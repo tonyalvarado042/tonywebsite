@@ -3,454 +3,209 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wireframe - Landing Page</title>
+    <title>Tony Alvarado - Mentor y Conferencista</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Estilos personalizados para darle look de wireframe */
-        .wireframe-img {
-            background-image: repeating-linear-gradient(45deg, #1f2937 25%, transparent 25%, transparent 75%, #1f2937 75%, #1f2937), repeating-linear-gradient(45deg, #1f2937 25%, #111827 25%, #111827 75%, #1f2937 75%, #1f2937);
-            background-position: 0 0, 10px 10px;
-            background-size: 20px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #6b7280;
-            font-size: 0.875rem;
-            text-align: center;
-            border: 1px dashed #374151;
-        }
         body {
             font-family: system-ui, -apple-system, sans-serif;
-            background-color: #0B0E14; /* Fondo oscuro similar al original */
+            background-color: #0B0E14;
             color: #e5e7eb;
         }
         .accent-text { color: #38bdf8; }
         .accent-bg { background-color: #38bdf8; color: #0f172a; }
+        
+        /* Estilo para imágenes que no cargan (placeholder) */
+        img {
+            background-color: #1f2937;
+            min-height: 50px;
+        }
     </style>
 </head>
 <body class="antialiased">
 
     <!-- 1. HEADER / NAVBAR -->
-    <header class="border-b border-gray-800 py-4 px-6 md:px-12 flex justify-between items-center sticky top-0 bg-[#0B0E14] z-50">
-        <div class="font-bold text-xl tracking-tight">Logo<span class="font-normal text-gray-400">Marca</span></div>
+    <header class="border-b border-gray-800 py-4 px-6 md:px-12 flex justify-between items-center sticky top-0 bg-[#0B0E14]/90 backdrop-blur-md z-50">
+        <div class="font-bold text-xl tracking-tight text-white">Tony<span class="font-normal text-gray-400">Alvarado</span></div>
         <nav class="hidden md:flex gap-6 text-sm text-gray-400">
-            <a href="#" class="hover:text-white">Inicio</a>
-            <a href="#" class="hover:text-white">Sobre mí</a>
-            <a href="#" class="hover:text-white">Conferencias</a>
-            <a href="#" class="hover:text-white">Libros</a>
-            <a href="#" class="hover:text-white">Blog</a>
-            <a href="#" class="hover:text-white">Contacto</a>
-            <a href="#" class="hover:text-white">EN</a>
+            <a href="#" class="hover:text-white transition">Inicio</a>
+            <a href="#sobre-mi" class="hover:text-white transition">Sobre mí</a>
+            <a href="#conferencias" class="hover:text-white transition">Conferencias</a>
+            <a href="#libros" class="hover:text-white transition">Libros</a>
+            <a href="#contacto" class="hover:text-white transition">Contacto</a>
         </nav>
-        <button class="accent-bg px-5 py-2 rounded-full text-sm font-semibold hover:opacity-90">Hablemos</button>
+        <button class="accent-bg px-5 py-2 rounded-full text-sm font-semibold hover:scale-105 transition-transform">Hablemos</button>
     </header>
 
     <!-- 2. HERO SECTION -->
     <section class="px-6 md:px-12 py-16 md:py-24 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12">
         <div class="flex-1 space-y-6">
-            <div class="text-xs text-gray-400 uppercase tracking-wider">🟢 Tag de Categoría / Profesión</div>
+            <div class="inline-block px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-xs text-cyan-400 uppercase tracking-wider">
+                🟢 Mentoría & Liderazgo
+            </div>
             <h1 class="text-5xl md:text-6xl font-bold leading-tight">
-                Título principal de impacto <br>
-                para descubrir tu grandeza <br>
-                <span class="accent-text">desde un concepto clave.</span>
+                Escala tu negocio <br>
+                y duplica tu impacto <br>
+                <span class="accent-text">con Liderazgo X10.</span>
             </h1>
             <p class="text-gray-400 text-lg max-w-lg">
-                Subtítulo descriptivo. Texto que explica cómo ayudas a las personas a lograr sus objetivos y transformar sus vidas a través de tus servicios.
+                Ayudo a empresarios hispanos a facturar más de un millón de dólares mediante principios probados de liderazgo y mentalidad de abundancia.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 pt-4">
-                <button class="accent-bg px-6 py-3 rounded-full font-semibold flex items-center justify-center gap-2">
-                    Llamado a la acción principal <span class="text-xl">→</span>
+                <button class="accent-bg px-8 py-4 rounded-full font-bold flex items-center justify-center gap-2 hover:opacity-90 transition">
+                    Empezar ahora <span class="text-xl">→</span>
                 </button>
-                <button class="border border-gray-600 px-6 py-3 rounded-full font-semibold flex items-center justify-center gap-2 hover:bg-gray-800">
-                    <span class="text-xl">▶</span> CTA Secundario
+                <button class="border border-gray-600 px-8 py-4 rounded-full font-semibold flex items-center justify-center gap-2 hover:bg-gray-800 transition">
+                    Ver testimonios
                 </button>
             </div>
         </div>
-        <div class="flex-1 w-full max-w-md h-[500px] relative">
-    <img src="principal.PNG" class="w-full h-full object-cover rounded-2xl" alt="Tony Alvarado">
-    <div class="absolute inset-0 bg-gradient-to-t from-[#0B0E14] via-transparent to-transparent rounded-2xl"></div>
-</div>
+        
+        <!-- FIX: Imagen principal centrada y sin corte de cabeza -->
+        <div class="flex-1 w-full max-w-md aspect-[4/5] relative group">
+            <div class="absolute -inset-1 bg-cyan-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition"></div>
+            <div class="relative w-full h-full overflow-hidden rounded-2xl border border-gray-700 shadow-2xl">
+                <img src="principal.PNG" 
+                     class="w-full h-full object-cover object-top" 
+                     alt="Tony Alvarado"
+                     onerror="this.src='https://via.placeholder.com/500x700?text=Tony+Alvarado'">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#0B0E14] via-transparent to-transparent"></div>
+            </div>
+        </div>
     </section>
 
     <!-- 3. STRIP DE MÉTRICAS -->
-    <section class="border-y border-gray-800 py-10">
-        <div class="max-w-7xl mx-auto px-6 flex flex-wrap justify-around gap-6 text-center">
-            <div><p class="text-3xl font-bold">+500K</p><p class="text-xs text-gray-500 mt-1 uppercase">Métrica 1</p></div>
-            <div><p class="text-3xl font-bold">+17</p><p class="text-xs text-gray-500 mt-1 uppercase">Métrica 2</p></div>
-            <div><p class="text-3xl font-bold">16+</p><p class="text-xs text-gray-500 mt-1 uppercase">Métrica 3</p></div>
-            <div><p class="text-3xl font-bold">8</p><p class="text-xs text-gray-500 mt-1 uppercase">Métrica 4</p></div>
-            <div><p class="text-3xl font-bold">+2.4M</p><p class="text-xs text-gray-500 mt-1 uppercase">Métrica 5</p></div>
-            <div><p class="text-3xl font-bold">+1,000</p><p class="text-xs text-gray-500 mt-1 uppercase">Métrica 6</p></div>
+    <section class="border-y border-gray-800 py-12 bg-gray-900/30">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-6 gap-8 text-center">
+            <div><p class="text-3xl font-bold accent-text">+500K</p><p class="text-[10px] text-gray-500 mt-1 uppercase tracking-widest">Seguidores</p></div>
+            <div><p class="text-3xl font-bold accent-text">+20</p><p class="text-[10px] text-gray-500 mt-1 uppercase tracking-widest">Años Exp.</p></div>
+            <div><p class="text-3xl font-bold accent-text">16+</p><p class="text-[10px] text-gray-500 mt-1 uppercase tracking-widest">Empresas</p></div>
+            <div><p class="text-3xl font-bold accent-text">8</p><p class="text-[10px] text-gray-500 mt-1 uppercase tracking-widest">Cifras</p></div>
+            <div><p class="text-3xl font-bold accent-text">+2.4M</p><p class="text-[10px] text-gray-500 mt-1 uppercase tracking-widest">Facturación</p></div>
+            <div><p class="text-3xl font-bold accent-text">+1K</p><p class="text-[10px] text-gray-500 mt-1 uppercase tracking-widest">Alumnos</p></div>
         </div>
     </section>
 
     <!-- 4. SOBRE MÍ -->
-    <section class="px-6 md:px-12 py-20 max-w-6xl mx-auto flex flex-col md:flex-row gap-12 items-center">
+    <section id="sobre-mi" class="px-6 md:px-12 py-24 max-w-6xl mx-auto flex flex-col md:flex-row gap-16 items-center">
         <div class="flex-1 w-full">
-            <!-- Aquí cargamos la imagen "secundaria" -->
-            <img src="secundaria.jpg" alt="Tony Alvarado" class="w-full h-auto object-cover rounded-xl shadow-lg border border-gray-800">
+            <!-- Imagen secundaria optimizada -->
+            <img src="secundaria.jpg" 
+                 alt="Tony Alvarado en acción" 
+                 class="w-full h-auto rounded-2xl shadow-2xl border border-gray-800 grayscale hover:grayscale-0 transition duration-500"
+                 onerror="this.src='https://via.placeholder.com/600x400?text=Sobre+Tony'">
         </div>
         <div class="flex-1 space-y-6">
-            <p class="text-xs text-gray-400 font-semibold tracking-wider uppercase">SOBRE MÍ</p>
-            <h2 class="text-4xl font-bold">Tony Alvarado <br><span class="accent-text">Empresario, Inversionista y Autor.</span></h2>
-            <p class="text-gray-400">Con 20 años de experiencia en múltiples empresas que han facturado millones de dólares. Además, soy esposo, padre de familia, ingeniero, hombre de fe, apasionado por el liderazgo y por ayudar a otros a lograr su propósito.</p>
-            <p class="text-gray-400">Como CEO de LIDERA X10, ayudo a otros emprendedores hispanos a facturar +1 millón de dólares. Durante más de 10 años, he aprendido de los mejores mentores del mundo, incluyendo a <strong>John C. Maxwell, Grant Cardone y Tony Robbins</strong>.</p>
-            <p class="text-gray-400">Mi enfoque principal es ayudarte a alcanzar la independencia financiera y crear una vida próspera y abundante en tiempo y dinero.</p>
-            <ul class="text-sm text-gray-500 space-y-2 mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-[#38bdf8] rounded-full"></span> Coach certificado por John Maxwell</li>
-                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-[#38bdf8] rounded-full"></span> 20 años de experiencia</li>
-                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-[#38bdf8] rounded-full"></span> CEO de LIDERA X10</li>
-                <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-[#38bdf8] rounded-full"></span> Emprendedor Hispano</li>
+            <p class="text-xs text-cyan-500 font-bold tracking-widest uppercase">SOBRE MÍ</p>
+            <h2 class="text-4xl font-bold">Empresario, Inversionista <br><span class="accent-text">y Autor de Éxito.</span></h2>
+            <p class="text-gray-400 leading-relaxed">Con 20 años de experiencia liderando empresas de múltiples millones de dólares. Como CEO de LIDERA X10, mi misión es equipar a emprendedores con las herramientas necesarias para lograr la libertad financiera.</p>
+            <p class="text-gray-400 leading-relaxed">He aprendido directamente de gigantes como <strong>John C. Maxwell, Grant Cardone y Tony Robbins</strong>, integrando su sabiduría en un método práctico para el mercado hispano.</p>
+            <ul class="text-sm text-gray-400 space-y-3 mt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-4">
+                <li class="flex items-center gap-3"><span class="w-2 h-2 bg-cyan-500 rounded-full"></span> Coach Certificado John Maxwell</li>
+                <li class="flex items-center gap-3"><span class="w-2 h-2 bg-cyan-500 rounded-full"></span> Experto en Real Estate</li>
+                <li class="flex items-center gap-3"><span class="w-2 h-2 bg-cyan-500 rounded-full"></span> Estratega de Negocios</li>
+                <li class="flex items-center gap-3"><span class="w-2 h-2 bg-cyan-500 rounded-full"></span> Mentor de Líderes</li>
             </ul>
         </div>
     </section>
 
-    <!-- 5. FILOSOFÍA -->
-    <section class="px-6 md:px-12 py-20 bg-[#0d1219]">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-12">
-                <p class="text-xs text-gray-400 font-semibold tracking-wider mb-2">FILOSOFÍA</p>
-                <h2 class="text-3xl md:text-4xl font-bold">Los principios que guían <span class="accent-text">todo lo que hago.</span></h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Tarjeta 1 -->
-                <div class="bg-[#111824] p-8 rounded-xl border border-gray-800">
-                    <p class="text-gray-600 text-sm mb-4">01</p>
-                    <h3 class="text-lg font-bold mb-3">Principio Número Uno</h3>
-                    <p class="text-gray-400 text-sm">Descripción del primer principio rector. Explica la mentalidad detrás de esta idea.</p>
-                </div>
-                <!-- Tarjeta 2 -->
-                <div class="bg-[#111824] p-8 rounded-xl border border-gray-800">
-                    <p class="text-gray-600 text-sm mb-4">02</p>
-                    <h3 class="text-lg font-bold mb-3">Principio Número Dos</h3>
-                    <p class="text-gray-400 text-sm">Descripción del segundo principio rector. Explica la mentalidad detrás de esta idea.</p>
-                </div>
-                <!-- Tarjeta 3 -->
-                <div class="bg-[#111824] p-8 rounded-xl border border-gray-800">
-                    <p class="text-gray-600 text-sm mb-4">03</p>
-                    <h3 class="text-lg font-bold mb-3">Principio Número Tres</h3>
-                    <p class="text-gray-400 text-sm">Descripción del tercer principio rector. Explica la mentalidad detrás de esta idea.</p>
-                </div>
-                <!-- Tarjeta 4 -->
-                <div class="bg-[#111824] p-8 rounded-xl border border-gray-800">
-                    <p class="text-gray-600 text-sm mb-4">04</p>
-                    <h3 class="text-lg font-bold mb-3">Principio Número Cuatro</h3>
-                    <p class="text-gray-400 text-sm">Descripción del cuarto principio rector. Explica la mentalidad detrás de esta idea.</p>
-                </div>
-                <!-- Tarjeta 5 -->
-                <div class="bg-[#111824] p-8 rounded-xl border border-gray-800">
-                    <p class="text-gray-600 text-sm mb-4">05</p>
-                    <h3 class="text-lg font-bold mb-3">Principio Número Cinco</h3>
-                    <p class="text-gray-400 text-sm">Descripción del quinto principio rector. Explica la mentalidad detrás de esta idea.</p>
-                </div>
-                <!-- Tarjeta 6 -->
-                <div class="bg-[#111824] p-8 rounded-xl border border-gray-800">
-                    <p class="text-gray-600 text-sm mb-4">06</p>
-                    <h3 class="text-lg font-bold mb-3">Principio Número Seis</h3>
-                    <p class="text-gray-400 text-sm">Descripción del sexto principio rector. Explica la mentalidad detrás de esta idea.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 6. CONFERENCIAS -->
-    <section class="px-6 md:px-12 py-20 max-w-4xl mx-auto text-center">
-        <p class="text-xs text-gray-400 font-semibold tracking-wider mb-2">CONFERENCIAS</p>
-        <h2 class="text-3xl md:text-4xl font-bold mb-4">Ideas que transforman <span class="accent-text">audiencias.</span></h2>
-        <p class="text-gray-400 mb-12">He compartido escenario con grandes referentes frente a miles de personas. Breve descripción de la experiencia como speaker.</p>
-
-        <!-- Acordeón de temas -->
-        <div class="space-y-4 text-left mb-12">
-            <div class="border border-gray-800 p-4 rounded-lg flex justify-between items-center bg-[#111824]">
-                <div class="flex items-center gap-3"><span class="text-gray-500">📄</span> Tema de Conferencia 1</div>
-                <div class="flex gap-2 text-xs"><span class="bg-gray-800 px-2 py-1 rounded">Tag 1</span> <span class="bg-gray-800 px-2 py-1 rounded">Tag 2</span> <span>+</span></div>
-            </div>
-            <div class="border border-gray-800 p-4 rounded-lg flex justify-between items-center bg-[#111824]">
-                <div class="flex items-center gap-3"><span class="text-gray-500">📄</span> Tema de Conferencia 2</div>
-                <div class="flex gap-2 text-xs"><span class="bg-gray-800 px-2 py-1 rounded">Tag A</span> <span class="bg-gray-800 px-2 py-1 rounded">Tag B</span> <span>+</span></div>
-            </div>
-            <div class="border border-gray-800 p-4 rounded-lg flex justify-between items-center bg-[#111824]">
-                <div class="flex items-center gap-3"><span class="text-gray-500">📄</span> Tema de Conferencia 3</div>
-                <div class="flex gap-2 text-xs"><span class="bg-gray-800 px-2 py-1 rounded">Tag X</span> <span class="bg-gray-800 px-2 py-1 rounded">Tag Y</span> <span>+</span></div>
-            </div>
-        </div>
-
-        <p class="text-xs text-gray-500 uppercase tracking-widest mb-6">Ha hablado para empresas como</p>
-        <div class="flex flex-wrap justify-center gap-8 text-gray-600 font-bold text-xl mb-10">
-            <span>[LOGO EMPRESA]</span>
-            <span>[LOGO EMPRESA]</span>
-            <span>[LOGO EMPRESA]</span>
-            <span>[LOGO EMPRESA]</span>
-        </div>
-        
-        <button class="accent-bg px-8 py-3 rounded-full font-semibold inline-flex items-center gap-2">
-            Llamado a la acción para eventos <span class="text-xl">→</span>
-        </button>
-    </section>
-
-    <!-- 7. LIBROS -->
-    <section class="px-6 md:px-12 py-20 bg-[#0d1219]">
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row gap-12 items-center">
+    <!-- 7. SECCIÓN LIBROS (Movida arriba para mejor flujo) -->
+    <section id="libros" class="px-6 md:px-12 py-24 bg-gray-900/50">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row gap-16 items-center">
             <div class="flex-1 space-y-6">
-                <p class="text-xs text-gray-400 font-semibold tracking-wider uppercase">MI LIBRO</p>
+                <p class="text-xs text-cyan-500 font-bold tracking-widest uppercase">RECURSO DESTACADO</p>
                 <h2 class="text-3xl md:text-4xl font-bold leading-tight">Secretos para ser un <br><span class="accent-text">Empresario Exitoso.</span></h2>
-                <p class="text-gray-400">¿Te encuentras atrapado/a en una rutina, no sabes cómo escalar tu emprendimiento al siguiente nivel y mucho menos cómo hacerlo trabajar sin que dependa de ti?</p>
-                <p class="text-gray-400">No estás solo/a. En este libro encontrarás <strong>más de 50 consejos</strong> (de esos que no te enseñan en ninguna escuela de negocios) basados en mis 20 años de experiencia, que te ayudarán a descubrir tu propósito.</p>
+                <p class="text-gray-400">¿Atrapado en la operatividad? En este libro comparto más de 50 consejos prácticos para que tu negocio trabaje para ti y no tú para él.</p>
                 
-                <blockquote class="border-l-4 border-[#38bdf8] pl-4 italic text-gray-300 my-6 text-lg">
+                <blockquote class="border-l-4 border-cyan-500 pl-6 italic text-gray-300 my-8 text-xl">
                     "Si quieres ganar el dinero que nunca has ganado, tienes que convertirte en la persona que nunca has sido."
                 </blockquote>
                 
-                <p class="text-gray-400">Descubre los 6 pilares fundamentales para tener una empresa consciente y en abundancia. Si tomas acción hoy, te garantizo que en un máximo de 3 a 5 años habrás logrado lo que otros duran 20 o 30 años.</p>
-                
-                <div class="pt-4">
-                    <button class="accent-bg px-8 py-3 rounded-full font-bold flex items-center justify-center gap-2 text-[#0f172a] hover:opacity-90 transition-opacity">
-                        ¡Dar los primeros pasos hoy! <span class="text-xl">→</span>
-                    </button>
-                </div>
+                <button class="accent-bg px-8 py-4 rounded-full font-bold hover:scale-105 transition shadow-lg shadow-cyan-500/20">
+                    Obtener el libro ahora
+                </button>
             </div>
             
             <div class="flex-1 w-full flex justify-center">
-                <!-- Aquí cargamos la imagen "libro" -->
-                <img src="libro.png" alt="Portada del libro Secretos para ser un Empresario Exitoso" class="max-w-md w-full h-auto rounded-xl shadow-2xl shadow-cyan-900/20">
+                <!-- Imagen del libro con estilo de producto -->
+                <img src="libro.png" 
+                     alt="Libro Secretos para ser un Empresario Exitoso" 
+                     class="max-w-[320px] w-full h-auto drop-shadow-[0_35px_35px_rgba(56,189,248,0.15)] hover:rotate-2 transition duration-500"
+                     onerror="this.src='https://via.placeholder.com/350x500?text=Portada+del+Libro'">
             </div>
         </div>
     </section>
 
-    <!-- 8. ECOSISTEMA -->
-    <section class="px-6 md:px-12 py-20 max-w-6xl mx-auto text-center">
-        <p class="text-xs text-gray-400 font-semibold tracking-wider mb-2">ECOSISTEMA</p>
-        <h2 class="text-3xl md:text-4xl font-bold mb-4">Un propósito, <span class="accent-text">múltiples caminos.</span></h2>
-        <p class="text-gray-400 mb-12 max-w-2xl mx-auto">Todo lo que construyo nace del mismo lugar: ayudar a las personas. Educación, tecnología, eventos y comunidad al servicio de este propósito.</p>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 text-left">
-            <!-- Tarjetas de ecosistema -->
-            <div class="bg-[#111824] p-6 rounded-xl border border-gray-800">
-                <div class="w-10 h-10 rounded bg-gray-800 flex items-center justify-center mb-4 text-gray-400">[i]</div>
-                <h3 class="font-bold mb-2">Área 1 (Ej. Escuela)</h3>
-                <p class="text-xs text-gray-500">Descripción breve del proyecto o empresa dentro del ecosistema.</p>
-            </div>
-            <div class="bg-[#111824] p-6 rounded-xl border border-gray-800">
-                <div class="w-10 h-10 rounded bg-gray-800 flex items-center justify-center mb-4 text-gray-400">[i]</div>
-                <h3 class="font-bold mb-2">Área 2 (Ej. Educación)</h3>
-                <p class="text-xs text-gray-500">Descripción breve del proyecto o empresa dentro del ecosistema.</p>
-            </div>
-            <div class="bg-[#111824] p-6 rounded-xl border border-gray-800">
-                <div class="w-10 h-10 rounded bg-gray-800 flex items-center justify-center mb-4 text-gray-400">[i]</div>
-                <h3 class="font-bold mb-2">Área 3 (Ej. Marca)</h3>
-                <p class="text-xs text-gray-500">Descripción breve del proyecto o empresa dentro del ecosistema.</p>
-            </div>
-            <div class="bg-[#111824] p-6 rounded-xl border border-gray-800">
-                <div class="w-10 h-10 rounded bg-gray-800 flex items-center justify-center mb-4 text-gray-400">[i]</div>
-                <h3 class="font-bold mb-2">Área 4 (Ej. Software)</h3>
-                <p class="text-xs text-gray-500">Descripción breve del proyecto o empresa dentro del ecosistema.</p>
-            </div>
-            <div class="bg-[#111824] p-6 rounded-xl border border-gray-800">
-                <div class="w-10 h-10 rounded bg-gray-800 flex items-center justify-center mb-4 text-gray-400">[i]</div>
-                <h3 class="font-bold mb-2">Área 5 (Ej. Eventos)</h3>
-                <p class="text-xs text-gray-500">Descripción breve del proyecto o empresa dentro del ecosistema.</p>
-            </div>
-            <div class="bg-[#111824] p-6 rounded-xl border border-gray-800">
-                <div class="w-10 h-10 rounded bg-gray-800 flex items-center justify-center mb-4 text-gray-400">[i]</div>
-                <h3 class="font-bold mb-2">Área 6 (Ej. Comunidad)</h3>
-                <p class="text-xs text-gray-500">Descripción breve del proyecto o empresa dentro del ecosistema.</p>
-            </div>
-            <div class="bg-[#111824] p-6 rounded-xl border border-gray-800">
-                <div class="w-10 h-10 rounded bg-gray-800 flex items-center justify-center mb-4 text-gray-400">[i]</div>
-                <h3 class="font-bold mb-2">Área 7 (Ej. Contenido)</h3>
-                <p class="text-xs text-gray-500">Descripción breve del proyecto o empresa dentro del ecosistema.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 9. GALERÍA / TRAYECTORIA -->
-    <section class="py-20 bg-black">
+    <!-- 9. GALERÍA / TRAYECTORIA - FIX: Imágenes de John y Spencer -->
+    <section class="py-24 bg-black">
         <div class="max-w-6xl mx-auto px-6 text-center">
-            <p class="text-xs text-gray-400 font-semibold tracking-wider mb-2">TRAYECTORIA</p>
-            <h2 class="text-3xl md:text-4xl font-bold mb-4">Honrado de compartir escenario con <span class="accent-text">grandes referentes.</span></h2>
-            <p class="text-gray-400 mb-12">Un texto introductorio sobre el privilegio de aprender de figuras extraordinarias.</p>
+            <p class="text-xs text-gray-500 font-bold tracking-widest mb-2 uppercase">TRAYECTORIA</p>
+            <h2 class="text-3xl md:text-4xl font-bold mb-12">Aprendiendo de los <span class="accent-text">mejores del mundo.</span></h2>
 
-            <div class="w-full h-80 md:h-[500px] wireframe-img rounded-xl mb-4 relative">
-                <div class="absolute bottom-4 left-4 text-left">
-                    <p class="text-[10px] bg-blue-600 px-2 py-1 rounded inline-block text-white mb-1">MOMENTO HISTÓRICO</p>
-                    <p class="text-xl text-white font-bold">[Nombres de los referentes principales en la foto]</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <!-- Imagen con John -->
+                <div class="relative group overflow-hidden rounded-2xl border border-gray-800">
+                    <img src="Tony con John.png" alt="Tony Alvarado con John Maxwell" class="w-full aspect-video object-cover group-hover:scale-105 transition duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-6">
+                        <p class="text-white font-bold text-lg">Con John C. Maxwell</p>
+                    </div>
+                </div>
+                <!-- Imagen con Spencer -->
+                <div class="relative group overflow-hidden rounded-2xl border border-gray-800">
+                    <img src="Tony con Spencer.png" alt="Tony Alvarado con Spencer Hoffman" class="w-full aspect-video object-cover group-hover:scale-105 transition duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-6">
+                        <p class="text-white font-bold text-lg">Con Spencer Hoffman</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="h-40 wireframe-img rounded-xl">[Foto Galería]</div>
-                <div class="h-40 wireframe-img rounded-xl">[Foto Galería]</div>
-                <div class="h-40 wireframe-img rounded-xl">[Foto Galería]</div>
-                <div class="h-40 wireframe-img rounded-xl">[Foto Galería]</div>
-                <div class="h-40 wireframe-img rounded-xl">[Foto Galería]</div>
-                <div class="h-40 wireframe-img rounded-xl">[Foto Galería]</div>
-                <div class="h-40 wireframe-img rounded-xl">[Foto Galería]</div>
-                <div class="h-40 wireframe-img rounded-xl">[Foto Galería]</div>
-            </div>
+            <p class="text-gray-500 text-sm mb-8 italic">Momentos compartidos en conferencias internacionales y mentorías privadas.</p>
         </div>
     </section>
 
-    <!-- 10. TESTIMONIOS Y VIDEOS -->
-    <section class="py-20 px-6 max-w-6xl mx-auto text-center">
-        <p class="text-xs text-gray-400 font-semibold tracking-wider mb-2">TESTIMONIOS</p>
-        <h2 class="text-3xl md:text-4xl font-bold mb-12">Lo que dicen <span class="accent-text">de la marca.</span></h2>
-
-        <!-- Video Principal -->
-        <div class="w-full aspect-video wireframe-img rounded-xl mb-6 relative border-2 border-gray-700">
-            <span class="text-5xl opacity-50">▶</span>
-            <div class="absolute bottom-4 left-4 text-left p-4 bg-black/60 rounded-lg max-w-md backdrop-blur-sm hidden md:block">
-                <p class="text-sm">"Descripción o cita destacada del video principal donde un referente importante avala el trabajo realizado."</p>
-            </div>
-        </div>
-
-        <!-- Grid de Videos/Citas secundarias -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8 text-left">
-            <div class="bg-[#111824] rounded-xl border border-gray-800 overflow-hidden">
-                <div class="h-40 wireframe-img relative">
-                    <span class="text-3xl opacity-50">▶</span>
-                </div>
-                <div class="p-5">
-                    <p class="text-xl text-gray-500 mb-2">"</p>
-                    <p class="text-sm text-gray-300 italic mb-4">Cita textual del testimonio avalando la experiencia y liderazgo.</p>
-                    <h4 class="font-bold text-sm">Nombre Testimonio 1</h4>
-                    <p class="text-xs text-gray-500">Cargo o rol</p>
+    <!-- 11. FORMULARIO / CONTACTO -->
+    <section id="contacto" class="py-24 px-6 max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 bg-gray-900/40 p-8 md:p-16 rounded-[2rem] border border-gray-800 shadow-3xl">
+            <div>
+                <h2 class="text-4xl font-bold mb-6">Llevemos tu negocio al <span class="accent-text">próximo nivel.</span></h2>
+                <p class="text-gray-400 mb-8">Disponible para conferencias presenciales, mentorías privadas y alianzas estratégicas.</p>
+                
+                <div class="space-y-6">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-500">✉</div>
+                        <p class="text-gray-300 font-medium">contacto@tonyalvarado.com</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center text-green-500">📱</div>
+                        <p class="text-gray-300 font-medium">WhatsApp: +1 (234) 567-890</p>
+                    </div>
                 </div>
             </div>
-            <div class="bg-[#111824] rounded-xl border border-gray-800 overflow-hidden">
-                <div class="h-40 wireframe-img relative">
-                    <span class="text-3xl opacity-50">▶</span>
-                </div>
-                <div class="p-5">
-                    <p class="text-xl text-gray-500 mb-2">"</p>
-                    <p class="text-sm text-gray-300 italic mb-4">Cita textual del testimonio avalando la experiencia y liderazgo.</p>
-                    <h4 class="font-bold text-sm">Nombre Testimonio 2</h4>
-                    <p class="text-xs text-gray-500">Cargo o rol</p>
-                </div>
-            </div>
-            <div class="bg-[#111824] rounded-xl border border-gray-800 overflow-hidden">
-                <div class="h-40 wireframe-img relative">
-                    <span class="text-3xl opacity-50">▶</span>
-                </div>
-                <div class="p-5">
-                    <p class="text-xl text-gray-500 mb-2">"</p>
-                    <p class="text-sm text-gray-300 italic mb-4">Cita textual del testimonio avalando la experiencia y liderazgo.</p>
-                    <h4 class="font-bold text-sm">Nombre Testimonio 3</h4>
-                    <p class="text-xs text-gray-500">Cargo o rol</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- 11. FORMULARIO / CONTACTO (Ideal para integración CRM) -->
-    <section class="py-20 px-6 max-w-6xl mx-auto border-t border-gray-800 mt-10">
-        <div class="text-center mb-12">
-            <p class="text-xs text-gray-400 font-semibold tracking-wider mb-2">TRABAJEMOS JUNTOS</p>
-            <h2 class="text-3xl md:text-4xl font-bold mb-4">¿Listo para llevar tu evento <span class="accent-text">al siguiente nivel?</span></h2>
-            <p class="text-gray-400">Mensaje de invitación a contactar para conferencias, mentorías o colaboración.</p>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 bg-[#0d1219] p-8 md:p-12 rounded-2xl border border-gray-800">
-            <!-- Formulario (Aquí es donde entra tu magia de captura de datos) -->
             <form class="space-y-4">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs text-gray-400 mb-1">Nombre completo *</label>
-                        <input type="text" placeholder="Tu nombre" class="w-full bg-[#111824] border border-gray-700 rounded p-3 text-sm focus:outline-none focus:border-cyan-500 text-white">
-                    </div>
-                    <div>
-                        <label class="block text-xs text-gray-400 mb-1">Email *</label>
-                        <input type="email" placeholder="tu@email.com" class="w-full bg-[#111824] border border-gray-700 rounded p-3 text-sm focus:outline-none focus:border-cyan-500 text-white">
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-xs text-gray-400 mb-1">WhatsApp (opcional)</label>
-                    <input type="text" placeholder="+52 55 1234 5678" class="w-full bg-[#111824] border border-gray-700 rounded p-3 text-sm focus:outline-none focus:border-cyan-500 text-white">
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs text-gray-400 mb-1">Empresa u organización</label>
-                        <input type="text" placeholder="Nombre de tu empresa" class="w-full bg-[#111824] border border-gray-700 rounded p-3 text-sm focus:outline-none focus:border-cyan-500 text-white">
-                    </div>
-                    <div>
-                        <label class="block text-xs text-gray-400 mb-1">¿En qué te puedo ayudar? *</label>
-                        <select class="w-full bg-[#111824] border border-gray-700 rounded p-3 text-sm focus:outline-none focus:border-cyan-500 text-white appearance-none">
-                            <option>Selecciona una opción</option>
-                            <option>Conferencia</option>
-                            <option>Mentoría</option>
-                        </select>
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-xs text-gray-400 mb-1">Cuéntame más sobre tu proyecto</label>
-                    <textarea rows="4" placeholder="Fecha del evento, audiencia esperada, tema..." class="w-full bg-[#111824] border border-gray-700 rounded p-3 text-sm focus:outline-none focus:border-cyan-500 text-white"></textarea>
-                </div>
-                <button type="submit" class="accent-bg px-8 py-3 rounded-full font-semibold flex items-center gap-2 mt-4">
-                    Enviar mensaje <span class="text-lg">↗</span>
+                <input type="text" placeholder="Tu Nombre" class="w-full bg-[#111824] border border-gray-700 rounded-xl p-4 text-white focus:border-cyan-500 outline-none transition">
+                <input type="email" placeholder="Correo Electrónico" class="w-full bg-[#111824] border border-gray-700 rounded-xl p-4 text-white focus:border-cyan-500 outline-none transition">
+                <select class="w-full bg-[#111824] border border-gray-700 rounded-xl p-4 text-gray-400 focus:border-cyan-500 outline-none transition appearance-none">
+                    <option>Interés: Mentoría 1 a 1</option>
+                    <option>Interés: Conferencias</option>
+                    <option>Interés: Liderazgo X10</option>
+                </select>
+                <textarea rows="4" placeholder="¿Cómo puedo ayudarte?" class="w-full bg-[#111824] border border-gray-700 rounded-xl p-4 text-white focus:border-cyan-500 outline-none transition"></textarea>
+                <button class="accent-bg w-full py-4 rounded-xl font-bold text-lg hover:opacity-90 transition shadow-lg shadow-cyan-500/20">
+                    Enviar Mensaje
                 </button>
             </form>
-
-            <!-- Datos Directos -->
-            <div class="space-y-8 flex flex-col justify-center">
-                <div class="space-y-4">
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center">✉</div>
-                        <div>
-                            <p class="text-xs text-gray-400">Email directo</p>
-                            <p class="font-medium text-sm">contacto@dominio.com</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center">📱</div>
-                        <div>
-                            <p class="text-xs text-gray-400">WhatsApp directo</p>
-                            <p class="font-medium text-sm">+52 1 55 6670 2133</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center">📍</div>
-                        <div>
-                            <p class="text-xs text-gray-400">Ubicación</p>
-                            <p class="font-medium text-sm">México • USA • Global</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-[#111824] p-6 rounded-xl border border-gray-800">
-                    <h4 class="font-bold mb-3 text-sm">¿Qué puedes esperar?</h4>
-                    <ul class="text-xs text-gray-400 space-y-2">
-                        <li class="flex items-start gap-2"><span class="accent-text">•</span> Respuesta en menos de 48 horas</li>
-                        <li class="flex items-start gap-2"><span class="accent-text">•</span> Propuesta personalizada para tu evento</li>
-                        <li class="flex items-start gap-2"><span class="accent-text">•</span> Llamada de alineación con el equipo</li>
-                        <li class="flex items-start gap-2"><span class="accent-text">•</span> Coordinación completa pre y post evento</li>
-                    </ul>
-                </div>
-            </div>
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer class="border-t border-gray-800 py-8 px-6 md:px-12 mt-10">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-            <div>
-                <div class="font-bold text-lg mb-1">Logo<span class="font-normal text-gray-400">Marca</span></div>
-                <p class="text-xs text-gray-500">Empresario • Speaker • Autor • Mentor</p>
-            </div>
-            <div class="flex gap-4 text-gray-500">
-                <!-- Iconos RRSS (Placeholders) -->
-                <div class="w-8 h-8 rounded-full border border-gray-700 flex items-center justify-center text-xs">In</div>
-                <div class="w-8 h-8 rounded-full border border-gray-700 flex items-center justify-center text-xs">Ig</div>
-                <div class="w-8 h-8 rounded-full border border-gray-700 flex items-center justify-center text-xs">Tk</div>
-            </div>
+    <footer class="border-t border-gray-800 py-12 px-6 text-center">
+        <div class="font-bold text-2xl mb-4 text-white">Tony<span class="font-normal text-gray-500">Alvarado</span></div>
+        <div class="flex justify-center gap-6 mb-8 text-gray-500">
+            <a href="#" class="hover:text-cyan-500">Instagram</a>
+            <a href="#" class="hover:text-cyan-500">LinkedIn</a>
+            <a href="#" class="hover:text-cyan-500">YouTube</a>
         </div>
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center mt-6 pt-6 border-t border-gray-800/50 text-xs text-gray-500 gap-4">
-            <p>© 2026 Nombre de la Marca. Todos los derechos reservados.</p>
-            <div class="flex gap-4">
-                <a href="#" class="hover:text-white">Conferencias</a>
-                <a href="#" class="hover:text-white">Libros</a>
-                <a href="#" class="hover:text-white">Blog</a>
-                <a href="#" class="hover:text-white">Prensa</a>
-            </div>
-        </div>
+        <p class="text-gray-600 text-sm">© 2024 Tony Alvarado. Todos los derechos reservados.</p>
     </footer>
 
 </body>
