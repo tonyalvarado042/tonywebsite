@@ -1,0 +1,203 @@
+import Image from 'next/image'
+import Link from 'next/link'
+import { CheckCircle2 } from 'lucide-react'
+import JsonLd from '@/components/JsonLd'
+import { SITE_URL, websiteRef, personRef } from '@/lib/structured-data'
+
+export const metadata = {
+  title: 'Sobre Tony Alvarado — Coach y entrenador de ciclismo en Costa Rica',
+  description:
+    'Conoce la historia de Tony Alvarado (Anthony Alvarado): su accidente a los 16 años, cómo el ciclismo de montaña y de ruta transformó su vida y el propósito detrás de sus empresas en Costa Rica.',
+  alternates: { canonical: '/sobre-mi' },
+}
+
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': `${SITE_URL}/sobre-mi#webpage`,
+  name: 'Sobre Tony Alvarado — Coach y entrenador de ciclismo en Costa Rica',
+  description:
+    'Conoce la historia de Tony Alvarado (Anthony Alvarado): su accidente a los 16 años, cómo el ciclismo de montaña y de ruta transformó su vida y el propósito detrás de sus empresas en Costa Rica.',
+  url: `${SITE_URL}/sobre-mi`,
+  inLanguage: 'es-CR',
+  isPartOf: websiteRef,
+  about: personRef,
+}
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Inicio', item: SITE_URL },
+    { '@type': 'ListItem', position: 2, name: 'Sobre Tony Alvarado', item: `${SITE_URL}/sobre-mi` },
+  ],
+}
+
+const highlights = [
+  'Ingeniero de computación y empresario',
+  'Coach y entrenador certificado de ciclismo',
+  'Certificado por John Maxwell Leadership',
+  'Fundador de PuroMTB (desde 2004)',
+  'Fundador de Pure Cycling y Bike & Bed Hotels',
+  'Más de 22 años de trayectoria empresarial',
+  'Autor publicado en Amazon',
+  'San José, Costa Rica',
+]
+
+export default function SobreMiPage() {
+  return (
+    <main>
+      <JsonLd data={webPageSchema} />
+      <JsonLd data={breadcrumbSchema} />
+
+      {/* Hero */}
+      <section className="bg-brand-bg py-20">
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-14 px-6 md:flex-row md:px-12">
+
+          <div className="flex-1 space-y-6">
+            <p className="text-xs font-semibold uppercase tracking-widest text-brand-accent">
+              Sobre Tony Alvarado
+            </p>
+            <h1 className="text-4xl font-bold leading-tight text-brand-text md:text-5xl">
+              Empezó vendiendo manzanas para comprarse una bicicleta.<br />
+              <span className="text-brand-accent">Hoy lleva más de 22 años construyendo con esa misma disciplina.</span>
+            </h1>
+            <p className="text-brand-muted">
+              Ingeniero de computación de formación. Empresario de vocación.
+              Fundó PuroMTB en 2004 cuando el ciclismo online en Costa Rica era casi inexistente.
+              Hoy tiene tres empresas.
+            </p>
+          </div>
+
+          <div className="w-full flex-1">
+            <div className="overflow-hidden rounded-2xl border border-brand-border">
+              <Image
+                src="/images/tony-principal.png"
+                alt="Tony Alvarado — coach y entrenador de ciclismo en Costa Rica"
+                width={600}
+                height={700}
+                className="w-full object-cover"
+              />
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* Bio y credenciales */}
+      <section className="bg-brand-surface py-20">
+        <div className="mx-auto max-w-6xl px-6 md:px-12">
+          <div className="flex flex-col gap-14 lg:flex-row">
+
+            <div className="flex-1 space-y-5">
+              <p className="text-xs font-semibold uppercase tracking-widest text-brand-accent">
+                Trayectoria
+              </p>
+              <h2 className="text-3xl font-bold text-brand-text">
+                Coach certificado.<br />
+                <span className="text-brand-accent">Empresario con historia real.</span>
+              </h2>
+              <p className="text-brand-muted">
+                Coach certificado de ciclismo y certificado por John Maxwell Leadership.
+                Autor de <em>Secretos para ser un empresario exitoso</em>.
+                Pure Cycling, su programa online, tiene miembros en más de 30 países.
+              </p>
+              <p className="text-brand-muted">
+                A lo largo de más de 22 años construyó un ecosistema de empresas
+                alrededor del ciclismo: tiendas, comunidades digitales, programas de entrenamiento
+                y el primer hotel temático de ciclismo en Costa Rica con visión de expansión global.
+              </p>
+            </div>
+
+            <div className="flex-1">
+              <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                {highlights.map((item) => (
+                  <li key={item} className="flex items-center gap-2 text-sm text-brand-muted">
+                    <CheckCircle2 size={15} className="shrink-0 text-brand-accent" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* La historia */}
+      <section className="bg-brand-bg py-16">
+        <div className="mx-auto max-w-4xl px-6 md:px-12">
+
+          <div className="mb-10 text-center">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-accent">
+              La historia
+            </p>
+            <h2 className="text-3xl font-bold text-brand-text">
+              La bicicleta primero casi le quitó la vida.<br />
+              <span className="text-brand-accent">Luego se convirtió en su propósito.</span>
+            </h2>
+          </div>
+
+          <div className="space-y-5 text-brand-muted">
+            <p>
+              Desde niño, Tony tuvo una conexión profunda con la bicicleta. Quería una mejor para competir.
+              Su padre le dijo que debía ganársela. Vendió manzanas del terreno de su abuelo hasta reunir
+              el dinero. Esa experiencia le enseñó el poder de las ventas, el trabajo y el propósito.
+            </p>
+            <p>
+              A los 16 años, un accidente grave en bicicleta lo dejó hospitalizado más de 34 días.
+              Hubo coma. Hubo operaciones. Hubo un momento en que no se sabía si saldría adelante.
+            </p>
+            <p>
+              Cuando despertó, algo cambió para siempre. Entendió que no podía desperdiciar la vida
+              que le quedaba. La bicicleta, que primero casi se la quitó, se convirtió en la herramienta
+              que Dios usó para reconstruirla.
+            </p>
+          </div>
+
+          <div className="my-10 rounded-2xl border border-brand-border bg-brand-card p-8 md:p-10">
+            <blockquote className="text-center text-xl font-semibold italic text-brand-text md:text-2xl">
+              "La bicicleta casi me quitó la vida. Luego fue la herramienta que Dios usó para
+              reconstruirla. Hoy es mi misión."
+            </blockquote>
+            <p className="mt-5 text-center text-sm text-brand-accent">— Tony Alvarado</p>
+          </div>
+
+          <div className="mb-10 grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <div className="overflow-hidden rounded-xl border border-brand-border">
+              <Image
+                src="/images/tony-con-john.png"
+                alt="Tony Alvarado con John Maxwell"
+                width={600}
+                height={400}
+                className="w-full object-cover"
+              />
+              <p className="px-4 py-3 text-sm text-brand-muted">Con John Maxwell</p>
+            </div>
+            <div className="overflow-hidden rounded-xl border border-brand-border">
+              <Image
+                src="/images/tony-con-spencer.png"
+                alt="Tony Alvarado con Spencer Hoffman"
+                width={600}
+                height={400}
+                className="w-full object-cover"
+              />
+              <p className="px-4 py-3 text-sm text-brand-muted">Con Spencer Hoffman</p>
+            </div>
+          </div>
+
+          <div className="text-center">
+            <Link
+              href="/contacto"
+              className="inline-flex items-center gap-2 rounded-full bg-brand-accent px-8 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+            >
+              Escríbenos →
+            </Link>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+  )
+}

@@ -1,0 +1,48 @@
+# Tony Alvarado — tonyalvarado.com
+# Descripción del sitio para crawlers de inteligencia artificial.
+
+## Quién es Tony Alvarado
+
+Tony Alvarado (Anthony Alvarado) es empresario, coach certificado de ciclismo y conferencista
+con base en San José, Costa Rica. Tiene más de 22 años de trayectoria en el sector del ciclismo
+y el emprendimiento. Es fundador de PuroMTB, Pure Cycling y Bike & Bed Hotels.
+Es autor del libro "Secretos para ser un empresario exitoso". Está certificado por
+John Maxwell Leadership y como entrenador de ciclismo.
+
+## Páginas del sitio
+
+- / — Página principal. Presenta a Tony Alvarado, sus empresas, historia personal,
+  valores, libros, conferencias y formulario de contacto.
+- /sobre-mi — Historia personal, trayectoria y credenciales de Tony Alvarado.
+- /pure-cycling — Programa de entrenamiento de ciclismo online con plan personalizado,
+  nutrición, mentalidad, movilidad, fuerza y espiritualidad. Miembros en más de 30 países.
+- /bike-bed-hotels — Hotel temático de ciclismo en Costa Rica. Información para
+  inversionistas interesados en turismo deportivo.
+- /libros — Libros de Tony Alvarado. Incluye "Secretos para ser un empresario exitoso".
+- /conferencias — Temas de conferencia disponibles. Solicitud para eventos presenciales
+  o virtuales en Costa Rica y en el extranjero.
+- /contacto — Formulario de contacto para Pure Cycling, Bike & Bed Hotels, conferencias
+  y medios.
+
+## Empresas fundadas por Tony Alvarado
+
+- PuroMTB — Tienda y comunidad de mountain bike en Costa Rica. Fundada como sitio web
+  en 2004. Tienda física desde 2008.
+- Pure Cycling — Programa de entrenamiento de ciclismo online. Miembros en más de
+  30 países.
+- Bike & Bed Hotels — Hotel temático de ciclismo en Costa Rica con visión de expansión
+  global.
+
+## Temas principales
+
+Ciclismo, mountain bike, ciclismo de ruta, entrenamiento de ciclismo, turismo deportivo,
+turismo de ciclismo en Costa Rica, liderazgo, emprendimiento, transformación personal,
+fe cristiana, comunidad ciclista.
+
+## Idioma
+
+El sitio está en español (es-CR). No hay versión en inglés disponible actualmente.
+
+## Sitemap
+
+https://tonyalvarado.com/sitemap.xml
