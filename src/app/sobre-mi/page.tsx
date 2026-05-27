@@ -70,12 +70,12 @@ export default function SobreMiPage() {
           </div>
 
           <div className="w-full flex-1">
-            <div className="overflow-hidden rounded-2xl border border-brand-border">
+            <div className="overflow-hidden rounded-2xl">
               <Image
-                src="/images/tony-principal.png"
+                src="/images/tony/tony-about.jpg"
                 alt="Tony Alvarado — coach y entrenador de ciclismo en Costa Rica"
                 width={600}
-                height={700}
+                height={750}
                 className="w-full object-cover"
               />
             </div>

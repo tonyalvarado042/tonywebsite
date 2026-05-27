@@ -29,3 +29,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+_client-assets/
+# Client private assets - do not commit
+/_client-assets/
+_client-assets/
+_client-assets/**

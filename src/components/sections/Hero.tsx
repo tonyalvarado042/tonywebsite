@@ -58,10 +58,10 @@ export default function Hero() {
         >
           <div className="relative h-[540px] overflow-hidden rounded-2xl">
             <Image
-              src="/images/tony-principal.png"
+              src="/images/tony/tony-hero.jpg"
               alt="Tony Alvarado — coach y entrenador de ciclismo en Costa Rica, fundador de Pure Cycling, PuroMTB y Bike & Bed Hotels"
               fill
-              className="object-cover object-top"
+              className="object-cover object-center"
               priority
               sizes="(max-width: 768px) 100vw, 50vw"
             />

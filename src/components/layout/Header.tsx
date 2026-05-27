@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
 
@@ -19,8 +20,15 @@ export default function Header() {
     <header className="sticky top-0 z-50 border-b border-brand-border bg-brand-bg/95 backdrop-blur-sm">
       <div className="mx-auto max-w-7xl px-6 md:px-12">
         <div className="flex h-16 items-center justify-between">
-          <Link href="/" className="text-xl font-bold tracking-tight text-brand-text">
-            Tony<span className="font-light text-brand-muted">Alvarado</span>
+          <Link href="/" className="flex items-center" aria-label="Tony Alvarado — Inicio">
+            <Image
+              src="/images/logos/tony-alvarado-logo-white-horizontal.png"
+              alt="Tony Alvarado"
+              width={160}
+              height={40}
+              className="h-9 w-auto"
+              priority
+            />
           </Link>
 
           <nav className="hidden items-center gap-8 text-sm md:flex">

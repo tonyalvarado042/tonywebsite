@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Calendar, Globe, ShoppingCart, Users } from 'lucide-react'
 
@@ -42,6 +43,15 @@ export default function PuroMTB() {
             <p className="text-xs text-brand-muted/50">
               Cifras aproximadas.
             </p>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              {milestones.map(({ Icon, year, label }) => (
+                <div key={label} className="rounded-xl border border-brand-border bg-brand-card p-4">
+                  <Icon size={16} className="mb-2 text-brand-accent" />
+                  <p className="text-base font-bold text-brand-text">{year}</p>
+                  <p className="text-xs text-brand-muted">{label}</p>
+                </div>
+              ))}
+            </div>
           </motion.div>
 
           <motion.div
@@ -51,21 +61,14 @@ export default function PuroMTB() {
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.1 }}
           >
-            {/* Placeholder: logo e imagen de tienda PuroMTB */}
-            <div className="mb-6 flex h-44 items-center justify-center rounded-2xl border border-dashed border-brand-border bg-brand-card text-center text-sm text-brand-muted">
-              <div>
-                <p className="font-medium">Logo e imagen de tienda PuroMTB</p>
-                <p className="mt-1 text-xs text-brand-muted/50">[INFORMACIÓN PENDIENTE del cliente]</p>
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              {milestones.map(({ Icon, year, label }) => (
-                <div key={label} className="rounded-xl border border-brand-border bg-brand-card p-5">
-                  <Icon size={18} className="mb-2 text-brand-accent" />
-                  <p className="text-lg font-bold text-brand-text">{year}</p>
-                  <p className="text-xs text-brand-muted">{label}</p>
-                </div>
-              ))}
+            <div className="relative h-[360px] overflow-hidden rounded-2xl sm:h-[420px] lg:h-[440px]">
+              <Image
+                src="/images/tony/tony-puromtb-community.jpg"
+                alt="Tony Alvarado — fundador de PuroMTB, comunidad ciclista en Costa Rica"
+                fill
+                className="object-cover object-[50%_100%]"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
             </div>
           </motion.div>
 

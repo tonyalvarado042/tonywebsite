@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 const footerLinks = [
   { href: '/sobre-mi', label: 'Sobre mí' },
@@ -15,8 +16,14 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-6 py-12 md:px-12">
         <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-start">
           <div className="max-w-xs">
-            <Link href="/" className="text-xl font-bold tracking-tight text-brand-text">
-              Tony<span className="font-light text-brand-muted">Alvarado</span>
+            <Link href="/" aria-label="Tony Alvarado — Inicio">
+              <Image
+                src="/images/logos/tony-alvarado-logo-white-horizontal.png"
+                alt="Tony Alvarado"
+                width={150}
+                height={38}
+                className="h-8 w-auto opacity-90"
+              />
             </Link>
             <p className="mt-3 text-sm text-brand-muted">
               Ciclismo, comunidad y Costa Rica.
