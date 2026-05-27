@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { Shield, Star, Target, TrendingUp } from 'lucide-react'
 import JsonLd from '@/components/JsonLd'
@@ -80,6 +81,22 @@ export default function BikeBedPage() {
             Bike & Bed Hotels es el modelo de turismo deportivo para ciclistas en Costa Rica
             con operación profesional y visión de expansión global.
           </p>
+        </div>
+      </section>
+
+      {/* Imagen del hotel */}
+      <section className="bg-brand-bg pb-12 pt-0">
+        <div className="mx-auto max-w-6xl px-6 md:px-12">
+          <div className="relative h-96 overflow-hidden rounded-2xl lg:h-[480px]">
+            <Image
+              src="/images/hotel/bike-bed-exterior-cabana.jpg"
+              alt="Bike & Bed Hotels — exterior cabaña hotel temático de ciclismo en Costa Rica"
+              fill
+              className="object-cover object-[50%_40%]"
+              sizes="(max-width: 1024px) 100vw, 1152px"
+              priority
+            />
+          </div>
         </div>
       </section>
 

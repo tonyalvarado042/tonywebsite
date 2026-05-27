@@ -176,7 +176,7 @@ export default function SobreMiPage() {
             </div>
             <div className="overflow-hidden rounded-xl border border-brand-border">
               <Image
-                src="/images/tony-con-spencer.png"
+                src="/images/tony/tony-spencer-hoffman.jpg"
                 alt="Tony Alvarado con Spencer Hoffman"
                 width={600}
                 height={400}

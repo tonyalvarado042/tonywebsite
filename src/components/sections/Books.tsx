@@ -36,13 +36,13 @@ export default function Books() {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <div className="shrink-0">
+            <div className="shrink-0 rounded-xl bg-white p-3 shadow-xl">
               <Image
-                src="/images/libro-secretos.png"
+                src="/images/books/libro-secretos-mockup.jpg"
                 alt="Secretos para ser un empresario exitoso — Tony Alvarado"
-                width={130}
-                height={185}
-                className="rounded-lg shadow-xl"
+                width={160}
+                height={110}
+                className="rounded-lg"
               />
             </div>
             <div className="space-y-4">

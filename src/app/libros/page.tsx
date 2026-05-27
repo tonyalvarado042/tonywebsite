@@ -56,13 +56,15 @@ export default function LibrosPage() {
           <div className="flex flex-col items-center gap-14 lg:flex-row">
 
             <div className="flex justify-center">
-              <Image
-                src="/images/libro-secretos.png"
-                alt="Secretos para ser un empresario exitoso — Tony Alvarado"
-                width={280}
-                height={400}
-                className="rounded-xl shadow-2xl"
-              />
+              <div className="rounded-2xl bg-white p-4 shadow-2xl">
+                <Image
+                  src="/images/books/libro-secretos-mockup.jpg"
+                  alt="Secretos para ser un empresario exitoso — Tony Alvarado"
+                  width={320}
+                  height={220}
+                  className="rounded-lg"
+                />
+              </div>
             </div>
 
             <div className="flex-1 space-y-5">

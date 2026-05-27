@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Shield, Star, Target, TrendingUp } from 'lucide-react'
@@ -57,17 +58,20 @@ export default function BikeAndBed() {
           </p>
         </motion.div>
 
-        {/* Imagen del hotel — pendiente */}
         <motion.div
-          className="mb-10 flex h-56 items-center justify-center rounded-2xl border border-dashed border-brand-border bg-brand-card text-center text-sm text-brand-muted"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          className="relative mb-10 h-96 overflow-hidden rounded-2xl lg:h-[440px]"
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.6 }}
         >
-          <div>
-            <p className="font-medium">Fotos del hotel Bike & Bed Hotels</p>
-          </div>
+          <Image
+            src="/images/hotel/bike-bed-exterior-cabana.jpg"
+            alt="Bike & Bed Hotels — hotel temático de ciclismo en Costa Rica, arquitectura tropical"
+            fill
+            className="object-cover object-[50%_40%]"
+            sizes="(max-width: 1024px) 100vw, 1152px"
+          />
         </motion.div>
 
         <div className="mb-10 grid grid-cols-1 gap-5 md:grid-cols-2">
