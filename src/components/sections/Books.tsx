@@ -56,7 +56,7 @@ export default function Books() {
                 Secretos para ser un{' '}
                 <span className="text-brand-accent">empresario exitoso</span>
               </h3>
-              <p className="text-sm text-brand-muted">
+              <p className="text-sm text-brand-muted text-left md:text-justify">
                 Los principios que Tony usó para construir un ecosistema de empresas
                 alrededor del ciclismo durante más de dos décadas. No es teoría —
                 son lecciones aprendidas con fracasos, victorias y fe en el proceso.
@@ -103,7 +103,7 @@ export default function Books() {
                 Sigue{' '}
                 <span className="text-brand-accent">Pedaleando</span>
               </h3>
-              <p className="text-sm text-brand-muted">
+              <p className="text-sm text-brand-muted text-left md:text-justify">
                 La bicicleta lo acompañó desde niño, lo puso a prueba a los 16 años
                 y después se convirtió en la herramienta que Dios usó para reconstruirlo.
                 Un libro sobre fe, propósito y seguir adelante cuando el camino se complica.

@@ -51,12 +51,12 @@ export default function AboutTony() {
             Empezó vendiendo manzanas para comprarse una bicicleta.<br />
             <span className="text-brand-accent">Hoy tiene tres empresas.</span>
           </h2>
-          <p className="text-brand-muted">
+          <p className="text-brand-muted text-left md:text-justify">
             Ingeniero de computación de formación, empresario de vocación. Coach certificado de ciclismo
             y líder formado por John Maxwell Leadership. Fundador de tres empresas que comparten
             una misión: transformar vidas a través de la bicicleta.
           </p>
-          <p className="text-brand-muted">
+          <p className="text-brand-muted text-left md:text-justify">
             Tony Alvarado construye comunidad alrededor del mountain bike y el ciclismo de ruta.
             Pure Cycling, su programa online, tiene miembros en más de 30 países.
           </p>

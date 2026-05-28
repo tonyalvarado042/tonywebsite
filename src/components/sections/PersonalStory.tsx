@@ -24,7 +24,7 @@ export default function PersonalStory() {
         </motion.div>
 
         <motion.div
-          className="mt-12 space-y-6 text-lg text-brand-muted"
+          className="mt-12 space-y-6 text-lg text-brand-muted text-left md:text-justify"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

@@ -62,7 +62,7 @@ export default function SobreMiPage() {
               Empezó vendiendo manzanas para comprarse una bicicleta.<br />
               <span className="text-brand-accent">Hoy lleva más de 22 años construyendo con esa misma disciplina.</span>
             </h1>
-            <p className="text-brand-muted">
+            <p className="text-brand-muted text-left md:text-justify">
               Ingeniero de computación de formación. Empresario de vocación.
               Fundó PuroMTB en 2004 cuando el ciclismo online en Costa Rica era casi inexistente.
               Hoy tiene tres empresas.
@@ -97,12 +97,12 @@ export default function SobreMiPage() {
                 Coach certificado.<br />
                 <span className="text-brand-accent">Empresario con historia real.</span>
               </h2>
-              <p className="text-brand-muted">
+              <p className="text-brand-muted text-left md:text-justify">
                 Coach certificado de ciclismo y certificado por John Maxwell Leadership.
                 Autor de <em>Secretos para ser un empresario exitoso</em>.
                 Pure Cycling, su programa online, tiene miembros en más de 30 países.
               </p>
-              <p className="text-brand-muted">
+              <p className="text-brand-muted text-left md:text-justify">
                 A lo largo de más de 22 años construyó un ecosistema de empresas
                 alrededor del ciclismo: tiendas, comunidades digitales, programas de entrenamiento
                 y el primer hotel temático de ciclismo en Costa Rica con visión de expansión global.
@@ -138,7 +138,7 @@ export default function SobreMiPage() {
             </h2>
           </div>
 
-          <div className="space-y-5 text-brand-muted">
+          <div className="space-y-5 text-brand-muted text-left md:text-justify">
             <p>
               Desde niño, Tony tuvo una conexión profunda con la bicicleta. Quería una mejor para competir.
               Su padre le dijo que debía ganársela. Vendió manzanas del terreno de su abuelo hasta reunir

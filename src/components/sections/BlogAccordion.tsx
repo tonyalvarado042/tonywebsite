@@ -207,7 +207,7 @@ export default function BlogAccordion() {
               <div className="pb-8 pt-2">
                 <div className="space-y-4">
                   {post.content.map((paragraph, i) => (
-                    <p key={i} className="text-sm leading-relaxed text-brand-muted">
+                    <p key={i} className="text-sm leading-relaxed text-brand-muted text-left md:text-justify">
                       {paragraph}
                     </p>
                   ))}

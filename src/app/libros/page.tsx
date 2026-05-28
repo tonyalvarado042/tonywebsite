@@ -83,7 +83,7 @@ export default function LibrosPage() {
                 Secretos para ser un<br />
                 <span className="text-brand-accent">empresario exitoso</span>
               </h2>
-              <p className="text-brand-muted">
+              <p className="text-brand-muted text-left md:text-justify">
                 En este libro, Tony Alvarado comparte los principios que utilizó para construir
                 un ecosistema de empresas alrededor del ciclismo durante más de dos décadas.
                 No es teoría. Son lecciones aprendidas en el campo, con fracasos, victorias
@@ -135,7 +135,7 @@ export default function LibrosPage() {
                 Sigue<br />
                 <span className="text-brand-accent">Pedaleando</span>
               </h2>
-              <p className="text-brand-muted">
+              <p className="text-brand-muted text-left md:text-justify">
                 Sigue Pedaleando es el libro donde Tony Alvarado conecta su historia personal
                 con la bicicleta, la disciplina, la fe, la transformación y el propósito.
                 Un relato para quienes están atravesando procesos difíciles y necesitan

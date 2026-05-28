@@ -75,7 +75,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
             transition={{ duration: 0.22 }}
             className="overflow-hidden"
           >
-            <p className="pb-5 text-sm text-brand-muted">{a}</p>
+            <p className="pb-5 text-sm text-brand-muted text-left md:text-justify">{a}</p>
           </motion.div>
         )}
       </AnimatePresence>

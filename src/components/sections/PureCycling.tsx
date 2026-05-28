@@ -43,7 +43,7 @@ export default function PureCycling() {
                 Transforma tu vida<br />en 90 días.<br />
                 <span className="text-brand-accent">Sobre dos ruedas.</span>
               </h2>
-              <p className="mb-6 text-brand-muted">
+              <p className="mb-6 text-brand-muted text-left md:text-justify">
                 Pure Cycling es la comunidad donde el ciclismo, la nutrición, la mentalidad, la movilidad,
                 la fuerza y la fe convergen en un plan de entrenamiento completo. No es solo entrenar
                 en bicicleta. Es cambiar tu vida.

@@ -31,11 +31,11 @@ export default function PuroMTB() {
               Más de 20 años<br />construyendo la cultura<br />
               <span className="text-brand-accent">ciclista de Costa Rica.</span>
             </h2>
-            <p className="text-brand-muted">
+            <p className="text-brand-muted text-left md:text-justify">
               PuroMTB es, desde hace más de 20 años, una comunidad ciclista reconocida en Costa Rica.
               Tienda física, venta online de bicicletas MTB y de ruta, y contenido para ciclistas de todos los niveles.
             </p>
-            <p className="text-brand-muted">
+            <p className="text-brand-muted text-left md:text-justify">
               Con una comunidad de aproximadamente medio millón de seguidores en redes sociales,
               PuroMTB es prueba de que un proyecto construido con constancia puede
               convertirse en algo que dura décadas.
