@@ -96,7 +96,7 @@ export default function Books() {
               <div className="flex items-center gap-2">
                 <Clock size={14} className="text-brand-accent" />
                 <span className="text-xs font-semibold uppercase tracking-widest text-brand-accent">
-                  Próximamente
+                  Libro listo · Próximamente en Amazon
                 </span>
               </div>
               <h3 className="text-2xl font-bold leading-tight text-brand-text">
@@ -109,7 +109,7 @@ export default function Books() {
                 Un libro sobre fe, propósito y seguir adelante cuando el camino se complica.
               </p>
               <p className="text-xs text-brand-muted/60">
-                Disponible próximamente.
+                Ya está escrito. Pronto estará disponible para compra en Amazon.
               </p>
             </div>
           </motion.div>
