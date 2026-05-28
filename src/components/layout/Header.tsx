@@ -10,6 +10,7 @@ const navLinks = [
   { href: '/#ecosistema', label: 'Empresas' },
   { href: '/conferencias', label: 'Conferencias' },
   { href: '/libros', label: 'Libros' },
+  { href: '/blog', label: 'Blog' },
   { href: '/contacto', label: 'Contacto' },
 ]
 

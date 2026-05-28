@@ -103,5 +103,18 @@ export const bookSchema: Record<string, unknown> = {
   publisher: { '@type': 'Person', '@id': `${SITE_URL}/#tony-alvarado` },
   inLanguage: 'es',
   about: ['Emprendimiento', 'Liderazgo', 'Ciclismo', 'Costa Rica'],
-  // ISBN, offers y URL de Amazon pendientes de confirmación del cliente
+  url: 'https://www.amazon.com/dp/B0CCZWJG7S',
+  // ISBN pendiente de confirmación del cliente
+}
+
+export const bookSchema2: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': 'Book',
+  '@id': `${SITE_URL}/#sigue-pedaleando`,
+  name: 'Sigue Pedaleando',
+  author: { '@type': 'Person', '@id': `${SITE_URL}/#tony-alvarado` },
+  publisher: { '@type': 'Person', '@id': `${SITE_URL}/#tony-alvarado` },
+  inLanguage: 'es',
+  about: ['Ciclismo', 'Transformación personal', 'Fe', 'Disciplina', 'Costa Rica'],
+  // URL de Amazon y fecha de publicación: pendientes de confirmación
 }

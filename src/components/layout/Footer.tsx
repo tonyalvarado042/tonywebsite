@@ -6,6 +6,7 @@ const footerLinks = [
   { href: '/pure-cycling', label: 'Pure Cycling' },
   { href: '/bike-bed-hotels', label: 'Bike & Bed Hotels' },
   { href: '/libros', label: 'Libros' },
+  { href: '/blog', label: 'Blog' },
   { href: '/conferencias', label: 'Conferencias' },
   { href: '/contacto', label: 'Contacto' },
 ]
