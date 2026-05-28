@@ -40,7 +40,12 @@ export const personSchema: Record<string, unknown> = {
     'Liderazgo',
     'Emprendimiento',
   ],
-  // sameAs: pendiente — URLs de redes sociales y perfiles externos por confirmar con el cliente
+  sameAs: [
+    'https://www.facebook.com/profile.php?id=100090599181641',
+    'https://www.linkedin.com/in/tony-alvarado-a1b3a820/',
+    'https://www.instagram.com/tony_purecycling/',
+    'https://x.com/TonyAlvaradocr',
+  ],
 }
 
 // ─── Referencias reutilizables (para isPartOf / about en WebPage) ─────────────

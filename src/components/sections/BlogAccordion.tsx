@@ -12,6 +12,29 @@ type BlogPost = {
 
 const posts: BlogPost[] = [
   {
+    title: 'Cómo encontrar tu propósito cuando te sientes perdido',
+    category: 'Propósito — Transformación',
+    keyword: 'propósito de vida transformación personal',
+    summary:
+      'Una reflexión práctica sobre dirección, identidad, disciplina y cómo volver a avanzar cuando sientes que perdiste el rumbo.',
+    content: [
+      'Hay un tipo de cansancio que dormir no puede solucionar. No se trata únicamente del agotamiento físico; es esa incómoda sensación de levantarte cada mañana y sentir que, aunque haces muchas cosas, en el fondo no sabes hacia dónde vas. Cumples responsabilidades, trabajas, estudias, respondes mensajes y avanzas en automático… pero algo dentro de ti se siente apagado.',
+      'La realidad es que sentirse perdido es más común de lo que imaginas, pero también puede convertirse en el inicio de una transformación profunda. No estás roto; simplemente llevas demasiado tiempo desconectado de tu propósito de vida.',
+      'Antes de convertirme en empresario, mentor y autor, hubo una etapa de mi vida en la que me sentía completamente desconectado. Trabajaba duro, estudiaba ingeniería y pasaba largas horas frente a una computadora. Desde afuera, todo parecía marchar bien, pero por dentro me sentía cansado, presionado y vacío. Estaba sobreviviendo más de lo que realmente estaba viviendo. Mi mente estaba saturada, mi cuerpo agotado y mi visión desenfocada.',
+      'Hasta que ocurrió un accidente en bicicleta que cambió mi vida para siempre. Ese momento me obligó a detenerme y a cuestionar la manera en la que estaba viviendo. Me hizo entender que el tiempo es demasiado valioso para desperdiciarlo sin intención. Comprendí que no quería pasar el resto de mi vida simplemente existiendo; quería vivir plenamente, crecer y construir una vida con significado.',
+      'Desde entonces, montar en bicicleta dejó de ser únicamente un deporte para convertirse en una metáfora de vida. Porque la vida se parece mucho a pedalear: cuando dejas de avanzar, pierdes el equilibrio; cuando te enfocas únicamente en el cansancio, te detienes; y cuando no sabes hacia dónde vas, cualquier camino termina agotándote.',
+      'Si eres un apasionado del ciclismo de montaña o disfrutas recorrer kilómetros en carretera, sabes exactamente de qué tipo de equilibrio hablo. Pero también aprendí algo poderoso: no necesitas tocar fondo para despertar. No necesitas perderlo todo para cambiar. A veces, el cambio comienza con una decisión pequeña pero honesta: volver a pedalear.',
+      '1. Sé honesto contigo mismo. El primer paso no es motivarte; es aceptar lo que sientes. Muchas veces intentamos distraernos trabajando de más o refugiándonos en el ruido constante para evitar el vacío interior. Sin embargo, mientras ignores lo que sucede dentro de ti, seguirás estancado. Aceptar que algo necesita cambiar no es debilidad; es madurez.',
+      '2. Recupera tu identidad y tus dones. Muchas personas pierden el rumbo porque olvidaron quiénes son realmente. Comienzan a vivir comparándose con otros, intentando encajar o persiguiendo expectativas ajenas. Tu propósito jamás nacerá de copiar la vida de alguien más. Aparece cuando vuelves a descubrir tus capacidades, tus valores y aquello que verdaderamente te apasiona.',
+      '3. Vuelve a confiar en tu palabra. Una de las consecuencias más silenciosas del estancamiento es perder credibilidad contigo mismo. La transformación verdadera se construye a través de pequeñas victorias diarias: levantarte temprano, cuidar tu salud, mantener el orden o dedicar tiempo a fortalecer tu vida espiritual. La constancia en los microhábitos es la disciplina diaria que construye a un verdadero campeón.',
+      '4. Cambia tus creencias limitantes. Tu vida comienza a cambiar cuando cambia la manera en la que te ves a ti mismo. Las limitaciones más grandes rara vez son externas; casi siempre son mentales. Pensamientos como "No soy suficiente", "Ya es tarde para mí" o "No tengo lo necesario" terminan frenando tu crecimiento. Para avanzar, necesitas reemplazar esas ideas por una mentalidad de crecimiento: "Estoy a tiempo de construir la vida que deseo. Tengo las capacidades y los dones necesarios para salir adelante. Mi pasado no define mi destino; mis decisiones de hoy sí."',
+      '5. Rodéate de un entorno que te impulse. Nadie encuentra su propósito completamente solo. Necesitas un entorno que te rete, te inspire y te recuerde tu verdadero potencial. Las personas correctas tienen visión y rumbo, te celebran genuinamente cuando avanzas, y con su ejemplo de disciplina y compromiso te motivan a no abandonar el camino.',
+      'Pasar de la reflexión a la acción es lo que marcará la diferencia. Comienza esta semana con tres pasos concretos: identifica tu "fuga de aire" — ese pensamiento, hábito o entorno que drena tu energía y te mantiene estancado; construye un microhábito innegociable para los próximos siete días (leer, madrugar, ejercitarte, cuidar tu nutrición para el ciclismo y el bienestar); y cada noche, antes de dormir, pregúntate: "¿Las acciones que tomé hoy me acercan a la persona que quiero ser mañana?" La consistencia siempre vale más que la intensidad momentánea.',
+      'Quizás cometiste errores, perdiste años o tomaste decisiones equivocadas. Tal vez hoy te sientes más confundido que nunca. Pero eso no significa que tu historia haya terminado. El propósito no siempre aparece como un rayo de luz repentino. La mayoría de las veces se revela mientras avanzas, mientras sanas, mientras creces y mientras decides no rendirte. No estás tan perdido como crees. Tal vez simplemente dejaste de pedalear por un tiempo.',
+    ],
+    cta: { label: 'Conoce Pure Cycling →', href: '/pure-cycling' },
+  },
+  {
     title: 'Cómo empezar a entrenar ciclismo de forma seria',
     category: 'Ciclismo — Entrenamiento',
     keyword: 'entrenamiento ciclismo Costa Rica',
@@ -182,10 +205,6 @@ export default function BlogAccordion() {
                 />
               </summary>
               <div className="pb-8 pt-2">
-                <p className="mb-4 text-xs text-brand-muted/60">
-                  Keyword principal:{' '}
-                  <span className="text-brand-accent">{post.keyword}</span>
-                </p>
                 <div className="space-y-4">
                   {post.content.map((paragraph, i) => (
                     <p key={i} className="text-sm leading-relaxed text-brand-muted">
