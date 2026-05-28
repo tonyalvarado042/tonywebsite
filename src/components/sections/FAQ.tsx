@@ -6,40 +6,48 @@ import { ChevronDown } from 'lucide-react'
 
 const faqs = [
   {
+    q: '¿Cómo puedo tener un plan de entrenamiento de ciclismo personalizado en Costa Rica con Tony Alvarado?',
+    a: 'Tony Alvarado ofrece un plan de entrenamiento de ciclismo en Costa Rica totalmente personalizado, diseñado según tu nivel, objetivos y condición física. Como entrenador de ciclismo certificado internacionalmente, Tony combina experiencia real en competencia, metodología profesional y acompañamiento cercano para ayudarte a mejorar tu rendimiento sobre la bicicleta. A través de su plataforma y comunidad de entrenamiento, puedes acceder a un coach de ciclismo que adapta cada sesión a tus metas, ya sea bajar de peso, mejorar resistencia, prepararse para competencias de MTB o simplemente ponerte en forma con el ciclismo. No importa si eres principiante o avanzado, el objetivo es ayudarte a transformar tu vida a través del ciclismo.',
+  },
+  {
+    q: '¿Cuáles son las mejores rutas de ciclismo de montaña (MTB) en Costa Rica?',
+    a: 'Para Tony Alvarado, algunas de las mejores rutas de ciclismo de montaña en Costa Rica están en zonas como La Fortuna, Cartago, Escazú y los alrededores de San José, donde se combinan senderos técnicos, paisajes increíbles y rutas ideales tanto para principiantes como avanzados. Costa Rica se ha convertido en uno de los destinos más atractivos para el ciclismo de montaña y las rutas MTB, gracias a su clima, naturaleza y variedad de terrenos. Además, muchas de las mejores rutas de ciclismo en San José y zonas turísticas están cerca de Bike & Bed Hotels, un proyecto pensado estratégicamente para ciclistas que buscan entrenar, viajar y vivir la experiencia completa del MTB en Costa Rica.',
+  },
+  {
+    q: '¿Cómo mejorar la técnica de descenso en MTB, enduro o downhill con Tony Alvarado?',
+    a: 'Tony Alvarado ofrece entrenamiento MTB personalizado para ciclistas que quieren mejorar su técnica de descenso, ganar confianza y perder el miedo en terrenos técnicos. A través de Pure Cycling, puedes acceder a talleres presenciales y cursos digitales enfocados en enduro y downhill en Costa Rica. Los entrenamientos están diseñados para ayudarte a dominar curvas, frenado, postura y control de la bicicleta, sin importar si estás iniciando en el MTB o ya compites en rutas de enduro o downhill.',
+  },
+  {
+    q: '¿Qué es el entrenamiento por potencia o vatios y por qué es clave para mejorar mi rendimiento?',
+    a: 'Para Tony Alvarado, el entrenamiento de potencia en ciclismo es la forma más inteligente de mejorar rendimiento porque te permite entrenar con datos reales y no solo "por sensaciones". Los vatios muestran exactamente cuánto esfuerzo estás haciendo sobre la bicicleta, ayudándote a avanzar más rápido, evitar sobreentrenamiento y mejorar resistencia y velocidad. En palabras simples: entrenar por potencia es como dejar de manejar con los ojos cerrados. Por eso, en Pure Cycling utilizan métricas de potencia y vatios para crear entrenamientos más precisos y efectivos para cada ciclista.',
+  },
+  {
+    q: 'Guía de ciclismo para principiantes: ¿qué equipo básico necesito realmente para empezar y no gastar de más?',
+    a: 'Si estás iniciando en el ciclismo para principiantes, no necesitas comprar lo más caro para disfrutar y progresar. Lo básico para empezar en el mountain bike es: una bicicleta adecuada para tu tipo de ruta, casco de buena calidad, lycra cómoda, guantes e hidratación. El mountain bike o MTB es una modalidad de ciclismo enfocada en rutas de montaña, senderos y terrenos irregulares, ideal para mejorar condición física y disfrutar la aventura. Lo más importante al comenzar es elegir el equipo correcto según tu nivel y objetivos para evitar gastar de más. En PuroMTB te asesoran gratis para ayudarte a escoger tu primera bicicleta y el equipo ideal para iniciar en el ciclismo con seguridad y confianza.',
+  },
+  {
+    q: '¿Existe un plan de nutrición para ciclistas para mejorar el rendimiento?',
+    a: 'Sí. Una buena nutrición para el ciclismo puede marcar la diferencia entre sentirse sin energía o rendir al máximo en cada entrenamiento. Para Tony Alvarado, la clave está en aprender qué comer antes, durante y después de cada rodada. Antes de salir en bicicleta necesitas energía limpia y buena hidratación; durante la ruta, mantener carbohidratos y electrolitos; y después, recuperar músculos con proteína y alimentación adecuada. En Pure Cycling enseñan cómo combinar nutrición, entrenamiento y mentalidad para mejorar rendimiento, bajar grasa y tener más resistencia sobre la bicicleta.',
+  },
+  {
+    q: '¿Qué es Bike & Bed Hotels?',
+    a: 'Bike & Bed Hotels es un proyecto creado por Tony Alvarado después de más de 22 años viviendo el ciclismo de montaña en Costa Rica y entendiendo las necesidades reales de los ciclistas. La visión de Bike & Bed Hotels es crear el primer hotel temático para ciclistas, donde nacionales y extranjeros puedan encontrar hospedaje, talleres, rutas guiadas, entrenamiento y comunidad en un solo lugar. Ubicado estratégicamente cerca de algunas de las mejores rutas de ciclismo de montaña en Costa Rica, el proyecto busca convertirse en un punto de encuentro para quienes viven la pasión del MTB y la aventura.',
+  },
+  {
+    q: '¿Qué es PuroMTB y qué servicios exclusivos ofrece para la comunidad de ciclismo de montaña en Costa Rica?',
+    a: 'PuroMTB es una de las marcas más reconocidas del ciclismo de montaña en Costa Rica, fundada por Tony Alvarado después de más de dos décadas dentro de la industria del MTB. Además de sus tiendas físicas y ecommerce, PuroMTB ofrece talleres especializados, asesoría personalizada, bicicletas y accesorios de marcas internacionales, convirtiéndose en un respaldo de confianza para miles de ciclistas en el país. La marca también ha sido clave en el crecimiento de la comunidad de ciclismo de montaña en Costa Rica, apoyando entrenamientos, eventos y nuevos ciclistas que quieren iniciar en el MTB con el equipo correcto.',
+  },
+  {
+    q: '¿Cuál es el secreto detrás de un buen plan de entrenamiento ciclista?',
+    a: 'Muchas personas creen que para mejorar en ciclismo solo hay que acumular kilómetros, pero un buen plan de entrenamiento de ciclismo en Costa Rica va mucho más allá. Para Tony Alvarado, la clave está en entrenar con estructura, descanso, nutrición y objetivos claros según tu nivel. Un entrenamiento sin planificación puede hacerte perder tiempo, energía y hasta motivación. Por eso, en Pure Cycling desarrollan programas y cursos digitales que ayudan a ciclistas principiantes y avanzados a mejorar rendimiento, técnica y condición física de manera inteligente y sostenible.',
+  },
+  {
     q: '¿Qué es Pure Cycling?',
     a: 'Pure Cycling es la comunidad de entrenamiento de ciclismo fundada por Tony Alvarado. Integra un plan de entrenamiento personalizado con nutrición, mentalidad, movilidad, fuerza y espiritualidad en un solo programa, con miembros en más de 30 países. Diseñado para transformar tu vida sobre la bicicleta.',
   },
   {
-    q: '¿Necesito experiencia en ciclismo para unirme a Pure Cycling?',
-    a: 'No. Pure Cycling recibe tanto a principiantes como a ciclistas con experiencia. El programa está diseñado para adaptarse a cada nivel y acompañar a cada persona en su proceso de transformación.',
-  },
-  {
-    q: '¿Qué es Bike & Bed Hotels?',
-    a: 'Bike & Bed Hotels es un modelo de hotel temático para ciclistas en Costa Rica con operación profesional. Está diseñado para ciclistas, viajeros activos y comunidades deportivas. También existe una oportunidad para inversionistas interesados en turismo ciclista en Costa Rica y turismo deportivo a escala global.',
-  },
-  {
-    q: '¿Cómo puedo conocer la oportunidad de inversión en Bike & Bed Hotels?',
-    a: 'El primer paso es agendar una llamada con el equipo para conocer el modelo, las ubicaciones y las opciones disponibles. Toda información financiera se presenta de forma personalizada. Puedes contactarnos a través del formulario.',
-  },
-  {
     q: '¿Tony Alvarado ofrece conferencias presenciales fuera de Costa Rica?',
     a: 'Sí. Tony Alvarado está disponible para eventos presenciales y virtuales en Costa Rica y en el extranjero. Para solicitar una conferencia, completa el formulario de contacto con los detalles del evento.',
-  },
-  {
-    q: '¿Cómo puedo comprar el libro de Tony Alvarado?',
-    a: '"Secretos para ser un empresario exitoso" está disponible en Amazon. El enlace de compra directo estará disponible próximamente en esta página.',
-  },
-  {
-    q: '¿Qué es PuroMTB?',
-    a: 'PuroMTB es la tienda y comunidad de mountain bike y ciclismo de ruta fundada por Tony Alvarado en Costa Rica. Desde 2004, ha construido una presencia con tienda física, venta online de bicicletas MTB y de ruta, y una comunidad ciclista de aproximadamente medio millón de seguidores.',
-  },
-  {
-    q: '¿Qué tipo de ciclismo enseña Tony Alvarado en Pure Cycling?',
-    a: 'Pure Cycling trabaja tanto mountain bike como ciclismo de ruta, adaptado al nivel de cada miembro. El plan de entrenamiento personalizado incluye sesiones específicas para cada disciplina, acompañadas por coaches certificados.',
-  },
-  {
-    q: '¿Se puede hacer turismo de ciclismo en Costa Rica con Bike & Bed Hotels?',
-    a: 'Sí. Bike & Bed Hotels es el hotel para ciclistas diseñado para quienes buscan viajes de ciclismo en Costa Rica. Combina turismo deportivo activo, alojamiento temático y acceso a la comunidad ciclista del país en un modelo pensado para deportistas y viajeros activos.',
   },
 ]
 
