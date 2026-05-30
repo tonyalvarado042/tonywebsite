@@ -143,15 +143,32 @@ export default function SobreMiPage() {
               Desde niño, Tony tuvo una conexión profunda con la bicicleta. Quería una mejor para competir.
               Su padre le dijo que debía ganársela. Vendió manzanas del terreno de su abuelo hasta reunir
               el dinero. Esa experiencia le enseñó el poder de las ventas, el trabajo y el propósito.
+              La bicicleta, desde entonces, no fue solo un deporte: fue la primera lección de vida.
             </p>
             <p>
               A los 16 años, un accidente grave en bicicleta lo dejó hospitalizado más de 34 días.
               Hubo coma. Hubo operaciones. Hubo un momento en que no se sabía si saldría adelante.
+              La familia esperaba. El cuerpo de Tony luchaba. Y en ese silencio, algo más profundo
+              comenzó a moverse.
             </p>
             <p>
               Cuando despertó, algo cambió para siempre. Entendió que no podía desperdiciar la vida
               que le quedaba. La bicicleta, que primero casi se la quitó, se convirtió en la herramienta
-              que Dios usó para reconstruirla.
+              que Dios usó para reconstruirla. No como metáfora. Como realidad concreta: el movimiento,
+              la disciplina, la comunidad ciclista — todo eso fue parte de su recuperación.
+            </p>
+            <p>
+              La recuperación tomó meses. Pero en ese proceso, Tony tomó decisiones que cambiarían su
+              trayectoria: estudiar ingeniería en computación, aprender sobre negocios y emprendimiento,
+              y entender que una pasión — bien canalizada — puede convertirse en un ecosistema de valor
+              para miles de personas.
+            </p>
+            <p>
+              Hoy, todo lo que construye —PuroMTB, Pure Cycling, Bike & Bed Hotels— tiene una sola
+              razón de ser: que otros puedan transformar su vida como él transformó la suya. No es
+              solo ciclismo. Es el ciclismo como vehículo de disciplina, comunidad, fe y propósito.
+              Es un legado que empezó con una bicicleta y unas manzanas, y que hoy alcanza a personas
+              en más de 30 países.
             </p>
           </div>
 

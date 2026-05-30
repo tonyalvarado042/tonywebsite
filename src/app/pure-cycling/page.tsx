@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { CheckCircle2, Globe, Users, Zap } from 'lucide-react'
+import ContactFormEmbed from '@/components/sections/ContactFormEmbed'
 import JsonLd from '@/components/JsonLd'
 import { SITE_URL, websiteRef, personRef, pureCyclingOrg } from '@/lib/structured-data'
 
@@ -70,14 +71,12 @@ export default function PureCyclingPage() {
               <Users size={22} className="mx-auto mb-2 text-brand-accent" />
               <p className="text-4xl font-bold text-brand-text">+500</p>
               <p className="mt-1 text-xs uppercase tracking-wider text-brand-muted">Miembros activos</p>
-              <p className="mt-0.5 text-xs text-brand-muted/50">(aprox.)</p>
             </div>
             <div className="hidden h-12 w-px bg-brand-border sm:block" />
             <div className="text-center">
               <Globe size={22} className="mx-auto mb-2 text-brand-accent" />
               <p className="text-4xl font-bold text-brand-text">+30</p>
               <p className="mt-1 text-xs uppercase tracking-wider text-brand-muted">Países</p>
-              <p className="mt-0.5 text-xs text-brand-muted/50">(aprox.)</p>
             </div>
             <div className="hidden h-12 w-px bg-brand-border sm:block" />
             <div className="text-center">
@@ -120,32 +119,69 @@ export default function PureCyclingPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-brand-bg py-16">
-        <div className="mx-auto max-w-xl px-6 text-center md:px-12">
-          <h2 className="text-3xl font-bold text-brand-text">
-            ¿Listo para dar el primer paso?
-          </h2>
-          <p className="mt-4 text-brand-muted">
-            Para unirte, completa el formulario de contacto. Nuestro equipo te enviará
-            los detalles del programa y los próximos pasos.
-          </p>
-          <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <Link
-              href="/contacto"
-              className="inline-flex items-center justify-center rounded-full bg-brand-accent px-8 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-            >
-              Únete a Pure Cycling →
-            </Link>
-            <Link
-              href="/#pure-cycling"
-              className="text-sm font-semibold text-brand-accent hover:underline"
-            >
-              Ver más en la página principal
-            </Link>
+      {/* Bloque visual 90 días */}
+      <section className="bg-brand-bg py-20">
+        <div className="mx-auto max-w-6xl px-6 md:px-12">
+          <div className="overflow-hidden rounded-2xl border border-brand-accent/20 bg-brand-card">
+            <div className="grid md:grid-cols-2">
+
+              {/* Texto y beneficios */}
+              <div className="border-b border-brand-border p-8 md:border-b-0 md:border-r md:p-12">
+                <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-accent">
+                  Programa Pure Cycling
+                </p>
+                <h2 className="text-3xl font-bold leading-tight text-brand-text md:text-4xl">
+                  Transforma tu vida{' '}
+                  <span className="text-brand-accent">en 90 días.</span>
+                </h2>
+                <p className="mt-2 text-lg font-medium text-brand-text/70">Sobre dos ruedas.</p>
+                <p className="mt-4 text-sm leading-relaxed text-brand-muted">
+                  Un sistema integrado de entrenamiento, nutrición, movilidad, fuerza, mentalidad,
+                  espiritualidad y comunidad. Todo lo que necesitas para transformarte en 90 días
+                  sobre la bicicleta.
+                </p>
+                <ul className="mt-7 space-y-3">
+                  {features.map(({ title }) => (
+                    <li key={title} className="flex items-center gap-3 text-sm text-brand-muted">
+                      <CheckCircle2 size={16} className="shrink-0 text-brand-accent" />
+                      {title}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Números */}
+              <div className="flex flex-col items-center justify-center gap-10 p-8 md:p-12">
+                <div className="text-center">
+                  <p className="text-6xl font-bold text-brand-text">+500</p>
+                  <p className="mt-2 text-xs uppercase tracking-widest text-brand-muted">
+                    miembros activos
+                  </p>
+                </div>
+                <div className="h-px w-20 bg-brand-border" />
+                <div className="text-center">
+                  <p className="text-6xl font-bold text-brand-text">+30</p>
+                  <p className="mt-2 text-xs uppercase tracking-widest text-brand-muted">países</p>
+                </div>
+                <div className="h-px w-20 bg-brand-border" />
+                <div className="text-center">
+                  <p className="text-6xl font-bold text-brand-accent">90</p>
+                  <p className="mt-2 text-xs uppercase tracking-widest text-brand-muted">
+                    días de transformación
+                  </p>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
       </section>
+
+      <ContactFormEmbed
+        preselectedType="Pure Cycling"
+        heading="¿Listo para dar el primer paso?"
+        subheading="Completa el formulario y nuestro equipo te enviará los detalles del programa y los próximos pasos."
+      />
 
     </main>
   )

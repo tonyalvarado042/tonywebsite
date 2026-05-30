@@ -1,6 +1,7 @@
-import BlogAccordion from '@/components/sections/BlogAccordion'
+import Link from 'next/link'
 import JsonLd from '@/components/JsonLd'
 import { SITE_URL, websiteRef, personRef } from '@/lib/structured-data'
+import { blogPosts, formatDate } from '@/lib/blog-posts'
 
 export const metadata = {
   title: 'Blog de ciclismo, liderazgo y vida — Tony Alvarado',
@@ -13,7 +14,7 @@ const webPageSchema = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
   '@id': `${SITE_URL}/blog#webpage`,
-  name: 'Blog de ciclismo, liderazgo y vida — Tony Alvarado',
+  name: 'Blog de Tony Alvarado — Ciclismo, liderazgo y transformación',
   description:
     'Reflexiones, guías y respuestas prácticas sobre entrenamiento, mountain bike, ciclismo de ruta, emprendimiento, fe y turismo deportivo en Costa Rica. Por Tony Alvarado.',
   url: `${SITE_URL}/blog`,
@@ -35,78 +36,13 @@ const itemListSchema = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
   name: 'Blog de Tony Alvarado — Ciclismo, liderazgo y transformación',
-  itemListElement: [
-    {
-      '@type': 'ListItem',
-      position: 1,
-      name: 'Cómo empezar a entrenar ciclismo de forma seria',
-      description:
-        'El error más común es empezar con demasiada intensidad y sin estructura. Entrenar en serio tiene un método, no solo voluntad.',
-    },
-    {
-      '@type': 'ListItem',
-      position: 2,
-      name: 'Qué debe tener un plan de entrenamiento para ciclistas',
-      description:
-        'Un plan de entrenamiento serio va mucho más allá de contar kilómetros por semana. Así se estructura uno que realmente funciona.',
-    },
-    {
-      '@type': 'ListItem',
-      position: 3,
-      name: 'Mountain bike en Costa Rica: comunidad, técnica y disciplina',
-      description:
-        'Costa Rica tiene una geografía hecha para el MTB, y PuroMTB lleva más de 20 años en el centro de esa comunidad ciclista.',
-    },
-    {
-      '@type': 'ListItem',
-      position: 4,
-      name: 'Ciclismo de ruta y MTB: diferencias, beneficios y cómo elegir',
-      description:
-        'Dos disciplinas con filosofías distintas. La pregunta correcta no es cuál es mejor, sino cuál pedalearás con constancia.',
-    },
-    {
-      '@type': 'ListItem',
-      position: 5,
-      name: 'Cómo mejorar la resistencia y la mentalidad sobre la bicicleta',
-      description:
-        'La resistencia en ciclismo se construye en capas: física primero, mental después. Pero las dos están conectadas desde el primer pedalazo.',
-    },
-    {
-      '@type': 'ListItem',
-      position: 6,
-      name: 'Pure Cycling: entrenamiento de ciclismo online con propósito',
-      description:
-        'Pure Cycling no es un curso de ciclismo. Es una comunidad de transformación con estructura real, acompañamiento y más de 30 países conectados.',
-    },
-    {
-      '@type': 'ListItem',
-      position: 7,
-      name: 'PuroMTB: cómo nació una comunidad ciclista en Costa Rica',
-      description:
-        'En 2004, Tony Alvarado empezó un sitio web de ciclismo cuando nadie más lo hacía en Costa Rica. Hoy es una referencia cultural.',
-    },
-    {
-      '@type': 'ListItem',
-      position: 8,
-      name: 'Bike & Bed Hotels: turismo deportivo para ciclistas en Costa Rica',
-      description:
-        'El turismo deportivo de ciclismo crece globalmente. Costa Rica es uno de los mejores destinos del mundo para vivirlo.',
-    },
-    {
-      '@type': 'ListItem',
-      position: 9,
-      name: 'La bicicleta como herramienta de transformación personal',
-      description:
-        'A los 16 años, una bicicleta casi le quitó la vida a Tony Alvarado. Años después, fue la misma bicicleta la que Dios usó para reconstruirla.',
-    },
-    {
-      '@type': 'ListItem',
-      position: 10,
-      name: 'Liderazgo, fe y emprendimiento: lecciones de 22 años',
-      description:
-        'Más de 22 años construyendo empresas en torno al ciclismo con un hilo conductor que nunca cambió: el propósito.',
-    },
-  ],
+  itemListElement: blogPosts.map((post, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: post.title,
+    description: post.summary,
+    url: `${SITE_URL}/blog/${post.slug}`,
+  })),
 }
 
 export default function BlogPage() {
@@ -133,7 +69,38 @@ export default function BlogPage() {
         </div>
       </section>
 
-      <BlogAccordion />
+      {/* Lista de artículos */}
+      <section className="bg-brand-bg pb-20">
+        <div className="mx-auto max-w-3xl px-6 md:px-12">
+          <div className="divide-y divide-brand-border">
+            {blogPosts.map((post) => (
+              <article key={post.slug} className="group py-8">
+                <Link href={`/blog/${post.slug}`} className="block">
+                  <span className="text-xs font-semibold uppercase tracking-widest text-brand-accent">
+                    {post.category}
+                  </span>
+                  <h2 className="mt-2 text-xl font-bold text-brand-text transition-colors group-hover:text-brand-accent md:text-2xl">
+                    {post.title}
+                  </h2>
+                  <p className="mt-2 text-sm leading-relaxed text-brand-muted">
+                    {post.summary}
+                  </p>
+                  <div className="mt-4 flex items-center justify-between">
+                    <div className="flex items-center gap-3 text-xs text-brand-muted/60">
+                      <span>{formatDate(post.date)}</span>
+                      <span>·</span>
+                      <span>{post.readingTime} min de lectura</span>
+                    </div>
+                    <span className="text-sm font-semibold text-brand-accent transition-colors group-hover:underline">
+                      Leer →
+                    </span>
+                  </div>
+                </Link>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
     </main>
   )
 }

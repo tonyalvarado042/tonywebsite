@@ -1,10 +1,9 @@
 import Hero from '@/components/sections/Hero'
 import MetricsStrip from '@/components/sections/MetricsStrip'
 import AboutTony from '@/components/sections/AboutTony'
-import PersonalStory from '@/components/sections/PersonalStory'
+import StoryTeaser from '@/components/sections/StoryTeaser'
 import FaithAndPurpose from '@/components/sections/FaithAndPurpose'
 import BusinessEcosystem from '@/components/sections/BusinessEcosystem'
-import PureCycling from '@/components/sections/PureCycling'
 import PuroMTB from '@/components/sections/PuroMTB'
 import BikeAndBed from '@/components/sections/BikeAndBed'
 import Books from '@/components/sections/Books'
@@ -133,10 +132,9 @@ export default function HomePage() {
       <Hero />
       <MetricsStrip />
       <AboutTony />
-      <PersonalStory />
+      <StoryTeaser />
       <FaithAndPurpose />
       <BusinessEcosystem />
-      <PureCycling />
       <PuroMTB />
       <BikeAndBed />
       <Books />
