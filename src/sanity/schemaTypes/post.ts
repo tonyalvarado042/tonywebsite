@@ -45,10 +45,10 @@ export const postType = defineType({
     }),
     defineField({
       name: 'summary',
-      title: 'Resumen / Idea central',
+      title: 'Resumen del artículo',
       type: 'text',
       rows: 3,
-      description: 'Se muestra como idea central al inicio del artículo.',
+      description: 'Texto corto para la tarjeta del blog y SEO. No se muestra como bloque dentro del artículo.',
     }),
     defineField({
       name: 'readingTime',

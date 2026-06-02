@@ -48,7 +48,7 @@ const ptComponents = {
       </p>
     ),
     h2: ({ children }: any) => (
-      <h2 className="mt-10 mb-4 text-2xl font-bold leading-tight text-brand-text">
+      <h2 className="mt-12 mb-4 text-2xl font-bold leading-tight text-brand-text md:text-3xl">
         {children}
       </h2>
     ),
@@ -61,33 +61,38 @@ const ptComponents = {
       <h4 className="mt-6 mb-2 text-lg font-semibold text-brand-text">{children}</h4>
     ),
     blockquote: ({ children }: any) => (
-      <blockquote className="my-6 border-l-4 border-brand-accent pl-5 italic text-brand-muted">
+      <blockquote className="my-8 rounded-r-lg border-l-4 border-brand-accent bg-brand-card py-4 pl-5 pr-4 italic text-brand-muted">
         {children}
       </blockquote>
     ),
   },
   list: {
-    bullet: ({ children }: any) => <ul className="my-5 space-y-2">{children}</ul>,
+    bullet: ({ children }: any) => (
+      <ul className="my-5 space-y-2 pl-5">{children}</ul>
+    ),
     number: ({ children }: any) => (
-      <ol className="my-5 list-decimal space-y-2 pl-5 text-brand-muted">{children}</ol>
+      <ol className="my-5 space-y-2 pl-5">{children}</ol>
     ),
   },
   listItem: {
     bullet: ({ children }: any) => (
-      <li className="flex items-start gap-2.5 text-sm text-brand-muted">
-        <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-brand-accent/70" />
-        <span>{children}</span>
+      <li className="list-disc text-sm leading-relaxed text-brand-muted marker:text-brand-accent">
+        {children}
       </li>
     ),
     number: ({ children }: any) => (
-      <li className="text-sm text-brand-muted">{children}</li>
+      <li className="list-decimal text-sm leading-relaxed text-brand-muted marker:text-brand-accent/70">
+        {children}
+      </li>
     ),
   },
   marks: {
     strong: ({ children }: any) => (
       <strong className="font-semibold text-brand-text">{children}</strong>
     ),
-    em: ({ children }: any) => <em className="italic">{children}</em>,
+    em: ({ children }: any) => (
+      <em className="italic text-brand-text/80">{children}</em>
+    ),
     link: ({ value, children }: any) => {
       const target = value?.blank ? '_blank' : undefined
       return (
@@ -95,7 +100,7 @@ const ptComponents = {
           href={value?.href || '#'}
           target={target}
           rel={target === '_blank' ? 'noopener noreferrer' : undefined}
-          className="text-brand-accent underline hover:no-underline"
+          className="text-brand-accent underline decoration-brand-accent/40 underline-offset-2 transition-colors hover:decoration-brand-accent"
         >
           {children}
         </a>
@@ -107,16 +112,16 @@ const ptComponents = {
       if (!value?.asset?._ref) return null
       const src = urlForImage(value)?.width(800).url() || ''
       return (
-        <figure className="my-8">
+        <figure className="my-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={src}
             alt={value.alt || ''}
-            className="w-full rounded-xl"
+            className="w-full max-h-[480px] rounded-xl object-cover"
             loading="lazy"
           />
           {value.caption && (
-            <figcaption className="mt-2 text-center text-xs text-brand-muted">
+            <figcaption className="mt-3 text-center text-xs text-brand-muted/60">
               {value.caption}
             </figcaption>
           )}
@@ -174,6 +179,40 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
+// ─── Shared article header ────────────────────────────────────────────────────
+
+function ArticleHeader({
+  category,
+  title,
+  publishedAt,
+  readingTime,
+}: {
+  category?: string
+  title: string
+  publishedAt: string
+  readingTime?: number | string | null
+}) {
+  return (
+    <div className="mt-6">
+      {category && (
+        <span className="text-xs font-semibold uppercase tracking-widest text-brand-accent">
+          {category}
+        </span>
+      )}
+      <h1 className="mt-3 text-3xl font-bold leading-tight text-brand-text md:text-4xl">
+        {title}
+      </h1>
+      <div className="mt-5 flex flex-wrap items-center gap-3 text-xs text-brand-muted/60">
+        {publishedAt && <span>{publishedAt}</span>}
+        {publishedAt && readingTime && <span>·</span>}
+        {readingTime && <span>{readingTime} min de lectura</span>}
+        <span>·</span>
+        <span>Por Tony Alvarado</span>
+      </div>
+    </div>
+  )
+}
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default async function BlogPostPage({ params }: Props) {
@@ -203,7 +242,9 @@ export default async function BlogPostPage({ params }: Props) {
       url: `${SITE_URL}/blog/${post.slug}`,
       keywords: post.keywords?.join(', ') || '',
     }
-    const mainImageUrl = post.mainImage ? urlForImage(post.mainImage)?.width(1200).url() : null
+    const mainImageUrl = post.mainImage
+      ? urlForImage(post.mainImage)?.width(1200).url()
+      : null
 
     return (
       <main className="bg-brand-bg">
@@ -214,54 +255,31 @@ export default async function BlogPostPage({ params }: Props) {
 
             <Link
               href="/blog"
-              className="mb-8 inline-flex items-center gap-1 text-sm text-brand-muted transition-colors hover:text-brand-accent"
+              className="inline-flex items-center gap-1 text-sm text-brand-muted transition-colors hover:text-brand-accent"
             >
               ← Blog
             </Link>
 
-            {/* Cabecera */}
-            <div className="mt-6">
-              {post.category && (
-                <span className="text-xs font-semibold uppercase tracking-widest text-brand-accent">
-                  {post.category}
-                </span>
-              )}
-              <h1 className="mt-3 text-3xl font-bold leading-tight text-brand-text md:text-4xl">
-                {post.title}
-              </h1>
-              <div className="mt-5 flex flex-wrap items-center gap-3 text-xs text-brand-muted/60">
-                {post.publishedAt && <span>{formatDate(post.publishedAt)}</span>}
-                {post.publishedAt && post.readingTime && <span>·</span>}
-                {post.readingTime && <span>{post.readingTime} min de lectura</span>}
-                <span>·</span>
-                <span>Por Tony Alvarado</span>
-              </div>
-            </div>
+            <ArticleHeader
+              category={post.category ?? undefined}
+              title={post.title}
+              publishedAt={post.publishedAt ? formatDate(post.publishedAt) : ''}
+              readingTime={post.readingTime}
+            />
 
             <div className="my-8 border-t border-brand-border" />
 
             {/* Imagen principal */}
             {mainImageUrl && (
-              <div className="mb-8 overflow-hidden rounded-xl">
+              <div className="mb-10 overflow-hidden rounded-xl">
                 <Image
                   src={mainImageUrl}
                   alt={post.mainImage?.alt || post.title}
                   width={800}
                   height={450}
                   className="w-full object-cover"
+                  priority
                 />
-              </div>
-            )}
-
-            {/* Idea central */}
-            {post.summary && (
-              <div className="mb-10 rounded-xl border border-brand-accent/20 bg-brand-card px-6 py-5">
-                <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-brand-accent">
-                  Idea central
-                </p>
-                <p className="text-base font-medium leading-relaxed text-brand-text">
-                  {post.summary}
-                </p>
               </div>
             )}
 
@@ -284,7 +302,6 @@ export default async function BlogPostPage({ params }: Props) {
               </div>
             )}
 
-            {/* Volver */}
             <div className="mt-10 text-center">
               <Link
                 href="/blog"
@@ -322,39 +339,19 @@ export default async function BlogPostPage({ params }: Props) {
 
           <Link
             href="/blog"
-            className="mb-8 inline-flex items-center gap-1 text-sm text-brand-muted transition-colors hover:text-brand-accent"
+            className="inline-flex items-center gap-1 text-sm text-brand-muted transition-colors hover:text-brand-accent"
           >
             ← Blog
           </Link>
 
-          {/* Cabecera */}
-          <div className="mt-6">
-            <span className="text-xs font-semibold uppercase tracking-widest text-brand-accent">
-              {post.category}
-            </span>
-            <h1 className="mt-3 text-3xl font-bold leading-tight text-brand-text md:text-4xl">
-              {post.title}
-            </h1>
-            <div className="mt-5 flex flex-wrap items-center gap-3 text-xs text-brand-muted/60">
-              <span>{formatDate(post.date)}</span>
-              <span>·</span>
-              <span>{post.readingTime} min de lectura</span>
-              <span>·</span>
-              <span>Por Tony Alvarado</span>
-            </div>
-          </div>
+          <ArticleHeader
+            category={post.category}
+            title={post.title}
+            publishedAt={formatDate(post.date)}
+            readingTime={post.readingTime}
+          />
 
           <div className="my-8 border-t border-brand-border" />
-
-          {/* Idea central */}
-          <div className="mb-10 rounded-xl border border-brand-accent/20 bg-brand-card px-6 py-5">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-brand-accent">
-              Idea central
-            </p>
-            <p className="text-base font-medium leading-relaxed text-brand-text">
-              {post.summary}
-            </p>
-          </div>
 
           {/* Contenido local */}
           <div className="space-y-7">
@@ -402,7 +399,6 @@ export default async function BlogPostPage({ params }: Props) {
             </Link>
           </div>
 
-          {/* Volver */}
           <div className="mt-10 text-center">
             <Link
               href="/blog"

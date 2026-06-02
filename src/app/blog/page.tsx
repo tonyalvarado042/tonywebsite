@@ -2,6 +2,7 @@ import Link from 'next/link'
 import JsonLd from '@/components/JsonLd'
 import { SITE_URL, websiteRef, personRef } from '@/lib/structured-data'
 import { blogPosts, formatDate } from '@/lib/blog-posts'
+import type { BlogPost } from '@/lib/blog-posts'
 import { client } from '@/sanity/lib/client'
 import { postsQuery } from '@/sanity/lib/queries'
 import type { SanityBlogPost } from '@/sanity/lib/queries'
@@ -41,6 +42,7 @@ type DisplayPost = {
   category: string
   summary: string
   date: string
+  rawDate: string
   readingTime: number | string
 }
 
@@ -51,34 +53,45 @@ function fromSanity(post: SanityBlogPost): DisplayPost {
     category: post.category || '',
     summary: post.summary || '',
     date: post.publishedAt ? formatDate(post.publishedAt) : '',
+    rawDate: post.publishedAt || '',
     readingTime: post.readingTime ?? '',
   }
 }
 
+function fromLocal(p: BlogPost): DisplayPost {
+  return {
+    slug: p.slug,
+    title: p.title,
+    category: p.category,
+    summary: p.summary,
+    date: formatDate(p.date),
+    rawDate: p.date,
+    readingTime: p.readingTime,
+  }
+}
+
 export default async function BlogPage() {
-  let displayPosts: DisplayPost[] = []
-  let usingSanity = false
+  let sanityPosts: SanityBlogPost[] = []
 
   try {
-    const sanityPosts: SanityBlogPost[] = await client.fetch(postsQuery, {}, { next: { revalidate: 60 } })
-    if (sanityPosts && sanityPosts.length > 0) {
-      usingSanity = true
-      displayPosts = sanityPosts.map(fromSanity)
-    }
+    const fetched: SanityBlogPost[] = await client.fetch(
+      postsQuery,
+      {},
+      { next: { revalidate: 60 } }
+    )
+    if (fetched?.length) sanityPosts = fetched
   } catch {
-    // Sanity not available — use fallback
+    // Sanity not reachable — continue with local only
   }
 
-  if (!usingSanity) {
-    displayPosts = blogPosts.map((p) => ({
-      slug: p.slug,
-      title: p.title,
-      category: p.category,
-      summary: p.summary,
-      date: formatDate(p.date),
-      readingTime: p.readingTime,
-    }))
-  }
+  // Merge: Sanity posts + local posts whose slug isn't already in Sanity
+  const sanitySlugSet = new Set(sanityPosts.map((p) => p.slug))
+  const localOnly = blogPosts.filter((p) => !sanitySlugSet.has(p.slug))
+
+  const displayPosts: DisplayPost[] = [
+    ...sanityPosts.map(fromSanity),
+    ...localOnly.map(fromLocal),
+  ].sort((a, b) => (b.rawDate > a.rawDate ? 1 : -1))
 
   const itemListSchema = {
     '@context': 'https://schema.org',
@@ -116,29 +129,40 @@ export default async function BlogPage() {
         </div>
       </section>
 
-      {/* Lista de artículos */}
-      <section className="bg-brand-bg pb-20">
+      {/* Tarjetas de artículos */}
+      <section className="bg-brand-bg pb-24">
         <div className="mx-auto max-w-3xl px-6 md:px-12">
-          <div className="divide-y divide-brand-border">
+          <div className="grid gap-4">
             {displayPosts.map((post) => (
-              <article key={post.slug} className="group py-8">
-                <Link href={`/blog/${post.slug}`} className="block">
-                  <span className="text-xs font-semibold uppercase tracking-widest text-brand-accent">
-                    {post.category}
-                  </span>
-                  <h2 className="mt-2 text-xl font-bold text-brand-text transition-colors group-hover:text-brand-accent md:text-2xl">
+              <article key={post.slug} className="group">
+                <Link
+                  href={`/blog/${post.slug}`}
+                  className="block rounded-xl border border-brand-border bg-brand-card p-6 transition-all duration-200 hover:border-brand-accent/40 hover:shadow-[0_0_28px_-8px_rgba(139,92,246,0.18)] md:p-8"
+                >
+                  {post.category && (
+                    <span className="text-xs font-semibold uppercase tracking-widest text-brand-accent">
+                      {post.category}
+                    </span>
+                  )}
+                  <h2 className="mt-2.5 text-xl font-bold leading-snug text-brand-text transition-colors group-hover:text-brand-accent md:text-2xl">
                     {post.title}
                   </h2>
-                  <p className="mt-2 text-sm leading-relaxed text-brand-muted">
-                    {post.summary}
-                  </p>
-                  <div className="mt-4 flex items-center justify-between">
-                    <div className="flex items-center gap-3 text-xs text-brand-muted/60">
+                  {post.summary && (
+                    <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-brand-muted">
+                      {post.summary}
+                    </p>
+                  )}
+                  <div className="mt-5 flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-xs text-brand-muted/60">
                       {post.date && <span>{post.date}</span>}
-                      {post.date && post.readingTime && <span>·</span>}
-                      {post.readingTime && <span>{post.readingTime} min de lectura</span>}
+                      {post.date && post.readingTime && (
+                        <span className="text-brand-muted/30">·</span>
+                      )}
+                      {post.readingTime && (
+                        <span>{post.readingTime} min de lectura</span>
+                      )}
                     </div>
-                    <span className="text-sm font-semibold text-brand-accent transition-colors group-hover:underline">
+                    <span className="text-sm font-semibold text-brand-accent transition-opacity group-hover:opacity-70">
                       Leer →
                     </span>
                   </div>
