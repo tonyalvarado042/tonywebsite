@@ -111,6 +111,12 @@ export default function Books() {
               <p className="text-xs text-brand-muted/60">
                 Ya está escrito. Pronto estará disponible para compra en Amazon.
               </p>
+              <Link
+                href="/libros"
+                className="inline-flex items-center gap-1 text-sm font-semibold text-brand-accent hover:underline"
+              >
+                Avísame cuando esté disponible →
+              </Link>
             </div>
           </motion.div>
 

@@ -70,7 +70,7 @@ export default function AboutTony() {
           </ul>
           <Link
             href="/sobre-mi"
-            className="inline-flex items-center gap-1 text-sm font-semibold text-brand-accent hover:underline"
+            className="inline-flex items-center gap-1 rounded-full border border-brand-accent/50 px-6 py-2 text-sm font-semibold text-brand-accent transition-colors hover:bg-brand-accent/10"
           >
             Conoce la historia completa →
           </Link>

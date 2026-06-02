@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 
 const values = [
@@ -56,8 +57,10 @@ export default function FaithAndPurpose() {
             <span className="text-brand-accent">Es la base de todo.</span>
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-brand-muted">
-            Tony Alvarado es un hombre de fe cristiana. Estos son los valores que guían cada
-            decisión en sus empresas, su comunidad y su vida.
+            Tony Alvarado construye desde la fe. Cree que el propósito de sus empresas va más
+            allá del negocio: es un vehículo para transformar comunidades, generar impacto real
+            y dejar un legado que trascienda. Estos son los valores que guían cada decisión en
+            su vida y en todo lo que construye.
           </p>
         </motion.div>
 
@@ -76,6 +79,21 @@ export default function FaithAndPurpose() {
             </motion.div>
           ))}
         </div>
+
+        <motion.div
+          className="mt-12 text-center"
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <Link
+            href="/sobre-mi"
+            className="inline-flex items-center gap-1 text-sm font-semibold text-brand-accent transition-colors hover:underline"
+          >
+            Conoce la historia de Tony →
+          </Link>
+        </motion.div>
 
       </div>
     </section>

@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Calendar, Globe, ShoppingCart, Users } from 'lucide-react'
 
@@ -32,7 +33,7 @@ export default function PuroMTB() {
               <span className="text-brand-accent">ciclista de Costa Rica.</span>
             </h2>
             <p className="text-brand-muted text-left md:text-justify">
-              PuroMTB es, desde hace más de 20 años, una comunidad ciclista reconocida en Costa Rica.
+              PuroMTB es una de las comunidades ciclistas más reconocidas de Costa Rica.
               Tienda física, venta online de bicicletas MTB y de ruta, y contenido para ciclistas de todos los niveles.
             </p>
             <p className="text-brand-muted text-left md:text-justify">
@@ -43,7 +44,7 @@ export default function PuroMTB() {
             <p className="text-xs text-brand-muted/50">
               Cifras aproximadas.
             </p>
-            <div className="grid grid-cols-2 gap-3 pt-2">
+            <div className="grid grid-cols-2 gap-3 pb-2 pt-2">
               {milestones.map(({ Icon, year, label }) => (
                 <div key={label} className="rounded-xl border border-brand-border bg-brand-card p-4">
                   <Icon size={16} className="mb-2 text-brand-accent" />
@@ -52,6 +53,14 @@ export default function PuroMTB() {
                 </div>
               ))}
             </div>
+            <Link
+              href="https://puromtb.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-sm font-semibold text-brand-accent transition-colors hover:underline"
+            >
+              Visita PuroMTB →
+            </Link>
           </motion.div>
 
           <motion.div
