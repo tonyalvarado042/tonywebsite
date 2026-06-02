@@ -79,14 +79,15 @@ export const postType = defineType({
       title: 'Contenido del artículo',
       type: 'array',
       of: [
+        // ── Bloque de texto enriquecido ────────────────────────────────
         {
           type: 'block',
           styles: [
             { title: 'Párrafo', value: 'normal' },
-            { title: 'H2 — Sección', value: 'h2' },
+            { title: 'H2 — Sección principal', value: 'h2' },
             { title: 'H3 — Subsección', value: 'h3' },
-            { title: 'H4', value: 'h4' },
-            { title: 'Cita destacada', value: 'blockquote' },
+            { title: 'H4 — Detalle', value: 'h4' },
+            { title: 'Cita / Blockquote', value: 'blockquote' },
           ],
           lists: [
             { title: 'Lista con viñetas', value: 'bullet' },
@@ -96,6 +97,8 @@ export const postType = defineType({
             decorators: [
               { title: 'Negrita', value: 'strong' },
               { title: 'Cursiva', value: 'em' },
+              { title: '🟣 Destacado morado', value: 'highlightPurple' },
+              { title: '🟡 Destacado dorado', value: 'highlightGold' },
             ],
             annotations: [
               {
@@ -121,6 +124,7 @@ export const postType = defineType({
             ],
           },
         },
+        // ── Imagen dentro del artículo ─────────────────────────────────
         {
           type: 'image',
           options: { hotspot: true },
@@ -128,29 +132,99 @@ export const postType = defineType({
             {
               name: 'alt',
               type: 'string',
-              title: 'Texto alternativo',
+              title: 'Texto alternativo (SEO)',
             },
             {
               name: 'caption',
               type: 'string',
-              title: 'Pie de foto',
+              title: 'Pie de foto (opcional)',
             },
           ],
         },
+        // ── Nota destacada / Callout ───────────────────────────────────
+        {
+          type: 'object',
+          name: 'callout',
+          title: 'Nota destacada',
+          fields: [
+            {
+              name: 'text',
+              title: 'Texto de la nota',
+              type: 'text',
+              rows: 3,
+              validation: (Rule: any) => Rule.required(),
+            },
+            {
+              name: 'variant',
+              title: 'Estilo de la nota',
+              type: 'string',
+              options: {
+                list: [
+                  { title: '💡 Consejo / Tip', value: 'tip' },
+                  { title: '⚡ Destacado', value: 'highlight' },
+                  { title: '⚠️ Advertencia', value: 'warning' },
+                ],
+                layout: 'radio',
+              },
+              initialValue: 'tip',
+            },
+          ],
+          preview: {
+            select: { title: 'text', subtitle: 'variant' },
+            prepare({ title, subtitle }: any) {
+              const icons: Record<string, string> = { tip: '💡', highlight: '⚡', warning: '⚠️' }
+              return {
+                title: title?.slice(0, 60) || 'Nota destacada',
+                subtitle: icons[subtitle] || '💡',
+              }
+            },
+          },
+        },
+        // ── CTA dentro del artículo ────────────────────────────────────
+        {
+          type: 'object',
+          name: 'ctaBlock',
+          title: 'Llamada a acción (CTA)',
+          fields: [
+            {
+              name: 'label',
+              title: 'Texto del botón',
+              type: 'string',
+              placeholder: 'Ej: Conoce Pure Cycling →',
+              validation: (Rule: any) => Rule.required(),
+            },
+            {
+              name: 'href',
+              title: 'Destino del enlace',
+              type: 'string',
+              placeholder: 'Ej: /pure-cycling',
+              validation: (Rule: any) => Rule.required(),
+            },
+          ],
+          preview: {
+            select: { title: 'label', subtitle: 'href' },
+            prepare({ title, subtitle }: any) {
+              return { title: `🔗 ${title || 'CTA'}`, subtitle }
+            },
+          },
+        },
       ],
     }),
+    // ── CTA principal del artículo ─────────────────────────────────────
     defineField({
       name: 'ctaLabel',
-      title: 'CTA — Texto del botón',
+      title: 'CTA principal — Texto del botón',
       type: 'string',
       placeholder: 'Ej: Conoce Pure Cycling →',
+      description: 'Aparece al final del artículo.',
     }),
     defineField({
       name: 'ctaHref',
-      title: 'CTA — Destino del enlace',
+      title: 'CTA principal — Enlace',
       type: 'string',
       placeholder: 'Ej: /pure-cycling',
     }),
+    // ── SEO ────────────────────────────────────────────────────────────
     defineField({
       name: 'seoTitle',
       title: 'SEO — Título para buscadores',
@@ -178,7 +252,7 @@ export const postType = defineType({
       subtitle: 'status',
       media: 'mainImage',
     },
-    prepare({ title, subtitle, media }) {
+    prepare({ title, subtitle, media }: any) {
       const statusLabel: Record<string, string> = {
         draft: '📝 Borrador',
         published: '✅ Publicado',
