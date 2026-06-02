@@ -35,3 +35,5 @@ _client-assets/
 /_client-assets/
 _client-assets/
 _client-assets/**
+dist/
+.sanity/

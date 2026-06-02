@@ -2,6 +2,9 @@ import Link from 'next/link'
 import JsonLd from '@/components/JsonLd'
 import { SITE_URL, websiteRef, personRef } from '@/lib/structured-data'
 import { blogPosts, formatDate } from '@/lib/blog-posts'
+import { client } from '@/sanity/lib/client'
+import { postsQuery } from '@/sanity/lib/queries'
+import type { SanityBlogPost } from '@/sanity/lib/queries'
 
 export const metadata = {
   title: 'Blog de ciclismo, liderazgo y vida — Tony Alvarado',
@@ -32,20 +35,64 @@ const breadcrumbSchema = {
   ],
 }
 
-const itemListSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'ItemList',
-  name: 'Blog de Tony Alvarado — Ciclismo, liderazgo y transformación',
-  itemListElement: blogPosts.map((post, i) => ({
-    '@type': 'ListItem',
-    position: i + 1,
-    name: post.title,
-    description: post.summary,
-    url: `${SITE_URL}/blog/${post.slug}`,
-  })),
+type DisplayPost = {
+  slug: string
+  title: string
+  category: string
+  summary: string
+  date: string
+  readingTime: number | string
 }
 
-export default function BlogPage() {
+function fromSanity(post: SanityBlogPost): DisplayPost {
+  return {
+    slug: post.slug,
+    title: post.title,
+    category: post.category || '',
+    summary: post.summary || '',
+    date: post.publishedAt ? formatDate(post.publishedAt) : '',
+    readingTime: post.readingTime ?? '',
+  }
+}
+
+export default async function BlogPage() {
+  let displayPosts: DisplayPost[] = []
+  let usingSanity = false
+
+  try {
+    const sanityPosts: SanityBlogPost[] = await client.fetch(postsQuery, {}, { next: { revalidate: 60 } })
+    if (sanityPosts && sanityPosts.length > 0) {
+      usingSanity = true
+      displayPosts = sanityPosts.map(fromSanity)
+    }
+  } catch {
+    // Sanity not available — use fallback
+  }
+
+  if (!usingSanity) {
+    displayPosts = blogPosts.map((p) => ({
+      slug: p.slug,
+      title: p.title,
+      category: p.category,
+      summary: p.summary,
+      date: formatDate(p.date),
+      readingTime: p.readingTime,
+    }))
+  }
+
+  const itemListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Blog de Tony Alvarado — Ciclismo, liderazgo y transformación',
+    itemListElement: displayPosts.map((post, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: post.title,
+      description: post.summary,
+      url: `${SITE_URL}/blog/${post.slug}`,
+    })),
+  }
+
   return (
     <main>
       <JsonLd data={webPageSchema} />
@@ -73,7 +120,7 @@ export default function BlogPage() {
       <section className="bg-brand-bg pb-20">
         <div className="mx-auto max-w-3xl px-6 md:px-12">
           <div className="divide-y divide-brand-border">
-            {blogPosts.map((post) => (
+            {displayPosts.map((post) => (
               <article key={post.slug} className="group py-8">
                 <Link href={`/blog/${post.slug}`} className="block">
                   <span className="text-xs font-semibold uppercase tracking-widest text-brand-accent">
@@ -87,9 +134,9 @@ export default function BlogPage() {
                   </p>
                   <div className="mt-4 flex items-center justify-between">
                     <div className="flex items-center gap-3 text-xs text-brand-muted/60">
-                      <span>{formatDate(post.date)}</span>
-                      <span>·</span>
-                      <span>{post.readingTime} min de lectura</span>
+                      {post.date && <span>{post.date}</span>}
+                      {post.date && post.readingTime && <span>·</span>}
+                      {post.readingTime && <span>{post.readingTime} min de lectura</span>}
                     </div>
                     <span className="text-sm font-semibold text-brand-accent transition-colors group-hover:underline">
                       Leer →

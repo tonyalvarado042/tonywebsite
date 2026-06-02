@@ -1,28 +1,25 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
+import { PortableText } from '@portabletext/react'
 import JsonLd from '@/components/JsonLd'
 import { blogPosts, getPostBySlug, formatDate } from '@/lib/blog-posts'
+import { client } from '@/sanity/lib/client'
+import { urlForImage } from '@/sanity/lib/image'
+import { postBySlugQuery, postSlugsQuery } from '@/sanity/lib/queries'
+import type { SanityBlogPost } from '@/sanity/lib/queries'
 import { SITE_URL, personRef } from '@/lib/structured-data'
 
 type Props = { params: Promise<{ slug: string }> }
 
-const KEYWORDS = [
-  'Pure Cycling',
-  'PuroMTB',
-  'Bike & Bed Hotels',
-  'Costa Rica',
-  'mountain bike',
-  'turismo deportivo',
-  'plan de entrenamiento',
-  'ciclismo',
-  'MTB',
-  'entrenamiento',
-  'propósito',
-  'disciplina',
-  'liderazgo',
-]
+// ─── Local-post helpers (fallback) ───────────────────────────────────────────
 
+const KEYWORDS = [
+  'Pure Cycling', 'PuroMTB', 'Bike & Bed Hotels', 'Costa Rica',
+  'mountain bike', 'turismo deportivo', 'plan de entrenamiento',
+  'ciclismo', 'MTB', 'entrenamiento', 'propósito', 'disciplina', 'liderazgo',
+]
 const keywordSet = new Set(KEYWORDS.map(k => k.toLowerCase()))
 
 function renderText(text: string) {
@@ -41,26 +38,270 @@ function parseStep(text: string): { num: string; body: string } | null {
   return m ? { num: m[1], body: m[2] } : null
 }
 
-export async function generateStaticParams() {
-  return blogPosts.map((post) => ({ slug: post.slug }))
+// ─── PortableText components (Sanity posts) ──────────────────────────────────
+
+const ptComponents = {
+  block: {
+    normal: ({ children }: any) => (
+      <p className="text-base leading-relaxed text-brand-muted text-left md:text-justify">
+        {children}
+      </p>
+    ),
+    h2: ({ children }: any) => (
+      <h2 className="mt-10 mb-4 text-2xl font-bold leading-tight text-brand-text">
+        {children}
+      </h2>
+    ),
+    h3: ({ children }: any) => (
+      <h3 className="mt-8 mb-3 text-xl font-bold leading-tight text-brand-text">
+        {children}
+      </h3>
+    ),
+    h4: ({ children }: any) => (
+      <h4 className="mt-6 mb-2 text-lg font-semibold text-brand-text">{children}</h4>
+    ),
+    blockquote: ({ children }: any) => (
+      <blockquote className="my-6 border-l-4 border-brand-accent pl-5 italic text-brand-muted">
+        {children}
+      </blockquote>
+    ),
+  },
+  list: {
+    bullet: ({ children }: any) => <ul className="my-5 space-y-2">{children}</ul>,
+    number: ({ children }: any) => (
+      <ol className="my-5 list-decimal space-y-2 pl-5 text-brand-muted">{children}</ol>
+    ),
+  },
+  listItem: {
+    bullet: ({ children }: any) => (
+      <li className="flex items-start gap-2.5 text-sm text-brand-muted">
+        <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-brand-accent/70" />
+        <span>{children}</span>
+      </li>
+    ),
+    number: ({ children }: any) => (
+      <li className="text-sm text-brand-muted">{children}</li>
+    ),
+  },
+  marks: {
+    strong: ({ children }: any) => (
+      <strong className="font-semibold text-brand-text">{children}</strong>
+    ),
+    em: ({ children }: any) => <em className="italic">{children}</em>,
+    link: ({ value, children }: any) => {
+      const target = value?.blank ? '_blank' : undefined
+      return (
+        <a
+          href={value?.href || '#'}
+          target={target}
+          rel={target === '_blank' ? 'noopener noreferrer' : undefined}
+          className="text-brand-accent underline hover:no-underline"
+        >
+          {children}
+        </a>
+      )
+    },
+  },
+  types: {
+    image: ({ value }: any) => {
+      if (!value?.asset?._ref) return null
+      const src = urlForImage(value)?.width(800).url() || ''
+      return (
+        <figure className="my-8">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={src}
+            alt={value.alt || ''}
+            className="w-full rounded-xl"
+            loading="lazy"
+          />
+          {value.caption && (
+            <figcaption className="mt-2 text-center text-xs text-brand-muted">
+              {value.caption}
+            </figcaption>
+          )}
+        </figure>
+      )
+    },
+  },
 }
+
+// ─── Static params ────────────────────────────────────────────────────────────
+
+export async function generateStaticParams() {
+  const localParams = blogPosts.map((p) => ({ slug: p.slug }))
+
+  try {
+    const sanityData: { slug: string }[] = await client.fetch(postSlugsQuery)
+    if (sanityData?.length) {
+      const seen = new Set(localParams.map((p) => p.slug))
+      sanityData.forEach(({ slug }) => {
+        if (slug && !seen.has(slug)) {
+          localParams.push({ slug })
+          seen.add(slug)
+        }
+      })
+    }
+  } catch {
+    // Sanity not reachable — use local params only
+  }
+
+  return localParams
+}
+
+// ─── Metadata ─────────────────────────────────────────────────────────────────
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
-  const post = getPostBySlug(slug)
-  if (!post) return {}
+
+  try {
+    const post: SanityBlogPost | null = await client.fetch(postBySlugQuery, { slug })
+    if (post) {
+      return {
+        title: `${post.seoTitle || post.title} — Tony Alvarado`,
+        description: post.seoDescription || post.summary || '',
+        alternates: { canonical: `/blog/${post.slug}` },
+      }
+    }
+  } catch { /* fall through */ }
+
+  const local = getPostBySlug(slug)
+  if (!local) return {}
   return {
-    title: `${post.title} — Tony Alvarado`,
-    description: post.summary,
-    alternates: { canonical: `/blog/${post.slug}` },
+    title: `${local.title} — Tony Alvarado`,
+    description: local.summary,
+    alternates: { canonical: `/blog/${local.slug}` },
   }
 }
 
+// ─── Page ─────────────────────────────────────────────────────────────────────
+
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params
-  const post = getPostBySlug(slug)
-  if (!post) notFound()
 
+  // Try Sanity first
+  let sanityPost: SanityBlogPost | null = null
+  try {
+    sanityPost = await client.fetch(postBySlugQuery, { slug }, { next: { revalidate: 60 } })
+  } catch { /* fall through */ }
+
+  // Fall back to local
+  const localPost = sanityPost ? null : getPostBySlug(slug)
+
+  if (!sanityPost && !localPost) notFound()
+
+  // ── Sanity post render ────────────────────────────────────────────────────
+  if (sanityPost) {
+    const post = sanityPost
+    const articleSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: post.title,
+      description: post.summary || '',
+      datePublished: post.publishedAt,
+      author: personRef,
+      url: `${SITE_URL}/blog/${post.slug}`,
+      keywords: post.keywords?.join(', ') || '',
+    }
+    const mainImageUrl = post.mainImage ? urlForImage(post.mainImage)?.width(1200).url() : null
+
+    return (
+      <main className="bg-brand-bg">
+        <JsonLd data={articleSchema} />
+
+        <section className="py-16">
+          <div className="mx-auto max-w-3xl px-6 md:px-12">
+
+            <Link
+              href="/blog"
+              className="mb-8 inline-flex items-center gap-1 text-sm text-brand-muted transition-colors hover:text-brand-accent"
+            >
+              ← Blog
+            </Link>
+
+            {/* Cabecera */}
+            <div className="mt-6">
+              {post.category && (
+                <span className="text-xs font-semibold uppercase tracking-widest text-brand-accent">
+                  {post.category}
+                </span>
+              )}
+              <h1 className="mt-3 text-3xl font-bold leading-tight text-brand-text md:text-4xl">
+                {post.title}
+              </h1>
+              <div className="mt-5 flex flex-wrap items-center gap-3 text-xs text-brand-muted/60">
+                {post.publishedAt && <span>{formatDate(post.publishedAt)}</span>}
+                {post.publishedAt && post.readingTime && <span>·</span>}
+                {post.readingTime && <span>{post.readingTime} min de lectura</span>}
+                <span>·</span>
+                <span>Por Tony Alvarado</span>
+              </div>
+            </div>
+
+            <div className="my-8 border-t border-brand-border" />
+
+            {/* Imagen principal */}
+            {mainImageUrl && (
+              <div className="mb-8 overflow-hidden rounded-xl">
+                <Image
+                  src={mainImageUrl}
+                  alt={post.mainImage?.alt || post.title}
+                  width={800}
+                  height={450}
+                  className="w-full object-cover"
+                />
+              </div>
+            )}
+
+            {/* Idea central */}
+            {post.summary && (
+              <div className="mb-10 rounded-xl border border-brand-accent/20 bg-brand-card px-6 py-5">
+                <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-brand-accent">
+                  Idea central
+                </p>
+                <p className="text-base font-medium leading-relaxed text-brand-text">
+                  {post.summary}
+                </p>
+              </div>
+            )}
+
+            {/* Contenido Portable Text */}
+            {post.body && post.body.length > 0 && (
+              <div className="space-y-5">
+                <PortableText value={post.body as any} components={ptComponents} />
+              </div>
+            )}
+
+            {/* CTA */}
+            {post.ctaLabel && post.ctaHref && (
+              <div className="mt-14 rounded-2xl border border-brand-accent/30 bg-brand-card p-8 text-center">
+                <Link
+                  href={post.ctaHref}
+                  className="inline-flex items-center gap-2 rounded-full bg-brand-accent px-8 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                >
+                  {post.ctaLabel}
+                </Link>
+              </div>
+            )}
+
+            {/* Volver */}
+            <div className="mt-10 text-center">
+              <Link
+                href="/blog"
+                className="text-sm text-brand-muted transition-colors hover:text-brand-accent"
+              >
+                ← Volver al blog
+              </Link>
+            </div>
+
+          </div>
+        </section>
+      </main>
+    )
+  }
+
+  // ── Local post render (fallback) ─────────────────────────────────────────
+  const post = localPost!
   const articleSchema = {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -115,11 +356,10 @@ export default async function BlogPostPage({ params }: Props) {
             </p>
           </div>
 
-          {/* Contenido */}
+          {/* Contenido local */}
           <div className="space-y-7">
             {post.content.map((paragraph, i) => {
               const step = parseStep(paragraph)
-
               if (step) {
                 return (
                   <div
@@ -137,23 +377,15 @@ export default async function BlogPostPage({ params }: Props) {
                   </div>
                 )
               }
-
               if (i === 0) {
                 return (
-                  <p
-                    key={i}
-                    className="text-lg font-medium leading-relaxed text-brand-text text-left md:text-justify"
-                  >
+                  <p key={i} className="text-lg font-medium leading-relaxed text-brand-text text-left md:text-justify">
                     {renderText(paragraph)}
                   </p>
                 )
               }
-
               return (
-                <p
-                  key={i}
-                  className="text-base leading-relaxed text-brand-muted text-left md:text-justify"
-                >
+                <p key={i} className="text-base leading-relaxed text-brand-muted text-left md:text-justify">
                   {renderText(paragraph)}
                 </p>
               )
