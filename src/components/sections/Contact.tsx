@@ -2,16 +2,24 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Mail, MapPin, MessageCircle } from 'lucide-react'
+import { MapPin, Mic, Bike, Building2, BookOpen, Handshake } from 'lucide-react'
 
 const inquiryTypes = [
-  'Conferencia / Keynote',
-  'Evento corporativo',
-  'Inversión en Bike & Bed Hotels',
-  'Pure Cycling',
-  'Medios / Prensa',
-  'Colaboración',
+  'Solicitar conferencia / evento',
+  'Unirme o conocer Pure Cycling',
+  'Información sobre Bike & Bed Hotels',
+  'Consulta sobre PuroMTB',
+  'Libros / entrevistas / prensa',
+  'Alianza profesional',
   'Otro',
+]
+
+const canRequest = [
+  { icon: Mic, label: 'Conferencia / keynote' },
+  { icon: Bike, label: 'Entrenamiento con Pure Cycling' },
+  { icon: Building2, label: 'Inversión en Bike & Bed Hotels' },
+  { icon: BookOpen, label: 'Libros y entrevistas' },
+  { icon: Handshake, label: 'Alianzas profesionales' },
 ]
 
 const inputClass =
@@ -20,7 +28,7 @@ const inputClass =
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false)
 
-  function handleSubmit(e: React.FormEvent) {
+  function handleSubmit(e: { preventDefault(): void }) {
     e.preventDefault()
     // Pendiente: integración con Resend en Fase 3
     setSubmitted(true)
@@ -29,25 +37,6 @@ export default function Contact() {
   return (
     <section id="contacto" className="bg-brand-surface py-20">
       <div className="mx-auto max-w-6xl px-6 md:px-12">
-
-        <motion.div
-          className="mb-12 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-accent">
-            Contacto
-          </p>
-          <h2 className="text-4xl font-bold text-brand-text">
-            <span className="text-brand-accent">¿Empezamos?</span>
-          </h2>
-          <p className="mx-auto mt-4 max-w-lg text-brand-muted">
-            Sea para Pure Cycling, Bike & Bed, una conferencia o medios — escríbenos.
-            Respondemos a cada mensaje.
-          </p>
-        </motion.div>
 
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
 
@@ -61,9 +50,13 @@ export default function Contact() {
             {submitted ? (
               <div className="flex h-full min-h-[400px] items-center justify-center rounded-2xl border border-brand-accent/30 bg-brand-card p-10 text-center">
                 <div>
-                  <p className="text-3xl font-bold text-brand-accent">✓</p>
-                  <p className="mt-3 font-semibold text-brand-text">Mensaje enviado</p>
-                  <p className="mt-2 text-sm text-brand-muted">Te contactaremos pronto.</p>
+                  <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-brand-accent/15">
+                    <span className="text-xl font-bold text-brand-accent">✓</span>
+                  </div>
+                  <p className="font-semibold text-brand-text">Mensaje enviado</p>
+                  <p className="mt-2 text-sm text-brand-muted">
+                    El equipo de Tony lo revisará y te responderá pronto.
+                  </p>
                 </div>
               </div>
             ) : (
@@ -73,32 +66,52 @@ export default function Contact() {
               >
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div>
-                    <label className="mb-1.5 block text-xs font-medium text-brand-muted">Nombre</label>
-                    <input type="text" required placeholder="Tu nombre" className={inputClass} />
+                    <label className="mb-1.5 block text-xs font-medium text-brand-muted">
+                      Nombre completo
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Tu nombre"
+                      className={inputClass}
+                    />
                   </div>
                   <div>
-                    <label className="mb-1.5 block text-xs font-medium text-brand-muted">Email</label>
-                    <input type="email" required placeholder="tu@email.com" className={inputClass} />
+                    <label className="mb-1.5 block text-xs font-medium text-brand-muted">
+                      Correo electrónico
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      placeholder="tu@email.com"
+                      className={inputClass}
+                    />
                   </div>
                 </div>
 
                 <div>
                   <label className="mb-1.5 block text-xs font-medium text-brand-muted">
-                    WhatsApp (opcional)
+                    WhatsApp{' '}
+                    <span className="font-normal text-brand-muted/60">(opcional)</span>
                   </label>
                   <input type="tel" placeholder="+506 0000-0000" className={inputClass} />
                 </div>
 
                 <div>
                   <label className="mb-1.5 block text-xs font-medium text-brand-muted">
-                    Empresa (opcional)
+                    Empresa u organización{' '}
+                    <span className="font-normal text-brand-muted/60">(opcional)</span>
                   </label>
-                  <input type="text" placeholder="Nombre de tu empresa" className={inputClass} />
+                  <input
+                    type="text"
+                    placeholder="Nombre de tu empresa"
+                    className={inputClass}
+                  />
                 </div>
 
                 <div>
                   <label className="mb-1.5 block text-xs font-medium text-brand-muted">
-                    Tipo de consulta
+                    ¿En qué te podemos ayudar?
                   </label>
                   <select required className={inputClass}>
                     <option value="">Selecciona una opción</option>
@@ -109,11 +122,13 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <label className="mb-1.5 block text-xs font-medium text-brand-muted">Mensaje</label>
+                  <label className="mb-1.5 block text-xs font-medium text-brand-muted">
+                    Mensaje
+                  </label>
                   <textarea
                     required
                     rows={4}
-                    placeholder="Cuéntanos en qué podemos ayudarte..."
+                    placeholder="Cuéntanos brevemente qué necesitas: tipo de evento, fecha tentativa, país, audiencia, interés en Pure Cycling, Bike & Bed Hotels o el motivo de tu contacto."
                     className={`${inputClass} resize-none`}
                   />
                 </div>
@@ -131,7 +146,7 @@ export default function Contact() {
             )}
           </motion.div>
 
-          {/* Datos de contacto */}
+          {/* Columna derecha */}
           <motion.div
             className="flex flex-col justify-center space-y-7"
             initial={{ opacity: 0, x: 25 }}
@@ -139,41 +154,42 @@ export default function Contact() {
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.1 }}
           >
-            <div className="flex items-start gap-4">
-              <MapPin size={20} className="mt-0.5 shrink-0 text-brand-accent" />
-              <div>
-                <p className="font-semibold text-brand-text">Ubicación</p>
-                <p className="mt-0.5 text-sm text-brand-muted">San José, Costa Rica</p>
-              </div>
-            </div>
 
-            <div className="flex items-start gap-4">
-              <Mail size={20} className="mt-0.5 shrink-0 text-brand-accent" />
-              <div>
-                <p className="font-semibold text-brand-text">Email</p>
-                <p className="mt-0.5 text-sm text-brand-muted">
-                  Usa el formulario — respondemos a cada mensaje.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4">
-              <MessageCircle size={20} className="mt-0.5 shrink-0 text-brand-accent" />
-              <div>
-                <p className="font-semibold text-brand-text">WhatsApp</p>
-                <p className="mt-0.5 text-sm text-brand-muted">
-                  Disponible próximamente para consultas directas.
-                </p>
-              </div>
+            <div>
+              <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-brand-accent">
+                ¿Qué puedes solicitar?
+              </p>
+              <h3 className="mb-5 text-xl font-bold text-brand-text">
+                Este formulario es la vía directa al equipo de Tony.
+              </h3>
+              <ul className="space-y-3">
+                {canRequest.map(({ icon: Icon, label }) => (
+                  <li key={label} className="flex items-center gap-3">
+                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-accent/10">
+                      <Icon size={15} className="text-brand-accent" />
+                    </div>
+                    <span className="text-sm text-brand-muted">{label}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
 
             <div className="rounded-xl border border-brand-border bg-brand-card p-6">
               <p className="mb-1 text-sm font-semibold text-brand-text">Tiempos de respuesta</p>
               <p className="text-sm text-brand-muted">
-                Para consultas de inversión o conferencias, el equipo responde en un plazo
-                de 24 a 48 horas hábiles.
+                Para consultas de conferencias o inversión, el equipo responde
+                en un plazo de 24 a 48 horas hábiles.
               </p>
             </div>
+
+            <div className="flex items-start gap-3">
+              <MapPin size={18} className="mt-0.5 shrink-0 text-brand-accent" />
+              <div>
+                <p className="text-sm font-semibold text-brand-text">Ubicación</p>
+                <p className="mt-0.5 text-sm text-brand-muted">San José, Costa Rica</p>
+              </div>
+            </div>
+
           </motion.div>
 
         </div>

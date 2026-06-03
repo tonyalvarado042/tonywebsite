@@ -178,7 +178,7 @@ export default function PureCyclingPage() {
       </section>
 
       <ContactFormEmbed
-        preselectedType="Pure Cycling"
+        preselectedType="Unirme o conocer Pure Cycling"
         heading="¿Listo para dar el primer paso?"
         subheading="Completa el formulario y nuestro equipo te enviará los detalles del programa y los próximos pasos."
       />
