@@ -1,4 +1,5 @@
-export const SITE_URL = 'https://tonyalvarado.com'
+// TODO: cambiar a https://tonyalvarado.com cuando el dominio final esté conectado.
+export const SITE_URL = 'https://tonywebsite-three.vercel.app'
 
 // ─── WebSite ──────────────────────────────────────────────────────────────────
 
@@ -11,6 +12,14 @@ export const websiteSchema: Record<string, unknown> = {
   description:
     'Coach y entrenador de ciclismo en Costa Rica. Fundador de Pure Cycling, PuroMTB y Bike & Bed Hotels.',
   inLanguage: 'es-CR',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: `${SITE_URL}/blog?q={search_term_string}`,
+    },
+    'query-input': 'required name=search_term_string',
+  },
 }
 
 // ─── Person ───────────────────────────────────────────────────────────────────
@@ -23,9 +32,39 @@ export const personSchema: Record<string, unknown> = {
   alternateName: 'Anthony Alvarado',
   jobTitle: 'Coach y entrenador de ciclismo',
   description:
-    'Coach y entrenador de ciclismo en Costa Rica con más de 22 años de trayectoria. Fundador de Pure Cycling, PuroMTB y Bike & Bed Hotels.',
+    'Coach y entrenador de ciclismo en Costa Rica con más de 22 años de trayectoria. Fundador de Pure Cycling, PuroMTB y Bike & Bed Hotels. Autor, conferencista y líder con propósito.',
   url: SITE_URL,
+  image: {
+    '@type': 'ImageObject',
+    url: `${SITE_URL}/images/tony-principal.png`,
+    contentUrl: `${SITE_URL}/images/tony-principal.png`,
+  },
   nationality: { '@type': 'Country', name: 'Costa Rica' },
+  homeLocation: {
+    '@type': 'Place',
+    name: 'San José, Costa Rica',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'San José',
+      addressCountry: 'CR',
+    },
+  },
+  hasOccupation: [
+    {
+      '@type': 'Occupation',
+      name: 'Coach y entrenador de ciclismo',
+      occupationLocation: { '@type': 'Country', name: 'Costa Rica' },
+    },
+    {
+      '@type': 'Occupation',
+      name: 'Empresario y fundador',
+      occupationLocation: { '@type': 'Country', name: 'Costa Rica' },
+    },
+    {
+      '@type': 'Occupation',
+      name: 'Conferencista y autor',
+    },
+  ],
   worksFor: [
     { '@type': 'Organization', name: 'Pure Cycling' },
     { '@type': 'Organization', name: 'PuroMTB' },
@@ -39,6 +78,13 @@ export const personSchema: Record<string, unknown> = {
     'Turismo deportivo',
     'Liderazgo',
     'Emprendimiento',
+    'Transformación personal',
+    'Fe y propósito',
+    'Comunidad ciclista',
+    'Costa Rica',
+  ],
+  knowsLanguage: [
+    { '@type': 'Language', name: 'Español' },
   ],
   sameAs: [
     'https://www.facebook.com/profile.php?id=100090599181641',

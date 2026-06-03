@@ -1,7 +1,0 @@
-# Sitio web de Tony Alvarado — tonyalvarado.com
-# Indexación permitida para todos los crawlers, incluidos crawlers de IA.
-
-User-agent: *
-Allow: /
-
-Sitemap: https://tonyalvarado.com/sitemap.xml

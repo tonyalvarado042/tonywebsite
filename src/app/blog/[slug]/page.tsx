@@ -194,20 +194,34 @@ export default async function BlogPostPage({ params }: Props) {
 
   if (!post) notFound()
 
+  const mainImageUrl = post.mainImage
+    ? urlForImage(post.mainImage)?.width(1200).url()
+    : null
+
   const articleSchema = {
     '@context': 'https://schema.org',
-    '@type': 'Article',
+    '@type': 'BlogPosting',
+    '@id': `${SITE_URL}/blog/${post.slug}#article`,
     headline: post.title,
     description: post.summary || '',
     datePublished: post.publishedAt,
     author: personRef,
+    publisher: personRef,
     url: `${SITE_URL}/blog/${post.slug}`,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${SITE_URL}/blog/${post.slug}`,
+    },
+    inLanguage: 'es-CR',
     keywords: post.keywords?.join(', ') || '',
+    ...(mainImageUrl && {
+      image: {
+        '@type': 'ImageObject',
+        url: mainImageUrl,
+        contentUrl: mainImageUrl,
+      },
+    }),
   }
-
-  const mainImageUrl = post.mainImage
-    ? urlForImage(post.mainImage)?.width(1200).url()
-    : null
 
   return (
     <main className="bg-brand-bg">
