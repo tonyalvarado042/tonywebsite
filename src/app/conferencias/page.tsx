@@ -1,12 +1,12 @@
 import Link from 'next/link'
-import { Mic } from 'lucide-react'
+import { Mic, CheckCircle2, Users, Target, Heart, TrendingUp, Compass } from 'lucide-react'
 import JsonLd from '@/components/JsonLd'
 import { SITE_URL, websiteRef, personRef } from '@/lib/structured-data'
 
 export const metadata = {
-  title: 'Conferencias — Tony Alvarado | Coach de ciclismo Costa Rica',
+  title: 'Conferencias — Tony Alvarado | Ciclismo, liderazgo y transformación',
   description:
-    'Solicita a Tony Alvarado como conferencista para tu evento en Costa Rica o el extranjero. Coach de ciclismo, empresario y líder con temas de transformación personal, ciclismo y emprendimiento.',
+    'Solicita a Tony Alvarado como conferencista para tu evento. Temas de liderazgo con propósito, disciplina, ciclismo, emprendimiento y transformación personal desde Costa Rica.',
   alternates: { canonical: '/conferencias' },
 }
 
@@ -14,9 +14,9 @@ const webPageSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
   '@id': `${SITE_URL}/conferencias#webpage`,
-  name: 'Conferencias — Tony Alvarado | Coach de ciclismo Costa Rica',
+  name: 'Conferencias — Tony Alvarado | Ciclismo, liderazgo y transformación',
   description:
-    'Solicita a Tony Alvarado como conferencista para tu evento en Costa Rica o el extranjero. Coach de ciclismo, empresario y líder con temas de transformación personal, ciclismo y emprendimiento.',
+    'Solicita a Tony Alvarado como conferencista para tu evento. Temas de liderazgo con propósito, disciplina, ciclismo, emprendimiento y transformación personal desde Costa Rica.',
   url: `${SITE_URL}/conferencias`,
   inLanguage: 'es-CR',
   isPartOf: websiteRef,
@@ -34,36 +34,62 @@ const breadcrumbSchema = {
 
 const topics = [
   {
-    title: 'Transformación personal a través del ciclismo',
-    tags: ['Inspiración', 'Salud', 'Propósito'],
+    icon: Target,
+    title: 'Liderazgo con propósito',
+    tags: ['Liderazgo', 'Propósito'],
     description:
-      'Cómo el ciclismo de montaña y de ruta puede convertirse en una herramienta de cambio físico, mental y espiritual.',
+      'Liderar desde la misión y no desde el ego. Cómo construir equipos, tomar decisiones difíciles y mantener el rumbo cuando el camino se complica.',
+    featured: true,
   },
   {
-    title: 'Construir negocios con propósito y fe',
-    tags: ['Liderazgo', 'Emprendimiento'],
+    icon: TrendingUp,
+    title: 'Disciplina y transformación personal',
+    tags: ['Disciplina', 'Transformación'],
     description:
-      'Lecciones de 22+ años construyendo empresas desde la fe, la disciplina y el propósito.',
+      'El ciclismo como escuela de vida: cómo los hábitos, la constancia y la mentalidad del deportista se trasladan a cada área de la existencia.',
+    featured: false,
   },
   {
-    title: 'Liderazgo: de la teoría a la cancha',
-    tags: ['Liderazgo', 'Equipos'],
+    icon: Compass,
+    title: 'Emprendimiento alrededor del ciclismo',
+    tags: ['Emprendimiento', 'Ciclismo'],
     description:
-      'El ciclismo como metáfora del liderazgo real: pelotón, estrategia, resistencia y visión de meta.',
+      'Cómo Tony construyó un ecosistema de empresas alrededor de una pasión. Lecciones de 22 años fundando negocios desde la fe, el propósito y la disciplina.',
+    featured: false,
   },
   {
-    title: 'Turismo deportivo: la oportunidad del siglo XXI',
-    tags: ['Negocios', 'Turismo'],
+    icon: Heart,
+    title: 'Comunidad, fe y perseverancia',
+    tags: ['Fe', 'Comunidad'],
     description:
-      'El auge del turismo activo y wellness como modelo de negocio con propósito y alcance global.',
+      'Por qué la fe y la comunidad son los activos más poderosos en momentos de adversidad. Una perspectiva honesta desde la vida real de Tony Alvarado.',
+    featured: false,
   },
+  {
+    icon: Users,
+    title: 'Construir una vida o negocio sobre una misión',
+    tags: ['Misión', 'Visión'],
+    description:
+      'El diferenciador que separa a quienes construyen algo duradero de quienes solo sobreviven el corto plazo. Propósito como estrategia.',
+    featured: false,
+  },
+]
+
+const contributions = [
+  'Una historia real de adversidad, recuperación y fe contada sin filtros',
+  'Más de 22 años de experiencia empresarial aplicada en la práctica',
+  'Autoridad en ciclismo certificada por la Federación Costarricense de Ciclismo',
+  'Certificación en liderazgo por John Maxwell Leadership',
+  'Un mensaje que conecta deporte, negocio, fe y propósito en un solo relato',
+  'Formatos adaptables: keynote, panel, taller, evento corporativo o comunidad',
 ]
 
 const eventTypes = [
   'Keynote en conferencias empresariales',
   'Evento corporativo de liderazgo',
-  'Seminario empresarial',
+  'Seminario empresarial y formación de equipos',
   'Comunidades de liderazgo y fe',
+  'Eventos presenciales y virtuales',
 ]
 
 export default function ConferenciasPage() {
@@ -73,88 +99,158 @@ export default function ConferenciasPage() {
       <JsonLd data={breadcrumbSchema} />
 
       {/* Hero */}
-      <section className="bg-brand-bg py-20">
-        <div className="mx-auto max-w-6xl px-6 text-center md:px-12">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-accent">
-            Conferencias
-          </p>
-          <h1 className="mx-auto max-w-3xl text-4xl font-bold leading-tight text-brand-text md:text-5xl">
-            Tony no habla sobre ciclismo.<br />
+      <section className="bg-brand-bg py-24">
+        <div className="mx-auto max-w-3xl px-6 text-center md:px-12">
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-brand-accent/30 bg-brand-card px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand-accent">
+            <Mic size={12} /> Conferencias
+          </span>
+          <h1 className="mt-4 text-4xl font-bold leading-tight text-brand-text md:text-5xl">
+            Tony no habla sobre ciclismo.{' '}
             <span className="text-brand-accent">Habla desde él.</span>
           </h1>
-          <p className="mx-auto mt-5 max-w-xl text-brand-muted">
-            Empresario, coach de ciclismo y conferencista disponible para eventos
-            presenciales y virtuales en Costa Rica y en el extranjero.
+          <p className="mx-auto mt-6 max-w-xl text-brand-muted">
+            Empresario, coach certificado y conferencista con más de 22 años de
+            experiencia construyendo desde la fe y la disciplina. Disponible para
+            eventos presenciales y virtuales en Costa Rica y en el extranjero.
           </p>
+          <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+            <Link
+              href="/contacto"
+              className="inline-flex items-center gap-2 rounded-full bg-brand-accent px-8 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+            >
+              <Mic size={15} /> Solicitar conferencia →
+            </Link>
+            <Link
+              href="/sobre-mi"
+              className="inline-flex items-center gap-2 rounded-full border border-brand-accent/40 px-8 py-3.5 text-sm font-semibold text-brand-accent transition-colors hover:bg-brand-accent/10"
+            >
+              Conoce la historia de Tony →
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* Los 4 temas */}
+      {/* Temas de conferencia */}
       <section className="bg-brand-surface py-20">
         <div className="mx-auto max-w-6xl px-6 md:px-12">
 
-          <div className="mb-10 text-center">
+          <div className="mb-12 text-center">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-brand-accent">
+              Temas
+            </p>
             <h2 className="text-3xl font-bold text-brand-text">
               Temas de conferencia
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-brand-muted">
               Cada conferencia se adapta al formato, el público y el contexto del evento.
+              Todos los temas nacen de la experiencia real de Tony.
             </p>
           </div>
 
-          <div className="mb-10 grid grid-cols-1 gap-5 md:grid-cols-2">
-            {topics.map(({ title, tags, description }, i) => (
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {topics.map(({ icon: Icon, title, tags, description, featured }) => (
               <div
                 key={title}
-                className={`rounded-xl border p-7 ${i === 0 ? 'border-brand-accent/40 bg-brand-card ring-1 ring-brand-accent/20' : 'border-brand-border bg-brand-card'}`}
+                className={`rounded-xl border p-7 transition-shadow hover:shadow-md ${
+                  featured
+                    ? 'border-brand-accent/40 bg-brand-card ring-1 ring-brand-accent/20 md:col-span-2 lg:col-span-1'
+                    : 'border-brand-border bg-brand-card'
+                }`}
               >
-                <div className="mb-3 flex flex-wrap gap-2">
+                <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-lg bg-brand-accent/10">
+                  <Icon size={18} className="text-brand-accent" />
+                </div>
+                <div className="mb-3 flex flex-wrap gap-1.5">
                   {tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full bg-brand-accent/10 px-3 py-0.5 text-xs font-medium text-brand-accent"
+                      className="rounded-full bg-brand-accent/10 px-2.5 py-0.5 text-xs font-medium text-brand-accent"
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
                 <h3 className="mb-2 font-bold text-brand-text">{title}</h3>
-                <p className="text-sm text-brand-muted">{description}</p>
+                <p className="text-sm leading-relaxed text-brand-muted">{description}</p>
               </div>
             ))}
           </div>
 
-          <div className="rounded-xl border border-brand-border bg-brand-card p-7">
-            <h3 className="mb-3 font-bold text-brand-text">Tipo de eventos</h3>
-            <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+        </div>
+      </section>
+
+      {/* Qué puede aportar Tony */}
+      <section className="bg-brand-bg py-20">
+        <div className="mx-auto max-w-5xl px-6 md:px-12">
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-center">
+
+            <div>
+              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-brand-accent">
+                Por qué Tony
+              </p>
+              <h2 className="text-3xl font-bold text-brand-text">
+                Qué puede aportar<br />
+                <span className="text-brand-accent">Tony a tu evento</span>
+              </h2>
+              <p className="mt-4 text-brand-muted">
+                No es teoría ni motivación genérica. Tony lleva al escenario
+                una historia forjada en el campo, con fracasos reales, fe
+                y una visión construida durante más de dos décadas.
+              </p>
+            </div>
+
+            <ul className="space-y-3">
+              {contributions.map((item) => (
+                <li key={item} className="flex items-start gap-3 text-sm text-brand-muted">
+                  <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-brand-accent" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+
+          </div>
+        </div>
+      </section>
+
+      {/* Tipo de eventos */}
+      <section className="bg-brand-surface py-16">
+        <div className="mx-auto max-w-4xl px-6 md:px-12">
+          <div className="rounded-xl border border-brand-border bg-brand-card p-8">
+            <h3 className="mb-5 font-bold text-brand-text">Tipo de eventos</h3>
+            <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               {eventTypes.map((type) => (
-                <li key={type} className="flex items-center gap-2 text-sm text-brand-muted">
+                <li key={type} className="flex items-center gap-2.5 text-sm text-brand-muted">
                   <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-brand-accent" />
                   {type}
                 </li>
               ))}
             </ul>
           </div>
-
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="bg-brand-bg py-16">
+      {/* CTA final */}
+      <section className="bg-brand-bg py-20">
         <div className="mx-auto max-w-xl px-6 text-center md:px-12">
           <h2 className="text-3xl font-bold text-brand-text">
             ¿Quieres a Tony en tu evento?
           </h2>
           <p className="mt-4 text-brand-muted">
             Completa el formulario indicando la fecha, el formato y el tema de interés.
-            Nuestro equipo revisará la solicitud y dará seguimiento por el canal correspondiente.
+            El equipo revisará la solicitud y dará seguimiento directamente.
           </p>
-          <div className="mt-8">
+          <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <Link
               href="/contacto"
               className="inline-flex items-center gap-2 rounded-full bg-brand-accent px-8 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
             >
-              <Mic size={16} /> Solicitar una conferencia
+              <Mic size={15} /> Solicitar conferencia →
+            </Link>
+            <Link
+              href="/sobre-mi"
+              className="inline-flex items-center gap-2 rounded-full border border-brand-accent/40 px-8 py-3.5 text-sm font-semibold text-brand-accent transition-colors hover:bg-brand-accent/10"
+            >
+              Conoce la historia de Tony →
             </Link>
           </div>
         </div>
