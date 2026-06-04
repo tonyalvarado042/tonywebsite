@@ -72,10 +72,10 @@ export default function PuroMTB() {
           >
             <div className="relative h-[360px] overflow-hidden rounded-2xl sm:h-[420px] lg:h-[440px]">
               <Image
-                src="/images/tony/tony-puromtb-community.jpg"
-                alt="Tony Alvarado — fundador de PuroMTB, comunidad ciclista en Costa Rica"
+                src="/images/tony/tony-ciclismo-ruta-01.jpg"
+                alt="Tony Alvarado en bicicleta — fundador de PuroMTB y Pure Cycling, Costa Rica"
                 fill
-                className="object-cover object-[50%_100%]"
+                className="object-cover object-center"
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
             </div>

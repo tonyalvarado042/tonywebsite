@@ -1,6 +1,23 @@
 import Link from 'next/link'
 import Image from 'next/image'
 
+const companyLogos = [
+  {
+    src: '/images/logos/pure-cycling/pure-cycling-logo.png',
+    alt: 'Pure Cycling',
+    href: '/pure-cycling',
+    width: 110,
+    height: 32,
+  },
+  {
+    src: '/images/logos/bike-bed/bike-bed-logo.png',
+    alt: 'Bike & Bed Hotels',
+    href: '/bike-bed-hotels',
+    width: 120,
+    height: 36,
+  },
+]
+
 const footerLinks = [
   { href: '/sobre-mi', label: 'Sobre mí' },
   { href: '/pure-cycling', label: 'Pure Cycling' },
@@ -95,10 +112,19 @@ export default function Footer() {
             <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-brand-accent">
               Empresas
             </p>
-            <div className="flex flex-col gap-2 text-sm text-brand-muted">
-              <span>PuroMTB</span>
-              <span>Pure Cycling</span>
-              <span>Bike & Bed Hotels</span>
+            <div className="flex flex-col gap-3">
+              <span className="text-sm text-brand-muted">PuroMTB</span>
+              {companyLogos.map(({ src, alt, href, width, height }) => (
+                <Link key={href} href={href} aria-label={alt} className="transition-opacity hover:opacity-70">
+                  <Image
+                    src={src}
+                    alt={alt}
+                    width={width}
+                    height={height}
+                    className="h-8 w-auto object-contain brightness-0 invert opacity-55 transition-opacity hover:opacity-85"
+                  />
+                </Link>
+              ))}
             </div>
           </div>
         </div>

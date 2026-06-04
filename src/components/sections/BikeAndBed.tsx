@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Shield, Star, Target, TrendingUp } from 'lucide-react'
 
+const BIKE_BED_LOGO = '/images/logos/bike-bed/bike-bed-logo.png'
+
 const points = [
   {
     Icon: Star,
@@ -44,8 +46,17 @@ export default function BikeAndBed() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
+          <div className="mb-5 flex justify-center">
+            <Image
+              src={BIKE_BED_LOGO}
+              alt="Bike & Bed Hotels"
+              width={180}
+              height={54}
+              className="h-12 w-auto object-contain opacity-90"
+            />
+          </div>
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-accent">
-            Bike & Bed Hotels — Para inversionistas
+            Para inversionistas
           </p>
           <h2 className="text-4xl font-bold text-brand-text">
             El turismo deportivo tiene<br />
