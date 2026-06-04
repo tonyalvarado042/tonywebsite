@@ -41,13 +41,13 @@ export default function Books() {
             transition={{ duration: 0.7 }}
           >
             {/* Mockup */}
-            <div className="flex shrink-0 items-center justify-center">
+            <div className="flex shrink-0 items-center justify-center sm:min-w-[160px]">
               <Image
                 src="/images/books/secretos-mockup.png"
                 alt="Secretos para ser un empresario exitoso — Tony Alvarado"
-                width={130}
-                height={180}
-                className="w-auto max-h-[170px] object-contain drop-shadow-[0_8px_24px_rgba(125,38,204,0.35)]"
+                width={190}
+                height={265}
+                className="w-auto max-h-[255px] object-contain drop-shadow-[0_8px_24px_rgba(125,38,204,0.35)]"
               />
             </div>
 
@@ -89,13 +89,13 @@ export default function Books() {
             transition={{ duration: 0.7, delay: 0.1 }}
           >
             {/* Mockup */}
-            <div className="flex shrink-0 items-center justify-center">
+            <div className="flex shrink-0 items-center justify-center sm:min-w-[160px]">
               <Image
                 src="/images/books/sigue-pedaleando-mockup.png"
                 alt="Sigue Pedaleando — Tony Alvarado"
-                width={130}
-                height={180}
-                className="w-auto max-h-[170px] object-contain drop-shadow-[0_8px_24px_rgba(215,186,158,0.25)]"
+                width={190}
+                height={265}
+                className="w-auto max-h-[255px] object-contain drop-shadow-[0_8px_24px_rgba(215,186,158,0.25)]"
               />
             </div>
 
