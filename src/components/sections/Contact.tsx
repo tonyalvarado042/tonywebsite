@@ -25,13 +25,38 @@ const canRequest = [
 const inputClass =
   'w-full rounded-lg border border-brand-border bg-brand-surface px-4 py-3 text-sm text-brand-text outline-none transition-colors placeholder:text-brand-muted/40 focus:border-brand-accent'
 
-export default function Contact() {
-  const [submitted, setSubmitted] = useState(false)
+type Status = 'idle' | 'sending' | 'success' | 'error'
 
-  function handleSubmit(e: { preventDefault(): void }) {
+export default function Contact() {
+  const [status, setStatus] = useState<Status>('idle')
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    // Pendiente: integración con Resend en Fase 3
-    setSubmitted(true)
+    if (status === 'sending') return
+
+    setStatus('sending')
+
+    const form = e.currentTarget
+    const data = new FormData(form)
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nombre: data.get('nombre'),
+          correo: data.get('correo'),
+          whatsapp: data.get('whatsapp'),
+          empresa: data.get('empresa'),
+          tipo: data.get('tipo'),
+          mensaje: data.get('mensaje'),
+        }),
+      })
+      const json = await res.json()
+      setStatus(json.success ? 'success' : 'error')
+    } catch {
+      setStatus('error')
+    }
   }
 
   return (
@@ -47,7 +72,7 @@ export default function Contact() {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            {submitted ? (
+            {status === 'success' ? (
               <div className="flex h-full min-h-[400px] items-center justify-center rounded-2xl border border-brand-accent/30 bg-brand-card p-10 text-center">
                 <div>
                   <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-brand-accent/15">
@@ -70,6 +95,7 @@ export default function Contact() {
                       Nombre completo
                     </label>
                     <input
+                      name="nombre"
                       type="text"
                       required
                       placeholder="Tu nombre"
@@ -81,6 +107,7 @@ export default function Contact() {
                       Correo electrónico
                     </label>
                     <input
+                      name="correo"
                       type="email"
                       required
                       placeholder="tu@email.com"
@@ -94,7 +121,7 @@ export default function Contact() {
                     WhatsApp{' '}
                     <span className="font-normal text-brand-muted/60">(opcional)</span>
                   </label>
-                  <input type="tel" placeholder="+506 0000-0000" className={inputClass} />
+                  <input name="whatsapp" type="tel" placeholder="+506 0000-0000" className={inputClass} />
                 </div>
 
                 <div>
@@ -103,6 +130,7 @@ export default function Contact() {
                     <span className="font-normal text-brand-muted/60">(opcional)</span>
                   </label>
                   <input
+                    name="empresa"
                     type="text"
                     placeholder="Nombre de tu empresa"
                     className={inputClass}
@@ -113,7 +141,7 @@ export default function Contact() {
                   <label className="mb-1.5 block text-xs font-medium text-brand-muted">
                     ¿En qué te podemos ayudar?
                   </label>
-                  <select required className={inputClass}>
+                  <select name="tipo" required className={inputClass}>
                     <option value="">Selecciona una opción</option>
                     {inquiryTypes.map((t) => (
                       <option key={t} value={t}>{t}</option>
@@ -126,6 +154,7 @@ export default function Contact() {
                     Mensaje
                   </label>
                   <textarea
+                    name="mensaje"
                     required
                     rows={4}
                     placeholder="Cuéntanos brevemente qué necesitas: tipo de evento, fecha tentativa, país, audiencia, interés en Pure Cycling, Bike & Bed Hotels o el motivo de tu contacto."
@@ -133,11 +162,18 @@ export default function Contact() {
                   />
                 </div>
 
+                {status === 'error' && (
+                  <p className="rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+                    No se pudo enviar el mensaje. Por favor intenta de nuevo o escríbenos directamente.
+                  </p>
+                )}
+
                 <button
                   type="submit"
-                  className="w-full rounded-full bg-brand-accent py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                  disabled={status === 'sending'}
+                  className="w-full rounded-full bg-brand-accent py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  Enviar mensaje →
+                  {status === 'sending' ? 'Enviando...' : 'Enviar mensaje →'}
                 </button>
                 <p className="text-center text-xs text-brand-muted/50">
                   Respondemos en un plazo de 24 a 48 horas hábiles.
