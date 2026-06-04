@@ -3,15 +3,20 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, ChevronDown } from 'lucide-react'
 
 const navLinks = [
   { href: '/sobre-mi', label: 'Sobre mí' },
-  { href: '/#ecosistema', label: 'Empresas' },
   { href: '/conferencias', label: 'Conferencias' },
   { href: '/libros', label: 'Libros' },
   { href: '/blog', label: 'Blog' },
   { href: '/contacto', label: 'Contacto' },
+]
+
+const empresasLinks = [
+  { href: '/puromtb', label: 'PuroMTB' },
+  { href: '/pure-cycling', label: 'Pure Cycling' },
+  { href: '/bike-bed-hotels', label: 'Bike & Bed Hotels' },
 ]
 
 export default function Header() {
@@ -42,6 +47,27 @@ export default function Header() {
                 {link.label}
               </Link>
             ))}
+
+            {/* Dropdown Empresas */}
+            <div className="group relative">
+              <button className="flex items-center gap-1 text-brand-muted transition-colors hover:text-brand-text">
+                Empresas
+                <ChevronDown size={13} className="mt-px transition-transform duration-200 group-hover:rotate-180" />
+              </button>
+              <div className="invisible absolute left-1/2 top-full z-50 -translate-x-1/2 pt-3 opacity-0 transition-all duration-150 group-hover:visible group-hover:opacity-100">
+                <div className="w-52 overflow-hidden rounded-xl border border-brand-border bg-brand-surface shadow-2xl">
+                  {empresasLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="block px-4 py-3 text-sm text-brand-muted transition-colors hover:bg-brand-card hover:text-brand-text"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
           </nav>
 
           <div className="flex items-center gap-4">
@@ -75,6 +101,26 @@ export default function Header() {
                 {link.label}
               </Link>
             ))}
+
+            {/* Empresas en mobile */}
+            <div>
+              <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-brand-accent">
+                Empresas
+              </p>
+              <div className="flex flex-col gap-3 pl-2">
+                {empresasLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="text-brand-muted hover:text-brand-text"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
             <Link
               href="/pure-cycling"
               className="mt-2 rounded-full bg-brand-accent px-5 py-2.5 text-center text-sm font-semibold text-white"

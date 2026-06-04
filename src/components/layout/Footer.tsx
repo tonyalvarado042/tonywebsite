@@ -3,18 +3,34 @@ import Image from 'next/image'
 
 const companyLogos = [
   {
+    src: '/images/logos/puromtb/logo_puro_mtb.png',
+    alt: 'PuroMTB',
+    name: 'PuroMTB',
+    href: 'https://puromtb.com',
+    external: true,
+    width: 100,
+    height: 30,
+    className: 'h-7 w-auto object-contain opacity-70 transition-opacity hover:opacity-95',
+  },
+  {
     src: '/images/logos/pure-cycling/pure-cycling-logo.png',
     alt: 'Pure Cycling',
+    name: 'Pure Cycling',
     href: '/pure-cycling',
+    external: false,
     width: 110,
     height: 32,
+    className: 'h-7 w-auto object-contain brightness-0 invert opacity-60 transition-opacity hover:opacity-90',
   },
   {
     src: '/images/logos/bike-bed/bike-bed-logo.png',
     alt: 'Bike & Bed Hotels',
+    name: 'Bike & Bed Hotels',
     href: '/bike-bed-hotels',
+    external: false,
     width: 120,
     height: 36,
+    className: 'h-7 w-auto object-contain brightness-0 invert opacity-60 transition-opacity hover:opacity-90',
   },
 ]
 
@@ -112,17 +128,25 @@ export default function Footer() {
             <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-brand-accent">
               Empresas
             </p>
-            <div className="flex flex-col gap-3">
-              <span className="text-sm text-brand-muted">PuroMTB</span>
-              {companyLogos.map(({ src, alt, href, width, height }) => (
-                <Link key={href} href={href} aria-label={alt} className="transition-opacity hover:opacity-70">
+            <div className="flex flex-col gap-4">
+              {companyLogos.map(({ src, alt, name, href, external, width, height, className }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  aria-label={alt}
+                  {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  className="group flex items-center gap-3"
+                >
                   <Image
                     src={src}
                     alt={alt}
                     width={width}
                     height={height}
-                    className="h-8 w-auto object-contain brightness-0 invert opacity-55 transition-opacity hover:opacity-85"
+                    className={className}
                   />
+                  <span className="text-sm text-brand-muted transition-colors group-hover:text-brand-text">
+                    {name}
+                  </span>
                 </Link>
               ))}
             </div>

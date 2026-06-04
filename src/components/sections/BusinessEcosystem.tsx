@@ -3,58 +3,40 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Bike, Users, Hotel } from 'lucide-react'
+import { Bike, Building2, Globe, Users } from 'lucide-react'
 
-const companies = [
-  {
-    Icon: Bike,
-    logoSrc: null as string | null,
-    name: 'PuroMTB',
-    tagline: 'La tienda y comunidad ciclista de referencia en Costa Rica.',
-    description:
-      'Fundada en 2004, PuroMTB tiene más de 20 años de historia, tienda física, venta online y una amplia comunidad de ciclistas.',
-    href: '/#puromtb',
-    cta: 'Conocer PuroMTB',
-    featured: false,
-    imageSrc: '/images/tony/tony-ciclismo-bosque-01.jpg',
-    imageAlt: 'PuroMTB — ciclismo en Costa Rica',
-    imagePosition: 'object-[50%_35%]',
-  },
+const pillars = [
   {
     Icon: Users,
-    logoSrc: '/images/logos/pure-cycling/pure-cycling-logo.png',
-    name: 'Pure Cycling',
-    tagline: 'La comunidad que transforma tu vida a través del ciclismo.',
-    description:
-      'Programa de transformación con ciclismo, nutrición, mentalidad, movilidad y fe. Con miembros en más de 30 países.',
-    href: '/pure-cycling',
-    cta: 'Únete a Pure Cycling',
-    featured: true,
-    imageSrc: '/images/tony/tony-ciclismo-pradera-01.jpg',
-    imageAlt: 'Pure Cycling — Tony Alvarado ciclismo Costa Rica',
-    imagePosition: 'object-[50%_40%]',
+    label: 'Comunidad',
+    desc: 'Conectamos personas con la misma pasión por el ciclismo.',
   },
   {
-    Icon: Hotel,
-    logoSrc: '/images/logos/bike-bed/bike-bed-logo.png',
-    name: 'Bike & Bed Hotels',
-    tagline: 'El modelo de turismo deportivo del futuro.',
-    description:
-      'Hotel temático de ciclismo con operación profesional y visión de expansión global. Oportunidades para inversionistas.',
-    href: '/bike-bed-hotels',
-    cta: 'Ver oportunidad',
-    featured: false,
-    imageSrc: '/images/hotel/bike-bed-exterior-cabana.jpg',
-    imageAlt: 'Bike & Bed Hotels — hotel temático ciclismo Costa Rica',
-    imagePosition: 'object-[50%_25%]',
+    Icon: Bike,
+    label: 'Transformación',
+    desc: 'Impulsamos vidas a través del deporte, la fe y el propósito.',
+  },
+  {
+    Icon: Globe,
+    label: 'Impacto Global',
+    desc: 'Creamos oportunidades que trascienden fronteras.',
   },
 ]
 
 export default function BusinessEcosystem() {
   return (
-    <section id="ecosistema" className="bg-brand-surface py-20">
-      <div className="mx-auto max-w-6xl px-6 md:px-12">
+    <section id="ecosistema" className="relative overflow-hidden bg-brand-surface py-20">
 
+      {/* Glow de fondo */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-72
+                   bg-[radial-gradient(ellipse_70%_70%_at_50%_0%,rgba(125,38,204,0.09)_0%,transparent_70%)]"
+      />
+
+      <div className="relative z-10 mx-auto max-w-6xl px-6 md:px-12">
+
+        {/* ── Header ── */}
         <motion.div
           className="mb-14 text-center"
           initial={{ opacity: 0, y: 20 }}
@@ -62,89 +44,256 @@ export default function BusinessEcosystem() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-accent">
+          <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-brand-accent">
             Ecosistema empresarial
           </p>
-          <h2 className="text-4xl font-bold text-brand-text">
+          <h2 className="text-4xl font-bold leading-tight text-brand-text md:text-5xl">
             Un ecosistema construido{' '}
             <span className="text-brand-accent">alrededor de una sola misión.</span>
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-brand-muted">
-            PuroMTB, Pure Cycling y Bike & Bed Hotels. Cada una distinta. Todas giran alrededor de una bicicleta.
+            PuroMTB, Pure Cycling y Bike &amp; Bed Hotels. Cada una distinta. Todas giran alrededor de una bicicleta.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          {companies.map(({ Icon, logoSrc, name, tagline, description, href, cta, featured, imageSrc, imageAlt, imagePosition }, i) => (
-            <motion.div
-              key={name}
-              className={`group flex flex-col overflow-hidden rounded-2xl border transition-shadow duration-300 ${
-                featured
-                  ? 'border-brand-accent bg-brand-card shadow-[0_0_40px_rgba(125,38,204,0.12)] hover:shadow-[0_0_60px_rgba(125,38,204,0.22)]'
-                  : 'border-brand-border bg-brand-card hover:shadow-[0_0_30px_rgba(0,0,0,0.35)]'
-              }`}
-              initial={{ opacity: 0, y: 25 }}
+        {/* ── Grid de empresas ── */}
+        <div className="relative">
+
+          {/* Línea de conexión — desktop only */}
+          <div
+            aria-hidden
+            className="absolute hidden md:block top-[96px] left-4 right-4 h-px
+                       bg-gradient-to-r from-transparent via-brand-accent/35 to-transparent"
+          />
+          {/* Nodo izquierdo (unión col1-col2) */}
+          <div
+            aria-hidden
+            className="absolute hidden md:block top-[92px] left-[33%] h-[10px] w-[10px]
+                       -translate-x-1/2 rounded-full bg-brand-accent/55
+                       shadow-[0_0_8px_rgba(125,38,204,0.75)]"
+          />
+          {/* Nodo derecho (unión col2-col3) */}
+          <div
+            aria-hidden
+            className="absolute hidden md:block top-[92px] right-[33%] h-[10px] w-[10px]
+                       translate-x-1/2 rounded-full bg-brand-accent/55
+                       shadow-[0_0_8px_rgba(125,38,204,0.75)]"
+          />
+
+          {/*
+            HTML order: Pure Cycling → PuroMTB → Bike & Bed
+            Mobile: Pure Cycling primero (HTML order)
+            Desktop: PuroMTB (order-1) | Pure Cycling (order-2) | Bike & Bed (order-3)
+          */}
+          <div className="relative z-10 grid grid-cols-1 items-stretch gap-5 md:grid-cols-3">
+
+            {/* ══════ Pure Cycling — centro protagonista ══════ */}
+            <motion.article
+              className="group relative isolate flex flex-col overflow-hidden rounded-2xl
+                         border border-brand-accent bg-brand-card p-8
+                         shadow-[0_0_50px_rgba(125,38,204,0.18),inset_0_0_0_1px_rgba(125,38,204,0.1)]
+                         transition-all duration-300
+                         hover:scale-[1.02] hover:-translate-y-1
+                         hover:shadow-[0_0_80px_rgba(125,38,204,0.35),inset_0_0_0_1px_rgba(125,38,204,0.2)]
+                         md:order-2"
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
+              transition={{ duration: 0.6 }}
             >
-              {/* Zona de imagen con logo overlay */}
-              <div className="relative h-52 shrink-0 overflow-hidden">
-                <Image
-                  src={imageSrc}
-                  alt={imageAlt}
-                  fill
-                  className={`object-cover transition-transform duration-500 group-hover:scale-[1.05] ${imagePosition}`}
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
-                {/* Overlay oscuro */}
-                <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-brand-card" />
+              <div
+                aria-hidden
+                className="absolute inset-0 bg-[radial-gradient(ellipse_70%_55%_at_50%_0%,rgba(125,38,204,0.18)_0%,transparent_65%)]"
+              />
+              <span
+                aria-hidden
+                className="pointer-events-none absolute right-4 top-4 select-none text-5xl font-black text-brand-accent/[0.06]"
+              >
+                02
+              </span>
 
-                {featured && (
-                  <span className="absolute left-3 top-3 rounded-full bg-brand-accent/90 px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm">
-                    Comunidad principal
-                  </span>
-                )}
-
-                {/* Logo de la empresa — sobre la imagen, esquina inferior izquierda */}
-                {logoSrc && (
-                  <div className="absolute bottom-3 left-4 z-10">
-                    <Image
-                      src={logoSrc}
-                      alt={`Logo ${name}`}
-                      width={110}
-                      height={34}
-                      className="h-7 w-auto object-contain brightness-0 invert opacity-90"
-                    />
+              <div className="relative z-10 flex flex-1 flex-col">
+                {/* Header: ícono + logo en línea */}
+                <div className="mb-6 flex items-center gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl
+                                  bg-brand-accent/15 ring-1 ring-brand-accent/30">
+                    <Users size={19} className="text-brand-accent" />
                   </div>
-                )}
-              </div>
+                  <Image
+                    src="/images/logos/pure-cycling/pure-cycling-logo2.png"
+                    alt="Pure Cycling"
+                    width={140}
+                    height={42}
+                    className="h-9 w-auto object-contain opacity-90"
+                  />
+                </div>
 
-              {/* Contenido */}
-              <div className="flex flex-1 flex-col p-7">
-                {!logoSrc && (
-                  <p className="mb-3 text-xs font-bold uppercase tracking-widest text-brand-accent">
-                    {name}
-                  </p>
-                )}
-                <Icon size={22} className="mb-3 text-brand-accent" />
-                <h3 className="mb-1 text-xl font-bold text-brand-text">{name}</h3>
-                <p className="mb-3 text-sm font-medium text-brand-accent">{tagline}</p>
-                <p className="mb-6 flex-1 text-sm text-brand-muted">{description}</p>
+                <h3 className="mb-2 text-xl font-bold text-brand-text">Pure Cycling</h3>
+                <p className="mb-3 text-sm font-semibold text-brand-accent">
+                  La comunidad que transforma tu vida a través del ciclismo.
+                </p>
+                <p className="mb-8 flex-1 text-sm leading-relaxed text-brand-muted">
+                  Programa de transformación con ciclismo, nutrición, mentalidad, movilidad y fe.
+                  Con miembros en más de 30 países.
+                </p>
+
                 <Link
-                  href={href}
-                  className={`inline-flex items-center justify-center rounded-full px-6 py-2.5 text-sm font-semibold transition-opacity hover:opacity-90 ${
-                    featured
-                      ? 'bg-brand-accent text-white'
-                      : 'border border-brand-border text-brand-text hover:bg-brand-surface'
-                  }`}
+                  href="/pure-cycling"
+                  className="inline-flex items-center justify-center rounded-full bg-brand-accent
+                             px-7 py-3 text-sm font-semibold text-white
+                             shadow-[0_6px_20px_rgba(125,38,204,0.4)]
+                             transition-opacity hover:opacity-90"
                 >
-                  {cta} →
+                  Únete a Pure Cycling →
                 </Link>
               </div>
-            </motion.div>
-          ))}
+            </motion.article>
+
+            {/* ══════ PuroMTB — izquierda ══════ */}
+            <motion.article
+              className="group relative isolate flex flex-col overflow-hidden rounded-2xl
+                         border border-brand-border bg-brand-card p-8
+                         transition-all duration-300
+                         hover:scale-[1.02] hover:-translate-y-1
+                         hover:border-brand-accent/30 hover:shadow-[0_0_40px_rgba(125,38,204,0.12)]
+                         md:order-1"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              <div
+                aria-hidden
+                className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(125,38,204,0.07)_0%,transparent_65%)]"
+              />
+              <span
+                aria-hidden
+                className="pointer-events-none absolute right-4 top-4 select-none text-5xl font-black text-brand-accent/[0.05]"
+              >
+                01
+              </span>
+
+              <div className="relative z-10 flex flex-1 flex-col">
+                {/* Header: ícono + logo en línea */}
+                <div className="mb-6 flex items-center gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl
+                                  bg-brand-accent/10 ring-1 ring-brand-accent/20">
+                    <Bike size={19} className="text-brand-accent" />
+                  </div>
+                  <Image
+                    src="/images/logos/puromtb/logo_puro_mtb.png"
+                    alt="PuroMTB"
+                    width={130}
+                    height={40}
+                    className="h-9 w-auto object-contain opacity-90"
+                  />
+                </div>
+
+                <h3 className="mb-2 text-xl font-bold text-brand-text">PuroMTB</h3>
+                <p className="mb-3 text-sm font-semibold text-brand-accent">
+                  La tienda y comunidad ciclista de referencia en Costa Rica.
+                </p>
+                <p className="mb-8 flex-1 text-sm leading-relaxed text-brand-muted">
+                  Fundada en 2004, PuroMTB tiene más de 20 años de historia, tienda física,
+                  venta online y una amplia comunidad de ciclistas.
+                </p>
+
+                <Link
+                  href="/puromtb"
+                  className="inline-flex items-center justify-center rounded-full border border-brand-border
+                             px-6 py-2.5 text-sm font-semibold text-brand-text
+                             transition-colors hover:bg-brand-surface"
+                >
+                  Conocer PuroMTB →
+                </Link>
+              </div>
+            </motion.article>
+
+            {/* ══════ Bike & Bed Hotels — derecha ══════ */}
+            <motion.article
+              className="group relative isolate flex flex-col overflow-hidden rounded-2xl
+                         border border-brand-border bg-brand-card p-8
+                         transition-all duration-300
+                         hover:scale-[1.02] hover:-translate-y-1
+                         hover:border-brand-accent/30 hover:shadow-[0_0_40px_rgba(125,38,204,0.12)]
+                         md:order-3"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <div
+                aria-hidden
+                className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(125,38,204,0.07)_0%,transparent_65%)]"
+              />
+              <span
+                aria-hidden
+                className="pointer-events-none absolute right-4 top-4 select-none text-5xl font-black text-brand-accent/[0.05]"
+              >
+                03
+              </span>
+
+              <div className="relative z-10 flex flex-1 flex-col">
+                {/* Header: ícono + logo en línea */}
+                <div className="mb-6 flex items-center gap-3">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl
+                                  bg-brand-accent/10 ring-1 ring-brand-accent/20">
+                    <Building2 size={19} className="text-brand-accent" />
+                  </div>
+                  <Image
+                    src="/images/logos/bike-bed/bike-bed-logo-alt.png"
+                    alt="Bike & Bed Hotels"
+                    width={140}
+                    height={42}
+                    className="h-9 w-auto object-contain opacity-90"
+                  />
+                </div>
+
+                <h3 className="mb-2 text-xl font-bold text-brand-text">Bike &amp; Bed Hotels</h3>
+                <p className="mb-3 text-sm font-semibold text-brand-accent">
+                  El modelo de turismo deportivo del futuro.
+                </p>
+                <p className="mb-8 flex-1 text-sm leading-relaxed text-brand-muted">
+                  Hotel temático de ciclismo con operación profesional y visión de expansión global.
+                  Oportunidades para inversionistas.
+                </p>
+
+                <Link
+                  href="/bike-bed-hotels"
+                  className="inline-flex items-center justify-center rounded-full border border-brand-border
+                             px-6 py-2.5 text-sm font-semibold text-brand-text
+                             transition-colors hover:bg-brand-surface"
+                >
+                  Ver oportunidad →
+                </Link>
+              </div>
+            </motion.article>
+
+          </div>
         </div>
+
+        {/* ── Strip inferior de pilares ── */}
+        <motion.div
+          className="mt-12 flex flex-wrap justify-center gap-x-10 gap-y-6
+                     border-t border-brand-border pt-10"
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          {pillars.map(({ Icon, label, desc }) => (
+            <div key={label} className="flex max-w-[210px] items-start gap-3">
+              <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center
+                              rounded-lg bg-brand-accent/10 ring-1 ring-brand-accent/15">
+                <Icon size={15} className="text-brand-accent" />
+              </div>
+              <div>
+                <p className="text-sm font-bold text-brand-text">{label}</p>
+                <p className="mt-0.5 text-xs leading-relaxed text-brand-muted">{desc}</p>
+              </div>
+            </div>
+          ))}
+        </motion.div>
 
       </div>
     </section>

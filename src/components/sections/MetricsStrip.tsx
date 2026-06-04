@@ -4,9 +4,9 @@ import { motion } from 'framer-motion'
 
 const metrics = [
   { value: '22+', label: 'Años de trayectoria' },
-  { value: '~500K', label: 'Comunidad ciclista', note: 'aprox.' },
-  { value: '+30', label: 'Países — Pure Cycling', note: 'aprox.' },
-  { value: '+250', label: 'Reseñas 5★ Bike & Bed', note: 'aprox.' },
+  { value: '~500K', label: 'Comunidad ciclista' },
+  { value: '+30', label: 'Países — Pure Cycling' },
+  { value: '+250', label: 'Reseñas 5★ Bike & Bed' },
   { value: '3', label: 'Empresas con propósito' },
 ]
 
@@ -25,9 +25,6 @@ export default function MetricsStrip() {
             >
               <p className="text-3xl font-bold text-brand-text md:text-4xl">{m.value}</p>
               <p className="mt-1 text-xs uppercase tracking-wider text-brand-muted">{m.label}</p>
-              {m.note && (
-                <p className="mt-0.5 text-xs text-brand-muted/50">{m.note}</p>
-              )}
             </motion.div>
           ))}
         </div>

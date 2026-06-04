@@ -1,11 +1,8 @@
 import Hero from '@/components/sections/Hero'
 import MetricsStrip from '@/components/sections/MetricsStrip'
 import AboutTony from '@/components/sections/AboutTony'
-import StoryTeaser from '@/components/sections/StoryTeaser'
 import FaithAndPurpose from '@/components/sections/FaithAndPurpose'
 import BusinessEcosystem from '@/components/sections/BusinessEcosystem'
-import PuroMTB from '@/components/sections/PuroMTB'
-import BikeAndBed from '@/components/sections/BikeAndBed'
 import Books from '@/components/sections/Books'
 import Mentors from '@/components/sections/Mentors'
 // import Testimonials from '@/components/sections/Testimonials' — oculto hasta tener testimonios reales
@@ -123,25 +120,39 @@ const faqSchema = {
   ],
 }
 
+/* ── Separador visual sutil entre secciones ── */
+function SectionDivider() {
+  return (
+    <div
+      aria-hidden
+      className="mx-auto max-w-4xl px-6 md:px-12"
+    >
+      <div className="h-px bg-gradient-to-r from-transparent via-brand-border/50 to-transparent" />
+    </div>
+  )
+}
+
 export default function HomePage() {
   return (
     <main>
       <JsonLd data={webPageSchema} />
       <JsonLd data={puroMTBOrg} />
       <JsonLd data={faqSchema} />
+
       <Hero />
       <MetricsStrip />
       <AboutTony />
-      <StoryTeaser />
+      <SectionDivider />
       <FaithAndPurpose />
+      <SectionDivider />
       <BusinessEcosystem />
-      <PuroMTB />
-      <BikeAndBed />
+      <SectionDivider />
       <Books />
+      <SectionDivider />
       <Mentors />
       <Speaking />
-      <FAQ />
       <Contact />
+      <FAQ />
     </main>
   )
 }
