@@ -10,6 +10,7 @@ const mentors = [
     context:
       'Tony está certificado por John Maxwell Leadership, un programa de liderazgo de amplio reconocimiento internacional.',
     alt: 'Tony Alvarado con John C. Maxwell',
+    position: 'object-center',
   },
   {
     image: '/images/tony-con-spencer.png',
@@ -17,6 +18,7 @@ const mentors = [
     context:
       'Referente en emprendimiento y mentalidad. Tony ha compartido escenario y formación con Spencer Hoffman en el área de negocios y desarrollo personal.',
     alt: 'Tony Alvarado con Spencer Hoffman',
+    position: 'object-[50%_20%]',
   },
 ]
 
@@ -46,7 +48,7 @@ export default function Mentors() {
         </motion.div>
 
         <div className="grid grid-cols-1 gap-7 md:grid-cols-2">
-          {mentors.map(({ image, name, context, alt }, i) => (
+          {mentors.map(({ image, name, context, alt, position }, i) => (
             <motion.div
               key={name}
               className="overflow-hidden rounded-2xl border border-brand-border bg-brand-card"
@@ -60,7 +62,7 @@ export default function Mentors() {
                   src={image}
                   alt={alt}
                   fill
-                  className="object-cover object-top"
+                  className={`object-cover ${position}`}
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-card via-transparent to-transparent" />

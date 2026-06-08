@@ -23,7 +23,7 @@ const companyLogos = [
     className: 'h-7 w-auto object-contain brightness-0 invert opacity-60 transition-opacity hover:opacity-90',
   },
   {
-    src: '/images/logos/bike-bed/bike-bed-logo.png',
+    src: '/images/logos/bike-bed/bike_and_bed_logo.png',
     alt: 'Bike & Bed Hotels',
     name: 'Bike & Bed Hotels',
     href: '/bike-bed-hotels',
@@ -87,6 +87,12 @@ export default function Footer() {
             <p className="mt-3 text-sm text-brand-muted">
               Ciclismo, comunidad y Costa Rica.
             </p>
+            <a
+              href="mailto:info@tonyalvarado.com"
+              className="mt-2 text-sm text-brand-muted transition-colors hover:text-brand-accent"
+            >
+              info@tonyalvarado.com
+            </a>
           </div>
 
           <div className="flex items-center gap-3">

@@ -1,7 +1,6 @@
 import { MetadataRoute } from 'next'
 
-// TODO: cambiar a https://tonyalvarado.com cuando el dominio final esté conectado.
-const BASE_URL = 'https://tonywebsite-three.vercel.app'
+const BASE_URL = 'https://www.tonyalvarado.com'
 
 export default function robots(): MetadataRoute.Robots {
   return {

@@ -7,7 +7,7 @@ import { SITE_URL, websiteRef, personRef, bookSchema, bookSchema2 } from '@/lib/
 export const metadata = {
   title: 'Libros de Tony Alvarado — Ciclismo, transformación y liderazgo',
   description:
-    'Libros de Tony Alvarado: "Secretos para ser un empresario exitoso" (Amazon) y "Sigue Pedaleando", próximamente. Ciclismo, transformación personal, fe y emprendimiento desde Costa Rica.',
+    'Libros de Tony Alvarado: "Secretos para ser un empresario exitoso" y "Sigue Pedaleando", ambos disponibles en Amazon. Ciclismo, transformación personal, fe y emprendimiento desde Costa Rica.',
   alternates: { canonical: '/libros' },
 }
 
@@ -17,7 +17,7 @@ const webPageSchema = {
   '@id': `${SITE_URL}/libros#webpage`,
   name: 'Libros de Tony Alvarado — Ciclismo, transformación y liderazgo',
   description:
-    'Libros de Tony Alvarado: "Secretos para ser un empresario exitoso" (Amazon) y "Sigue Pedaleando", próximamente. Ciclismo, transformación personal, fe y emprendimiento desde Costa Rica.',
+    'Libros de Tony Alvarado: "Secretos para ser un empresario exitoso" y "Sigue Pedaleando", ambos disponibles en Amazon. Ciclismo, transformación personal, fe y emprendimiento desde Costa Rica.',
   url: `${SITE_URL}/libros`,
   inLanguage: 'es-CR',
   isPartOf: websiteRef,
@@ -259,9 +259,9 @@ export default function LibrosPage() {
               {/* Badge */}
               <span className="mb-6 inline-flex w-fit items-center gap-2 rounded-full
                                bg-brand-warm/10 px-4 py-1.5 ring-1 ring-brand-warm/25">
-                <Bell size={12} className="text-brand-warm" />
+                <ShoppingCart size={12} className="text-brand-warm" />
                 <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-brand-warm">
-                  Próximamente en Amazon
+                  Disponible en Amazon
                 </span>
               </span>
 
@@ -297,15 +297,17 @@ export default function LibrosPage() {
 
               {/* CTA */}
               <Link
-                href="/contacto"
+                href="https://www.amazon.com/-/es/Tony-Alvarado/dp/B0H2QD8PPD/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="mt-auto flex w-full items-center justify-center gap-3
                            rounded-2xl border-2 border-brand-warm/35
                            py-4 text-[15px] font-bold text-brand-warm
                            transition-all
                            hover:border-brand-warm/55 hover:bg-brand-warm/10"
               >
-                <Bell size={17} />
-                Avísame cuando esté disponible
+                <ShoppingCart size={17} />
+                Comprar en Amazon
               </Link>
             </div>
           </article>

@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { CheckCircle2, Globe, Users, Zap } from 'lucide-react'
 import ContactFormEmbed from '@/components/sections/ContactFormEmbed'
 import JsonLd from '@/components/JsonLd'
+import PhotoStrip from '@/components/ui/PhotoStrip'
 import { SITE_URL, websiteRef, personRef, pureCyclingOrg } from '@/lib/structured-data'
 
 export const metadata = {
@@ -85,6 +86,17 @@ export default function PureCyclingPage() {
               <p className="mt-1 text-xs uppercase tracking-wider text-brand-muted">Días de transformación</p>
             </div>
           </div>
+
+          <div className="mt-10 flex justify-center">
+            <Link
+              href="https://www.skool.com/purecycling"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-brand-accent px-8 py-3.5 text-sm font-semibold text-white shadow-[0_6px_20px_rgba(125,38,204,0.4)] transition-opacity hover:opacity-90"
+            >
+              Únete a la comunidad →
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -116,6 +128,22 @@ export default function PureCyclingPage() {
               Para quienes buscan más que kilometraje.
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* Franja comunidad Pure Cycling */}
+      <section className="bg-brand-bg py-12">
+        <div className="mx-auto max-w-6xl px-6 md:px-12">
+          <PhotoStrip
+            photos={[
+              { src: '/images/pure-cycling/pure-cycling-team-02.jpeg', alt: 'Equipo Pure Cycling', position: 'object-center' },
+              { src: '/images/pure-cycling/pure-cycling-community-road-01.webp', alt: 'Comunidad Pure Cycling en ruta', position: 'object-center' },
+              { src: '/images/pure-cycling/pure-cycling-transformacion-01.jpeg', alt: 'Transformación a través del ciclismo', position: 'object-center' },
+            ]}
+          />
+          <p className="mt-5 text-center text-xs font-medium uppercase tracking-widest text-brand-muted">
+            Comunidad · Disciplina · Transformación
+          </p>
         </div>
       </section>
 
@@ -173,6 +201,41 @@ export default function PureCyclingPage() {
               </div>
 
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonios */}
+      <section className="bg-brand-surface py-20">
+        <div className="mx-auto max-w-6xl px-6 md:px-12">
+          <div className="mb-12 text-center">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-accent">
+              Testimonios
+            </p>
+            <h2 className="text-3xl font-bold text-brand-text">
+              Historias reales dentro de Pure Cycling
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-brand-muted">
+              Personas que decidieron transformar su vida a través del ciclismo, la disciplina y la comunidad.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+            {[
+              { n: '01', poster: '/images/testimonials/pure-cycling/testimonio-pure-cycling-01.PNG' },
+              { n: '02', poster: '/images/testimonials/pure-cycling/testimonio-pure-cycling-02.PNG' },
+              { n: '03', poster: '/images/testimonials/pure-cycling/testimonio-pure-cycling-03.PNG' },
+            ].map(({ n, poster }) => (
+              <div key={n} className="overflow-hidden rounded-2xl border border-brand-border bg-brand-card">
+                <video
+                  controls
+                  preload="none"
+                  poster={poster}
+                  className="w-full aspect-video"
+                  src={`/videos/testimonials/pure-cycling/testimonio-pure-cycling-${n}.mp4`}
+                />
+              </div>
+            ))}
           </div>
         </div>
       </section>

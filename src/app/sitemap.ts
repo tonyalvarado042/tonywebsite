@@ -2,8 +2,7 @@ import { MetadataRoute } from 'next'
 import { client } from '@/sanity/lib/client'
 import { postSlugsQuery } from '@/sanity/lib/queries'
 
-// TODO: cambiar a https://tonyalvarado.com cuando el dominio final esté conectado.
-const BASE_URL = 'https://tonywebsite-three.vercel.app'
+const BASE_URL = 'https://www.tonyalvarado.com'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date()

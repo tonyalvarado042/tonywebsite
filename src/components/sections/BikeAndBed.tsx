@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Shield, Star, Target, TrendingUp } from 'lucide-react'
 
-const BIKE_BED_LOGO = '/images/logos/bike-bed/bike-bed-logo.png'
+const BIKE_BED_LOGO = '/images/logos/bike-bed/bike_and_bed_logo.png'
 
 const points = [
   {

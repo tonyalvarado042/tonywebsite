@@ -49,7 +49,7 @@ export default function AboutTony() {
           </p>
           <h2 className="text-4xl font-bold leading-tight text-brand-text">
             Empezó vendiendo manzanas para comprarse una bicicleta.<br />
-            <span className="text-brand-accent">Hoy tiene tres empresas.</span>
+            <span className="text-brand-accent">Hoy tiene tres empresas que han facturado millones de dólares.</span>
           </h2>
           <p className="text-brand-muted text-left md:text-justify">
             Ingeniero de computación de formación, empresario de vocación. Coach certificado de ciclismo

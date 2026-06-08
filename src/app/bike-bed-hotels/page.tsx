@@ -89,8 +89,8 @@ export default function BikeBedPage() {
         <div className="mx-auto max-w-6xl px-6 md:px-12">
           <div className="relative h-96 overflow-hidden rounded-2xl lg:h-[480px]">
             <Image
-              src="/images/hotel/bike-bed-exterior-cabana.jpg"
-              alt="Bike & Bed Hotels — exterior cabaña hotel temático de ciclismo en Costa Rica"
+              src="/images/bike-bed/bike-bed-aerial-volcano-01.png"
+              alt="Bike & Bed Hotels — vista aérea con volcán, hotel temático de ciclismo en Costa Rica"
               fill
               className="object-cover object-[50%_40%]"
               sizes="(max-width: 1024px) 100vw, 1152px"
@@ -132,6 +132,44 @@ export default function BikeBedPage() {
         </div>
       </section>
 
+      {/* Galería del hotel */}
+      <section className="bg-brand-surface pb-12 pt-0">
+        <div className="mx-auto max-w-6xl px-6 md:px-12">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="relative h-72 overflow-hidden rounded-2xl lg:h-80">
+              <Image
+                src="/images/bike-bed/bike-bed-interior-01.jpg"
+                alt="Bike & Bed Hotels — interior premium"
+                fill
+                loading="lazy"
+                className="object-cover object-center"
+                sizes="(max-width: 640px) 100vw, 50vw"
+              />
+            </div>
+            <div className="relative h-72 overflow-hidden rounded-2xl lg:h-80">
+              <Image
+                src="/images/bike-bed/bike-bed-jacuzzi-01.jpg"
+                alt="Bike & Bed Hotels — jacuzzi y amenidades"
+                fill
+                loading="lazy"
+                className="object-cover object-center"
+                sizes="(max-width: 640px) 100vw, 50vw"
+              />
+            </div>
+          </div>
+          <div className="relative mt-4 h-72 overflow-hidden rounded-2xl lg:h-96">
+            <Image
+              src="/images/bike-bed/bike-bed-aerial-01.png"
+              alt="Bike & Bed Hotels — vista aérea del hotel temático de ciclismo en Costa Rica"
+              fill
+              loading="lazy"
+              className="object-cover object-center"
+              sizes="(max-width: 1024px) 100vw, 1152px"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* CTA inversión */}
       <section className="bg-brand-bg py-16">
         <div className="mx-auto max-w-xl px-6 text-center md:px-12">
@@ -142,12 +180,20 @@ export default function BikeBedPage() {
             Agenda una llamada con el equipo. Toda información financiera se presenta
             de forma personalizada y confidencial.
           </p>
-          <div className="mt-8">
+          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
               href="/#contacto"
               className="inline-flex items-center justify-center rounded-full bg-brand-accent px-8 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
             >
               Agenda una llamada →
+            </Link>
+            <Link
+              href="https://www.bikeandbedhotels.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center rounded-full border border-brand-border px-8 py-3.5 text-sm font-semibold text-brand-text transition-colors hover:bg-brand-surface"
+            >
+              Visitar el hotel →
             </Link>
           </div>
           <p className="mt-5 text-xs text-brand-muted/50">

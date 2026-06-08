@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 
 const metrics = [
   { value: '22+', label: 'Años de trayectoria' },
-  { value: '~500K', label: 'Comunidad ciclista' },
+  { value: '400K', label: 'Comunidad ciclista' },
   { value: '+30', label: 'Países — Pure Cycling' },
   { value: '+250', label: 'Reseñas 5★ Bike & Bed' },
   { value: '3', label: 'Empresas con propósito' },

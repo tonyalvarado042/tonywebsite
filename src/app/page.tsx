@@ -3,6 +3,7 @@ import MetricsStrip from '@/components/sections/MetricsStrip'
 import AboutTony from '@/components/sections/AboutTony'
 import FaithAndPurpose from '@/components/sections/FaithAndPurpose'
 import BusinessEcosystem from '@/components/sections/BusinessEcosystem'
+import PhotoStrip from '@/components/ui/PhotoStrip'
 import Books from '@/components/sections/Books'
 import Mentors from '@/components/sections/Mentors'
 // import Testimonials from '@/components/sections/Testimonials' — oculto hasta tener testimonios reales
@@ -144,6 +145,18 @@ export default function HomePage() {
       <AboutTony />
       <SectionDivider />
       <FaithAndPurpose />
+      <SectionDivider />
+      <section className="bg-brand-bg py-10">
+        <div className="mx-auto max-w-6xl px-6 md:px-12">
+          <PhotoStrip
+            photos={[
+              { src: '/images/tony/tony-ciclismo-bosque-01.jpg', alt: 'Tony Alvarado ciclismo de montaña', position: 'object-[50%_65%]' },
+              { src: '/images/tony/tony-ciclismo-ruta-01.jpg', alt: 'Tony Alvarado ciclismo de ruta', position: 'object-[50%_58%]' },
+              { src: '/images/tony/tony-ciclismo-vacas-02.jpg', alt: 'Tony Alvarado ciclismo en el campo', position: 'object-[50%_65%]' },
+            ]}
+          />
+        </div>
+      </section>
       <SectionDivider />
       <BusinessEcosystem />
       <SectionDivider />

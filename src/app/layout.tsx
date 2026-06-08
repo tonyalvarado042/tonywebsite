@@ -16,23 +16,23 @@ export const metadata: Metadata = {
   title: 'Tony Alvarado — Coach y entrenador de ciclismo en Costa Rica',
   description:
     'Coach y entrenador de ciclismo en Costa Rica. Fundador de Pure Cycling, PuroMTB y Bike & Bed Hotels. Más de 22 años construyendo comunidad y propósito alrededor del mountain bike y el ciclismo de ruta.',
-  metadataBase: new URL('https://tonywebsite-three.vercel.app'),
+  metadataBase: new URL('https://www.tonyalvarado.com'),
   alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
     locale: 'es_CR',
-    url: 'https://tonywebsite-three.vercel.app',
+    url: 'https://www.tonyalvarado.com',
     siteName: 'Tony Alvarado',
     title: 'Tony Alvarado — Coach y entrenador de ciclismo en Costa Rica',
     description:
       'Coach y entrenador de ciclismo en Costa Rica, fundador de Pure Cycling, PuroMTB y Bike & Bed Hotels.',
-    images: [{ url: '/images/tony-principal.png', width: 1200, height: 630, alt: 'Tony Alvarado — coach y entrenador de ciclismo en Costa Rica' }],
+    images: [{ url: '/images/og/tony-alvarado-og.jpg', width: 1200, height: 630, alt: 'Tony Alvarado — coach y entrenador de ciclismo en Costa Rica' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Tony Alvarado — Coach y entrenador de ciclismo en Costa Rica',
     description: 'Coach y entrenador de ciclismo en Costa Rica. Fundador de Pure Cycling, PuroMTB y Bike & Bed Hotels.',
-    images: ['/images/tony-principal.png'],
+    images: ['/images/og/tony-alvarado-og.jpg'],
   },
   robots: {
     index: true,

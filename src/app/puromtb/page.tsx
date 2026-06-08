@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Bike, ShoppingBag, Users, Award, ExternalLink } from 'lucide-react'
 import JsonLd from '@/components/JsonLd'
+import PhotoStrip from '@/components/ui/PhotoStrip'
 import { SITE_URL, websiteRef, personRef, puroMTBOrg } from '@/lib/structured-data'
 
 export const metadata = {
@@ -124,7 +125,7 @@ export default function PuroMTBPage() {
                 alt="Tony Alvarado en PuroMTB"
                 width={600}
                 height={450}
-                className="h-80 w-full object-cover object-top md:h-96"
+                className="h-80 w-full object-cover object-[50%_25%] md:h-96"
               />
             </div>
 
@@ -150,6 +151,44 @@ export default function PuroMTBPage() {
               </p>
             </div>
 
+          </div>
+        </div>
+      </section>
+
+      {/* Tienda — imágenes reales */}
+      <section className="bg-brand-bg py-12">
+        <div className="mx-auto max-w-6xl px-6 md:px-12">
+          <div className="overflow-hidden rounded-2xl">
+            <Image
+              src="/images/puromtb/puromtb-store-interior-01.png"
+              alt="Interior tienda PuroMTB — ciclismo en Costa Rica"
+              width={1200}
+              height={600}
+              className="w-full object-cover"
+              loading="lazy"
+            />
+          </div>
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="overflow-hidden rounded-2xl">
+              <Image
+                src="/images/puromtb/puromtb-online-store-01.png"
+                alt="Tienda online PuroMTB"
+                width={600}
+                height={400}
+                className="w-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            <div className="overflow-hidden rounded-2xl">
+              <Image
+                src="/images/puromtb/puromtb-store-interior-02.png"
+                alt="Interior tienda PuroMTB"
+                width={600}
+                height={400}
+                className="w-full object-cover"
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -185,6 +224,7 @@ export default function PuroMTBPage() {
           </div>
         </div>
       </section>
+
 
       {/* CTA final */}
       <section className="bg-brand-surface py-20">

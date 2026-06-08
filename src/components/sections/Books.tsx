@@ -101,9 +101,9 @@ export default function Books() {
 
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-2">
-                <Bell size={13} className="text-brand-warm" />
+                <ShoppingCart size={13} className="text-brand-warm" />
                 <span className="text-xs font-bold uppercase tracking-widest text-brand-warm">
-                  Próximamente en Amazon
+                  Disponible en Amazon
                 </span>
               </div>
               <h3 className="text-xl font-bold leading-tight text-brand-text">
@@ -116,11 +116,13 @@ export default function Books() {
                 Un libro sobre fe, propósito y seguir adelante cuando el camino se complica.
               </p>
               <Link
-                href="/libros"
+                href="https://www.amazon.com/-/es/Tony-Alvarado/dp/B0H2QD8PPD/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="mt-1 inline-flex w-fit items-center gap-2 rounded-full border border-brand-warm/40 px-6 py-2.5 text-sm font-semibold text-brand-warm transition-colors hover:bg-brand-warm/10"
               >
-                <Bell size={14} />
-                Avísame cuando esté disponible →
+                <ShoppingCart size={14} />
+                Comprar en Amazon →
               </Link>
             </div>
           </motion.div>

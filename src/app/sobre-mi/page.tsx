@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { CheckCircle2 } from 'lucide-react'
 import JsonLd from '@/components/JsonLd'
+import PhotoStrip from '@/components/ui/PhotoStrip'
 import { SITE_URL, websiteRef, personRef } from '@/lib/structured-data'
 
 export const metadata = {
@@ -65,18 +66,19 @@ export default function SobreMiPage() {
             <p className="text-brand-muted text-left md:text-justify">
               Ingeniero de computación de formación. Empresario de vocación.
               Fundó PuroMTB en 2004 cuando el ciclismo online en Costa Rica era casi inexistente.
-              Hoy tiene tres empresas.
+              Hoy tiene tres empresas que han facturado millones de dólares.
             </p>
           </div>
 
           <div className="w-full flex-1">
             <div className="overflow-hidden rounded-2xl">
               <Image
-                src="/images/tony/tony-about.jpg"
-                alt="Tony Alvarado — coach y entrenador de ciclismo en Costa Rica"
+                src="/images/tony/tony-ciclismo-vertical-01.jpg"
+                alt="Tony Alvarado en bicicleta — coach y entrenador de ciclismo en Costa Rica"
                 width={600}
                 height={750}
-                className="w-full object-cover"
+                className="w-full object-cover object-[50%_20%]"
+                priority
               />
             </div>
           </div>
@@ -121,6 +123,19 @@ export default function SobreMiPage() {
             </div>
 
           </div>
+        </div>
+      </section>
+
+      {/* Franja ciclismo */}
+      <section className="bg-brand-bg py-10">
+        <div className="mx-auto max-w-6xl px-6 md:px-12">
+          <PhotoStrip
+            photos={[
+              { src: '/images/tony/tony-ciclismo-bosque-01.jpg', alt: 'Tony Alvarado en ciclismo de montaña', position: 'object-[50%_65%]' },
+              { src: '/images/tony/tony-ciclismo-ruta-01.jpg', alt: 'Tony Alvarado en ciclismo de ruta', position: 'object-[50%_58%]' },
+              { src: '/images/tony/tony-ciclismo-pradera-01.jpg', alt: 'Tony Alvarado ciclismo en pradera', position: 'object-[55%_60%]' },
+            ]}
+          />
         </div>
       </section>
 
@@ -182,23 +197,27 @@ export default function SobreMiPage() {
 
           <div className="mb-10 grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div className="overflow-hidden rounded-xl border border-brand-border">
-              <Image
-                src="/images/tony-con-john.png"
-                alt="Tony Alvarado con John Maxwell"
-                width={600}
-                height={400}
-                className="w-full object-cover"
-              />
+              <div className="relative h-64 overflow-hidden">
+                <Image
+                  src="/images/tony-con-john.png"
+                  alt="Tony Alvarado con John Maxwell"
+                  fill
+                  className="object-cover object-center"
+                  sizes="(max-width: 640px) 100vw, 50vw"
+                />
+              </div>
               <p className="px-4 py-3 text-sm text-brand-muted">Con John Maxwell</p>
             </div>
             <div className="overflow-hidden rounded-xl border border-brand-border">
-              <Image
-                src="/images/tony/tony-spencer-hoffman.jpg"
-                alt="Tony Alvarado con Spencer Hoffman"
-                width={600}
-                height={400}
-                className="w-full object-cover"
-              />
+              <div className="relative h-64 overflow-hidden">
+                <Image
+                  src="/images/tony/tony-spencer-hoffman.jpg"
+                  alt="Tony Alvarado con Spencer Hoffman"
+                  fill
+                  className="object-cover object-center"
+                  sizes="(max-width: 640px) 100vw, 50vw"
+                />
+              </div>
               <p className="px-4 py-3 text-sm text-brand-muted">Con Spencer Hoffman</p>
             </div>
           </div>

@@ -1,5 +1,4 @@
-// TODO: cambiar a https://tonyalvarado.com cuando el dominio final esté conectado.
-export const SITE_URL = 'https://tonywebsite-three.vercel.app'
+export const SITE_URL = 'https://www.tonyalvarado.com'
 
 // ─── WebSite ──────────────────────────────────────────────────────────────────
 
@@ -36,8 +35,8 @@ export const personSchema: Record<string, unknown> = {
   url: SITE_URL,
   image: {
     '@type': 'ImageObject',
-    url: `${SITE_URL}/images/tony-principal.png`,
-    contentUrl: `${SITE_URL}/images/tony-principal.png`,
+    url: `${SITE_URL}/images/og/tony-alvarado-og.jpg`,
+    contentUrl: `${SITE_URL}/images/og/tony-alvarado-og.jpg`,
   },
   nationality: { '@type': 'Country', name: 'Costa Rica' },
   homeLocation: {
@@ -167,5 +166,10 @@ export const bookSchema2: Record<string, unknown> = {
   publisher: { '@type': 'Person', '@id': `${SITE_URL}/#tony-alvarado` },
   inLanguage: 'es',
   about: ['Ciclismo', 'Transformación personal', 'Fe', 'Disciplina', 'Costa Rica'],
-  // URL de Amazon y fecha de publicación: pendientes de confirmación
+  url: 'https://www.amazon.com/-/es/Tony-Alvarado/dp/B0H2QD8PPD/',
+  offers: {
+    '@type': 'Offer',
+    availability: 'https://schema.org/InStock',
+    url: 'https://www.amazon.com/-/es/Tony-Alvarado/dp/B0H2QD8PPD/',
+  },
 }

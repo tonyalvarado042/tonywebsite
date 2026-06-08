@@ -241,7 +241,7 @@ export default function BusinessEcosystem() {
                     <Building2 size={19} className="text-brand-accent" />
                   </div>
                   <Image
-                    src="/images/logos/bike-bed/bike-bed-logo-alt.png"
+                    src="/images/logos/bike-bed/bike_and_bed_logo.png"
                     alt="Bike & Bed Hotels"
                     width={140}
                     height={42}
