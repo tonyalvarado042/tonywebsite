@@ -135,38 +135,25 @@ export default function BikeBedPage() {
       {/* Galería del hotel */}
       <section className="bg-brand-surface pb-12 pt-0">
         <div className="mx-auto max-w-6xl px-6 md:px-12">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="relative h-72 overflow-hidden rounded-2xl lg:h-80">
-              <Image
-                src="/images/bike-bed/bike-bed-interior-01.jpg"
-                alt="Bike & Bed Hotels — interior premium"
-                fill
-                loading="lazy"
-                className="object-cover object-center"
-                sizes="(max-width: 640px) 100vw, 50vw"
-              />
-            </div>
-            <div className="relative h-72 overflow-hidden rounded-2xl lg:h-80">
-              <Image
-                src="/images/bike-bed/bike-bed-jacuzzi-01.jpg"
-                alt="Bike & Bed Hotels — jacuzzi y amenidades"
-                fill
-                loading="lazy"
-                className="object-cover object-center"
-                sizes="(max-width: 640px) 100vw, 50vw"
-              />
-            </div>
-          </div>
-          <div className="relative mt-4 h-72 overflow-hidden rounded-2xl lg:h-96">
-            <Image
-              src="/images/bike-bed/bike-bed-aerial-02.png"
-              alt="Bike & Bed Hotels — vista aérea del hotel temático de ciclismo en Costa Rica"
-              fill
-              loading="lazy"
-              quality={100}
-              className="object-cover object-center"
-              sizes="(max-width: 768px) 100vw, 1200px"
-            />
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+            {[
+              { src: '/images/bike-bed/bike-bed-interior-01.jpg', alt: 'Bike & Bed Hotels — interior premium' },
+              { src: '/images/bike-bed/bike-bed-jacuzzi-01.jpg', alt: 'Bike & Bed Hotels — jacuzzi y amenidades' },
+              { src: '/images/bike-bed/bike-bed-cabin-exterior-01.jpg', alt: 'Bike & Bed Hotels — cabaña exterior' },
+              { src: '/images/bike-bed/bike-bed-cyclists-couple-01.jpg', alt: 'Bike & Bed Hotels — ciclistas en el hotel' },
+            ].map(({ src, alt }) => (
+              <div key={src} className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-brand-border/40 bg-brand-card">
+                <Image
+                  src={src}
+                  alt={alt}
+                  fill
+                  loading="lazy"
+                  quality={100}
+                  className="object-cover object-center"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              </div>
+            ))}
           </div>
         </div>
       </section>
