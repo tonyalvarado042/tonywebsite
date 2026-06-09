@@ -156,13 +156,13 @@ export default function BikeBedPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-b from-brand-bg/55 via-brand-bg/30 to-brand-bg" />
           <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
-            <span className="mb-5 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-brand-bg/40 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand-accent backdrop-blur-sm">
+            <span className="mb-5 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-brand-bg/40 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand-green backdrop-blur-sm">
               <MapPin size={11} />
               La Fortuna · Volcán Arenal · Costa Rica
             </span>
             <h1 className="mx-auto max-w-3xl text-4xl font-bold leading-tight text-white md:text-5xl lg:text-6xl">
               El primer hotel creado<br />
-              <span className="text-brand-accent">por y para ciclistas.</span>
+              <span className="text-brand-green">por y para ciclistas.</span>
             </h1>
             <p className="mx-auto mt-5 max-w-lg text-base text-white/70 md:text-lg">
               Ciclismo, bienestar, naturaleza y hospitalidad en un solo destino.
@@ -172,7 +172,7 @@ export default function BikeBedPage() {
                 href="https://www.bikeandbedhotels.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-brand-accent px-7 py-3.5 text-sm font-semibold text-white shadow-[0_6px_20px_rgba(125,38,204,0.5)] transition-opacity hover:opacity-90"
+                className="inline-flex items-center gap-2 rounded-full bg-brand-green px-7 py-3.5 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(57,217,138,0.4)] transition-opacity hover:opacity-90"
               >
                 Conocer el hotel <ArrowRight size={15} />
               </Link>
@@ -192,13 +192,13 @@ export default function BikeBedPage() {
         <div className="mx-auto max-w-6xl px-6 md:px-12">
           <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
             {[
-              { value: '+250', label: 'Reseñas de 5 estrellas' },
-              { value: '1°', label: 'Hotel ciclista en Costa Rica' },
-              { value: 'Arenal', label: 'La Fortuna, Costa Rica' },
-              { value: '2050', label: 'Meta: red global de hoteles' },
-            ].map(({ value, label }) => (
+              { value: '+250', label: 'Reseñas de 5 estrellas', gold: false },
+              { value: '1°', label: 'Hotel ciclista en Costa Rica', gold: true },
+              { value: 'Arenal', label: 'La Fortuna, Costa Rica', gold: true },
+              { value: '2050', label: 'Meta: red global de hoteles', gold: false },
+            ].map(({ value, label, gold }) => (
               <div key={label} className="text-center">
-                <p className="text-3xl font-bold text-brand-text md:text-4xl">{value}</p>
+                <p className={`text-3xl font-bold md:text-4xl ${gold ? 'text-brand-gold' : 'text-brand-text'}`}>{value}</p>
                 <p className="mt-1 text-xs uppercase tracking-wider text-brand-muted">{label}</p>
               </div>
             ))}
@@ -433,15 +433,12 @@ export default function BikeBedPage() {
                   constituye una oferta pública de valores.
                 </p>
                 <div className="mt-7">
-                  <a
-                    href="mailto:lm@puromtb.com?subject=Información%20de%20inversión%20Bike%20%26%20Bed"
+                  <Link
+                    href="/contacto#formulario"
                     className="inline-flex items-center gap-2 rounded-full bg-brand-accent px-7 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
                   >
-                    Hablar con el equipo de inversión <ArrowRight size={15} />
-                  </a>
-                  <p className="mt-3 text-xs text-brand-muted">
-                    Luis Marín · <span className="text-brand-accent">lm@puromtb.com</span>
-                  </p>
+                    Solicitar información <ArrowRight size={15} />
+                  </Link>
                 </div>
               </div>
             </div>
@@ -481,7 +478,7 @@ export default function BikeBedPage() {
           </p>
           <h2 className="text-3xl font-bold text-brand-text md:text-4xl">
             1,000 bicicletas y camas<br />
-            <span className="text-brand-accent">en todo el mundo.</span>
+            <span className="text-brand-green">en todo el mundo.</span>
           </h2>
           <p className="mx-auto mt-5 max-w-2xl text-brand-muted">
             Bike & Bed no es solo un hotel. Es el primer paso de un movimiento global.
@@ -519,20 +516,17 @@ export default function BikeBedPage() {
               href="https://www.bikeandbedhotels.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-brand-accent px-8 py-3.5 text-sm font-semibold text-white shadow-[0_6px_20px_rgba(125,38,204,0.4)] transition-opacity hover:opacity-90"
+              className="inline-flex items-center gap-2 rounded-full bg-brand-green px-8 py-3.5 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(57,217,138,0.35)] transition-opacity hover:opacity-90"
             >
               Visitar el hotel <ArrowRight size={15} />
             </Link>
-            <a
-              href="mailto:lm@puromtb.com?subject=Información%20de%20inversión%20Bike%20%26%20Bed"
+            <Link
+              href="/contacto#formulario"
               className="inline-flex items-center gap-2 rounded-full border border-brand-border px-8 py-3.5 text-sm font-semibold text-brand-text transition-colors hover:bg-brand-surface"
             >
               Hablar sobre inversión <ArrowRight size={15} />
-            </a>
+            </Link>
           </div>
-          <p className="mt-5 text-xs text-brand-muted/50">
-            Para inversión: Luis Marín · lm@puromtb.com
-          </p>
         </div>
       </section>
 

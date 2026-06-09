@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { Bike, ShoppingBag, Users, Award, ExternalLink } from 'lucide-react'
+import { Bike, ShoppingBag, Users, Award, ExternalLink, ArrowRight, CheckCircle2 } from 'lucide-react'
 import JsonLd from '@/components/JsonLd'
 import PhotoStrip from '@/components/ui/PhotoStrip'
 import { SITE_URL, websiteRef, personRef, puroMTBOrg } from '@/lib/structured-data'
@@ -71,7 +71,7 @@ export default function PuroMTBPage() {
       {/* Hero */}
       <section className="bg-brand-bg py-20">
         <div className="mx-auto max-w-6xl px-6 text-center md:px-12">
-          <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-brand-accent">
+          <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-brand-green">
             Ecosistema de ciclismo — Costa Rica
           </p>
 
@@ -87,7 +87,7 @@ export default function PuroMTBPage() {
 
           <h1 className="mx-auto max-w-3xl text-4xl font-bold leading-tight text-brand-text md:text-5xl">
             La tienda y comunidad<br />
-            <span className="text-brand-accent">que mueve el ciclismo en Costa Rica.</span>
+            <span className="text-brand-green">que mueve el ciclismo en Costa Rica.</span>
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-brand-muted">
             Más de 20 años impulsando el ciclismo. Tienda física, venta online y una comunidad
@@ -99,7 +99,7 @@ export default function PuroMTBPage() {
               href="https://puromtb.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-brand-accent px-7 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+              className="inline-flex items-center gap-2 rounded-full bg-brand-green px-7 py-3 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(57,217,138,0.3)] transition-opacity hover:opacity-90"
             >
               Visitar PuroMTB
               <ExternalLink size={14} />
@@ -130,12 +130,12 @@ export default function PuroMTBPage() {
             </div>
 
             <div>
-              <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-accent">
-                La historia detrás de la marca
+              <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-green">
+                Historia
               </p>
               <h2 className="mb-5 text-3xl font-bold leading-tight text-brand-text">
                 Fundada con propósito.<br />
-                <span className="text-brand-accent">Construida con comunidad.</span>
+                <span className="text-brand-green">Construida con comunidad.</span>
               </h2>
               <p className="mb-4 text-sm leading-relaxed text-brand-muted">
                 PuroMTB nació en 2004 como un espacio digital para los ciclistas de Costa Rica.
@@ -193,20 +193,75 @@ export default function PuroMTBPage() {
         </div>
       </section>
 
+      {/* Bloque editorial — La comunidad */}
+      <section className="bg-brand-surface py-20">
+        <div className="mx-auto max-w-6xl px-6 md:px-12">
+          <div className="flex flex-col gap-14 lg:flex-row-reverse lg:items-center">
+            <div className="flex-1">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+                <Image
+                  src="/images/tony/tony-puromtb-community.jpg"
+                  alt="Comunidad PuroMTB — ciclistas en Costa Rica"
+                  fill
+                  loading="lazy"
+                  quality={100}
+                  className="object-cover object-center"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+              </div>
+            </div>
+            <div className="flex-1 space-y-5">
+              <p className="text-xs font-semibold uppercase tracking-widest text-brand-green">
+                Comunidad
+              </p>
+              <h2 className="text-3xl font-bold leading-tight text-brand-text md:text-4xl">
+                Más de 20 años<br />
+                <span className="text-brand-green">construyendo comunidad ciclista.</span>
+              </h2>
+              <p className="text-brand-muted">
+                PuroMTB no es solo una tienda. Es el punto de encuentro de miles de ciclistas
+                en Costa Rica y Latinoamérica. Desde 2004, Tony Alvarado construyó una marca
+                que conecta personas, eventos, rutas y equipamiento en un solo ecosistema.
+              </p>
+              <ul className="space-y-3">
+                {[
+                  'Más de 400K seguidores en redes sociales',
+                  'Tienda física y venta online en Costa Rica',
+                  'Parte del ecosistema de ciclismo de Tony Alvarado',
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-sm text-brand-muted">
+                    <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-brand-green" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="https://puromtb.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-brand-green/50 px-7 py-3.5 text-sm font-semibold text-brand-green transition-colors hover:bg-brand-green/10"
+              >
+                Explorar PuroMTB <ArrowRight size={15} />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Pilares */}
       <section className="bg-brand-bg py-20">
         <div className="mx-auto max-w-6xl px-6 md:px-12">
           <div className="mb-12 text-center">
             <h2 className="text-3xl font-bold text-brand-text">
               Más que una tienda.<br />
-              <span className="text-brand-accent">Un punto de encuentro del ciclismo.</span>
+              <span className="text-brand-green">Un punto de encuentro del ciclismo.</span>
             </h2>
           </div>
 
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
             {pilares.map(({ icon: Icon, title, description }) => (
               <div key={title} className="rounded-xl border border-brand-border bg-brand-card p-6">
-                <Icon size={20} className="mb-3 text-brand-accent" />
+                <Icon size={20} className="mb-3 text-brand-green" />
                 <h3 className="mb-2 font-bold text-brand-text">{title}</h3>
                 <p className="text-sm text-brand-muted">{description}</p>
               </div>
@@ -229,7 +284,7 @@ export default function PuroMTBPage() {
       {/* CTA final */}
       <section className="bg-brand-surface py-20">
         <div className="mx-auto max-w-3xl px-6 text-center md:px-12">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-accent">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-green">
             Visita PuroMTB
           </p>
           <h2 className="mb-5 text-3xl font-bold text-brand-text">
@@ -244,7 +299,7 @@ export default function PuroMTBPage() {
               href="https://puromtb.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-brand-accent px-8 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+              className="inline-flex items-center gap-2 rounded-full bg-brand-green px-8 py-3 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(57,217,138,0.3)] transition-opacity hover:opacity-90"
             >
               Ir a PuroMTB
               <ExternalLink size={14} />

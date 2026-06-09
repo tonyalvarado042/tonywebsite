@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { CheckCircle2, Globe, Users, Zap } from 'lucide-react'
+import Image from 'next/image'
+import { CheckCircle2, Globe, Users, Zap, ArrowRight } from 'lucide-react'
 import ContactFormEmbed from '@/components/sections/ContactFormEmbed'
 import JsonLd from '@/components/JsonLd'
 import PhotoStrip from '@/components/ui/PhotoStrip'
@@ -55,12 +56,12 @@ export default function PureCyclingPage() {
       {/* Hero */}
       <section className="bg-brand-bg py-20">
         <div className="mx-auto max-w-6xl px-6 text-center md:px-12">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-accent">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-green">
             Pure Cycling — Entrenamiento de ciclismo online
           </p>
           <h1 className="mx-auto max-w-3xl text-4xl font-bold leading-tight text-brand-text md:text-5xl">
             Entrena con estructura.<br />
-            <span className="text-brand-accent">Vive el ciclismo con más intención.</span>
+            <span className="text-brand-green">Vive el ciclismo con más intención.</span>
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-brand-muted">
             Pure Cycling integra plan de entrenamiento personalizado, nutrición, mentalidad,
@@ -69,19 +70,19 @@ export default function PureCyclingPage() {
 
           <div className="mx-auto mt-12 flex max-w-xl flex-col items-center justify-center gap-8 sm:flex-row">
             <div className="text-center">
-              <Users size={22} className="mx-auto mb-2 text-brand-accent" />
+              <Users size={22} className="mx-auto mb-2 text-brand-green" />
               <p className="text-4xl font-bold text-brand-text">+500</p>
               <p className="mt-1 text-xs uppercase tracking-wider text-brand-muted">Miembros activos</p>
             </div>
             <div className="hidden h-12 w-px bg-brand-border sm:block" />
             <div className="text-center">
-              <Globe size={22} className="mx-auto mb-2 text-brand-accent" />
+              <Globe size={22} className="mx-auto mb-2 text-brand-green" />
               <p className="text-4xl font-bold text-brand-text">+30</p>
               <p className="mt-1 text-xs uppercase tracking-wider text-brand-muted">Países</p>
             </div>
             <div className="hidden h-12 w-px bg-brand-border sm:block" />
             <div className="text-center">
-              <Zap size={22} className="mx-auto mb-2 text-brand-accent" />
+              <Zap size={22} className="mx-auto mb-2 text-brand-green" />
               <p className="text-4xl font-bold text-brand-text">90</p>
               <p className="mt-1 text-xs uppercase tracking-wider text-brand-muted">Días de transformación</p>
             </div>
@@ -92,7 +93,7 @@ export default function PureCyclingPage() {
               href="https://www.skool.com/purecycling"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-brand-accent px-8 py-3.5 text-sm font-semibold text-white shadow-[0_6px_20px_rgba(125,38,204,0.4)] transition-opacity hover:opacity-90"
+              className="inline-flex items-center gap-2 rounded-full bg-brand-green px-8 py-3.5 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(57,217,138,0.35)] transition-opacity hover:opacity-90"
             >
               Únete a la comunidad →
             </Link>
@@ -106,7 +107,7 @@ export default function PureCyclingPage() {
           <div className="mb-12 text-center">
             <h2 className="text-3xl font-bold text-brand-text">
               Todo lo que necesitas para<br />
-              <span className="text-brand-accent">transformarte sobre la bicicleta.</span>
+              <span className="text-brand-green">transformarte sobre la bicicleta.</span>
             </h2>
           </div>
 
@@ -127,6 +128,62 @@ export default function PureCyclingPage() {
               Para ciclistas que quieren mejorar con estructura.
               Para quienes buscan más que kilometraje.
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Bloque editorial — El programa */}
+      <section className="bg-brand-bg py-20">
+        <div className="mx-auto max-w-6xl px-6 md:px-12">
+          <div className="flex flex-col gap-14 lg:flex-row lg:items-center">
+            <div className="flex-1">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+                <Image
+                  src="/images/pure-cycling/pure-cycling-community-road-01.webp"
+                  alt="Comunidad Pure Cycling en ruta — entrenamiento de ciclismo online"
+                  fill
+                  loading="lazy"
+                  quality={100}
+                  className="object-cover object-center"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+              </div>
+            </div>
+            <div className="flex-1 space-y-5">
+              <p className="text-xs font-semibold uppercase tracking-widest text-brand-green">
+                El programa
+              </p>
+              <h2 className="text-3xl font-bold leading-tight text-brand-text md:text-4xl">
+                Estructura que se siente.<br />
+                <span className="text-brand-green">Resultados que se ven.</span>
+              </h2>
+              <p className="text-brand-muted">
+                Pure Cycling no es un plan por WhatsApp ni un Excel con series.
+                Es un sistema integrado con entrenamiento personalizado, nutrición,
+                mentalidad, movilidad, fuerza y espiritualidad. Todo en una comunidad
+                activa con miembros en más de 30 países.
+              </p>
+              <ul className="space-y-3">
+                {[
+                  'Plan de entrenamiento diseñado para tu nivel y objetivo',
+                  'Comunidad activa en más de 30 países',
+                  'Acompañamiento de coaches certificados por Tony Alvarado',
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-sm text-brand-muted">
+                    <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-brand-green" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="https://www.skool.com/purecycling"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-brand-green px-7 py-3.5 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(57,217,138,0.35)] transition-opacity hover:opacity-90"
+              >
+                Conocer el programa <ArrowRight size={15} />
+              </Link>
+            </div>
           </div>
         </div>
       </section>

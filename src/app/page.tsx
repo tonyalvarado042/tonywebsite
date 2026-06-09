@@ -1,3 +1,6 @@
+import Link from 'next/link'
+import Image from 'next/image'
+import { CheckCircle2, ArrowRight } from 'lucide-react'
 import Hero from '@/components/sections/Hero'
 import MetricsStrip from '@/components/sections/MetricsStrip'
 import AboutTony from '@/components/sections/AboutTony'
@@ -159,6 +162,62 @@ export default function HomePage() {
       </section>
       <SectionDivider />
       <BusinessEcosystem />
+      <SectionDivider />
+
+      {/* Bloque editorial — Propósito */}
+      <section className="bg-brand-bg py-20">
+        <div className="mx-auto max-w-6xl px-6 md:px-12">
+          <div className="flex flex-col gap-14 lg:flex-row lg:items-center">
+            <div className="flex-1">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+                <Image
+                  src="/images/tony/tony-ciclismo-bosque-02.jpg"
+                  alt="Tony Alvarado ciclismo de montaña — propósito y transformación"
+                  fill
+                  loading="lazy"
+                  quality={100}
+                  className="object-cover object-center"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+              </div>
+            </div>
+            <div className="flex-1 space-y-5">
+              <p className="text-xs font-semibold uppercase tracking-widest text-brand-green">
+                Propósito
+              </p>
+              <h2 className="text-3xl font-bold leading-tight text-brand-text md:text-4xl">
+                Cada pedalada<br />
+                <span className="text-brand-green">tiene un propósito.</span>
+              </h2>
+              <p className="text-brand-muted">
+                Tony Alvarado no construyó empresas por accidente. Detrás de cada proyecto
+                hay una historia de fe, disciplina y una convicción profunda: la bicicleta
+                puede cambiar vidas. Lo hizo con la suya, y hoy lo hace posible para
+                miles de personas en más de 30 países.
+              </p>
+              <ul className="space-y-3">
+                {[
+                  'Más de 22 años transformando vidas a través del ciclismo',
+                  'Comunidad activa en Costa Rica y Latinoamérica',
+                  'Fe, propósito y disciplina como pilares del liderazgo',
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-sm text-brand-muted">
+                    <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-brand-green" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/sobre-mi"
+                className="inline-flex items-center gap-2 rounded-full border border-brand-green/50 px-7 py-3.5 text-sm font-semibold text-brand-green transition-colors hover:bg-brand-green/10"
+              >
+                Conocer la historia de Tony <ArrowRight size={15} />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <SectionDivider />
       <Books />
       <SectionDivider />

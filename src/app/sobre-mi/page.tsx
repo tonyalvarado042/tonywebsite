@@ -56,12 +56,12 @@ export default function SobreMiPage() {
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-14 px-6 md:flex-row md:px-12">
 
           <div className="flex-1 space-y-6">
-            <p className="text-xs font-semibold uppercase tracking-widest text-brand-accent">
+            <p className="text-xs font-semibold uppercase tracking-widest text-brand-green">
               Sobre Tony Alvarado
             </p>
             <h1 className="text-4xl font-bold leading-tight text-brand-text md:text-5xl">
               Empezó vendiendo manzanas para comprarse una bicicleta.<br />
-              <span className="text-brand-accent">Hoy lleva más de 22 años construyendo con esa misma disciplina.</span>
+              <span className="text-brand-green">Hoy lleva más de 22 años construyendo con esa misma disciplina.</span>
             </h1>
             <p className="text-brand-muted text-left md:text-justify">
               Ingeniero de computación de formación. Empresario de vocación.
@@ -92,7 +92,7 @@ export default function SobreMiPage() {
           <div className="flex flex-col gap-14 lg:flex-row">
 
             <div className="flex-1 space-y-5">
-              <p className="text-xs font-semibold uppercase tracking-widest text-brand-accent">
+              <p className="text-xs font-semibold uppercase tracking-widest text-brand-green">
                 Trayectoria
               </p>
               <h2 className="text-3xl font-bold text-brand-text">
@@ -115,7 +115,7 @@ export default function SobreMiPage() {
               <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 {highlights.map((item) => (
                   <li key={item} className="flex items-center gap-2 text-sm text-brand-muted">
-                    <CheckCircle2 size={15} className="shrink-0 text-brand-accent" />
+                    <CheckCircle2 size={15} className="shrink-0 text-brand-green" />
                     {item}
                   </li>
                 ))}
@@ -144,12 +144,12 @@ export default function SobreMiPage() {
         <div className="mx-auto max-w-4xl px-6 md:px-12">
 
           <div className="mb-10 text-center">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-accent">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-green">
               La historia
             </p>
             <h2 className="text-3xl font-bold text-brand-text">
               La bicicleta primero casi le quitó la vida.<br />
-              <span className="text-brand-accent">Luego se convirtió en su propósito.</span>
+              <span className="text-brand-green">Luego se convirtió en su propósito.</span>
             </h2>
           </div>
 

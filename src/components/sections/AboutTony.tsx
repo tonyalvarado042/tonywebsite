@@ -63,14 +63,14 @@ export default function AboutTony() {
           <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {highlights.map((item) => (
               <li key={item} className="flex items-center gap-2 text-sm text-brand-muted">
-                <CheckCircle2 size={15} className="shrink-0 text-brand-accent" />
+                <CheckCircle2 size={15} className="shrink-0 text-brand-green" />
                 {item}
               </li>
             ))}
           </ul>
           <Link
             href="/sobre-mi"
-            className="inline-flex items-center gap-1 rounded-full border border-brand-accent/50 px-6 py-2 text-sm font-semibold text-brand-accent transition-colors hover:bg-brand-accent/10"
+            className="inline-flex items-center gap-1 rounded-full border border-brand-green/50 px-6 py-2 text-sm font-semibold text-brand-green transition-colors hover:bg-brand-green/10"
           >
             Conoce la historia completa →
           </Link>

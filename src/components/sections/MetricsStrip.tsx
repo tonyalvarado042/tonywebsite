@@ -23,7 +23,7 @@ export default function MetricsStrip() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
             >
-              <p className="text-3xl font-bold text-brand-text md:text-4xl">{m.value}</p>
+              <p className="text-3xl font-bold text-brand-gold md:text-4xl">{m.value}</p>
               <p className="mt-1 text-xs uppercase tracking-wider text-brand-muted">{m.label}</p>
             </motion.div>
           ))}

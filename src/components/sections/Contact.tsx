@@ -86,6 +86,7 @@ export default function Contact() {
               </div>
             ) : (
               <form
+                id="formulario"
                 onSubmit={handleSubmit}
                 className="space-y-4 rounded-2xl border border-brand-border bg-brand-card p-8"
               >

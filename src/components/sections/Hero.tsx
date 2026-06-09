@@ -17,14 +17,14 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: 'easeOut' }}
         >
-          <p className="text-xs font-semibold uppercase tracking-widest text-brand-accent">
+          <p className="text-xs font-semibold uppercase tracking-widest text-brand-green">
             Coach y entrenador de ciclismo · Empresario · Costa Rica
           </p>
 
           <h1 className="text-5xl font-bold leading-tight text-brand-text md:text-6xl lg:text-7xl">
             Tu vida puede<br />
             transformarse<br />
-            <span className="text-brand-accent">sobre dos ruedas.</span>
+            <span className="text-brand-green">sobre dos ruedas.</span>
           </h1>
 
           <p className="max-w-lg text-lg text-brand-muted">
@@ -35,7 +35,7 @@ export default function Hero() {
           <div className="flex flex-col gap-4 pt-2 sm:flex-row">
             <Link
               href="/pure-cycling"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-accent px-8 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-green px-8 py-3.5 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(57,217,138,0.35)] transition-opacity hover:opacity-90"
             >
               Únete a Pure Cycling <ArrowRight size={16} />
             </Link>
@@ -43,7 +43,7 @@ export default function Hero() {
               href="#historia"
               className="inline-flex items-center justify-center gap-2 rounded-full border border-brand-border px-8 py-3.5 text-sm font-semibold text-brand-text transition-colors hover:bg-brand-card"
             >
-              <Play size={16} className="text-brand-accent" />
+              <Play size={16} className="text-brand-green" />
               Conoce la historia de Tony
             </Link>
           </div>

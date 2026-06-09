@@ -21,6 +21,8 @@ const config: Config = {
           warm: '#D7BA9E',
           deep: '#1A0640',
           pop: '#1DCBBC',
+          green: '#39D98A',
+          gold: '#C9A24D',
         },
       },
       fontFamily: {
