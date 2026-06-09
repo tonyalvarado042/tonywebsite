@@ -159,12 +159,13 @@ export default function BikeBedPage() {
           </div>
           <div className="relative mt-4 h-72 overflow-hidden rounded-2xl lg:h-96">
             <Image
-              src="/images/bike-bed/bike-bed-aerial-01.png"
+              src="/images/bike-bed/bike-bed-aerial-02.png"
               alt="Bike & Bed Hotels — vista aérea del hotel temático de ciclismo en Costa Rica"
               fill
               loading="lazy"
+              quality={100}
               className="object-cover object-center"
-              sizes="(max-width: 1024px) 100vw, 1152px"
+              sizes="(max-width: 768px) 100vw, 1200px"
             />
           </div>
         </div>
