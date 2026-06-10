@@ -3,11 +3,11 @@
 import { motion } from 'framer-motion'
 
 const metrics = [
-  { value: '22+', label: 'Años de trayectoria' },
-  { value: '400K', label: 'Comunidad ciclista' },
-  { value: '+30', label: 'Países — Pure Cycling' },
-  { value: '+250', label: 'Reseñas 5★ Bike & Bed' },
-  { value: '3', label: 'Empresas con propósito' },
+  { value: '22+', label: 'Años de trayectoria', color: 'text-brand-gold' },
+  { value: '400K', label: 'Comunidad ciclista', color: 'text-brand-text' },
+  { value: '+30', label: 'Países — Pure Cycling', color: 'text-brand-text' },
+  { value: '+250', label: 'Reseñas 5★ Bike & Bed', color: 'text-brand-gold' },
+  { value: '3', label: 'Empresas con propósito', color: 'text-brand-text' },
 ]
 
 export default function MetricsStrip() {
@@ -23,7 +23,7 @@ export default function MetricsStrip() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
             >
-              <p className="text-3xl font-bold text-brand-gold md:text-4xl">{m.value}</p>
+              <p className={`text-3xl font-bold md:text-4xl ${m.color}`}>{m.value}</p>
               <p className="mt-1 text-xs uppercase tracking-wider text-brand-muted">{m.label}</p>
             </motion.div>
           ))}

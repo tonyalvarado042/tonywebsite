@@ -68,48 +68,57 @@ export default function PuroMTBPage() {
       <JsonLd data={breadcrumbSchema} />
       <JsonLd data={puroMTBOrg} />
 
-      {/* Hero */}
-      <section className="bg-brand-bg py-20">
-        <div className="mx-auto max-w-6xl px-6 text-center md:px-12">
-          <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-brand-green">
-            Ecosistema de ciclismo — Costa Rica
-          </p>
-
-          <div className="mx-auto mb-6 flex justify-center">
-            <Image
-              src="/images/logos/puromtb/logo_puro_mtb.png"
-              alt="PuroMTB"
-              width={200}
-              height={60}
-              className="h-14 w-auto"
-            />
-          </div>
-
-          <h1 className="mx-auto max-w-3xl text-4xl font-bold leading-tight text-brand-text md:text-5xl">
-            La tienda y comunidad<br />
-            <span className="text-brand-green">que mueve el ciclismo en Costa Rica.</span>
-          </h1>
-          <p className="mx-auto mt-5 max-w-xl text-brand-muted">
-            Más de 20 años impulsando el ciclismo. Tienda física, venta online y una comunidad
-            activa construida por Tony Alvarado desde 2004.
-          </p>
-
-          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link
-              href="https://puromtb.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-brand-green px-7 py-3 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(57,217,138,0.3)] transition-opacity hover:opacity-90"
-            >
-              Visitar PuroMTB
-              <ExternalLink size={14} />
-            </Link>
-            <Link
-              href="/contacto"
-              className="inline-flex items-center gap-2 rounded-full border border-brand-border px-7 py-3 text-sm font-semibold text-brand-text transition-colors hover:bg-brand-surface"
-            >
-              Contactar
-            </Link>
+      {/* Hero — fondo tienda */}
+      <section className="relative bg-brand-bg">
+        <div className="relative h-[500px] overflow-hidden md:h-[580px]">
+          <Image
+            src="/images/puromtb/puromtb-store-interior-01.png"
+            alt="Interior tienda PuroMTB — ciclismo en Costa Rica"
+            fill
+            priority
+            quality={80}
+            className="object-cover object-center"
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-brand-bg/70 via-brand-bg/50 to-brand-bg" />
+          <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
+            <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-brand-green">
+              Ecosistema de ciclismo — Costa Rica
+            </p>
+            <div className="mb-6">
+              <Image
+                src="/images/logos/puromtb/logo_puro_mtb.png"
+                alt="PuroMTB"
+                width={200}
+                height={60}
+                className="h-14 w-auto"
+              />
+            </div>
+            <h1 className="mx-auto max-w-3xl text-4xl font-bold leading-tight text-white md:text-5xl">
+              La tienda y comunidad<br />
+              <span className="text-brand-green">que mueve el ciclismo en Costa Rica.</span>
+            </h1>
+            <p className="mx-auto mt-5 max-w-xl text-white/70">
+              Más de 20 años impulsando el ciclismo. Tienda física, venta online y una comunidad
+              activa construida por Tony Alvarado desde 2004.
+            </p>
+            <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <Link
+                href="https://puromtb.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-brand-green px-7 py-3 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(57,217,138,0.3)] transition-opacity hover:opacity-90"
+              >
+                Visitar PuroMTB
+                <ExternalLink size={14} />
+              </Link>
+              <Link
+                href="/contacto"
+                className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-7 py-3 text-sm font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+              >
+                Contactar
+              </Link>
+            </div>
           </div>
         </div>
       </section>

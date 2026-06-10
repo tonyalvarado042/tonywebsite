@@ -211,12 +211,12 @@ export default function BikeBedPage() {
         <div className="mx-auto max-w-6xl px-6 md:px-12">
           <div className="flex flex-col gap-14 lg:flex-row lg:items-center">
             <div className="flex-1 space-y-5">
-              <p className="text-xs font-semibold uppercase tracking-widest text-brand-accent">
+              <p className="text-xs font-semibold uppercase tracking-widest text-brand-green">
                 El concepto
               </p>
               <h2 className="text-3xl font-bold leading-tight text-brand-text md:text-4xl">
                 No es solo un hotel.<br />
-                <span className="text-brand-accent">Es una experiencia transformadora.</span>
+                <span className="text-brand-green">Es una experiencia transformadora.</span>
               </h2>
               <p className="text-brand-muted">
                 Bike & Bed Arenal nació de una idea clara: crear un alojamiento donde los ciclistas
@@ -231,7 +231,7 @@ export default function BikeBedPage() {
               <div className="grid grid-cols-2 gap-3 pt-1">
                 {['Ciclismo', 'Naturaleza', 'Bienestar', 'Comunidad', 'Aventura', 'Hospitalidad'].map((tag) => (
                   <div key={tag} className="flex items-center gap-2 text-sm text-brand-muted">
-                    <CheckCircle2 size={14} className="shrink-0 text-brand-accent" />
+                    <CheckCircle2 size={14} className="shrink-0 text-brand-green" />
                     {tag}
                   </div>
                 ))}
@@ -258,18 +258,18 @@ export default function BikeBedPage() {
       <section className="bg-brand-surface py-20">
         <div className="mx-auto max-w-6xl px-6 md:px-12">
           <div className="mb-12 text-center">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-accent">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-green">
               Diferenciadores
             </p>
             <h2 className="text-3xl font-bold text-brand-text md:text-4xl">
               Por qué Bike & Bed es<br />
-              <span className="text-brand-accent">una propuesta diferente.</span>
+              <span className="text-brand-green">una propuesta diferente.</span>
             </h2>
           </div>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {uniquePoints.map(({ Icon, title, description }) => (
               <div key={title} className="rounded-xl border border-brand-border bg-brand-card p-6">
-                <Icon size={20} className="mb-3 text-brand-accent" />
+                <Icon size={20} className="mb-3 text-brand-green" />
                 <h3 className="mb-2 font-bold text-brand-text">{title}</h3>
                 <p className="text-sm text-brand-muted">{description}</p>
               </div>
@@ -282,12 +282,12 @@ export default function BikeBedPage() {
       <section className="bg-brand-bg py-16">
         <div className="mx-auto max-w-6xl px-6 md:px-12">
           <div className="mb-10 text-center">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-accent">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-green">
               El hotel
             </p>
             <h2 className="text-3xl font-bold text-brand-text">
               Diseñado para vivir<br />
-              <span className="text-brand-accent">el ciclismo completo.</span>
+              <span className="text-brand-green">el ciclismo completo.</span>
             </h2>
           </div>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
@@ -315,12 +315,12 @@ export default function BikeBedPage() {
       <section className="bg-brand-surface py-20">
         <div className="mx-auto max-w-6xl px-6 md:px-12">
           <div className="mb-12 text-center">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-accent">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-green">
               Hospedaje
             </p>
             <h2 className="text-3xl font-bold text-brand-text md:text-4xl">
               Diseñado desde cero<br />
-              <span className="text-brand-accent">para el ciclista moderno.</span>
+              <span className="text-brand-green">para el ciclista moderno.</span>
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-brand-muted">
               Cada detalle de Bike & Bed está pensado para el ciclista: infraestructura especializada,
@@ -333,8 +333,8 @@ export default function BikeBedPage() {
                 key={label}
                 className="flex items-center gap-4 rounded-xl border border-brand-border bg-brand-card p-5"
               >
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-accent/10">
-                  <Icon size={18} className="text-brand-accent" />
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-green/10">
+                  <Icon size={18} className="text-brand-green" />
                 </div>
                 <span className="font-medium text-brand-text">{label}</span>
               </div>
@@ -346,12 +346,12 @@ export default function BikeBedPage() {
       {/* ─── BIENESTAR ─── */}
       <section className="bg-brand-bg py-20">
         <div className="mx-auto max-w-4xl px-6 text-center md:px-12">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-accent">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-green">
             Bienestar · Naturaleza · Comunidad
           </p>
           <h2 className="text-3xl font-bold text-brand-text md:text-4xl">
             Pedalea. Descansa.<br />
-            <span className="text-brand-accent">Reconéctate.</span>
+            <span className="text-brand-green">Reconéctate.</span>
           </h2>
           <p className="mx-auto mt-5 max-w-2xl text-brand-muted">
             Bike & Bed no solo piensa en la bicicleta. Piensa en todo lo que hay alrededor.
@@ -382,12 +382,12 @@ export default function BikeBedPage() {
       <section id="inversion" className="bg-brand-surface py-20">
         <div className="mx-auto max-w-6xl px-6 md:px-12">
           <div className="mb-12 text-center">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-accent">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-gold">
               Oportunidad de inversión
             </p>
             <h2 className="text-3xl font-bold text-brand-text md:text-4xl">
               Bike & Bed como inversión.<br />
-              <span className="text-brand-accent">Un modelo probado, con visión global.</span>
+              <span className="text-brand-gold">Un modelo probado, con visión global.</span>
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-brand-muted">
               No estás invirtiendo en una idea. Estás participando en un modelo que ya opera,
@@ -398,14 +398,14 @@ export default function BikeBedPage() {
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {investmentPillars.map(({ title, description }) => (
               <div key={title} className="rounded-xl border border-brand-border bg-brand-card p-6">
-                <div className="mb-3 h-1 w-8 rounded-full bg-brand-accent" />
+                <div className="mb-3 h-1 w-8 rounded-full bg-brand-gold" />
                 <h3 className="mb-2 font-bold text-brand-text">{title}</h3>
                 <p className="text-sm text-brand-muted">{description}</p>
               </div>
             ))}
           </div>
 
-          <div className="mt-8 overflow-hidden rounded-2xl border border-brand-accent/20 bg-brand-card">
+          <div className="mt-8 overflow-hidden rounded-2xl border border-brand-gold/20 bg-brand-card">
             <div className="flex flex-col lg:flex-row">
               <div className="relative h-64 shrink-0 overflow-hidden lg:h-auto lg:w-72">
                 <Image
@@ -419,7 +419,7 @@ export default function BikeBedPage() {
                 />
               </div>
               <div className="flex flex-col justify-center p-8 md:p-10">
-                <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-brand-accent">
+                <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-brand-gold">
                   Participación desde
                 </p>
                 <p className="text-5xl font-bold text-brand-text">US$50,000</p>
@@ -435,7 +435,7 @@ export default function BikeBedPage() {
                 <div className="mt-7">
                   <Link
                     href="/contacto#formulario"
-                    className="inline-flex items-center gap-2 rounded-full bg-brand-accent px-7 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                    className="inline-flex items-center gap-2 rounded-full bg-brand-green px-7 py-3.5 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(57,217,138,0.3)] transition-opacity hover:opacity-90"
                   >
                     Solicitar información <ArrowRight size={15} />
                   </Link>
@@ -450,18 +450,18 @@ export default function BikeBedPage() {
       <section className="bg-brand-bg py-20">
         <div className="mx-auto max-w-6xl px-6 md:px-12">
           <div className="mb-12 text-center">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-accent">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-gold">
               Cómo participar
             </p>
             <h2 className="text-3xl font-bold text-brand-text">
               3 maneras de unirte a<br />
-              <span className="text-brand-accent">Bike & Bed.</span>
+              <span className="text-brand-green">Bike & Bed.</span>
             </h2>
           </div>
           <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
             {joinModes.map(({ number, title, description }) => (
               <div key={number} className="rounded-xl border border-brand-border bg-brand-card p-7">
-                <p className="mb-4 text-4xl font-bold text-brand-accent/25">{number}</p>
+                <p className="mb-4 text-4xl font-bold text-brand-gold/30">{number}</p>
                 <h3 className="mb-3 text-lg font-bold text-brand-text">{title}</h3>
                 <p className="text-sm text-brand-muted">{description}</p>
               </div>
@@ -473,7 +473,7 @@ export default function BikeBedPage() {
       {/* ─── VISIÓN GLOBAL ─── */}
       <section className="bg-brand-surface py-20">
         <div className="mx-auto max-w-4xl px-6 text-center md:px-12">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-accent">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-gold">
             Visión 2050
           </p>
           <h2 className="text-3xl font-bold text-brand-text md:text-4xl">
@@ -493,7 +493,7 @@ export default function BikeBedPage() {
               { value: '+400K', label: 'Red de ciclistas conectados' },
             ].map(({ value, label }) => (
               <div key={label} className="rounded-xl border border-brand-border bg-brand-card p-6">
-                <p className="text-2xl font-bold text-brand-accent">{value}</p>
+                <p className="text-2xl font-bold text-brand-gold">{value}</p>
                 <p className="mt-1 text-xs text-brand-muted">{label}</p>
               </div>
             ))}

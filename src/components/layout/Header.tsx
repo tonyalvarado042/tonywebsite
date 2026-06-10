@@ -73,7 +73,7 @@ export default function Header() {
           <div className="flex items-center gap-4">
             <Link
               href="/pure-cycling"
-              className="hidden rounded-full bg-brand-accent px-5 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-90 md:block"
+              className="hidden rounded-full bg-brand-green px-5 py-2 text-sm font-semibold text-brand-bg transition-opacity hover:opacity-90 md:block"
             >
               Únete a Pure Cycling
             </Link>
@@ -104,7 +104,7 @@ export default function Header() {
 
             {/* Empresas en mobile */}
             <div>
-              <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-brand-accent">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-brand-green">
                 Empresas
               </p>
               <div className="flex flex-col gap-3 pl-2">
@@ -123,7 +123,7 @@ export default function Header() {
 
             <Link
               href="/pure-cycling"
-              className="mt-2 rounded-full bg-brand-accent px-5 py-2.5 text-center text-sm font-semibold text-white"
+              className="mt-2 rounded-full bg-brand-green px-5 py-2.5 text-center text-sm font-semibold text-brand-bg"
               onClick={() => setMenuOpen(false)}
             >
               Únete a Pure Cycling

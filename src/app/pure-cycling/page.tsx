@@ -53,50 +53,62 @@ export default function PureCyclingPage() {
       <JsonLd data={breadcrumbSchema} />
       <JsonLd data={pureCyclingOrg} />
 
-      {/* Hero */}
-      <section className="bg-brand-bg py-20">
-        <div className="mx-auto max-w-6xl px-6 text-center md:px-12">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-green">
-            Pure Cycling — Entrenamiento de ciclismo online
-          </p>
-          <h1 className="mx-auto max-w-3xl text-4xl font-bold leading-tight text-brand-text md:text-5xl">
-            Entrena con estructura.<br />
-            <span className="text-brand-green">Vive el ciclismo con más intención.</span>
-          </h1>
-          <p className="mx-auto mt-5 max-w-xl text-brand-muted">
-            Pure Cycling integra plan de entrenamiento personalizado, nutrición, mentalidad,
-            movilidad, fuerza y espiritualidad. Miembros en más de 30 países.
-          </p>
+      {/* Hero — fondo editorial */}
+      <section className="relative bg-brand-bg">
+        <div className="relative h-[580px] overflow-hidden md:h-[660px]">
+          <Image
+            src="/images/pure-cycling/pure-cycling-team-02.jpeg"
+            alt="Comunidad Pure Cycling — ciclistas en entrenamiento"
+            fill
+            priority
+            quality={90}
+            className="object-cover object-[50%_20%]"
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-brand-bg/65 via-brand-bg/45 to-brand-bg" />
+          <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-green">
+              Pure Cycling — Entrenamiento de ciclismo online
+            </p>
+            <h1 className="mx-auto max-w-3xl text-4xl font-bold leading-tight text-white md:text-5xl">
+              Entrena con estructura.<br />
+              <span className="text-brand-green">Vive el ciclismo con más intención.</span>
+            </h1>
+            <p className="mx-auto mt-5 max-w-xl text-white/70">
+              Pure Cycling integra plan de entrenamiento personalizado, nutrición, mentalidad,
+              movilidad, fuerza y espiritualidad. Miembros en más de 30 países.
+            </p>
 
-          <div className="mx-auto mt-12 flex max-w-xl flex-col items-center justify-center gap-8 sm:flex-row">
-            <div className="text-center">
-              <Users size={22} className="mx-auto mb-2 text-brand-green" />
-              <p className="text-4xl font-bold text-brand-text">+500</p>
-              <p className="mt-1 text-xs uppercase tracking-wider text-brand-muted">Miembros activos</p>
+            <div className="mx-auto mt-10 flex max-w-xl flex-col items-center justify-center gap-8 sm:flex-row">
+              <div className="text-center">
+                <Users size={20} className="mx-auto mb-2 text-brand-green" />
+                <p className="text-3xl font-bold text-white md:text-4xl">+500</p>
+                <p className="mt-1 text-xs uppercase tracking-wider text-white/60">Miembros activos</p>
+              </div>
+              <div className="hidden h-10 w-px bg-white/20 sm:block" />
+              <div className="text-center">
+                <Globe size={20} className="mx-auto mb-2 text-brand-green" />
+                <p className="text-3xl font-bold text-white md:text-4xl">+30</p>
+                <p className="mt-1 text-xs uppercase tracking-wider text-white/60">Países</p>
+              </div>
+              <div className="hidden h-10 w-px bg-white/20 sm:block" />
+              <div className="text-center">
+                <Zap size={20} className="mx-auto mb-2 text-brand-green" />
+                <p className="text-3xl font-bold text-white md:text-4xl">90</p>
+                <p className="mt-1 text-xs uppercase tracking-wider text-white/60">Días de transformación</p>
+              </div>
             </div>
-            <div className="hidden h-12 w-px bg-brand-border sm:block" />
-            <div className="text-center">
-              <Globe size={22} className="mx-auto mb-2 text-brand-green" />
-              <p className="text-4xl font-bold text-brand-text">+30</p>
-              <p className="mt-1 text-xs uppercase tracking-wider text-brand-muted">Países</p>
-            </div>
-            <div className="hidden h-12 w-px bg-brand-border sm:block" />
-            <div className="text-center">
-              <Zap size={22} className="mx-auto mb-2 text-brand-green" />
-              <p className="text-4xl font-bold text-brand-text">90</p>
-              <p className="mt-1 text-xs uppercase tracking-wider text-brand-muted">Días de transformación</p>
-            </div>
-          </div>
 
-          <div className="mt-10 flex justify-center">
-            <Link
-              href="https://www.skool.com/purecycling"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-brand-green px-8 py-3.5 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(57,217,138,0.35)] transition-opacity hover:opacity-90"
-            >
-              Únete a la comunidad →
-            </Link>
+            <div className="mt-8">
+              <Link
+                href="https://www.skool.com/purecycling"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-brand-green px-8 py-3.5 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(57,217,138,0.35)] transition-opacity hover:opacity-90"
+              >
+                Únete a la comunidad →
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -114,14 +126,14 @@ export default function PureCyclingPage() {
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {features.map(({ title, description }) => (
               <div key={title} className="rounded-xl border border-brand-border bg-brand-card p-6">
-                <CheckCircle2 size={18} className="mb-3 text-brand-accent" />
+                <CheckCircle2 size={18} className="mb-3 text-brand-green" />
                 <h3 className="mb-2 font-bold text-brand-text">{title}</h3>
                 <p className="text-sm text-brand-muted">{description}</p>
               </div>
             ))}
           </div>
 
-          <div className="mt-10 rounded-xl border border-brand-accent/30 bg-brand-card p-7">
+          <div className="mt-10 rounded-xl border border-brand-green/20 bg-brand-card p-7">
             <h3 className="mb-2 font-bold text-brand-text">¿Para quién es Pure Cycling?</h3>
             <p className="text-sm text-brand-muted">
               Para principiantes que quieren empezar bien.
