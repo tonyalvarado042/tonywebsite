@@ -10,7 +10,7 @@ export default function Hero() {
     <section className="relative min-h-[600px] overflow-hidden bg-brand-bg md:min-h-[700px]">
       {/* Fondo — paisaje montañoso con ciclista */}
       <Image
-        src="/images/og/Ciclista en paisaje montañoso con luz.png"
+        src="/images/og/ciclista-paisaje-montanoso-luz.png"
         alt=""
         fill
         priority
