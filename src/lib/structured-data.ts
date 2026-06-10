@@ -115,7 +115,8 @@ export const puroMTBOrg: Record<string, unknown> = {
   name: 'PuroMTB',
   description:
     'Tienda y comunidad de mountain bike y ciclismo de ruta en Costa Rica. Fundada en 2004.',
-  url: SITE_URL,
+  url: 'https://puromtb.com',
+  sameAs: ['https://puromtb.com'],
   foundingDate: '2004',
   founder: { '@type': 'Person', '@id': `${SITE_URL}/#tony-alvarado` },
 }
