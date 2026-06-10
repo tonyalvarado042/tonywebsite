@@ -4,51 +4,62 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { MapPin, Mic, Bike, Building2, BookOpen, Handshake } from 'lucide-react'
 
-const inquiryTypes = [
-  'Solicitar conferencia / evento',
-  'Unirme o conocer Pure Cycling',
-  'Información sobre Bike & Bed Hotels',
-  'Consulta sobre PuroMTB',
-  'Libros / entrevistas / prensa',
-  'Alianza profesional',
-  'Otro',
+export const interesOptions = [
+  { value: 'pure-cycling',        label: 'Pure Cycling' },
+  { value: 'puromtb',            label: 'PuroMTB' },
+  { value: 'bike-bed',           label: 'Bike & Bed Hotels' },
+  { value: 'bike-bed-inversion', label: 'Inversión Bike & Bed' },
+  { value: 'conferencias',       label: 'Conferencias' },
+  { value: 'libros',             label: 'Libros' },
+  { value: 'contacto-general',   label: 'Contacto general' },
+  { value: 'otro',               label: 'Otro' },
 ]
 
+const validValues = interesOptions.map((o) => o.value)
+
 const canRequest = [
-  { icon: Mic, label: 'Conferencia / keynote' },
-  { icon: Bike, label: 'Entrenamiento con Pure Cycling' },
+  { icon: Mic,       label: 'Conferencia / keynote' },
+  { icon: Bike,      label: 'Entrenamiento con Pure Cycling' },
   { icon: Building2, label: 'Inversión en Bike & Bed Hotels' },
-  { icon: BookOpen, label: 'Libros y entrevistas' },
+  { icon: BookOpen,  label: 'Libros y entrevistas' },
   { icon: Handshake, label: 'Alianzas profesionales' },
 ]
 
 const inputClass =
-  'w-full rounded-lg border border-brand-border bg-brand-surface px-4 py-3 text-sm text-brand-text outline-none transition-colors placeholder:text-brand-muted/40 focus:border-brand-accent'
+  'w-full rounded-lg border border-brand-border bg-brand-surface px-4 py-3 text-sm text-brand-text outline-none transition-colors placeholder:text-brand-muted/40 focus:border-brand-green'
 
 type Status = 'idle' | 'sending' | 'success' | 'error'
 
-export default function Contact() {
+type Props = {
+  initialInterest?: string
+}
+
+export default function Contact({ initialInterest }: Props) {
+  const safeInitial = validValues.includes(initialInterest ?? '') ? initialInterest! : 'contacto-general'
+
   const [status, setStatus] = useState<Status>('idle')
+  const [interes, setInteres] = useState(safeInitial)
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     if (status === 'sending') return
-
     setStatus('sending')
 
     const form = e.currentTarget
     const data = new FormData(form)
+    const origen = typeof window !== 'undefined' ? window.location.href : '/contacto'
 
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          nombre: data.get('nombre'),
-          correo: data.get('correo'),
+          nombre:  data.get('nombre'),
+          correo:  data.get('correo'),
           whatsapp: data.get('whatsapp'),
           empresa: data.get('empresa'),
-          tipo: data.get('tipo'),
+          interes,
+          origen,
           mensaje: data.get('mensaje'),
         }),
       })
@@ -59,10 +70,11 @@ export default function Contact() {
     }
   }
 
+  const interesLabel = interesOptions.find((o) => o.value === interes)?.label ?? 'tu solicitud'
+
   return (
     <section id="contacto" className="bg-brand-surface py-20">
       <div className="mx-auto max-w-6xl px-6 md:px-12">
-
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
 
           {/* Formulario */}
@@ -73,14 +85,16 @@ export default function Contact() {
             transition={{ duration: 0.7 }}
           >
             {status === 'success' ? (
-              <div className="flex h-full min-h-[400px] items-center justify-center rounded-2xl border border-brand-accent/30 bg-brand-card p-10 text-center">
+              <div className="flex h-full min-h-[400px] items-center justify-center rounded-2xl border border-brand-green/20 bg-brand-card p-10 text-center">
                 <div>
-                  <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-brand-accent/15">
-                    <span className="text-xl font-bold text-brand-accent">✓</span>
+                  <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-brand-green/15">
+                    <span className="text-xl font-bold text-brand-green">✓</span>
                   </div>
-                  <p className="font-semibold text-brand-text">Mensaje enviado</p>
+                  <p className="font-semibold text-brand-text">Solicitud recibida.</p>
                   <p className="mt-2 text-sm text-brand-muted">
-                    El equipo de Tony lo revisará y te responderá pronto.
+                    Recibimos tu consulta sobre{' '}
+                    <span className="font-semibold text-brand-green">{interesLabel}</span>.{' '}
+                    El equipo la revisará y te responderá lo antes posible.
                   </p>
                 </div>
               </div>
@@ -140,12 +154,17 @@ export default function Contact() {
 
                 <div>
                   <label className="mb-1.5 block text-xs font-medium text-brand-muted">
-                    ¿En qué te podemos ayudar?
+                    Interés principal
                   </label>
-                  <select name="tipo" required className={inputClass}>
-                    <option value="">Selecciona una opción</option>
-                    {inquiryTypes.map((t) => (
-                      <option key={t} value={t}>{t}</option>
+                  <select
+                    name="interes"
+                    value={interes}
+                    onChange={(e) => setInteres(e.target.value)}
+                    required
+                    className={inputClass}
+                  >
+                    {interesOptions.map((o) => (
+                      <option key={o.value} value={o.value}>{o.label}</option>
                     ))}
                   </select>
                 </div>
@@ -172,7 +191,7 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={status === 'sending'}
-                  className="w-full rounded-full bg-brand-accent py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="w-full rounded-full bg-brand-green py-3.5 text-sm font-semibold text-brand-bg transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {status === 'sending' ? 'Enviando...' : 'Enviar mensaje →'}
                 </button>
@@ -191,10 +210,9 @@ export default function Contact() {
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.1 }}
           >
-
             <div>
-              <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-brand-accent">
-                ¿Qué puedes solicitar?
+              <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-brand-green">
+                ¿En qué te podemos ayudar?
               </p>
               <h3 className="mb-5 text-xl font-bold text-brand-text">
                 Este formulario es la vía directa al equipo de Tony.
@@ -202,8 +220,8 @@ export default function Contact() {
               <ul className="space-y-3">
                 {canRequest.map(({ icon: Icon, label }) => (
                   <li key={label} className="flex items-center gap-3">
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-accent/10">
-                      <Icon size={15} className="text-brand-accent" />
+                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-green/10">
+                      <Icon size={15} className="text-brand-green" />
                     </div>
                     <span className="text-sm text-brand-muted">{label}</span>
                   </li>
@@ -220,13 +238,12 @@ export default function Contact() {
             </div>
 
             <div className="flex items-start gap-3">
-              <MapPin size={18} className="mt-0.5 shrink-0 text-brand-accent" />
+              <MapPin size={18} className="mt-0.5 shrink-0 text-brand-green" />
               <div>
                 <p className="text-sm font-semibold text-brand-text">Ubicación</p>
                 <p className="mt-0.5 text-sm text-brand-muted">San José, Costa Rica</p>
               </div>
             </div>
-
           </motion.div>
 
         </div>

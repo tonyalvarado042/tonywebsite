@@ -90,7 +90,7 @@ export default function Speaking() {
           transition={{ duration: 0.5 }}
         >
           <Link
-            href="/contacto"
+            href="/contacto?interes=conferencias#formulario"
             className="inline-flex items-center gap-2 rounded-full bg-brand-accent px-8 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
           >
             <Mic size={16} /> Solicitar una conferencia

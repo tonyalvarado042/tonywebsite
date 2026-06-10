@@ -119,7 +119,7 @@ export default function BikeAndBed() {
             las ubicaciones disponibles y las opciones de participación.
           </p>
           <Link
-            href="/#contacto"
+            href="/contacto?interes=bike-bed-inversion#formulario"
             className="inline-flex items-center justify-center rounded-full bg-brand-accent px-8 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
           >
             Agenda una llamada de inversión →

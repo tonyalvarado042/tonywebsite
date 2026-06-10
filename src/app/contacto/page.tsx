@@ -31,7 +31,14 @@ const breadcrumbSchema = {
   ],
 }
 
-export default function ContactoPage() {
+export default async function ContactoPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ interes?: string }>
+}) {
+  const params = await searchParams
+  const initialInterest = params?.interes
+
   return (
     <main className="bg-brand-bg">
       <JsonLd data={webPageSchema} />
@@ -40,23 +47,24 @@ export default function ContactoPage() {
       {/* Hero */}
       <section className="py-20 px-6">
         <div className="mx-auto max-w-3xl text-center md:px-12">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-accent">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-green">
             Contacto
           </p>
           <h1 className="text-4xl font-bold leading-tight text-brand-text md:text-5xl">
-            Hablemos de tu evento,{' '}
-            <span className="text-brand-accent">tu proceso</span>
-            {' '}o tu próxima oportunidad.
+            Hablemos del{' '}
+            <span className="text-brand-green">próximo paso.</span>
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-brand-muted">
-            Usa el formulario para solicitar una conferencia, conocer Pure Cycling, consultar
-            sobre Bike & Bed Hotels, preguntar por libros o proponer una alianza.
-            Respondemos a cada mensaje.
+            Cuéntanos qué necesitas y el equipo de Tony Alvarado revisará tu solicitud
+            para darte una respuesta clara y enfocada.
+          </p>
+          <p className="mt-3 text-xs text-brand-muted/50">
+            Pure Cycling · Conferencias · Bike &amp; Bed Hotels · Inversión · PuroMTB · Libros · Colaboraciones
           </p>
         </div>
       </section>
 
-      <Contact />
+      <Contact initialInterest={initialInterest} />
     </main>
   )
 }

@@ -434,7 +434,7 @@ export default function BikeBedPage() {
                 </p>
                 <div className="mt-7">
                   <Link
-                    href="/contacto#formulario"
+                    href="/contacto?interes=bike-bed-inversion#formulario"
                     className="inline-flex items-center gap-2 rounded-full bg-brand-green px-7 py-3.5 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(57,217,138,0.3)] transition-opacity hover:opacity-90"
                   >
                     Solicitar información <ArrowRight size={15} />
@@ -521,7 +521,7 @@ export default function BikeBedPage() {
               Visitar el hotel <ArrowRight size={15} />
             </Link>
             <Link
-              href="/contacto#formulario"
+              href="/contacto?interes=bike-bed-inversion#formulario"
               className="inline-flex items-center gap-2 rounded-full border border-brand-border px-8 py-3.5 text-sm font-semibold text-brand-text transition-colors hover:bg-brand-surface"
             >
               Hablar sobre inversión <ArrowRight size={15} />

@@ -310,7 +310,7 @@ export default function PureCyclingPage() {
       </section>
 
       <ContactFormEmbed
-        preselectedType="Unirme o conocer Pure Cycling"
+        preselectedType="pure-cycling"
         heading="¿Listo para dar el primer paso?"
         subheading="Completa el formulario y nuestro equipo te enviará los detalles del programa y los próximos pasos."
       />

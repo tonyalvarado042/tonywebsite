@@ -113,7 +113,7 @@ export default function PuroMTBPage() {
                 <ExternalLink size={14} />
               </Link>
               <Link
-                href="/contacto"
+                href="/contacto?interes=puromtb#formulario"
                 className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-7 py-3 text-sm font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white/20"
               >
                 Contactar
