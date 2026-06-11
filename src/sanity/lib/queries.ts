@@ -1,4 +1,22 @@
-// GROQ queries for Sanity blog posts
+// GROQ queries for Sanity content
+
+// ─── Metrics ──────────────────────────────────────────────────────────────────
+
+export const homeMetricsQuery = `
+  *[_type == "metric" && page == "home" && isActive == true] | order(order asc) {
+    value,
+    label,
+    color
+  }
+`
+
+export type SanityMetric = {
+  value: string
+  label: string
+  color: string
+}
+
+// ─── Blog posts ───────────────────────────────────────────────────────────────
 
 export const postsQuery = `
   *[_type == "post" && status == "published"] | order(publishedAt desc) {

@@ -16,6 +16,9 @@ import Contact from '@/components/sections/Contact'
 import JsonLd from '@/components/JsonLd'
 import { puroMTBOrg, SITE_URL, websiteRef, personRef } from '@/lib/structured-data'
 import { faqs, faqAnswerToPlainText } from '@/data/faqs'
+import { homeMetrics, type MetricItem } from '@/data/metrics'
+import { client } from '@/sanity/lib/client'
+import { homeMetricsQuery, type SanityMetric } from '@/sanity/lib/queries'
 
 const webPageSchema = {
   '@context': 'https://schema.org',
@@ -55,7 +58,31 @@ function SectionDivider() {
   )
 }
 
-export default function HomePage() {
+const VALID_COLORS = new Set(['gold', 'text', 'green'])
+
+export default async function HomePage() {
+  let metrics: MetricItem[] = homeMetrics
+
+  try {
+    const raw: SanityMetric[] = await client.fetch(
+      homeMetricsQuery,
+      {},
+      { next: { revalidate: 60 } }
+    )
+    if (Array.isArray(raw) && raw.length > 0) {
+      const normalized: MetricItem[] = raw
+        .filter((m) => m.value?.trim() && m.label?.trim())
+        .map((m) => ({
+          value: m.value.trim(),
+          label: m.label.trim(),
+          color: (VALID_COLORS.has(m.color) ? m.color : 'text') as MetricItem['color'],
+        }))
+      if (normalized.length > 0) metrics = normalized
+    }
+  } catch {
+    // Sanity unavailable — local fallback active
+  }
+
   return (
     <main>
       <JsonLd data={webPageSchema} />
@@ -63,7 +90,7 @@ export default function HomePage() {
       <JsonLd data={faqSchema} />
 
       <Hero />
-      <MetricsStrip />
+      <MetricsStrip metrics={metrics} />
       <AboutTony />
       <SectionDivider />
       <FaithAndPurpose />

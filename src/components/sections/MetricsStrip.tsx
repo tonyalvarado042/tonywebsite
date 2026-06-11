@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { homeMetrics } from '@/data/metrics'
+import { homeMetrics, type MetricItem } from '@/data/metrics'
 
 const colorClass = {
   gold:  'text-brand-gold',
@@ -9,12 +9,18 @@ const colorClass = {
   green: 'text-brand-green',
 } as const
 
-export default function MetricsStrip() {
+type MetricsStripProps = {
+  metrics?: MetricItem[]
+}
+
+export default function MetricsStrip({ metrics }: MetricsStripProps) {
+  const items = metrics && metrics.length > 0 ? metrics : homeMetrics
+
   return (
     <section className="border-y border-brand-border bg-brand-surface py-10">
       <div className="mx-auto max-w-7xl px-6 md:px-12">
         <div className="flex flex-wrap items-start justify-around gap-8 text-center">
-          {homeMetrics.map((m, i) => (
+          {items.map((m, i) => (
             <motion.div
               key={m.label}
               initial={{ opacity: 0, y: 15 }}
