@@ -1,5 +1,41 @@
 // GROQ queries for Sanity content
 
+// ─── Testimonials ─────────────────────────────────────────────────────────────
+
+export const testimonialsByPageQuery = `
+  *[_type == "testimonial" && page == $page && isActive == true] | order(order asc) {
+    name,
+    role,
+    country,
+    quote,
+    videoUrl,
+    posterUrl,
+    featured,
+    page,
+    order,
+    posterImage {
+      alt,
+      asset
+    }
+  }
+`
+
+export type SanityTestimonial = {
+  name: string | null
+  role: string | null
+  country: string | null
+  quote: string | null
+  videoUrl: string | null
+  posterUrl: string | null
+  featured: boolean
+  page: string
+  order: number
+  posterImage: {
+    alt?: string
+    asset: { _ref: string; _type: string }
+  } | null
+}
+
 // ─── Metrics ──────────────────────────────────────────────────────────────────
 
 export const homeMetricsQuery = `

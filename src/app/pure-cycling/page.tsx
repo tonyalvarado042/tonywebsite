@@ -5,6 +5,10 @@ import ContactFormEmbed from '@/components/sections/ContactFormEmbed'
 import JsonLd from '@/components/JsonLd'
 import PhotoStrip from '@/components/ui/PhotoStrip'
 import { SITE_URL, websiteRef, personRef, pureCyclingOrg } from '@/lib/structured-data'
+import { client } from '@/sanity/lib/client'
+import { testimonialsByPageQuery, type SanityTestimonial } from '@/sanity/lib/queries'
+import { urlForImage } from '@/sanity/lib/image'
+import { pureCyclingTestimonials, type TestimonialItem } from '@/data/testimonials'
 
 export const metadata = {
   title: 'Pure Cycling — Entrenador de ciclismo online | Tony Alvarado',
@@ -46,7 +50,45 @@ const features = [
   { title: 'Programa de transformación en 90 días', description: 'Un proceso estructurado con inicio, progresión y resultado.' },
 ]
 
-export default function PureCyclingPage() {
+export default async function PureCyclingPage() {
+  let testimonials: TestimonialItem[] = pureCyclingTestimonials
+
+  try {
+    const raw: SanityTestimonial[] = await client.fetch(
+      testimonialsByPageQuery,
+      { page: 'pure-cycling' },
+      { next: { revalidate: 60 } }
+    )
+    if (Array.isArray(raw) && raw.length > 0) {
+      const normalized: TestimonialItem[] = raw
+        .filter((t) => t.videoUrl?.trim() || t.posterUrl?.trim() || t.posterImage)
+        .map((t) => {
+          let resolvedPoster = t.posterUrl ?? null
+          if (!resolvedPoster && t.posterImage?.asset) {
+            try {
+              resolvedPoster = urlForImage(t.posterImage).width(800).url()
+            } catch {
+              resolvedPoster = null
+            }
+          }
+          return {
+            name: t.name,
+            role: t.role,
+            country: t.country,
+            quote: t.quote,
+            videoUrl: t.videoUrl,
+            posterUrl: resolvedPoster,
+            page: t.page,
+            order: t.order,
+            featured: t.featured,
+          }
+        })
+      if (normalized.length > 0) testimonials = normalized
+    }
+  } catch {
+    // Sanity unavailable — local fallback active
+  }
+
   return (
     <main>
       <JsonLd data={webPageSchema} />
@@ -290,19 +332,40 @@ export default function PureCyclingPage() {
           </div>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {[
-              { n: '01', poster: '/images/testimonials/pure-cycling/testimonio-pure-cycling-01.PNG' },
-              { n: '02', poster: '/images/testimonials/pure-cycling/testimonio-pure-cycling-02.PNG' },
-              { n: '03', poster: '/images/testimonials/pure-cycling/testimonio-pure-cycling-03.PNG' },
-            ].map(({ n, poster }) => (
-              <div key={n} className="overflow-hidden rounded-2xl border border-brand-border bg-brand-card">
-                <video
-                  controls
-                  preload="none"
-                  poster={poster}
-                  className="w-full aspect-video"
-                  src={`/videos/testimonials/pure-cycling/testimonio-pure-cycling-${n}.mp4`}
-                />
+            {testimonials.map((t, i) => (
+              <div key={t.videoUrl ?? t.posterUrl ?? i} className="overflow-hidden rounded-2xl border border-brand-border bg-brand-card">
+                {t.videoUrl ? (
+                  <video
+                    controls
+                    preload="none"
+                    poster={t.posterUrl ?? undefined}
+                    className="w-full aspect-video"
+                    src={t.videoUrl}
+                  />
+                ) : t.posterUrl ? (
+                  <div className="relative aspect-video w-full">
+                    <Image
+                      src={t.posterUrl}
+                      alt={t.name ? `Testimonio de ${t.name}` : 'Testimonio Pure Cycling'}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                ) : null}
+                {(t.name || t.quote) && (
+                  <div className="p-4">
+                    {t.quote && (
+                      <p className="text-sm text-brand-muted">&ldquo;{t.quote}&rdquo;</p>
+                    )}
+                    {t.name && (
+                      <p className="mt-2 text-xs font-semibold text-brand-text">
+                        {t.name}
+                        {t.role && <span className="font-normal text-brand-muted"> · {t.role}</span>}
+                        {t.country && <span className="font-normal text-brand-muted"> · {t.country}</span>}
+                      </p>
+                    )}
+                  </div>
+                )}
               </div>
             ))}
           </div>
