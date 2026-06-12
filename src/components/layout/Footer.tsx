@@ -132,6 +132,20 @@ export default function Footer() {
 
           <div>
             <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-brand-accent">
+              Legal
+            </p>
+            <nav className="flex flex-col gap-2">
+              <Link href="/politica-de-privacidad" className="text-sm text-brand-muted transition-colors hover:text-brand-text">
+                Política de privacidad
+              </Link>
+              <Link href="/terminos-y-condiciones" className="text-sm text-brand-muted transition-colors hover:text-brand-text">
+                Términos y condiciones
+              </Link>
+            </nav>
+          </div>
+
+          <div>
+            <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-brand-accent">
               Empresas
             </p>
             <div className="flex flex-col gap-4">

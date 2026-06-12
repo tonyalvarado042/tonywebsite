@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { interesOptions } from '@/components/sections/Contact'
 import { pushGTMEvent } from '@/lib/gtm'
 
@@ -160,6 +161,13 @@ export default function ContactFormEmbed({
             </button>
             <p className="text-center text-xs text-brand-muted/50">
               Respondemos en un plazo de 24 a 48 horas hábiles.
+            </p>
+            <p className="text-center text-xs text-brand-muted/50">
+              Al enviar este formulario aceptas que usemos tus datos para responder tu solicitud.{' '}
+              <Link href="/politica-de-privacidad" className="underline transition-colors hover:text-brand-muted">
+                Política de privacidad
+              </Link>
+              .
             </p>
           </form>
         )}

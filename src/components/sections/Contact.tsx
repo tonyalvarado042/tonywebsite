@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { MapPin, Mic, Bike, Building2, BookOpen, Handshake } from 'lucide-react'
 import { pushGTMEvent } from '@/lib/gtm'
@@ -208,6 +209,13 @@ export default function Contact({ initialInterest }: Props) {
                 </button>
                 <p className="text-center text-xs text-brand-muted/50">
                   Respondemos en un plazo de 24 a 48 horas hábiles.
+                </p>
+                <p className="text-center text-xs text-brand-muted/50">
+                  Al enviar este formulario aceptas que usemos tus datos para responder tu solicitud.{' '}
+                  <Link href="/politica-de-privacidad" className="underline transition-colors hover:text-brand-muted">
+                    Política de privacidad
+                  </Link>
+                  .
                 </p>
               </form>
             )}
