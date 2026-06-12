@@ -10,6 +10,23 @@ export const metadata = {
   description:
     'Reflexiones, guías y respuestas prácticas sobre entrenamiento, mountain bike, ciclismo de ruta, emprendimiento, fe y turismo deportivo en Costa Rica. Por Tony Alvarado.',
   alternates: { canonical: '/blog' },
+  openGraph: {
+    type: 'website',
+    locale: 'es_CR',
+    url: 'https://www.tonyalvarado.com/blog',
+    siteName: 'Tony Alvarado',
+    title: 'Blog — Tony Alvarado | Ciclismo, liderazgo y transformación',
+    description:
+      'Reflexiones, guías y consejos sobre ciclismo, disciplina, fe y emprendimiento. Escrito desde Costa Rica para el mundo.',
+    images: [{ url: '/images/og/ciclista-paisaje-montanoso-poca-luz.png', width: 1672, height: 941, alt: 'Blog de Tony Alvarado — ciclismo, liderazgo y transformación' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Blog — Tony Alvarado | Ciclismo, liderazgo y transformación',
+    description:
+      'Reflexiones, guías y consejos sobre ciclismo, disciplina, fe y emprendimiento. Escrito desde Costa Rica para el mundo.',
+    images: ['/images/og/ciclista-paisaje-montanoso-poca-luz.png'],
+  },
 }
 
 const webPageSchema = {

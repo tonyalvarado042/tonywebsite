@@ -7,6 +7,23 @@ export const metadata = {
   description:
     'Escríbenos para solicitar una conferencia, conocer Pure Cycling, consultar sobre Bike & Bed Hotels, libros o alianzas profesionales. San José, Costa Rica.',
   alternates: { canonical: '/contacto' },
+  openGraph: {
+    type: 'website',
+    locale: 'es_CR',
+    url: 'https://www.tonyalvarado.com/contacto',
+    siteName: 'Tony Alvarado',
+    title: 'Contacto — Tony Alvarado',
+    description:
+      'Conferencias, Pure Cycling, Bike & Bed Hotels o alianzas profesionales. El equipo responde en 24-48 horas hábiles desde Costa Rica.',
+    images: [{ url: '/images/og/tony-alvarado-og-source.jpeg', width: 1600, height: 900, alt: 'Tony Alvarado — contacto' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Contacto — Tony Alvarado',
+    description:
+      'Conferencias, Pure Cycling, Bike & Bed Hotels o alianzas profesionales. El equipo responde en 24-48 horas hábiles desde Costa Rica.',
+    images: ['/images/og/tony-alvarado-og-source.jpeg'],
+  },
 }
 
 const webPageSchema = {

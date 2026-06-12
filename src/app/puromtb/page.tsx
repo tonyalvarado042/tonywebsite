@@ -10,6 +10,23 @@ export const metadata = {
   description:
     'PuroMTB es la tienda y comunidad de ciclismo fundada por Tony Alvarado en 2004. Más de 20 años impulsando el ciclismo en Costa Rica. Tienda física, venta online y comunidad activa.',
   alternates: { canonical: '/puromtb' },
+  openGraph: {
+    type: 'website',
+    locale: 'es_CR',
+    url: 'https://www.tonyalvarado.com/puromtb',
+    siteName: 'Tony Alvarado',
+    title: 'PuroMTB — La comunidad ciclista de Costa Rica',
+    description:
+      'Fundada en 2004 por Tony Alvarado. Tienda física, venta online y comunidad activa. Más de 20 años impulsando el ciclismo en Costa Rica.',
+    images: [{ url: '/images/puromtb/puromtb-store-interior-01.png', width: 1448, height: 1086, alt: 'PuroMTB — tienda y comunidad ciclista en Costa Rica' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'PuroMTB — La comunidad ciclista de Costa Rica',
+    description:
+      'Fundada en 2004 por Tony Alvarado. Tienda física, venta online y comunidad activa. Más de 20 años impulsando el ciclismo en Costa Rica.',
+    images: ['/images/puromtb/puromtb-store-interior-01.png'],
+  },
 }
 
 const webPageSchema = {

@@ -9,6 +9,23 @@ export const metadata = {
   description:
     'Libros de Tony Alvarado: "Secretos para ser un empresario exitoso" y "Sigue Pedaleando", ambos disponibles en Amazon. Ciclismo, transformación personal, fe y emprendimiento desde Costa Rica.',
   alternates: { canonical: '/libros' },
+  openGraph: {
+    type: 'website',
+    locale: 'es_CR',
+    url: 'https://www.tonyalvarado.com/libros',
+    siteName: 'Tony Alvarado',
+    title: 'Libros de Tony Alvarado — Sigue Pedaleando y más',
+    description:
+      '"Sigue Pedaleando" y "Secretos para ser un empresario exitoso". Disponibles en Amazon. Ciclismo, transformación personal, fe y emprendimiento.',
+    images: [{ url: '/images/books/libro-secretos-mockup.jpg', width: 1600, height: 1067, alt: 'Libros de Tony Alvarado — disponibles en Amazon' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Libros de Tony Alvarado — Sigue Pedaleando y más',
+    description:
+      '"Sigue Pedaleando" y "Secretos para ser un empresario exitoso". Disponibles en Amazon. Ciclismo, transformación personal, fe y emprendimiento.',
+    images: ['/images/books/libro-secretos-mockup.jpg'],
+  },
 }
 
 const webPageSchema = {

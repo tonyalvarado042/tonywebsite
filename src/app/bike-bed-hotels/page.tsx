@@ -13,6 +13,23 @@ export const metadata = {
   description:
     'Bike & Bed Hotels: el primer hotel creado por y para ciclistas en Costa Rica, ubicado en La Fortuna junto al Volcán Arenal. Ciclismo, bienestar y naturaleza. Oportunidad de inversión en turismo deportivo.',
   alternates: { canonical: '/bike-bed-hotels' },
+  openGraph: {
+    type: 'website',
+    locale: 'es_CR',
+    url: 'https://www.tonyalvarado.com/bike-bed-hotels',
+    siteName: 'Tony Alvarado',
+    title: 'Bike & Bed Hotels — Hotel boutique para ciclistas en Arenal',
+    description:
+      'Hotel temático de ciclismo en La Fortuna junto al Volcán Arenal. Más de 250 reseñas de 5 estrellas. Oportunidades de inversión en turismo deportivo.',
+    images: [{ url: '/images/bike-bed/bike-bed-aerial-volcano-01.png', width: 1448, height: 1086, alt: 'Bike & Bed Hotels — hotel para ciclistas en Arenal, Costa Rica' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Bike & Bed Hotels — Hotel boutique para ciclistas en Arenal',
+    description:
+      'Hotel temático de ciclismo en La Fortuna junto al Volcán Arenal. Más de 250 reseñas de 5 estrellas. Oportunidades de inversión en turismo deportivo.',
+    images: ['/images/bike-bed/bike-bed-aerial-volcano-01.png'],
+  },
 }
 
 const webPageSchema = {

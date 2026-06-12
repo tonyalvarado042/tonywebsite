@@ -10,6 +10,23 @@ export const metadata = {
   description:
     'Conoce la historia de Tony Alvarado (Anthony Alvarado): su accidente a los 16 años, cómo el ciclismo de montaña y de ruta transformó su vida y el propósito detrás de sus empresas en Costa Rica.',
   alternates: { canonical: '/sobre-mi' },
+  openGraph: {
+    type: 'website',
+    locale: 'es_CR',
+    url: 'https://www.tonyalvarado.com/sobre-mi',
+    siteName: 'Tony Alvarado',
+    title: 'La historia de Tony Alvarado — Ciclismo, fe y transformación',
+    description:
+      'Desde un accidente a los 16 años hasta fundar un ecosistema de empresas alrededor del ciclismo. La historia real de Tony Alvarado desde Costa Rica.',
+    images: [{ url: '/images/og/tony-alvarado-og-source.jpeg', width: 1600, height: 900, alt: 'Tony Alvarado — coach y entrenador de ciclismo en Costa Rica' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'La historia de Tony Alvarado — Ciclismo, fe y transformación',
+    description:
+      'Desde un accidente a los 16 años hasta fundar un ecosistema de empresas alrededor del ciclismo. La historia real de Tony Alvarado desde Costa Rica.',
+    images: ['/images/og/tony-alvarado-og-source.jpeg'],
+  },
 }
 
 const webPageSchema = {

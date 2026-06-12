@@ -9,6 +9,23 @@ export const metadata = {
   description:
     'Solicita a Tony Alvarado como conferencista para tu evento. Temas de liderazgo con propósito, disciplina, ciclismo, emprendimiento y transformación personal desde Costa Rica.',
   alternates: { canonical: '/conferencias' },
+  openGraph: {
+    type: 'website',
+    locale: 'es_CR',
+    url: 'https://www.tonyalvarado.com/conferencias',
+    siteName: 'Tony Alvarado',
+    title: 'Conferencias — Tony Alvarado | Ciclismo, liderazgo y propósito',
+    description:
+      'Historia real, fe y 22 años de experiencia empresarial. Tony Alvarado disponible para keynotes, eventos corporativos y conferencias presenciales o virtuales.',
+    images: [{ url: '/images/og/tony-alvarado-og-source.jpeg', width: 1600, height: 900, alt: 'Tony Alvarado — conferencista de ciclismo, liderazgo y transformación' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Conferencias — Tony Alvarado | Ciclismo, liderazgo y propósito',
+    description:
+      'Historia real, fe y 22 años de experiencia empresarial. Tony Alvarado disponible para keynotes, eventos corporativos y conferencias presenciales o virtuales.',
+    images: ['/images/og/tony-alvarado-og-source.jpeg'],
+  },
 }
 
 const webPageSchema = {

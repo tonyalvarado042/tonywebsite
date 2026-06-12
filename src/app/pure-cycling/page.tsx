@@ -15,6 +15,23 @@ export const metadata = {
   description:
     'Únete a Pure Cycling: programa de entrenamiento de ciclismo online con plan personalizado de MTB y ciclismo de ruta. Coach y entrenador de ciclismo en Costa Rica con miembros en más de 30 países.',
   alternates: { canonical: '/pure-cycling' },
+  openGraph: {
+    type: 'website',
+    locale: 'es_CR',
+    url: 'https://www.tonyalvarado.com/pure-cycling',
+    siteName: 'Tony Alvarado',
+    title: 'Pure Cycling — Transforma tu vida a través del ciclismo',
+    description:
+      'Comunidad en más de 30 países. Entrenamiento, mentalidad, nutrición y acompañamiento para ciclistas que quieren transformar su vida.',
+    images: [{ url: '/images/og/ciclista-paisaje-montanoso-poca-luz.png', width: 1672, height: 941, alt: 'Pure Cycling — comunidad de ciclismo en más de 30 países' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Pure Cycling — Transforma tu vida a través del ciclismo',
+    description:
+      'Comunidad en más de 30 países. Entrenamiento, mentalidad, nutrición y acompañamiento para ciclistas que quieren transformar su vida.',
+    images: ['/images/og/ciclista-paisaje-montanoso-poca-luz.png'],
+  },
 }
 
 const webPageSchema = {

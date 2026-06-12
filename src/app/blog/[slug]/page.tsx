@@ -169,13 +169,39 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
+  const fallbackImage = '/images/og/tony-alvarado-og-source.jpeg'
   try {
     const post: SanityBlogPost | null = await client.fetch(postBySlugQuery, { slug })
     if (post) {
+      const postTitle = `${post.seoTitle || post.title} — Tony Alvarado`
+      const postDescription = post.seoDescription || post.summary || ''
+      const postUrl = `https://www.tonyalvarado.com/blog/${post.slug}`
+      let ogImageUrl = fallbackImage
+      try {
+        if (post.mainImage) {
+          const resolved = urlForImage(post.mainImage)?.width(1200).height(630).url()
+          if (resolved) ogImageUrl = resolved
+        }
+      } catch { /* usa fallback */ }
       return {
-        title: `${post.seoTitle || post.title} — Tony Alvarado`,
-        description: post.seoDescription || post.summary || '',
+        title: postTitle,
+        description: postDescription,
         alternates: { canonical: `/blog/${post.slug}` },
+        openGraph: {
+          type: 'article',
+          locale: 'es_CR',
+          url: postUrl,
+          siteName: 'Tony Alvarado',
+          title: postTitle,
+          description: postDescription,
+          images: [{ url: ogImageUrl, width: 1200, height: 630, alt: post.title }],
+        },
+        twitter: {
+          card: 'summary_large_image',
+          title: postTitle,
+          description: postDescription,
+          images: [ogImageUrl],
+        },
       }
     }
   } catch { /* fall through to notFound */ }
