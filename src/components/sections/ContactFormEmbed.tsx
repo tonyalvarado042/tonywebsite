@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { interesOptions } from '@/components/sections/Contact'
+import { pushGTMEvent } from '@/lib/gtm'
 
 const validValues = interesOptions.map((o) => o.value)
 
@@ -48,7 +49,17 @@ export default function ContactFormEmbed({
         }),
       })
       const json = await res.json()
-      setStatus(json.success ? 'success' : 'error')
+      if (json.success) {
+        pushGTMEvent('form_submit_success', {
+          form_name: 'embedded_contact_form',
+          interest: interes,
+          page_path: window.location.pathname,
+          form_location: 'embedded_section',
+        })
+        setStatus('success')
+      } else {
+        setStatus('error')
+      }
     } catch {
       setStatus('error')
     }

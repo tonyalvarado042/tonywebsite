@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import TrackedLink from '@/components/common/TrackedLink'
 import { Mic, CheckCircle2, Users, Target, Heart, TrendingUp, Compass } from 'lucide-react'
 import JsonLd from '@/components/JsonLd'
 import { SITE_URL, websiteRef, personRef } from '@/lib/structured-data'
@@ -114,12 +115,14 @@ export default function ConferenciasPage() {
             eventos presenciales y virtuales en Costa Rica y en el extranjero.
           </p>
           <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-            <Link
+            <TrackedLink
               href="/contacto?interes=conferencias#formulario"
+              event="click_contact_conference"
+              params={{ cta_text: 'Solicitar conferencia', cta_location: 'conferencias_hero', destination_type: 'internal', interest: 'conferencias' }}
               className="inline-flex items-center gap-2 rounded-full bg-brand-accent px-8 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
             >
               <Mic size={15} /> Solicitar conferencia →
-            </Link>
+            </TrackedLink>
             <Link
               href="/sobre-mi"
               className="inline-flex items-center gap-2 rounded-full border border-brand-accent/40 px-8 py-3.5 text-sm font-semibold text-brand-accent transition-colors hover:bg-brand-accent/10"
@@ -240,12 +243,14 @@ export default function ConferenciasPage() {
             El equipo revisará la solicitud y dará seguimiento directamente.
           </p>
           <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-            <Link
+            <TrackedLink
               href="/contacto?interes=conferencias#formulario"
+              event="click_contact_conference"
+              params={{ cta_text: 'Solicitar conferencia', cta_location: 'conferencias_cta_final', destination_type: 'internal', interest: 'conferencias' }}
               className="inline-flex items-center gap-2 rounded-full bg-brand-accent px-8 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
             >
               <Mic size={15} /> Solicitar conferencia →
-            </Link>
+            </TrackedLink>
             <Link
               href="/sobre-mi"
               className="inline-flex items-center gap-2 rounded-full border border-brand-accent/40 px-8 py-3.5 text-sm font-semibold text-brand-accent transition-colors hover:bg-brand-accent/10"

@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import TrackedLink from '@/components/common/TrackedLink'
 import {
   Star, MapPin, Users, TrendingUp, Shield, Globe,
   CheckCircle2, ArrowRight, Zap, Mountain, Heart, Wrench, Building2,
@@ -168,14 +169,16 @@ export default function BikeBedPage() {
               Ciclismo, bienestar, naturaleza y hospitalidad en un solo destino.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Link
+              <TrackedLink
                 href="https://www.bikeandbedhotels.com/"
+                event="click_bike_bed"
+                params={{ cta_text: 'Conocer el hotel', cta_location: 'bike_bed_hero', destination_type: 'external' }}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full bg-brand-green px-7 py-3.5 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(57,217,138,0.4)] transition-opacity hover:opacity-90"
               >
                 Conocer el hotel <ArrowRight size={15} />
-              </Link>
+              </TrackedLink>
               <Link
                 href="#inversion"
                 className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white/20"
@@ -433,12 +436,14 @@ export default function BikeBedPage() {
                   constituye una oferta pública de valores.
                 </p>
                 <div className="mt-7">
-                  <Link
+                  <TrackedLink
                     href="/contacto?interes=bike-bed-inversion#formulario"
+                    event="click_contact_investment"
+                    params={{ cta_text: 'Solicitar información', cta_location: 'bike_bed_investment', destination_type: 'internal', interest: 'bike-bed-inversion' }}
                     className="inline-flex items-center gap-2 rounded-full bg-brand-green px-7 py-3.5 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(57,217,138,0.3)] transition-opacity hover:opacity-90"
                   >
                     Solicitar información <ArrowRight size={15} />
-                  </Link>
+                  </TrackedLink>
                 </div>
               </div>
             </div>
@@ -512,20 +517,24 @@ export default function BikeBedPage() {
             la oportunidad de inversión, estamos para atenderte.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-            <Link
+            <TrackedLink
               href="https://www.bikeandbedhotels.com/"
+              event="click_bike_bed"
+              params={{ cta_text: 'Visitar el hotel', cta_location: 'bike_bed_cta_final', destination_type: 'external' }}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full bg-brand-green px-8 py-3.5 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(57,217,138,0.35)] transition-opacity hover:opacity-90"
             >
               Visitar el hotel <ArrowRight size={15} />
-            </Link>
-            <Link
+            </TrackedLink>
+            <TrackedLink
               href="/contacto?interes=bike-bed-inversion#formulario"
+              event="click_contact_investment"
+              params={{ cta_text: 'Hablar sobre inversión', cta_location: 'bike_bed_cta_final', destination_type: 'internal', interest: 'bike-bed-inversion' }}
               className="inline-flex items-center gap-2 rounded-full border border-brand-border px-8 py-3.5 text-sm font-semibold text-brand-text transition-colors hover:bg-brand-surface"
             >
               Hablar sobre inversión <ArrowRight size={15} />
-            </Link>
+            </TrackedLink>
           </div>
         </div>
       </section>

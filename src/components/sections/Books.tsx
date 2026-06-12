@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { ShoppingCart, Bell } from 'lucide-react'
+import { pushGTMEvent } from '@/lib/gtm'
 
 export default function Books() {
   return (
@@ -72,6 +73,7 @@ export default function Books() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-1 inline-flex w-fit items-center gap-2 rounded-full bg-brand-accent px-6 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                onClick={() => pushGTMEvent('click_amazon', { cta_text: 'Comprar en Amazon', cta_location: 'books_secretos', destination_type: 'external', interest: 'libros', page_path: window.location.pathname })}
               >
                 <ShoppingCart size={14} />
                 Comprar en Amazon
@@ -120,6 +122,7 @@ export default function Books() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-1 inline-flex w-fit items-center gap-2 rounded-full border border-brand-warm/40 px-6 py-2.5 text-sm font-semibold text-brand-warm transition-colors hover:bg-brand-warm/10"
+                onClick={() => pushGTMEvent('click_amazon', { cta_text: 'Comprar en Amazon', cta_location: 'books_sigue_pedaleando', destination_type: 'external', interest: 'libros', page_path: window.location.pathname })}
               >
                 <ShoppingCart size={14} />
                 Comprar en Amazon →

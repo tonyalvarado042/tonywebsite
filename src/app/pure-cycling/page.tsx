@@ -1,5 +1,5 @@
-import Link from 'next/link'
 import Image from 'next/image'
+import TrackedLink from '@/components/common/TrackedLink'
 import { CheckCircle2, Globe, Users, Zap, ArrowRight } from 'lucide-react'
 import ContactFormEmbed from '@/components/sections/ContactFormEmbed'
 import JsonLd from '@/components/JsonLd'
@@ -142,14 +142,16 @@ export default async function PureCyclingPage() {
             </div>
 
             <div className="mt-8">
-              <Link
+              <TrackedLink
                 href="https://www.skool.com/purecycling"
+                event="click_skool"
+                params={{ cta_text: 'Únete a la comunidad', cta_location: 'pure_cycling_hero', destination_type: 'external', interest: 'pure-cycling' }}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full bg-brand-green px-8 py-3.5 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(57,217,138,0.35)] transition-opacity hover:opacity-90"
               >
                 Únete a la comunidad →
-              </Link>
+              </TrackedLink>
             </div>
           </div>
         </div>
@@ -229,14 +231,16 @@ export default async function PureCyclingPage() {
                   </li>
                 ))}
               </ul>
-              <Link
+              <TrackedLink
                 href="https://www.skool.com/purecycling"
+                event="click_skool"
+                params={{ cta_text: 'Conocer el programa', cta_location: 'pure_cycling_program', destination_type: 'external', interest: 'pure-cycling' }}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full bg-brand-green px-7 py-3.5 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(57,217,138,0.35)] transition-opacity hover:opacity-90"
               >
                 Conocer el programa <ArrowRight size={15} />
-              </Link>
+              </TrackedLink>
             </div>
           </div>
         </div>

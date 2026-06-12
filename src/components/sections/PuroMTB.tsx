@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Calendar, Globe, ShoppingCart, Users } from 'lucide-react'
+import { pushGTMEvent } from '@/lib/gtm'
 
 const milestones = [
   { Icon: Globe, year: '2004', label: 'Fundación del sitio web' },
@@ -58,6 +59,7 @@ export default function PuroMTB() {
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1 text-sm font-semibold text-brand-accent transition-colors hover:underline"
+              onClick={() => pushGTMEvent('click_puromtb', { cta_text: 'Visita PuroMTB', cta_location: 'puromtb_section', destination_type: 'external', page_path: window.location.pathname })}
             >
               Visita PuroMTB →
             </Link>

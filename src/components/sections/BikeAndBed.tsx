@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Shield, Star, Target, TrendingUp } from 'lucide-react'
+import { pushGTMEvent } from '@/lib/gtm'
 
 const BIKE_BED_LOGO = '/images/logos/bike-bed/bike_and_bed_logo.png'
 
@@ -121,6 +122,7 @@ export default function BikeAndBed() {
           <Link
             href="/contacto?interes=bike-bed-inversion#formulario"
             className="inline-flex items-center justify-center rounded-full bg-brand-accent px-8 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+            onClick={() => pushGTMEvent('click_contact_investment', { cta_text: 'Agenda una llamada de inversión', cta_location: 'bikeandbed_section', destination_type: 'internal', interest: 'bike-bed-inversion', page_path: window.location.pathname })}
           >
             Agenda una llamada de inversión →
           </Link>

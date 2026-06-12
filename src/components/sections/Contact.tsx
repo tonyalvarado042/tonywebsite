@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { MapPin, Mic, Bike, Building2, BookOpen, Handshake } from 'lucide-react'
+import { pushGTMEvent } from '@/lib/gtm'
 
 export const interesOptions = [
   { value: 'pure-cycling',        label: 'Pure Cycling' },
@@ -64,7 +65,17 @@ export default function Contact({ initialInterest }: Props) {
         }),
       })
       const json = await res.json()
-      setStatus(json.success ? 'success' : 'error')
+      if (json.success) {
+        pushGTMEvent('form_submit_success', {
+          form_name: 'contact_form',
+          interest: interes,
+          page_path: window.location.pathname,
+          form_location: 'contact_page',
+        })
+        setStatus('success')
+      } else {
+        setStatus('error')
+      }
     } catch {
       setStatus('error')
     }
