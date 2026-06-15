@@ -10,18 +10,155 @@ import {
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
+function readString(value: unknown): string {
+  return typeof value === 'string' ? value.trim() : ''
+}
+
+const VALID_INTERES = [
+  'pure-cycling',
+  'puromtb',
+  'bike-bed',
+  'bike-bed-inversion',
+  'conferencias',
+  'libros',
+  'contacto-general',
+  'otro',
+]
+
+// Dominios siempre permitidos
+const ALWAYS_ALLOWED_ORIGINS = [
+  'https://www.tonyalvarado.com',
+  'https://tonyalvarado.com',
+]
+
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json()
-    const { nombre, correo, whatsapp, empresa, interes: interesRaw, tipo, origen, mensaje } =
-      body as Record<string, string>
+    // 1. Origin — solo cuando está presente; ausente → permitir.
+    //    No reemplaza rate limiting ni CAPTCHA.
+    const origin = req.headers.get('origin')
+    if (origin) {
+      const isVercelPreview =
+        process.env.VERCEL_ENV === 'preview' &&
+        !!process.env.VERCEL_URL &&
+        origin === `https://${process.env.VERCEL_URL}`
+      const isLocalDev =
+        process.env.NODE_ENV !== 'production' &&
+        origin === 'http://localhost:3000'
 
-    const interes = interesRaw || tipo || 'contacto-general'
+      if (!ALWAYS_ALLOWED_ORIGINS.includes(origin) && !isVercelPreview && !isLocalDev) {
+        return NextResponse.json(
+          { success: false, error: 'Origen no permitido.' },
+          { status: 403 }
+        )
+      }
+    }
 
-    if (!nombre?.trim() || !correo?.trim() || !mensaje?.trim()) {
+    // 2. Content-Type
+    if (!(req.headers.get('content-type') ?? '').includes('application/json')) {
+      return NextResponse.json(
+        { success: false, error: 'Tipo de contenido no válido.' },
+        { status: 415 }
+      )
+    }
+
+    // 3. Leer body como texto y verificar tamaño real (Content-Length es solo un filtro)
+    const rawBody = await req.text()
+    if (new TextEncoder().encode(rawBody).byteLength > 20_000) {
+      return NextResponse.json(
+        { success: false, error: 'Solicitud demasiado grande.' },
+        { status: 413 }
+      )
+    }
+
+    // 4. JSON parse + validar que sea un objeto plano
+    let parsed: unknown
+    try {
+      parsed = JSON.parse(rawBody)
+    } catch {
+      return NextResponse.json(
+        { success: false, error: 'Formato de solicitud no válido.' },
+        { status: 400 }
+      )
+    }
+    if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) {
+      return NextResponse.json(
+        { success: false, error: 'Formato de solicitud no válido.' },
+        { status: 400 }
+      )
+    }
+    const body = parsed as Record<string, unknown>
+
+    // 5. Normalización — solo acepta strings; ignora otros tipos
+    const nombre     = readString(body.nombre)
+    const correo     = readString(body.correo)
+    const whatsapp   = readString(body.whatsapp)
+    const empresa    = readString(body.empresa)
+    const interesRaw = readString(body.interes) || readString(body.tipo)
+    const origen     = readString(body.origen)
+    const mensaje    = readString(body.mensaje)
+    const website    = readString(body.website)
+
+    // 6. Honeypot — silent success sin enviar correo y sin loggear contenido
+    if (website) {
+      return NextResponse.json({ success: true, filtered: true })
+    }
+
+    // 7. Whitelist de interés: vacío → contacto-general; inválido → 422
+    const interes = interesRaw === ''
+      ? 'contacto-general'
+      : VALID_INTERES.includes(interesRaw)
+        ? interesRaw
+        : null
+    if (!interes) {
+      return NextResponse.json(
+        { success: false, error: 'Interés no válido.' },
+        { status: 422 }
+      )
+    }
+
+    // 8. Campos requeridos presentes
+    if (!nombre || !correo || !mensaje) {
       return NextResponse.json(
         { success: false, error: 'Faltan campos requeridos.' },
         { status: 400 }
+      )
+    }
+
+    // 9. Longitud y formato
+    if (nombre.length < 2 || nombre.length > 100) {
+      return NextResponse.json(
+        { success: false, error: 'Nombre fuera de rango.' },
+        { status: 422 }
+      )
+    }
+    if (correo.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
+      return NextResponse.json(
+        { success: false, error: 'Correo no válido.' },
+        { status: 422 }
+      )
+    }
+    if (whatsapp && whatsapp.length > 40) {
+      return NextResponse.json(
+        { success: false, error: 'WhatsApp fuera de rango.' },
+        { status: 422 }
+      )
+    }
+    if (empresa && empresa.length > 120) {
+      return NextResponse.json(
+        { success: false, error: 'Empresa fuera de rango.' },
+        { status: 422 }
+      )
+    }
+    if (origen && origen.length > 500) {
+      return NextResponse.json(
+        { success: false, error: 'Origen fuera de rango.' },
+        { status: 422 }
+      )
+    }
+    if (mensaje.length < 5 || mensaje.length > 3000) {
+      return NextResponse.json(
+        { success: false, error: 'Mensaje fuera de rango.' },
+        { status: 422 }
       )
     }
 

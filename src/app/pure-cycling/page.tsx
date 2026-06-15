@@ -359,6 +359,7 @@ export default async function PureCyclingPage() {
                   <video
                     controls
                     preload="none"
+                    playsInline
                     poster={t.posterUrl ?? undefined}
                     className="w-full aspect-video"
                     src={t.videoUrl}
