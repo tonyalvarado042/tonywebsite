@@ -11,6 +11,7 @@ import Books from '@/components/sections/Books'
 import Mentors from '@/components/sections/Mentors'
 // import Testimonials from '@/components/sections/Testimonials' — oculto hasta tener testimonios reales
 import PedaleaFelicidad from '@/components/sections/PedaleaFelicidad'
+import RecentArticles from '@/components/sections/RecentArticles'
 import Speaking from '@/components/sections/Speaking'
 import FAQ from '@/components/sections/FAQ'
 import Contact from '@/components/sections/Contact'
@@ -172,6 +173,8 @@ export default async function HomePage() {
       <SectionDivider />
       <Mentors />
       <Speaking />
+      <SectionDivider />
+      <RecentArticles />
       <Contact />
       <FAQ />
     </main>

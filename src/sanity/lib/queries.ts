@@ -98,6 +98,33 @@ export const postSlugsQuery = `
   }
 `
 
+export const recentPostsQuery = `
+  *[
+    _type == "post" &&
+    status == "published" &&
+    defined(slug.current) &&
+    defined(publishedAt)
+  ] | order(publishedAt desc) [0..2] {
+    _id,
+    title,
+    "slug": slug.current,
+    category,
+    summary,
+    publishedAt,
+    readingTime
+  }
+`
+
+export type SanityRecentPost = {
+  _id: string
+  title: string
+  slug: string
+  category: string | null
+  summary: string | null
+  publishedAt: string
+  readingTime: number | null
+}
+
 export type SanityBlogPost = {
   _id: string
   title: string
