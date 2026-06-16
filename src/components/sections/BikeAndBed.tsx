@@ -56,12 +56,12 @@ export default function BikeAndBed() {
               className="h-12 w-auto object-contain opacity-90"
             />
           </div>
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-accent">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-gold">
             Para inversionistas
           </p>
           <h2 className="text-4xl font-bold text-brand-text">
             El turismo deportivo tiene<br />
-            <span className="text-brand-accent">una nueva oportunidad.</span>
+            <span className="text-brand-gold">una nueva oportunidad.</span>
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-brand-muted">
             Bike & Bed Hotels es un modelo de hotel temático de ciclismo con operación profesional
@@ -96,7 +96,7 @@ export default function BikeAndBed() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
             >
-              <Icon size={22} className="mt-0.5 shrink-0 text-brand-accent" />
+              <Icon size={22} className="mt-0.5 shrink-0 text-brand-gold" />
               <div>
                 <h3 className="mb-1 font-bold text-brand-text">{title}</h3>
                 <p className="text-sm text-brand-muted">{description}</p>
@@ -106,7 +106,7 @@ export default function BikeAndBed() {
         </div>
 
         <motion.div
-          className="rounded-2xl border border-brand-accent/30 bg-brand-card p-8 text-center"
+          className="rounded-2xl border border-brand-gold/30 bg-brand-card p-8 text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -121,7 +121,7 @@ export default function BikeAndBed() {
           </p>
           <Link
             href="/contacto?interes=bike-bed-inversion#formulario"
-            className="inline-flex items-center justify-center rounded-full bg-brand-accent px-8 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+            className="inline-flex items-center justify-center rounded-full bg-brand-green px-8 py-3.5 text-sm font-semibold text-brand-bg transition-opacity hover:opacity-90"
             onClick={() => pushGTMEvent('click_contact_investment', { cta_text: 'Agenda una llamada de inversión', cta_location: 'bikeandbed_section', destination_type: 'internal', interest: 'bike-bed-inversion', page_path: window.location.pathname })}
           >
             Agenda una llamada de inversión →

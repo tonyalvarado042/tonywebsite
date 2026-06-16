@@ -29,7 +29,7 @@ export default function StoryTeaser() {
           </p>
           <Link
             href="/sobre-mi"
-            className="mt-8 inline-flex items-center gap-2 rounded-full border border-brand-accent/50 px-8 py-3.5 text-sm font-semibold text-brand-accent transition-all hover:bg-brand-accent hover:text-white"
+            className="mt-8 inline-flex items-center gap-2 rounded-full border border-brand-accent/50 px-8 py-3.5 text-sm font-semibold text-brand-accent transition-all hover:bg-brand-accent hover:text-brand-bg"
           >
             Conoce la historia completa →
           </Link>

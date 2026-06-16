@@ -62,7 +62,7 @@ export default function PureCycling() {
                 {/* Pendiente: URL directa de Skool — por ahora redirige a /pure-cycling */}
                 <Link
                   href="/pure-cycling"
-                  className="inline-flex items-center justify-center rounded-full bg-brand-accent px-8 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                  className="inline-flex items-center justify-center rounded-full bg-brand-accent px-8 py-3.5 text-sm font-semibold text-brand-bg transition-opacity hover:opacity-90"
                 >
                   Únete a Pure Cycling →
                 </Link>

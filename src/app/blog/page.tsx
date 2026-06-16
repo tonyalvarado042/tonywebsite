@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import InterviewCarousel from '@/components/blog/InterviewCarousel'
 import JsonLd from '@/components/JsonLd'
 import { SITE_URL, websiteRef, personRef } from '@/lib/structured-data'
 import { client } from '@/sanity/lib/client'
@@ -89,6 +90,8 @@ export default async function BlogPage() {
       <JsonLd data={breadcrumbSchema} />
       <JsonLd data={itemListSchema} />
 
+      <InterviewCarousel />
+
       {/* Hero */}
       <section className="bg-brand-bg py-20">
         <div className="mx-auto max-w-4xl px-6 text-center md:px-12">
@@ -119,7 +122,7 @@ export default async function BlogPage() {
                 <article key={post.slug} className="group">
                   <Link
                     href={`/blog/${post.slug}`}
-                    className="block rounded-xl border border-brand-border bg-brand-card p-6 transition-all duration-200 hover:border-brand-accent/40 hover:shadow-[0_0_28px_-8px_rgba(139,92,246,0.18)] md:p-8"
+                    className="block rounded-xl border border-brand-border bg-brand-card p-6 transition-all duration-200 hover:border-brand-accent/40 hover:shadow-[0_0_28px_-8px_rgba(57,217,138,0.18)] md:p-8"
                   >
                     {post.category && (
                       <span className="text-xs font-semibold uppercase tracking-widest text-brand-accent">

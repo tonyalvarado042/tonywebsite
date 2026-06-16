@@ -31,7 +31,7 @@ export default function BusinessEcosystem() {
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 h-72
-                   bg-[radial-gradient(ellipse_70%_70%_at_50%_0%,rgba(125,38,204,0.09)_0%,transparent_70%)]"
+                   bg-[radial-gradient(ellipse_70%_70%_at_50%_0%,rgba(57,217,138,0.07)_0%,transparent_70%)]"
       />
 
       <div className="relative z-10 mx-auto max-w-6xl px-6 md:px-12">
@@ -70,14 +70,14 @@ export default function BusinessEcosystem() {
             aria-hidden
             className="absolute hidden md:block top-[92px] left-[33%] h-[10px] w-[10px]
                        -translate-x-1/2 rounded-full bg-brand-accent/55
-                       shadow-[0_0_8px_rgba(125,38,204,0.75)]"
+                       shadow-[0_0_8px_rgba(57,217,138,0.60)]"
           />
           {/* Nodo derecho (unión col2-col3) */}
           <div
             aria-hidden
             className="absolute hidden md:block top-[92px] right-[33%] h-[10px] w-[10px]
                        translate-x-1/2 rounded-full bg-brand-accent/55
-                       shadow-[0_0_8px_rgba(125,38,204,0.75)]"
+                       shadow-[0_0_8px_rgba(57,217,138,0.60)]"
           />
 
           {/*
@@ -91,10 +91,10 @@ export default function BusinessEcosystem() {
             <motion.article
               className="group relative isolate flex flex-col overflow-hidden rounded-2xl
                          border border-brand-accent bg-brand-card p-8
-                         shadow-[0_0_50px_rgba(125,38,204,0.18),inset_0_0_0_1px_rgba(125,38,204,0.1)]
+                         shadow-[0_0_50px_rgba(57,217,138,0.14),inset_0_0_0_1px_rgba(57,217,138,0.08)]
                          transition-all duration-300
                          hover:scale-[1.02] hover:-translate-y-1
-                         hover:shadow-[0_0_80px_rgba(125,38,204,0.35),inset_0_0_0_1px_rgba(125,38,204,0.2)]
+                         hover:shadow-[0_0_80px_rgba(57,217,138,0.25),inset_0_0_0_1px_rgba(57,217,138,0.14)]
                          md:order-2"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -103,7 +103,7 @@ export default function BusinessEcosystem() {
             >
               <div
                 aria-hidden
-                className="absolute inset-0 bg-[radial-gradient(ellipse_70%_55%_at_50%_0%,rgba(125,38,204,0.18)_0%,transparent_65%)]"
+                className="absolute inset-0 bg-[radial-gradient(ellipse_70%_55%_at_50%_0%,rgba(57,217,138,0.12)_0%,transparent_65%)]"
               />
               <span
                 aria-hidden
@@ -141,7 +141,7 @@ export default function BusinessEcosystem() {
                   href="/pure-cycling"
                   className="inline-flex items-center justify-center rounded-full bg-brand-accent
                              px-7 py-3 text-sm font-semibold text-white
-                             shadow-[0_6px_20px_rgba(125,38,204,0.4)]
+                             shadow-[0_6px_20px_rgba(57,217,138,0.35)]
                              transition-opacity hover:opacity-90"
                 >
                   Únete a Pure Cycling →
@@ -155,7 +155,7 @@ export default function BusinessEcosystem() {
                          border border-brand-border bg-brand-card p-8
                          transition-all duration-300
                          hover:scale-[1.02] hover:-translate-y-1
-                         hover:border-brand-accent/30 hover:shadow-[0_0_40px_rgba(125,38,204,0.12)]
+                         hover:border-brand-accent/30 hover:shadow-[0_0_40px_rgba(57,217,138,0.10)]
                          md:order-1"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -164,7 +164,7 @@ export default function BusinessEcosystem() {
             >
               <div
                 aria-hidden
-                className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(125,38,204,0.07)_0%,transparent_65%)]"
+                className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(57,217,138,0.06)_0%,transparent_65%)]"
               />
               <span
                 aria-hidden
@@ -215,7 +215,7 @@ export default function BusinessEcosystem() {
                          border border-brand-border bg-brand-card p-8
                          transition-all duration-300
                          hover:scale-[1.02] hover:-translate-y-1
-                         hover:border-brand-accent/30 hover:shadow-[0_0_40px_rgba(125,38,204,0.12)]
+                         hover:border-brand-accent/30 hover:shadow-[0_0_40px_rgba(57,217,138,0.10)]
                          md:order-3"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -224,7 +224,7 @@ export default function BusinessEcosystem() {
             >
               <div
                 aria-hidden
-                className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(125,38,204,0.07)_0%,transparent_65%)]"
+                className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(57,217,138,0.06)_0%,transparent_65%)]"
               />
               <span
                 aria-hidden

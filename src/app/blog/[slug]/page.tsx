@@ -142,7 +142,7 @@ const ptComponents = {
         <div className="my-10 text-center">
           <a
             href={value.href}
-            className="inline-flex items-center gap-2 rounded-full bg-brand-accent px-8 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+            className="inline-flex items-center gap-2 rounded-full bg-brand-accent px-8 py-3.5 text-sm font-semibold text-brand-bg transition-opacity hover:opacity-90"
           >
             {value.label}
           </a>
@@ -310,7 +310,7 @@ export default async function BlogPostPage({ params }: Props) {
             <div className="mt-14 rounded-2xl border border-brand-accent/30 bg-brand-card p-8 text-center">
               <Link
                 href={post.ctaHref}
-                className="inline-flex items-center gap-2 rounded-full bg-brand-accent px-8 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                className="inline-flex items-center gap-2 rounded-full bg-brand-accent px-8 py-3.5 text-sm font-semibold text-brand-bg transition-opacity hover:opacity-90"
               >
                 {post.ctaLabel}
               </Link>

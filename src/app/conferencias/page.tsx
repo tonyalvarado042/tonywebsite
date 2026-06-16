@@ -136,7 +136,7 @@ export default function ConferenciasPage() {
               href="/contacto?interes=conferencias#formulario"
               event="click_contact_conference"
               params={{ cta_text: 'Solicitar conferencia', cta_location: 'conferencias_hero', destination_type: 'internal', interest: 'conferencias' }}
-              className="inline-flex items-center gap-2 rounded-full bg-brand-accent px-8 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+              className="inline-flex items-center gap-2 rounded-full bg-brand-accent px-8 py-3.5 text-sm font-semibold text-brand-bg transition-opacity hover:opacity-90"
             >
               <Mic size={15} /> Solicitar conferencia →
             </TrackedLink>
@@ -264,7 +264,7 @@ export default function ConferenciasPage() {
               href="/contacto?interes=conferencias#formulario"
               event="click_contact_conference"
               params={{ cta_text: 'Solicitar conferencia', cta_location: 'conferencias_cta_final', destination_type: 'internal', interest: 'conferencias' }}
-              className="inline-flex items-center gap-2 rounded-full bg-brand-accent px-8 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+              className="inline-flex items-center gap-2 rounded-full bg-brand-accent px-8 py-3.5 text-sm font-semibold text-brand-bg transition-opacity hover:opacity-90"
             >
               <Mic size={15} /> Solicitar conferencia →
             </TrackedLink>

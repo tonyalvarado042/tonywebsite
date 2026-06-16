@@ -34,12 +34,12 @@ export default function Mentors() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-accent">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-gold">
             Referentes
           </p>
           <h2 className="text-4xl font-bold text-brand-text">
             Formado por quienes han construido{' '}
-            <span className="text-brand-accent">liderazgo a escala mundial.</span>
+            <span className="text-brand-gold">liderazgo a escala mundial.</span>
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-brand-muted">
             Tony ha aprendido de referentes globales del liderazgo, los negocios y el ciclismo.

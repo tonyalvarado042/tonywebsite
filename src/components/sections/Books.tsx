@@ -18,12 +18,12 @@ export default function Books() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-accent">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-gold">
             Libros
           </p>
           <h2 className="text-4xl font-bold text-brand-text">
             Dos libros.{' '}
-            <span className="text-brand-accent">Una misma misión.</span>
+            <span className="text-brand-gold">Una misma misión.</span>
           </h2>
           <p className="mx-auto mt-3 max-w-lg text-sm text-brand-muted">
             Desde el emprendimiento con fe hasta la bicicleta como herramienta de transformación.
@@ -34,8 +34,8 @@ export default function Books() {
 
           {/* Libro 1 */}
           <motion.div
-            className="flex flex-col gap-6 rounded-2xl border border-brand-accent/20 bg-brand-card p-8 sm:flex-row sm:items-center
-                       shadow-[0_0_30px_rgba(125,38,204,0.07)]"
+            className="flex flex-col gap-6 rounded-2xl border border-brand-gold/20 bg-brand-card p-8 sm:flex-row sm:items-center
+                       shadow-[0_0_30px_rgba(201,162,77,0.07)]"
             initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -48,20 +48,20 @@ export default function Books() {
                 alt="Secretos para ser un empresario exitoso — Tony Alvarado"
                 width={190}
                 height={265}
-                className="w-auto max-h-[255px] object-contain drop-shadow-[0_8px_24px_rgba(125,38,204,0.35)]"
+                className="w-auto max-h-[255px] object-contain drop-shadow-[0_8px_24px_rgba(201,162,77,0.30)]"
               />
             </div>
 
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-2">
-                <ShoppingCart size={13} className="text-brand-accent" />
-                <span className="text-xs font-bold uppercase tracking-widest text-brand-accent">
+                <ShoppingCart size={13} className="text-brand-gold" />
+                <span className="text-xs font-bold uppercase tracking-widest text-brand-gold">
                   Disponible en Amazon
                 </span>
               </div>
               <h3 className="text-xl font-bold leading-tight text-brand-text">
                 Secretos para ser un{' '}
-                <span className="text-brand-accent">empresario exitoso</span>
+                <span className="text-brand-gold">empresario exitoso</span>
               </h3>
               <p className="text-sm leading-relaxed text-brand-muted">
                 Los principios que Tony usó para construir un ecosistema de empresas
@@ -72,7 +72,7 @@ export default function Books() {
                 href="https://www.amazon.com/dp/B0CCZWJG7S"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-1 inline-flex w-fit items-center gap-2 rounded-full bg-brand-accent px-6 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                className="mt-1 inline-flex w-fit items-center gap-2 rounded-full bg-brand-gold px-6 py-2.5 text-sm font-semibold text-brand-bg transition-opacity hover:opacity-90"
                 onClick={() => pushGTMEvent('click_amazon', { cta_text: 'Comprar en Amazon', cta_location: 'books_secretos', destination_type: 'external', interest: 'libros', page_path: window.location.pathname })}
               >
                 <ShoppingCart size={14} />
@@ -141,7 +141,7 @@ export default function Books() {
         >
           <Link
             href="/libros"
-            className="text-sm font-semibold text-brand-accent hover:underline"
+            className="text-sm font-semibold text-brand-gold hover:underline"
           >
             Ver todos los libros →
           </Link>

@@ -92,7 +92,7 @@ export default function Speaking() {
         >
           <Link
             href="/contacto?interes=conferencias#formulario"
-            className="inline-flex items-center gap-2 rounded-full bg-brand-accent px-8 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+            className="inline-flex items-center gap-2 rounded-full bg-brand-accent px-8 py-3.5 text-sm font-semibold text-brand-bg transition-opacity hover:opacity-90"
             onClick={() => pushGTMEvent('click_contact_conference', { cta_text: 'Solicitar una conferencia', cta_location: 'speaking_section', destination_type: 'internal', interest: 'conferencias', page_path: window.location.pathname })}
           >
             <Mic size={16} /> Solicitar una conferencia
