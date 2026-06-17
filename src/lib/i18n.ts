@@ -1,8 +1,11 @@
 export type Locale = 'es' | 'en'
 
-// Ampliar aquí cuando se creen nuevas páginas inglesas.
 const routePairs: Array<{ es: string; en: string }> = [
-  { es: '/', en: '/en' },
+  { es: '/',             en: '/en' },
+  { es: '/sobre-mi',     en: '/en/about' },
+  { es: '/libros',       en: '/en/books' },
+  { es: '/conferencias', en: '/en/speaking' },
+  { es: '/contacto',     en: '/en/contact' },
 ]
 
 export function getLocaleFromPathname(pathname: string): Locale {

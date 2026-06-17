@@ -21,6 +21,13 @@ const empresasLinks = [
   { href: '/bike-bed-hotels', label: 'Bike & Bed Hotels' },
 ]
 
+const navLinksEn = [
+  { href: '/en/about',    label: 'About' },
+  { href: '/en/speaking', label: 'Speaking' },
+  { href: '/en/books',    label: 'Books' },
+  { href: '/en/contact',  label: 'Contact' },
+]
+
 const empresasLinksEn = [
   { href: '/puromtb', label: 'PuroMTB · ES' },
   { href: '/pure-cycling', label: 'Pure Cycling · ES' },
@@ -38,7 +45,7 @@ export default function Header({ locale = 'es' }: HeaderProps) {
     ? { companies: 'Companies', cta: 'Join Pure Cycling · ES', menuLabel: 'Open menu' }
     : { companies: 'Empresas',  cta: 'Únete a Pure Cycling', menuLabel: 'Abrir menú' }
 
-  const currentNavLinks = locale === 'en' ? [] : navLinks
+  const currentNavLinks = locale === 'en' ? navLinksEn : navLinks
   const currentEmpresasLinks = locale === 'en' ? empresasLinksEn : empresasLinks
   const homeHref = locale === 'en' ? '/en' : '/'
 

@@ -46,9 +46,13 @@ const footerLinks = [
 ]
 
 const footerLinksEn = [
-  { href: '/en', label: 'Home', hrefLang: undefined as string | undefined },
-  { href: '/pure-cycling', label: 'Pure Cycling · ES', hrefLang: 'es' },
-  { href: '/bike-bed-hotels', label: 'Bike & Bed Hotels · ES', hrefLang: 'es' },
+  { href: '/en',              label: 'Home',                    hrefLang: undefined as string | undefined },
+  { href: '/en/about',        label: 'About',                   hrefLang: undefined as string | undefined },
+  { href: '/en/speaking',     label: 'Speaking',                hrefLang: undefined as string | undefined },
+  { href: '/en/books',        label: 'Books',                   hrefLang: undefined as string | undefined },
+  { href: '/en/contact',      label: 'Contact',                 hrefLang: undefined as string | undefined },
+  { href: '/pure-cycling',    label: 'Pure Cycling · ES',       hrefLang: 'es' as string | undefined },
+  { href: '/bike-bed-hotels', label: 'Bike & Bed Hotels · ES',  hrefLang: 'es' as string | undefined },
 ]
 
 const socialLinks = [
