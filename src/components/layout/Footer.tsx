@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import type { Locale } from '@/lib/i18n'
 
 const companyLogos = [
   {
@@ -44,6 +45,12 @@ const footerLinks = [
   { href: '/contacto', label: 'Contacto' },
 ]
 
+const footerLinksEn = [
+  { href: '/en', label: 'Home', hrefLang: undefined as string | undefined },
+  { href: '/pure-cycling', label: 'Pure Cycling · ES', hrefLang: 'es' },
+  { href: '/bike-bed-hotels', label: 'Bike & Bed Hotels · ES', hrefLang: 'es' },
+]
+
 const socialLinks = [
   {
     href: 'https://www.facebook.com/profile.php?id=100090599181641',
@@ -67,7 +74,30 @@ const socialLinks = [
   },
 ]
 
-export default function Footer() {
+export default function Footer({ locale = 'es' }: { locale?: Locale }) {
+  const t = locale === 'en'
+    ? {
+        tagline: 'Cycling, community and Costa Rica.',
+        nav: 'Navigation',
+        legal: 'Legal',
+        companies: 'Companies',
+        privacy: 'Privacy Policy · ES',
+        terms: 'Terms & Conditions · ES',
+        copyright: '© 2026 Tony Alvarado. All rights reserved.',
+      }
+    : {
+        tagline: 'Ciclismo, comunidad y Costa Rica.',
+        nav: 'Navegación',
+        legal: 'Legal',
+        companies: 'Empresas',
+        privacy: 'Política de privacidad',
+        terms: 'Términos y condiciones',
+        copyright: '© 2026 Tony Alvarado. Todos los derechos reservados.',
+      }
+
+  const homeHref = locale === 'en' ? '/en' : '/'
+  const currentFooterLinks = locale === 'en' ? footerLinksEn : footerLinks.map((l) => ({ ...l, hrefLang: undefined as string | undefined }))
+
   return (
     <footer className="border-t border-brand-border bg-brand-bg">
       <div className="mx-auto max-w-7xl px-6 py-12 md:px-12">
@@ -75,7 +105,7 @@ export default function Footer() {
         {/* Fila superior: logo + redes sociales */}
         <div className="flex flex-col items-center gap-6 md:flex-row md:items-center md:justify-between">
           <div className="flex flex-col items-center md:items-start">
-            <Link href="/" aria-label="Tony Alvarado — Inicio">
+            <Link href={homeHref} aria-label="Tony Alvarado — Home">
               <Image
                 src="/images/logos/tony-alvarado-logo-white-horizontal.png"
                 alt="Tony Alvarado"
@@ -85,7 +115,7 @@ export default function Footer() {
               />
             </Link>
             <p className="mt-3 text-sm text-brand-muted">
-              Ciclismo, comunidad y Costa Rica.
+              {t.tagline}
             </p>
             <a
               href="mailto:info@tonyalvarado.com"
@@ -115,13 +145,14 @@ export default function Footer() {
         <div className="mt-10 flex flex-wrap gap-x-8 gap-y-6">
           <div>
             <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-brand-accent">
-              Navegación
+              {t.nav}
             </p>
             <nav className="flex flex-col gap-2 text-sm text-brand-muted">
-              {footerLinks.map((link) => (
+              {currentFooterLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
+                  {...(link.hrefLang ? { hrefLang: link.hrefLang } : {})}
                   className="transition-colors hover:text-brand-text"
                 >
                   {link.label}
@@ -132,21 +163,29 @@ export default function Footer() {
 
           <div>
             <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-brand-accent">
-              Legal
+              {t.legal}
             </p>
             <nav className="flex flex-col gap-2">
-              <Link href="/politica-de-privacidad" className="text-sm text-brand-muted transition-colors hover:text-brand-text">
-                Política de privacidad
+              <Link
+                href="/politica-de-privacidad"
+                {...(locale === 'en' ? { hrefLang: 'es' } : {})}
+                className="text-sm text-brand-muted transition-colors hover:text-brand-text"
+              >
+                {t.privacy}
               </Link>
-              <Link href="/terminos-y-condiciones" className="text-sm text-brand-muted transition-colors hover:text-brand-text">
-                Términos y condiciones
+              <Link
+                href="/terminos-y-condiciones"
+                {...(locale === 'en' ? { hrefLang: 'es' } : {})}
+                className="text-sm text-brand-muted transition-colors hover:text-brand-text"
+              >
+                {t.terms}
               </Link>
             </nav>
           </div>
 
           <div>
             <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-brand-accent">
-              Empresas
+              {t.companies}
             </p>
             <div className="flex flex-col gap-4">
               {companyLogos.map(({ src, alt, name, href, external, width, height, className }) => (
@@ -155,6 +194,7 @@ export default function Footer() {
                   href={href}
                   aria-label={alt}
                   {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  {...(locale === 'en' ? { hrefLang: 'es' } : {})}
                   className="group flex items-center gap-3"
                 >
                   <Image
@@ -165,7 +205,7 @@ export default function Footer() {
                     className={className}
                   />
                   <span className="text-sm text-brand-muted transition-colors group-hover:text-brand-text">
-                    {name}
+                    {name}{locale === 'en' ? ' · ES' : ''}
                   </span>
                 </Link>
               ))}
@@ -176,7 +216,7 @@ export default function Footer() {
         {/* Barra inferior: copyright */}
         <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-brand-border pt-6 md:flex-row">
           <p className="text-xs text-brand-muted">
-            © 2026 Tony Alvarado. Todos los derechos reservados.
+            {t.copyright}
           </p>
           <p className="text-xs text-brand-muted/50">San José, Costa Rica</p>
         </div>
