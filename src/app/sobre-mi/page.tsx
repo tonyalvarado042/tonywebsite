@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { CheckCircle2 } from 'lucide-react'
 import JsonLd from '@/components/JsonLd'
 import PhotoStrip from '@/components/ui/PhotoStrip'
+import PageFAQ, { type PageFAQItem } from '@/components/sections/PageFAQ'
 import { SITE_URL, websiteRef, personRef } from '@/lib/structured-data'
 
 export const metadata = {
@@ -42,6 +43,39 @@ const webPageSchema = {
   about: personRef,
 }
 
+const pageFaqs: PageFAQItem[] = [
+  {
+    question: '¿Quién es Tony Alvarado?',
+    answer:
+      'Tony Alvarado es empresario, coach certificado de ciclismo y conferencista costarricense. Fundó PuroMTB en 2004, Pure Cycling y Bike & Bed Hotels. Con más de 22 años de trayectoria construyendo en torno al ciclismo, combina experiencia empresarial real, certificación en entrenamiento y una historia personal de fe y transformación.',
+  },
+  {
+    question: '¿Por qué Tony Alvarado se dedica al ciclismo?',
+    answer:
+      'Desde niño Tony tuvo una conexión profunda con la bicicleta. A los 16 años sufrió un accidente grave que lo dejó hospitalizado más de 34 días. Esa experiencia transformó su vida: la bicicleta, que primero casi se la quitó, se convirtió en la herramienta que Dios usó para reconstruirla. Hoy su propósito es ayudar a otras personas a transformar su vida a través del ciclismo.',
+  },
+  {
+    question: '¿Qué empresas ha fundado Tony Alvarado?',
+    answer:
+      'Tony fundó PuroMTB —comunidad y tienda de ciclismo de referencia en Costa Rica, activa desde 2004—, Pure Cycling —comunidad de transformación a través del ciclismo con miembros en más de 30 países— y Bike & Bed Hotels —hotel temático de ciclismo en Costa Rica con visión de expansión global.',
+  },
+  {
+    question: '¿Cómo puedo contactar o trabajar con Tony Alvarado?',
+    answer:
+      'Puedes escribirnos a través del formulario de contacto en este sitio. Si tu interés es unirte a la comunidad de ciclismo, visita Pure Cycling. Si quieres a Tony como conferencista para un evento, visita la sección de conferencias.',
+  },
+]
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: pageFaqs.map(({ question, answer }) => ({
+    '@type': 'Question',
+    name: question,
+    acceptedAnswer: { '@type': 'Answer', text: answer },
+  })),
+}
+
 const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
@@ -67,6 +101,7 @@ export default function SobreMiPage() {
     <main>
       <JsonLd data={webPageSchema} />
       <JsonLd data={breadcrumbSchema} />
+      <JsonLd data={faqSchema} />
 
       {/* Hero */}
       <section className="bg-brand-bg py-20">
@@ -212,7 +247,7 @@ export default function SobreMiPage() {
             <p className="mt-5 text-center text-sm text-brand-accent">— Tony Alvarado</p>
           </div>
 
-          <div className="mb-10 grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div className="overflow-hidden rounded-xl border border-brand-border">
               <div className="relative h-64 overflow-hidden">
                 <Image
@@ -239,15 +274,19 @@ export default function SobreMiPage() {
             </div>
           </div>
 
-          <div className="text-center">
-            <Link
-              href="/contacto"
-              className="inline-flex items-center gap-2 rounded-full bg-brand-accent px-8 py-3.5 text-sm font-semibold text-brand-bg transition-opacity hover:opacity-90"
-            >
-              Escríbenos →
-            </Link>
-          </div>
+        </div>
+      </section>
 
+      <PageFAQ faqs={pageFaqs} accent="green" />
+
+      <section className="bg-brand-bg py-12">
+        <div className="mx-auto max-w-4xl px-6 text-center md:px-12">
+          <Link
+            href="/contacto"
+            className="inline-flex items-center gap-2 rounded-full bg-brand-accent px-8 py-3.5 text-sm font-semibold text-brand-bg transition-opacity hover:opacity-90"
+          >
+            Escríbenos →
+          </Link>
         </div>
       </section>
 

@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ShoppingCart, Bell } from 'lucide-react'
 import JsonLd from '@/components/JsonLd'
+import PageFAQ, { type PageFAQItem } from '@/components/sections/PageFAQ'
 import { SITE_URL, websiteRef, personRef, bookSchema, bookSchema2 } from '@/lib/structured-data'
 
 export const metadata = {
@@ -54,6 +55,39 @@ const breadcrumbSchema = {
   ],
 }
 
+const pageFaqs: PageFAQItem[] = [
+  {
+    question: '¿Dónde puedo adquirir los libros de Tony Alvarado?',
+    answer:
+      'En esta página encontrarás los enlaces disponibles para cada título. La disponibilidad, los formatos y las opciones de compra pueden variar según el libro y el país desde el que accedas.',
+  },
+  {
+    question: '¿Para quién está escrito "Secretos para ser un empresario exitoso"?',
+    answer:
+      'Para emprendedores y empresarios que quieren construir algo sólido con liderazgo, propósito y visión. El libro recoge principios y aprendizajes forjados en el camino real del emprendimiento, con una mirada honesta sobre liderazgo, propósito y legado.',
+  },
+  {
+    question: '¿De qué trata "Sigue Pedaleando"?',
+    answer:
+      'Es un libro de fe, propósito y resiliencia construido alrededor de la bicicleta. Recoge vivencias, caídas y esperanza, mostrando cómo seguir avanzando aun cuando la vida se pone cuesta arriba.',
+  },
+  {
+    question: '¿Qué tienen en común los dos libros?',
+    answer:
+      'Los dos comparten el mismo hilo conductor: el propósito, la disciplina y la transformación personal. Uno desde la perspectiva del emprendimiento y el liderazgo; el otro desde la fe, la resiliencia y la historia de vida de Tony alrededor de la bicicleta.',
+  },
+]
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: pageFaqs.map(({ question, answer }) => ({
+    '@type': 'Question',
+    name: question,
+    acceptedAnswer: { '@type': 'Answer', text: answer },
+  })),
+}
+
 export default function LibrosPage() {
   return (
     <main className="bg-brand-bg">
@@ -61,6 +95,7 @@ export default function LibrosPage() {
       <JsonLd data={breadcrumbSchema} />
       <JsonLd data={bookSchema} />
       <JsonLd data={bookSchema2} />
+      <JsonLd data={faqSchema} />
 
       {/* ── Hero ── */}
       <section className="relative overflow-hidden px-6 pb-20 pt-24 text-center">
@@ -331,6 +366,8 @@ export default function LibrosPage() {
 
         </div>
       </section>
+
+      <PageFAQ faqs={pageFaqs} accent="gold" />
 
     </main>
   )

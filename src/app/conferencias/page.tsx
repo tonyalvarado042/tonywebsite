@@ -2,6 +2,7 @@ import Link from 'next/link'
 import TrackedLink from '@/components/common/TrackedLink'
 import { Mic, CheckCircle2, Users, Target, Heart, TrendingUp, Compass } from 'lucide-react'
 import JsonLd from '@/components/JsonLd'
+import PageFAQ, { type PageFAQItem } from '@/components/sections/PageFAQ'
 import { SITE_URL, websiteRef, personRef } from '@/lib/structured-data'
 
 export const metadata = {
@@ -48,6 +49,39 @@ const breadcrumbSchema = {
     { '@type': 'ListItem', position: 1, name: 'Inicio', item: SITE_URL },
     { '@type': 'ListItem', position: 2, name: 'Conferencias', item: `${SITE_URL}/conferencias` },
   ],
+}
+
+const pageFaqs: PageFAQItem[] = [
+  {
+    question: '¿Qué temas aborda Tony Alvarado en sus conferencias?',
+    answer:
+      'Las conferencias de Tony cubren liderazgo con propósito, disciplina y transformación personal, emprendimiento alrededor del ciclismo, comunidad y fe en la adversidad, y cómo construir una vida o negocio desde una misión. Todos los temas nacen de su experiencia real y se adaptan al contexto del evento.',
+  },
+  {
+    question: '¿Tony Alvarado puede participar en eventos fuera de Costa Rica?',
+    answer:
+      'La disponibilidad se evalúa según la fecha, la ubicación, el formato y las características del evento. Puedes enviar los detalles mediante el formulario de contacto para que el equipo revise la solicitud.',
+  },
+  {
+    question: '¿Cómo solicitar a Tony Alvarado como conferencista?',
+    answer:
+      'Completa el formulario de contacto en este sitio seleccionando "Conferencia / Keynote" como tipo de consulta. Incluye la fecha tentativa, el formato del evento y el tema de interés. El equipo revisará la solicitud y dará seguimiento.',
+  },
+  {
+    question: '¿Para qué tipo de eventos está disponible Tony?',
+    answer:
+      'Tony puede participar en keynotes de conferencias empresariales, eventos corporativos de liderazgo, seminarios y formación de equipos, comunidades de liderazgo y fe, y eventos presenciales o virtuales. Cada presentación se adapta al formato y los objetivos del organizador.',
+  },
+]
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: pageFaqs.map(({ question, answer }) => ({
+    '@type': 'Question',
+    name: question,
+    acceptedAnswer: { '@type': 'Answer', text: answer },
+  })),
 }
 
 const topics = [
@@ -115,6 +149,7 @@ export default function ConferenciasPage() {
     <main>
       <JsonLd data={webPageSchema} />
       <JsonLd data={breadcrumbSchema} />
+      <JsonLd data={faqSchema} />
 
       {/* Hero */}
       <section className="bg-brand-bg py-24">
@@ -248,6 +283,8 @@ export default function ConferenciasPage() {
           </div>
         </div>
       </section>
+
+      <PageFAQ faqs={pageFaqs} accent="gold" />
 
       {/* CTA final */}
       <section className="bg-brand-bg py-20">
