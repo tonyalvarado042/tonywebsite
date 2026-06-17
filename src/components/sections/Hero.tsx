@@ -15,19 +15,17 @@ export default function Hero() {
         fill
         priority
         quality={80}
-        className="object-cover object-[60%_30%]"
+        className="object-cover object-[65%_center]"
         sizes="100vw"
       />
-      {/* Overlay izquierda → texto siempre legible */}
-      <div className="absolute inset-0 bg-gradient-to-r from-brand-bg via-brand-bg/90 to-brand-bg/10" />
+      {/* Overlay izquierda → texto legible, paisaje visible en el lado derecho */}
+      <div className="absolute inset-0 bg-gradient-to-r from-brand-bg from-[20%] via-brand-bg/75 via-[55%] to-transparent" />
       {/* Overlay inferior → funde con el resto del sitio */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-brand-bg" />
 
-      <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center gap-10 px-6 py-20 md:flex-row md:items-center md:py-28 md:px-12">
-
-        {/* Texto izquierda */}
+      <div className="relative z-10 mx-auto max-w-7xl px-6 py-20 md:px-12 md:py-28">
         <motion.div
-          className="flex-1 space-y-7"
+          className="max-w-2xl space-y-7"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: 'easeOut' }}
@@ -63,28 +61,6 @@ export default function Hero() {
             </Link>
           </div>
         </motion.div>
-
-        {/* Tony — sin caja/borde visible, fondo oscuro se funde con el hero */}
-        <motion.div
-          className="relative w-full flex-none md:w-[400px]"
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.9, delay: 0.15, ease: 'easeOut' }}
-        >
-          <div className="relative h-[500px] md:h-[580px]">
-            <Image
-              src="/images/og/tony-alvarado-og-sin-fondo.png"
-              alt="Tony Alvarado — coach y entrenador de ciclismo en Costa Rica, fundador de Pure Cycling, PuroMTB y Bike & Bed Hotels"
-              fill
-              className="object-contain object-top"
-              priority
-              sizes="(max-width: 768px) 100vw, 400px"
-            />
-            {/* Fade inferior suave */}
-            <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-brand-bg/60 to-transparent" />
-          </div>
-        </motion.div>
-
       </div>
     </section>
   )

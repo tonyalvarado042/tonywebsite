@@ -51,15 +51,29 @@ export default function AboutTony() {
             Empezó vendiendo manzanas para comprarse una bicicleta.<br />
             <span className="text-brand-accent">Hoy tiene tres empresas que han facturado millones de dólares.</span>
           </h2>
-          <p className="text-brand-muted text-left md:text-justify">
-            Ingeniero de computación de formación, empresario de vocación. Coach certificado de ciclismo
-            y líder formado por John Maxwell Leadership. Fundador de tres empresas que comparten
-            una misión: transformar vidas a través de la bicicleta.
-          </p>
-          <p className="text-brand-muted text-left md:text-justify">
-            Tony Alvarado construye comunidad alrededor del mountain bike y el ciclismo de ruta.
-            Pure Cycling, su programa online, tiene miembros en más de 30 países.
-          </p>
+          <div className="space-y-5">
+            <div>
+              <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-brand-green">
+                De la ingeniería al emprendimiento
+              </p>
+              <p className="text-sm leading-relaxed text-brand-muted md:text-base">
+                <strong className="font-semibold text-brand-text">Ingeniero de computación</strong> de formación, empresario de vocación.{' '}
+                <strong className="font-semibold text-brand-text">Coach certificado de ciclismo</strong> y líder formado por{' '}
+                <strong className="font-semibold text-brand-text">John Maxwell Leadership</strong>. Fundador de tres empresas
+                que comparten una misión: transformar vidas a través de la bicicleta.
+              </p>
+            </div>
+            <div>
+              <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-brand-green">
+                Una comunidad sin fronteras
+              </p>
+              <p className="text-sm leading-relaxed text-brand-muted md:text-base">
+                Tony Alvarado construye comunidad alrededor del mountain bike y el ciclismo de ruta.
+                Pure Cycling, su programa online, tiene miembros en{' '}
+                <span className="font-semibold text-brand-gold">más de 30 países</span>.
+              </p>
+            </div>
+          </div>
           <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {highlights.map((item) => (
               <li key={item} className="flex items-center gap-2 text-sm text-brand-muted">
