@@ -16,7 +16,19 @@ import Speaking from '@/components/sections/Speaking'
 import FAQ from '@/components/sections/FAQ'
 import Contact from '@/components/sections/Contact'
 import JsonLd from '@/components/JsonLd'
-import { puroMTBOrg, SITE_URL, websiteRef, personRef } from '@/lib/structured-data'
+import { SITE_URL, websiteRef, personRef } from '@/lib/structured-data'
+
+const puroMTBOrgEn = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${SITE_URL}/#puromtb`,
+  name: 'PuroMTB',
+  description:
+    'Cycling store and community in Costa Rica, founded by Tony Alvarado in 2004. Over 20 years driving cycling in the region.',
+  url: 'https://puromtb.com',
+  foundingDate: '2004',
+  founder: personRef,
+}
 import { type FAQItem } from '@/data/faqs'
 import { homeMetricsEn } from '@/data/metrics'
 
@@ -285,7 +297,7 @@ export default function EnHomePage() {
   return (
     <main>
       <JsonLd data={webPageSchemaEn} />
-      <JsonLd data={puroMTBOrg} />
+      <JsonLd data={puroMTBOrgEn} />
       <JsonLd data={faqSchemaEn} />
 
       <Hero locale="en" />
