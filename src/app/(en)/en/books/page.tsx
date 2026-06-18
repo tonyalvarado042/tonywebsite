@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ShoppingCart, ArrowRight } from 'lucide-react'
+import { ShoppingCart } from 'lucide-react'
+import JsonLd from '@/components/JsonLd'
 import PageFAQ, { type PageFAQItem } from '@/components/sections/PageFAQ'
+import { SITE_URL, websiteRef, personRef, bookSchema, bookSchema2 } from '@/lib/structured-data'
 
 export const metadata: Metadata = {
   title: {
@@ -38,6 +40,28 @@ export const metadata: Metadata = {
   robots: { index: false, follow: true },
 }
 
+const webPageSchemaEn = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': `${SITE_URL}/en/books#webpage`,
+  name: 'Books by Tony Alvarado — Cycling, Business & Transformation',
+  description:
+    'Books by Tony Alvarado: "Secretos para ser un empresario exitoso" and "Sigue Pedaleando", both available on Amazon.',
+  url: `${SITE_URL}/en/books`,
+  inLanguage: 'en-US',
+  isPartOf: websiteRef,
+  about: [personRef, { '@type': 'Book', '@id': `${SITE_URL}/#secretos-empresario-exitoso` }, { '@type': 'Book', '@id': `${SITE_URL}/#sigue-pedaleando` }],
+}
+
+const breadcrumbSchemaEn = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/en` },
+    { '@type': 'ListItem', position: 2, name: 'Books', item: `${SITE_URL}/en/books` },
+  ],
+}
+
 const faqs: PageFAQItem[] = [
   {
     question: 'Where can I buy Tony Alvarado\'s books?',
@@ -61,9 +85,24 @@ const faqs: PageFAQItem[] = [
   },
 ]
 
+const faqSchemaEn = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(({ question, answer }) => ({
+    '@type': 'Question',
+    name: question,
+    acceptedAnswer: { '@type': 'Answer', text: answer },
+  })),
+}
+
 export default function EnBooksPage() {
   return (
     <main className="bg-brand-bg">
+      <JsonLd data={webPageSchemaEn} />
+      <JsonLd data={breadcrumbSchemaEn} />
+      <JsonLd data={bookSchema} />
+      <JsonLd data={bookSchema2} />
+      <JsonLd data={faqSchemaEn} />
 
       {/* ── Hero ── */}
       <section className="relative overflow-hidden px-6 pb-20 pt-24 text-center">
@@ -287,24 +326,6 @@ export default function EnBooksPage() {
         eyebrow="FAQ"
         accent="gold"
       />
-
-      {/* ── CTA ── */}
-      <section className="bg-brand-surface py-20">
-        <div className="mx-auto max-w-2xl px-6 text-center md:px-12">
-          <h2 className="mb-4 text-2xl font-bold text-brand-text">
-            Want to know more about Tony?
-          </h2>
-          <p className="mb-8 text-brand-muted">
-            Discover his full story, companies and speaking topics.
-          </p>
-          <Link
-            href="/en/about"
-            className="inline-flex items-center gap-2 rounded-full border border-brand-border px-8 py-4 text-sm font-semibold text-brand-muted transition-colors hover:border-brand-text hover:text-brand-text"
-          >
-            About Tony <ArrowRight size={15} />
-          </Link>
-        </div>
-      </section>
 
     </main>
   )
