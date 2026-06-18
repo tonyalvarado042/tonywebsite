@@ -75,18 +75,16 @@ export default function EnHomePage() {
             </p>
             <div className="flex flex-wrap gap-4">
               <Link
-                href="/pure-cycling"
-                hrefLang="es"
+                href="/en/pure-cycling"
                 className="rounded-full bg-brand-green px-7 py-3.5 text-sm font-semibold text-brand-bg transition-opacity hover:opacity-90"
               >
-                Join Pure Cycling · ES
+                Join Pure Cycling
               </Link>
               <Link
-                href="/sobre-mi"
-                hrefLang="es"
+                href="/en/about"
                 className="rounded-full border border-brand-border px-7 py-3.5 text-sm font-semibold text-brand-muted transition-colors hover:border-brand-text hover:text-brand-text"
               >
-                Discover Tony&apos;s story · ES
+                Discover Tony&apos;s story
               </Link>
             </div>
           </div>
@@ -147,11 +145,10 @@ export default function EnHomePage() {
             that keeps you moving forward.
           </p>
           <Link
-            href="/pure-cycling"
-            hrefLang="es"
+            href="/en/pure-cycling"
             className="inline-flex items-center gap-2 rounded-full bg-brand-green px-8 py-4 text-sm font-semibold text-brand-bg transition-opacity hover:opacity-90"
           >
-            Explore Pure Cycling · ES <ArrowRight size={15} />
+            Explore Pure Cycling <ArrowRight size={15} />
           </Link>
         </div>
       </section>
@@ -173,11 +170,10 @@ export default function EnHomePage() {
               investors.
             </p>
             <Link
-              href="/bike-bed-hotels"
-              hrefLang="es"
+              href="/en/bike-bed-hotels"
               className="inline-flex items-center gap-2 rounded-full border border-brand-gold/50 px-7 py-3.5 text-sm font-semibold text-brand-gold transition-colors hover:bg-brand-gold/10"
             >
-              Learn about Bike &amp; Bed · ES <ArrowRight size={15} />
+              Learn about Bike &amp; Bed <ArrowRight size={15} />
             </Link>
           </div>
         </div>

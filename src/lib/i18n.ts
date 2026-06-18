@@ -1,11 +1,14 @@
 export type Locale = 'es' | 'en'
 
 const routePairs: Array<{ es: string; en: string }> = [
-  { es: '/',             en: '/en' },
-  { es: '/sobre-mi',     en: '/en/about' },
-  { es: '/libros',       en: '/en/books' },
-  { es: '/conferencias', en: '/en/speaking' },
-  { es: '/contacto',     en: '/en/contact' },
+  { es: '/',                en: '/en' },
+  { es: '/sobre-mi',        en: '/en/about' },
+  { es: '/libros',          en: '/en/books' },
+  { es: '/conferencias',    en: '/en/speaking' },
+  { es: '/contacto',        en: '/en/contact' },
+  { es: '/pure-cycling',    en: '/en/pure-cycling' },
+  { es: '/puromtb',         en: '/en/puromtb' },
+  { es: '/bike-bed-hotels', en: '/en/bike-bed-hotels' },
 ]
 
 export function getLocaleFromPathname(pathname: string): Locale {

@@ -29,9 +29,9 @@ const navLinksEn = [
 ]
 
 const empresasLinksEn = [
-  { href: '/puromtb', label: 'PuroMTB · ES' },
-  { href: '/pure-cycling', label: 'Pure Cycling · ES' },
-  { href: '/bike-bed-hotels', label: 'Bike & Bed Hotels · ES' },
+  { href: '/en/puromtb',         label: 'PuroMTB' },
+  { href: '/en/pure-cycling',    label: 'Pure Cycling' },
+  { href: '/en/bike-bed-hotels', label: 'Bike & Bed Hotels' },
 ]
 
 interface HeaderProps {
@@ -42,8 +42,9 @@ export default function Header({ locale = 'es' }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false)
 
   const t = locale === 'en'
-    ? { companies: 'Companies', cta: 'Join Pure Cycling · ES', menuLabel: 'Open menu' }
+    ? { companies: 'Companies', cta: 'Join Pure Cycling', menuLabel: 'Open menu' }
     : { companies: 'Empresas',  cta: 'Únete a Pure Cycling', menuLabel: 'Abrir menú' }
+  const ctaHref = locale === 'en' ? '/en/pure-cycling' : '/pure-cycling'
 
   const currentNavLinks = locale === 'en' ? navLinksEn : navLinks
   const currentEmpresasLinks = locale === 'en' ? empresasLinksEn : empresasLinks
@@ -87,7 +88,6 @@ export default function Header({ locale = 'es' }: HeaderProps) {
                     <Link
                       key={link.href}
                       href={link.href}
-                      {...(locale === 'en' ? { hrefLang: 'es' } : {})}
                       className="block px-4 py-3 text-sm text-brand-muted transition-colors hover:bg-brand-card hover:text-brand-text"
                     >
                       {link.label}
@@ -104,8 +104,7 @@ export default function Header({ locale = 'es' }: HeaderProps) {
               <LanguageSwitcher />
             </div>
             <Link
-              href="/pure-cycling"
-              {...(locale === 'en' ? { hrefLang: 'es' } : {})}
+              href={ctaHref}
               className="hidden rounded-full bg-brand-green px-5 py-2 text-sm font-semibold text-brand-bg transition-opacity hover:opacity-90 md:block"
             >
               {t.cta}
@@ -146,7 +145,6 @@ export default function Header({ locale = 'es' }: HeaderProps) {
                   <Link
                     key={link.href}
                     href={link.href}
-                    {...(locale === 'en' ? { hrefLang: 'es' } : {})}
                     className="text-brand-muted hover:text-brand-text"
                     onClick={() => setMenuOpen(false)}
                   >
@@ -157,8 +155,7 @@ export default function Header({ locale = 'es' }: HeaderProps) {
             </div>
 
             <Link
-              href="/pure-cycling"
-              {...(locale === 'en' ? { hrefLang: 'es' } : {})}
+              href={ctaHref}
               className="mt-2 rounded-full bg-brand-green px-5 py-2.5 text-center text-sm font-semibold text-brand-bg"
               onClick={() => setMenuOpen(false)}
             >

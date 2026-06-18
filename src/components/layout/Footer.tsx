@@ -8,6 +8,7 @@ const companyLogos = [
     alt: 'PuroMTB',
     name: 'PuroMTB',
     href: 'https://puromtb.com',
+    hrefEn: '/en/puromtb',
     external: true,
     width: 100,
     height: 30,
@@ -18,6 +19,7 @@ const companyLogos = [
     alt: 'Pure Cycling',
     name: 'Pure Cycling',
     href: '/pure-cycling',
+    hrefEn: '/en/pure-cycling',
     external: false,
     width: 110,
     height: 32,
@@ -28,6 +30,7 @@ const companyLogos = [
     alt: 'Bike & Bed Hotels',
     name: 'Bike & Bed Hotels',
     href: '/bike-bed-hotels',
+    hrefEn: '/en/bike-bed-hotels',
     external: false,
     width: 120,
     height: 36,
@@ -46,13 +49,13 @@ const footerLinks = [
 ]
 
 const footerLinksEn = [
-  { href: '/en',              label: 'Home',                    hrefLang: undefined as string | undefined },
-  { href: '/en/about',        label: 'About',                   hrefLang: undefined as string | undefined },
-  { href: '/en/speaking',     label: 'Speaking',                hrefLang: undefined as string | undefined },
-  { href: '/en/books',        label: 'Books',                   hrefLang: undefined as string | undefined },
-  { href: '/en/contact',      label: 'Contact',                 hrefLang: undefined as string | undefined },
-  { href: '/pure-cycling',    label: 'Pure Cycling · ES',       hrefLang: 'es' as string | undefined },
-  { href: '/bike-bed-hotels', label: 'Bike & Bed Hotels · ES',  hrefLang: 'es' as string | undefined },
+  { href: '/en',                 label: 'Home',              hrefLang: undefined as string | undefined },
+  { href: '/en/about',           label: 'About',             hrefLang: undefined as string | undefined },
+  { href: '/en/speaking',        label: 'Speaking',          hrefLang: undefined as string | undefined },
+  { href: '/en/books',           label: 'Books',             hrefLang: undefined as string | undefined },
+  { href: '/en/contact',         label: 'Contact',           hrefLang: undefined as string | undefined },
+  { href: '/en/pure-cycling',    label: 'Pure Cycling',      hrefLang: undefined as string | undefined },
+  { href: '/en/bike-bed-hotels', label: 'Bike & Bed Hotels', hrefLang: undefined as string | undefined },
 ]
 
 const socialLinks = [
@@ -192,27 +195,30 @@ export default function Footer({ locale = 'es' }: { locale?: Locale }) {
               {t.companies}
             </p>
             <div className="flex flex-col gap-4">
-              {companyLogos.map(({ src, alt, name, href, external, width, height, className }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  aria-label={alt}
-                  {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                  {...(locale === 'en' ? { hrefLang: 'es' } : {})}
-                  className="group flex items-center gap-3"
-                >
-                  <Image
-                    src={src}
-                    alt={alt}
-                    width={width}
-                    height={height}
-                    className={className}
-                  />
-                  <span className="text-sm text-brand-muted transition-colors group-hover:text-brand-text">
-                    {name}{locale === 'en' ? ' · ES' : ''}
-                  </span>
-                </Link>
-              ))}
+              {companyLogos.map(({ src, alt, name, href, hrefEn, external, width, height, className }) => {
+                const resolvedHref = locale === 'en' && hrefEn ? hrefEn : href
+                const isExternal = external && !(locale === 'en' && hrefEn)
+                return (
+                  <Link
+                    key={href}
+                    href={resolvedHref}
+                    aria-label={alt}
+                    {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                    className="group flex items-center gap-3"
+                  >
+                    <Image
+                      src={src}
+                      alt={alt}
+                      width={width}
+                      height={height}
+                      className={className}
+                    />
+                    <span className="text-sm text-brand-muted transition-colors group-hover:text-brand-text">
+                      {name}
+                    </span>
+                  </Link>
+                )
+              })}
             </div>
           </div>
         </div>
