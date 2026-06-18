@@ -7,7 +7,9 @@ import { Menu, X, ChevronDown } from 'lucide-react'
 import LanguageSwitcher from '@/components/ui/LanguageSwitcher'
 import type { Locale } from '@/lib/i18n'
 
-const navLinks = [
+type NavLink = { href: string; label: string; hrefLang?: string }
+
+const navLinks: NavLink[] = [
   { href: '/sobre-mi', label: 'Sobre mí' },
   { href: '/conferencias', label: 'Conferencias' },
   { href: '/libros', label: 'Libros' },
@@ -21,10 +23,11 @@ const empresasLinks = [
   { href: '/bike-bed-hotels', label: 'Bike & Bed Hotels' },
 ]
 
-const navLinksEn = [
+const navLinksEn: NavLink[] = [
   { href: '/en/about',    label: 'About' },
   { href: '/en/speaking', label: 'Speaking' },
   { href: '/en/books',    label: 'Books' },
+  { href: '/blog',        label: 'Blog · ES', hrefLang: 'es' },
   { href: '/en/contact',  label: 'Contact' },
 ]
 
@@ -70,6 +73,7 @@ export default function Header({ locale = 'es' }: HeaderProps) {
               <Link
                 key={link.href}
                 href={link.href}
+                hrefLang={link.hrefLang}
                 className="text-brand-muted transition-colors hover:text-brand-text"
               >
                 {link.label}
@@ -128,6 +132,7 @@ export default function Header({ locale = 'es' }: HeaderProps) {
               <Link
                 key={link.href}
                 href={link.href}
+                hrefLang={link.hrefLang}
                 className="text-brand-muted hover:text-brand-text"
                 onClick={() => setMenuOpen(false)}
               >

@@ -18,6 +18,24 @@ const IMPACT_LINES = [
   },
 ] as const
 
+const IMPACT_LINES_EN = [
+  {
+    icon: Bike,
+    title: 'Mobility and access',
+    text: 'Providing bicycles to people and communities who truly need them.',
+  },
+  {
+    icon: Activity,
+    title: 'Sport and wellbeing',
+    text: 'Promoting physical activity, healthy habits and community connection.',
+  },
+  {
+    icon: Users,
+    title: 'Opportunities for new generations',
+    text: 'Bringing cycling closer to children and young people, including youth leagues and development programs.',
+  },
+] as const
+
 const GOALS = [
   { year: '2026', count: '50' },
   { year: '2027', count: '100' },
@@ -25,7 +43,31 @@ const GOALS = [
   { year: '2029', count: '250' },
 ] as const
 
-export default function PedaleaFelicidad() {
+export default function PedaleaFelicidad({ locale = 'es' }: { locale?: 'es' | 'en' }) {
+  const t = locale === 'en' ? {
+    sectionLabel: 'Social impact',
+    h2text: 'Pedalea la Felicidad',
+    h2span: 'Foundation',
+    missionP1: 'An initiative to transform lives through the bicycle, bringing mobility, sport and new opportunities to children, youth and people with limited resources.',
+    missionP2: 'Each bicycle can become a tool of freedom, wellbeing and hope for a person, a family or a community.',
+    quote: 'A bicycle can change a story.',
+    goalsLabel: 'Bicycle goals',
+    goalsSuffix: 'bicycles',
+    disclaimer: '* Figures represent projected goals, not achieved results.',
+  } : {
+    sectionLabel: 'Impacto social',
+    h2text: 'Fundación',
+    h2span: 'Pedalea la Felicidad',
+    missionP1: 'Una iniciativa para transformar vidas a través de la bicicleta, acercando movilidad, deporte y nuevas oportunidades a niños, jóvenes y personas de escasos recursos.',
+    missionP2: 'Cada bicicleta puede convertirse en una herramienta de libertad, bienestar y esperanza para una persona, una familia o una comunidad.',
+    quote: 'Una bicicleta puede cambiar una historia.',
+    goalsLabel: 'Metas de bicicletas',
+    goalsSuffix: 'bicicletas',
+    disclaimer: '* Cifras corresponden a metas proyectadas, no a resultados alcanzados.',
+  }
+
+  const currentImpactLines = locale === 'en' ? IMPACT_LINES_EN : IMPACT_LINES
+
   return (
     <section
       id="fundacion-pedalea-la-felicidad"
@@ -37,15 +79,25 @@ export default function PedaleaFelicidad() {
         {/* Header */}
         <div className="mb-12">
           <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-brand-green">
-            Impacto social
+            {t.sectionLabel}
           </p>
-          <h2
-            id="pedalea-felicidad-title"
-            className="text-3xl font-bold text-brand-text md:text-4xl"
-          >
-            Fundación{' '}
-            <span className="text-brand-gold">Pedalea la Felicidad</span>
-          </h2>
+          {locale === 'en' ? (
+            <h2
+              id="pedalea-felicidad-title"
+              className="text-3xl font-bold text-brand-text md:text-4xl"
+            >
+              <span className="text-brand-gold">{t.h2text}</span>{' '}
+              {t.h2span}
+            </h2>
+          ) : (
+            <h2
+              id="pedalea-felicidad-title"
+              className="text-3xl font-bold text-brand-text md:text-4xl"
+            >
+              {t.h2text}{' '}
+              <span className="text-brand-gold">{t.h2span}</span>
+            </h2>
+          )}
         </div>
 
         {/* Dos columnas desktop / una columna mobile */}
@@ -55,18 +107,15 @@ export default function PedaleaFelicidad() {
           <div className="space-y-8">
             <div className="space-y-4">
               <p className="leading-relaxed text-brand-muted">
-                Una iniciativa para transformar vidas a través de la bicicleta, acercando
-                movilidad, deporte y nuevas oportunidades a niños, jóvenes y personas de
-                escasos recursos.
+                {t.missionP1}
               </p>
               <p className="text-sm leading-relaxed text-brand-muted/80">
-                Cada bicicleta puede convertirse en una herramienta de libertad, bienestar
-                y esperanza para una persona, una familia o una comunidad.
+                {t.missionP2}
               </p>
             </div>
 
             <ul className="space-y-5">
-              {IMPACT_LINES.map(({ icon: Icon, title, text }) => (
+              {currentImpactLines.map(({ icon: Icon, title, text }) => (
                 <li key={title} className="flex gap-4">
                   <div className="mt-0.5 shrink-0">
                     <Icon size={18} className="text-brand-green" aria-hidden="true" />
@@ -80,14 +129,14 @@ export default function PedaleaFelicidad() {
             </ul>
 
             <p className="text-sm italic text-brand-muted">
-              Una bicicleta puede cambiar una historia.
+              {t.quote}
             </p>
           </div>
 
           {/* Derecha: metas anuales */}
           <div className="rounded-2xl border border-brand-border bg-brand-card p-8">
             <p className="mb-6 text-xs font-semibold uppercase tracking-widest text-brand-green">
-              Metas de bicicletas
+              {t.goalsLabel}
             </p>
             <dl>
               {GOALS.map(({ year, count }) => (
@@ -98,13 +147,13 @@ export default function PedaleaFelicidad() {
                   <dt className="text-sm text-brand-muted">{year}</dt>
                   <dd className="text-right">
                     <span className="text-2xl font-bold text-brand-gold">{count}</span>
-                    <span className="ml-1.5 text-sm text-brand-muted">bicicletas</span>
+                    <span className="ml-1.5 text-sm text-brand-muted">{t.goalsSuffix}</span>
                   </dd>
                 </div>
               ))}
             </dl>
             <p className="mt-5 text-xs text-brand-muted">
-              * Cifras corresponden a metas proyectadas, no a resultados alcanzados.
+              {t.disclaimer}
             </p>
           </div>
 

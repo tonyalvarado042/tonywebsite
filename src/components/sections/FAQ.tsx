@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
-import { faqs, type FAQAnswerBlock } from '@/data/faqs'
+import { faqs, type FAQAnswerBlock, type FAQItem } from '@/data/faqs'
 
 function renderInlineText(text: string) {
   const parts = text.split(/(\*\*[^*]+\*\*)/)
@@ -77,7 +77,24 @@ function FAQRow({ question, answer }: { question: string; answer: FAQAnswerBlock
   )
 }
 
-export default function FAQ() {
+type FAQProps = {
+  locale?: 'es' | 'en'
+  questions?: FAQItem[]
+}
+
+export default function FAQ({ locale = 'es', questions }: FAQProps) {
+  const t = locale === 'en' ? {
+    sectionLabel: 'Frequently asked questions',
+    h2text: 'The questions',
+    h2span: 'we hear most.',
+  } : {
+    sectionLabel: 'Preguntas frecuentes',
+    h2text: 'Las preguntas',
+    h2span: 'que más nos hacen.',
+  }
+
+  const currentFaqs = questions ?? faqs
+
   return (
     <section id="faq" className="bg-brand-bg py-20">
       <div className="mx-auto max-w-3xl px-6 md:px-12">
@@ -90,16 +107,16 @@ export default function FAQ() {
           transition={{ duration: 0.6 }}
         >
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-accent">
-            Preguntas frecuentes
+            {t.sectionLabel}
           </p>
           <h2 className="text-4xl font-bold text-brand-text">
-            Las preguntas{' '}
-            <span className="text-brand-accent">que más nos hacen.</span>
+            {t.h2text}{' '}
+            <span className="text-brand-accent">{t.h2span}</span>
           </h2>
         </motion.div>
 
         <div>
-          {faqs.map((faq) => (
+          {currentFaqs.map((faq) => (
             <FAQRow key={faq.question} question={faq.question} answer={faq.answer} />
           ))}
         </div>

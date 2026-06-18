@@ -17,6 +17,17 @@ export const interesOptions = [
   { value: 'otro',               label: 'Otro' },
 ]
 
+const interesOptionsEn = [
+  { value: 'pure-cycling',        label: 'Pure Cycling' },
+  { value: 'puromtb',            label: 'PuroMTB' },
+  { value: 'bike-bed',           label: 'Bike & Bed Hotels' },
+  { value: 'bike-bed-inversion', label: 'Bike & Bed Investment' },
+  { value: 'conferencias',       label: 'Speaking / Conferences' },
+  { value: 'libros',             label: 'Books' },
+  { value: 'contacto-general',   label: 'General inquiry' },
+  { value: 'otro',               label: 'Other' },
+]
+
 const validValues = interesOptions.map((o) => o.value)
 
 const canRequest = [
@@ -25,6 +36,14 @@ const canRequest = [
   { icon: Building2, label: 'Inversión en Bike & Bed Hotels' },
   { icon: BookOpen,  label: 'Libros y entrevistas' },
   { icon: Handshake, label: 'Alianzas profesionales' },
+]
+
+const canRequestEn = [
+  { icon: Mic,       label: 'Conference / keynote' },
+  { icon: Bike,      label: 'Training with Pure Cycling' },
+  { icon: Building2, label: 'Investment in Bike & Bed Hotels' },
+  { icon: BookOpen,  label: 'Books and interviews' },
+  { icon: Handshake, label: 'Professional partnerships' },
 ]
 
 const inputClass =
@@ -40,9 +59,10 @@ type ContactApiResponse = {
 
 type Props = {
   initialInterest?: string
+  locale?: 'es' | 'en'
 }
 
-export default function Contact({ initialInterest }: Props) {
+export default function Contact({ initialInterest, locale = 'es' }: Props) {
   const safeInitial = validValues.includes(initialInterest ?? '') ? initialInterest! : 'contacto-general'
 
   const [status, setStatus] = useState<Status>('idle')
@@ -91,7 +111,65 @@ export default function Contact({ initialInterest }: Props) {
     }
   }
 
-  const interesLabel = interesOptions.find((o) => o.value === interes)?.label ?? 'tu solicitud'
+  const t = locale === 'en' ? {
+    sectionLabelRight: 'How can we help you?',
+    headingRight: "This form is the direct line to Tony's team.",
+    responseTitle: 'Response times',
+    responseText: 'For speaking or investment inquiries, the team responds within 24 to 48 business hours.',
+    locationLabel: 'Location',
+    successTitle: 'Request received.',
+    successDefaultLabel: 'your inquiry',
+    labelName: 'Full name',
+    placeholderName: 'Your name',
+    labelEmail: 'Email address',
+    placeholderEmail: 'you@email.com',
+    labelWhatsapp: 'WhatsApp',
+    optionalSuffix: '(optional)',
+    labelCompany: 'Company or organization',
+    placeholderCompany: 'Your company name',
+    labelInteres: 'Main interest',
+    labelMessage: 'Message',
+    placeholderMessage: 'Tell us briefly about your inquiry: type of event, tentative date, country, audience, interest in Pure Cycling, Bike & Bed Hotels or the reason for your contact.',
+    errorText: 'The message could not be sent. Please try again or write to us directly.',
+    submitSending: 'Sending...',
+    submitIdle: 'Send message →',
+    responseNote: 'We respond within 24 to 48 business hours.',
+    privacyPre: 'By submitting this form you agree to the use of your data to respond to your inquiry.',
+    privacyLabel: 'Privacy Policy · ES',
+    privacyHref: '/politica-de-privacidad',
+    privacyHrefLang: 'es' as string | undefined,
+  } : {
+    sectionLabelRight: '¿En qué te podemos ayudar?',
+    headingRight: 'Este formulario es la vía directa al equipo de Tony.',
+    responseTitle: 'Tiempos de respuesta',
+    responseText: 'Para consultas de conferencias o inversión, el equipo responde en un plazo de 24 a 48 horas hábiles.',
+    locationLabel: 'Ubicación',
+    successTitle: 'Solicitud recibida.',
+    successDefaultLabel: 'tu solicitud',
+    labelName: 'Nombre completo',
+    placeholderName: 'Tu nombre',
+    labelEmail: 'Correo electrónico',
+    placeholderEmail: 'tu@email.com',
+    labelWhatsapp: 'WhatsApp',
+    optionalSuffix: '(opcional)',
+    labelCompany: 'Empresa u organización',
+    placeholderCompany: 'Nombre de tu empresa',
+    labelInteres: 'Interés principal',
+    labelMessage: 'Mensaje',
+    placeholderMessage: 'Cuéntanos brevemente qué necesitas: tipo de evento, fecha tentativa, país, audiencia, interés en Pure Cycling, Bike & Bed Hotels o el motivo de tu contacto.',
+    errorText: 'No se pudo enviar el mensaje. Por favor intenta de nuevo o escríbenos directamente.',
+    submitSending: 'Enviando...',
+    submitIdle: 'Enviar mensaje →',
+    responseNote: 'Respondemos en un plazo de 24 a 48 horas hábiles.',
+    privacyPre: 'Al enviar este formulario aceptas que usemos tus datos para responder tu solicitud.',
+    privacyLabel: 'Política de privacidad',
+    privacyHref: '/politica-de-privacidad',
+    privacyHrefLang: undefined as string | undefined,
+  }
+
+  const currentOptions = locale === 'en' ? interesOptionsEn : interesOptions
+  const currentCanRequest = locale === 'en' ? canRequestEn : canRequest
+  const interesLabel = currentOptions.find((o) => o.value === interes)?.label ?? t.successDefaultLabel
 
   return (
     <section id="contacto" className="bg-brand-surface py-20">
@@ -115,12 +193,20 @@ export default function Contact({ initialInterest }: Props) {
                   <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-brand-green/15">
                     <span className="text-xl font-bold text-brand-green">✓</span>
                   </div>
-                  <p className="font-semibold text-brand-text">Solicitud recibida.</p>
-                  <p className="mt-2 text-sm text-brand-muted">
-                    Recibimos tu consulta sobre{' '}
-                    <span className="font-semibold text-brand-green">{interesLabel}</span>.{' '}
-                    El equipo la revisará y te responderá lo antes posible.
-                  </p>
+                  <p className="font-semibold text-brand-text">{t.successTitle}</p>
+                  {locale === 'en' ? (
+                    <p className="mt-2 text-sm text-brand-muted">
+                      We received your inquiry about{' '}
+                      <span className="font-semibold text-brand-green">{interesLabel}</span>.{' '}
+                      The team will review it and respond as soon as possible.
+                    </p>
+                  ) : (
+                    <p className="mt-2 text-sm text-brand-muted">
+                      Recibimos tu consulta sobre{' '}
+                      <span className="font-semibold text-brand-green">{interesLabel}</span>.{' '}
+                      El equipo la revisará y te responderá lo antes posible.
+                    </p>
+                  )}
                 </div>
               </div>
             ) : (
@@ -147,7 +233,7 @@ export default function Contact({ initialInterest }: Props) {
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div>
                     <label htmlFor="contact-nombre" className="mb-1.5 block text-xs font-medium text-brand-muted">
-                      Nombre completo
+                      {t.labelName}
                     </label>
                     <input
                       id="contact-nombre"
@@ -157,13 +243,13 @@ export default function Contact({ initialInterest }: Props) {
                       autoComplete="name"
                       minLength={2}
                       maxLength={100}
-                      placeholder="Tu nombre"
+                      placeholder={t.placeholderName}
                       className={inputClass}
                     />
                   </div>
                   <div>
                     <label htmlFor="contact-correo" className="mb-1.5 block text-xs font-medium text-brand-muted">
-                      Correo electrónico
+                      {t.labelEmail}
                     </label>
                     <input
                       id="contact-correo"
@@ -172,7 +258,7 @@ export default function Contact({ initialInterest }: Props) {
                       required
                       autoComplete="email"
                       maxLength={254}
-                      placeholder="tu@email.com"
+                      placeholder={t.placeholderEmail}
                       className={inputClass}
                     />
                   </div>
@@ -180,8 +266,8 @@ export default function Contact({ initialInterest }: Props) {
 
                 <div>
                   <label htmlFor="contact-whatsapp" className="mb-1.5 block text-xs font-medium text-brand-muted">
-                    WhatsApp{' '}
-                    <span className="font-normal text-brand-muted/60">(opcional)</span>
+                    {t.labelWhatsapp}{' '}
+                    <span className="font-normal text-brand-muted/60">{t.optionalSuffix}</span>
                   </label>
                   <input
                     id="contact-whatsapp"
@@ -196,8 +282,8 @@ export default function Contact({ initialInterest }: Props) {
 
                 <div>
                   <label htmlFor="contact-empresa" className="mb-1.5 block text-xs font-medium text-brand-muted">
-                    Empresa u organización{' '}
-                    <span className="font-normal text-brand-muted/60">(opcional)</span>
+                    {t.labelCompany}{' '}
+                    <span className="font-normal text-brand-muted/60">{t.optionalSuffix}</span>
                   </label>
                   <input
                     id="contact-empresa"
@@ -205,14 +291,14 @@ export default function Contact({ initialInterest }: Props) {
                     type="text"
                     autoComplete="organization"
                     maxLength={120}
-                    placeholder="Nombre de tu empresa"
+                    placeholder={t.placeholderCompany}
                     className={inputClass}
                   />
                 </div>
 
                 <div>
                   <label htmlFor="contact-interes" className="mb-1.5 block text-xs font-medium text-brand-muted">
-                    Interés principal
+                    {t.labelInteres}
                   </label>
                   <select
                     id="contact-interes"
@@ -223,7 +309,7 @@ export default function Contact({ initialInterest }: Props) {
                     autoComplete="off"
                     className={inputClass}
                   >
-                    {interesOptions.map((o) => (
+                    {currentOptions.map((o) => (
                       <option key={o.value} value={o.value}>{o.label}</option>
                     ))}
                   </select>
@@ -231,7 +317,7 @@ export default function Contact({ initialInterest }: Props) {
 
                 <div>
                   <label htmlFor="contact-mensaje" className="mb-1.5 block text-xs font-medium text-brand-muted">
-                    Mensaje
+                    {t.labelMessage}
                   </label>
                   <textarea
                     id="contact-mensaje"
@@ -241,14 +327,14 @@ export default function Contact({ initialInterest }: Props) {
                     autoComplete="off"
                     minLength={5}
                     maxLength={3000}
-                    placeholder="Cuéntanos brevemente qué necesitas: tipo de evento, fecha tentativa, país, audiencia, interés en Pure Cycling, Bike & Bed Hotels o el motivo de tu contacto."
+                    placeholder={t.placeholderMessage}
                     className={`${inputClass} resize-none`}
                   />
                 </div>
 
                 {status === 'error' && (
                   <p role="alert" aria-live="assertive" className="rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">
-                    No se pudo enviar el mensaje. Por favor intenta de nuevo o escríbenos directamente.
+                    {t.errorText}
                   </p>
                 )}
 
@@ -258,15 +344,19 @@ export default function Contact({ initialInterest }: Props) {
                   aria-busy={status === 'sending'}
                   className="w-full rounded-full bg-brand-green py-3.5 text-sm font-semibold text-brand-bg transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  {status === 'sending' ? 'Enviando...' : 'Enviar mensaje →'}
+                  {status === 'sending' ? t.submitSending : t.submitIdle}
                 </button>
                 <p className="text-center text-xs text-brand-muted/50">
-                  Respondemos en un plazo de 24 a 48 horas hábiles.
+                  {t.responseNote}
                 </p>
                 <p className="text-center text-xs text-brand-muted/50">
-                  Al enviar este formulario aceptas que usemos tus datos para responder tu solicitud.{' '}
-                  <Link href="/politica-de-privacidad" className="underline transition-colors hover:text-brand-muted">
-                    Política de privacidad
+                  {t.privacyPre}{' '}
+                  <Link
+                    href={t.privacyHref}
+                    {...(t.privacyHrefLang ? { hrefLang: t.privacyHrefLang } : {})}
+                    className="underline transition-colors hover:text-brand-muted"
+                  >
+                    {t.privacyLabel}
                   </Link>
                   .
                 </p>
@@ -284,13 +374,13 @@ export default function Contact({ initialInterest }: Props) {
           >
             <div>
               <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-brand-green">
-                ¿En qué te podemos ayudar?
+                {t.sectionLabelRight}
               </p>
               <h3 className="mb-5 text-xl font-bold text-brand-text">
-                Este formulario es la vía directa al equipo de Tony.
+                {t.headingRight}
               </h3>
               <ul className="space-y-3">
-                {canRequest.map(({ icon: Icon, label }) => (
+                {currentCanRequest.map(({ icon: Icon, label }) => (
                   <li key={label} className="flex items-center gap-3">
                     <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-green/10">
                       <Icon size={15} className="text-brand-green" />
@@ -302,17 +392,16 @@ export default function Contact({ initialInterest }: Props) {
             </div>
 
             <div className="rounded-xl border border-brand-border bg-brand-card p-6">
-              <p className="mb-1 text-sm font-semibold text-brand-text">Tiempos de respuesta</p>
+              <p className="mb-1 text-sm font-semibold text-brand-text">{t.responseTitle}</p>
               <p className="text-sm text-brand-muted">
-                Para consultas de conferencias o inversión, el equipo responde
-                en un plazo de 24 a 48 horas hábiles.
+                {t.responseText}
               </p>
             </div>
 
             <div className="flex items-start gap-3">
               <MapPin size={18} className="mt-0.5 shrink-0 text-brand-green" />
               <div>
-                <p className="text-sm font-semibold text-brand-text">Ubicación</p>
+                <p className="text-sm font-semibold text-brand-text">{t.locationLabel}</p>
                 <p className="mt-0.5 text-sm text-brand-muted">San José, Costa Rica</p>
               </div>
             </div>

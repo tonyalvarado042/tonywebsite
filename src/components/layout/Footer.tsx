@@ -53,6 +53,7 @@ const footerLinksEn = [
   { href: '/en/about',           label: 'About',             hrefLang: undefined as string | undefined },
   { href: '/en/speaking',        label: 'Speaking',          hrefLang: undefined as string | undefined },
   { href: '/en/books',           label: 'Books',             hrefLang: undefined as string | undefined },
+  { href: '/blog',               label: 'Blog · ES',         hrefLang: 'es' as string | undefined },
   { href: '/en/contact',         label: 'Contact',           hrefLang: undefined as string | undefined },
   { href: '/en/pure-cycling',    label: 'Pure Cycling',      hrefLang: undefined as string | undefined },
   { href: '/en/bike-bed-hotels', label: 'Bike & Bed Hotels', hrefLang: undefined as string | undefined },

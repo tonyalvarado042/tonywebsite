@@ -3,15 +3,15 @@ import { ArrowRight } from 'lucide-react'
 import { client } from '@/sanity/lib/client'
 import { recentPostsQuery, type SanityRecentPost } from '@/sanity/lib/queries'
 
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString('es-CR', {
+function formatDate(iso: string, locale: 'es' | 'en') {
+  return new Date(iso).toLocaleDateString(locale === 'en' ? 'en-US' : 'es-CR', {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
   })
 }
 
-export default async function RecentArticles() {
+export default async function RecentArticles({ locale = 'es' }: { locale?: 'es' | 'en' }) {
   let posts: SanityRecentPost[] = []
 
   try {
@@ -21,6 +21,20 @@ export default async function RecentArticles() {
   }
 
   if (!Array.isArray(posts) || posts.length === 0) return null
+
+  const t = locale === 'en' ? {
+    sectionLabel: 'From the blog',
+    h2: 'Latest articles',
+    ctaAll: 'All articles · ES',
+    readArticle: 'Read · ES →',
+    minRead: 'min read',
+  } : {
+    sectionLabel: 'Del blog',
+    h2: 'Últimos artículos',
+    ctaAll: 'Ver todos los artículos',
+    readArticle: 'Leer artículo →',
+    minRead: 'min de lectura',
+  }
 
   return (
     <section
@@ -32,20 +46,21 @@ export default async function RecentArticles() {
         <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-brand-green">
-              Del blog
+              {t.sectionLabel}
             </p>
             <h2
               id="recent-articles-title"
               className="text-3xl font-bold text-brand-text md:text-4xl"
             >
-              Últimos artículos
+              {t.h2}
             </h2>
           </div>
           <Link
             href="/blog"
+            {...(locale === 'en' ? { hrefLang: 'es' } : {})}
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-green transition-colors hover:underline"
           >
-            Ver todos los artículos <ArrowRight size={14} />
+            {t.ctaAll} <ArrowRight size={14} />
           </Link>
         </div>
 
@@ -54,11 +69,12 @@ export default async function RecentArticles() {
             <Link
               key={post._id}
               href={`/blog/${post.slug}`}
+              {...(locale === 'en' ? { hrefLang: 'es' } : {})}
               className="group flex h-full flex-col rounded-xl border border-brand-border bg-brand-card p-5 transition-colors hover:border-brand-green/50 md:p-6"
             >
               {post.category && (
                 <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-green">
-                  {post.category}
+                  {post.category}{locale === 'en' ? ' · ES' : ''}
                 </p>
               )}
 
@@ -74,12 +90,12 @@ export default async function RecentArticles() {
 
               <div className="mt-auto pt-5">
                 <p className="text-xs text-brand-muted">
-                  {formatDate(post.publishedAt)}
-                  {post.readingTime != null ? ` · ${post.readingTime} min de lectura` : ''}
+                  {formatDate(post.publishedAt, locale)}
+                  {post.readingTime != null ? ` · ${post.readingTime} ${t.minRead}` : ''}
                 </p>
 
                 <p className="mt-3 text-sm font-semibold text-brand-green">
-                  Leer artículo →
+                  {t.readArticle}
                 </p>
               </div>
             </Link>

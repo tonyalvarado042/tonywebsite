@@ -23,7 +23,63 @@ const pillars = [
   },
 ]
 
-export default function BusinessEcosystem() {
+const pillarsEn = [
+  {
+    Icon: Users,
+    label: 'Community',
+    desc: 'We connect people with the same passion for cycling.',
+  },
+  {
+    Icon: Bike,
+    label: 'Transformation',
+    desc: 'We empower lives through sport, faith and purpose.',
+  },
+  {
+    Icon: Globe,
+    label: 'Global Impact',
+    desc: 'We create opportunities that transcend borders.',
+  },
+]
+
+export default function BusinessEcosystem({ locale = 'es' }: { locale?: 'es' | 'en' }) {
+  const t = locale === 'en' ? {
+    sectionLabel: 'Business ecosystem',
+    h2text: 'An ecosystem built',
+    h2span: 'around a single mission.',
+    paragraph: 'PuroMTB, Pure Cycling and Bike & Bed Hotels. Each one different. All revolve around a bicycle.',
+    pureCyclingSubtitle: 'The community that transforms your life through cycling.',
+    pureCyclingDesc: 'A transformation program with cycling, nutrition, mindset, mobility and faith. With members in 30+ countries.',
+    pureCyclingCta: 'Join Pure Cycling →',
+    pureCyclingHref: '/en/pure-cycling',
+    puroMTBSubtitle: 'The cycling store and community of reference in Costa Rica.',
+    puroMTBDesc: 'Founded in 2004, PuroMTB has over 20 years of history, physical store, online sales and a wide cycling community.',
+    puroMTBCta: 'Explore PuroMTB →',
+    puroMTBHref: '/en/puromtb',
+    bikeBedSubtitle: 'The sports tourism model of the future.',
+    bikeBedDesc: 'A cycling-themed hotel with professional operation and global expansion vision. Opportunities for investors.',
+    bikeBedCta: 'View opportunity →',
+    bikeBedHref: '/en/bike-bed-hotels',
+  } : {
+    sectionLabel: 'Ecosistema empresarial',
+    h2text: 'Un ecosistema construido',
+    h2span: 'alrededor de una sola misión.',
+    paragraph: 'PuroMTB, Pure Cycling y Bike & Bed Hotels. Cada una distinta. Todas giran alrededor de una bicicleta.',
+    pureCyclingSubtitle: 'La comunidad que transforma tu vida a través del ciclismo.',
+    pureCyclingDesc: 'Programa de transformación con ciclismo, nutrición, mentalidad, movilidad y fe. Con miembros en más de 30 países.',
+    pureCyclingCta: 'Únete a Pure Cycling →',
+    pureCyclingHref: '/pure-cycling',
+    puroMTBSubtitle: 'La tienda y comunidad ciclista de referencia en Costa Rica.',
+    puroMTBDesc: 'Fundada en 2004, PuroMTB tiene más de 20 años de historia, tienda física, venta online y una amplia comunidad de ciclistas.',
+    puroMTBCta: 'Conocer PuroMTB →',
+    puroMTBHref: '/puromtb',
+    bikeBedSubtitle: 'El modelo de turismo deportivo del futuro.',
+    bikeBedDesc: 'Hotel temático de ciclismo con operación profesional y visión de expansión global. Oportunidades para inversionistas.',
+    bikeBedCta: 'Ver oportunidad →',
+    bikeBedHref: '/bike-bed-hotels',
+  }
+
+  const currentPillars = locale === 'en' ? pillarsEn : pillars
+
   return (
     <section id="ecosistema" className="relative overflow-hidden bg-brand-surface py-20">
 
@@ -45,14 +101,14 @@ export default function BusinessEcosystem() {
           transition={{ duration: 0.6 }}
         >
           <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-brand-accent">
-            Ecosistema empresarial
+            {t.sectionLabel}
           </p>
           <h2 className="text-4xl font-bold leading-tight text-brand-text md:text-5xl">
-            Un ecosistema construido{' '}
-            <span className="text-brand-accent">alrededor de una sola misión.</span>
+            {t.h2text}{' '}
+            <span className="text-brand-accent">{t.h2span}</span>
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-brand-muted">
-            PuroMTB, Pure Cycling y Bike &amp; Bed Hotels. Cada una distinta. Todas giran alrededor de una bicicleta.
+            {t.paragraph}
           </p>
         </motion.div>
 
@@ -130,21 +186,20 @@ export default function BusinessEcosystem() {
 
                 <h3 className="mb-2 text-xl font-bold text-brand-text">Pure Cycling</h3>
                 <p className="mb-3 text-sm font-semibold text-brand-accent">
-                  La comunidad que transforma tu vida a través del ciclismo.
+                  {t.pureCyclingSubtitle}
                 </p>
                 <p className="mb-8 flex-1 text-sm leading-relaxed text-brand-muted">
-                  Programa de transformación con ciclismo, nutrición, mentalidad, movilidad y fe.
-                  Con miembros en más de 30 países.
+                  {t.pureCyclingDesc}
                 </p>
 
                 <Link
-                  href="/pure-cycling"
+                  href={t.pureCyclingHref}
                   className="inline-flex items-center justify-center rounded-full bg-brand-accent
                              px-7 py-3 text-sm font-semibold text-white
                              shadow-[0_6px_20px_rgba(57,217,138,0.35)]
                              transition-opacity hover:opacity-90"
                 >
-                  Únete a Pure Cycling →
+                  {t.pureCyclingCta}
                 </Link>
               </div>
             </motion.article>
@@ -191,20 +246,19 @@ export default function BusinessEcosystem() {
 
                 <h3 className="mb-2 text-xl font-bold text-brand-text">PuroMTB</h3>
                 <p className="mb-3 text-sm font-semibold text-brand-accent">
-                  La tienda y comunidad ciclista de referencia en Costa Rica.
+                  {t.puroMTBSubtitle}
                 </p>
                 <p className="mb-8 flex-1 text-sm leading-relaxed text-brand-muted">
-                  Fundada en 2004, PuroMTB tiene más de 20 años de historia, tienda física,
-                  venta online y una amplia comunidad de ciclistas.
+                  {t.puroMTBDesc}
                 </p>
 
                 <Link
-                  href="/puromtb"
+                  href={t.puroMTBHref}
                   className="inline-flex items-center justify-center rounded-full border border-brand-border
                              px-6 py-2.5 text-sm font-semibold text-brand-text
                              transition-colors hover:bg-brand-surface"
                 >
-                  Conocer PuroMTB →
+                  {t.puroMTBCta}
                 </Link>
               </div>
             </motion.article>
@@ -251,20 +305,19 @@ export default function BusinessEcosystem() {
 
                 <h3 className="mb-2 text-xl font-bold text-brand-text">Bike &amp; Bed Hotels</h3>
                 <p className="mb-3 text-sm font-semibold text-brand-accent">
-                  El modelo de turismo deportivo del futuro.
+                  {t.bikeBedSubtitle}
                 </p>
                 <p className="mb-8 flex-1 text-sm leading-relaxed text-brand-muted">
-                  Hotel temático de ciclismo con operación profesional y visión de expansión global.
-                  Oportunidades para inversionistas.
+                  {t.bikeBedDesc}
                 </p>
 
                 <Link
-                  href="/bike-bed-hotels"
+                  href={t.bikeBedHref}
                   className="inline-flex items-center justify-center rounded-full border border-brand-border
                              px-6 py-2.5 text-sm font-semibold text-brand-text
                              transition-colors hover:bg-brand-surface"
                 >
-                  Ver oportunidad →
+                  {t.bikeBedCta}
                 </Link>
               </div>
             </motion.article>
@@ -281,7 +334,7 @@ export default function BusinessEcosystem() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          {pillars.map(({ Icon, label, desc }) => (
+          {currentPillars.map(({ Icon, label, desc }) => (
             <div key={label} className="flex max-w-[210px] items-start gap-3">
               <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center
                               rounded-lg bg-brand-accent/10 ring-1 ring-brand-accent/15">
