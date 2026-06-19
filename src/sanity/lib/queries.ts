@@ -88,7 +88,9 @@ export const postBySlugQuery = `
     ctaHref,
     seoTitle,
     seoDescription,
-    keywords
+    keywords,
+    youtubeUrl,
+    youtubeButtonText
   }
 `
 
@@ -111,7 +113,8 @@ export const recentPostsQuery = `
     category,
     summary,
     publishedAt,
-    readingTime
+    readingTime,
+    mainImage
   }
 `
 
@@ -123,6 +126,12 @@ export type SanityRecentPost = {
   summary: string | null
   publishedAt: string
   readingTime: number | null
+  mainImage: {
+    _type: string
+    asset: { _ref: string; _type: string }
+    hotspot?: object
+    alt?: string
+  } | null
 }
 
 export type SanityBlogPost = {
@@ -145,4 +154,6 @@ export type SanityBlogPost = {
   seoTitle: string | null
   seoDescription: string | null
   keywords: string[] | null
+  youtubeUrl: string | null
+  youtubeButtonText: string | null
 }

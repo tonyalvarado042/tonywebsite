@@ -141,7 +141,7 @@ export default async function PureCyclingPage() {
             <div className="mx-auto mt-10 flex max-w-xl flex-col items-center justify-center gap-8 sm:flex-row">
               <div className="text-center">
                 <Users size={20} className="mx-auto mb-2 text-brand-green" />
-                <p className="text-3xl font-bold text-white md:text-4xl">+500</p>
+                <p className="text-3xl font-bold text-white md:text-4xl">+700</p>
                 <p className="mt-1 text-xs uppercase tracking-wider text-white/60">Miembros activos</p>
               </div>
               <div className="hidden h-10 w-px bg-white/20 sm:block" />
@@ -313,7 +313,7 @@ export default async function PureCyclingPage() {
               {/* Números */}
               <div className="flex flex-col items-center justify-center gap-10 p-8 md:p-12">
                 <div className="text-center">
-                  <p className="text-6xl font-bold text-brand-text">+500</p>
+                  <p className="text-6xl font-bold text-brand-text">+700</p>
                   <p className="mt-2 text-xs uppercase tracking-widest text-brand-muted">
                     miembros activos
                   </p>

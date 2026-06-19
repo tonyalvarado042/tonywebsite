@@ -16,7 +16,7 @@ const features = [
 ]
 
 const stats = [
-  { Icon: Users, value: '+500', label: 'Miembros activos', note: 'aprox.' },
+  { Icon: Users, value: '+700', label: 'Miembros activos', note: 'aprox.' },
   { Icon: Globe, value: '+30', label: 'Países', note: 'aprox.' },
   { Icon: Zap, value: '90', label: 'Días de transformación' },
 ]

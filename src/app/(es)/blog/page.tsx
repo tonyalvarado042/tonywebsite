@@ -1,6 +1,7 @@
 import Link from 'next/link'
-import InterviewCarousel from '@/components/blog/InterviewCarousel'
+import Image from 'next/image'
 import JsonLd from '@/components/JsonLd'
+import { urlForImage } from '@/sanity/lib/image'
 import { SITE_URL, websiteRef, personRef } from '@/lib/structured-data'
 import { client } from '@/sanity/lib/client'
 import { postsQuery } from '@/sanity/lib/queries'
@@ -90,8 +91,6 @@ export default async function BlogPage() {
       <JsonLd data={breadcrumbSchema} />
       <JsonLd data={itemListSchema} />
 
-      <InterviewCarousel />
-
       {/* Hero */}
       <section className="bg-brand-bg py-20">
         <div className="mx-auto max-w-4xl px-6 text-center md:px-12">
@@ -111,51 +110,75 @@ export default async function BlogPage() {
 
       {/* Tarjetas */}
       <section className="bg-brand-bg pb-24">
-        <div className="mx-auto max-w-3xl px-6 md:px-12">
+        <div className="mx-auto max-w-6xl px-6 md:px-12">
           {posts.length === 0 ? (
             <div className="py-20 text-center">
               <p className="text-brand-muted">No hay artículos publicados todavía.</p>
             </div>
           ) : (
-            <div className="grid gap-4">
-              {posts.map((post) => (
-                <article key={post.slug} className="group">
-                  <Link
-                    href={`/blog/${post.slug}`}
-                    className="block rounded-xl border border-brand-border bg-brand-card p-6 transition-all duration-200 hover:border-brand-accent/40 hover:shadow-[0_0_28px_-8px_rgba(57,217,138,0.18)] md:p-8"
-                  >
-                    {post.category && (
-                      <span className="text-xs font-semibold uppercase tracking-widest text-brand-accent">
-                        {post.category}
-                      </span>
-                    )}
-                    <h2 className="mt-2.5 text-xl font-bold leading-snug text-brand-text transition-colors group-hover:text-brand-accent md:text-2xl">
-                      {post.title}
-                    </h2>
-                    {post.summary && (
-                      <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-brand-muted">
-                        {post.summary}
-                      </p>
-                    )}
-                    <div className="mt-5 flex items-center justify-between">
-                      <div className="flex items-center gap-2 text-xs text-brand-muted/60">
-                        {post.publishedAt && (
-                          <span>{formatDate(post.publishedAt)}</span>
-                        )}
-                        {post.publishedAt && post.readingTime && (
-                          <span className="text-brand-muted/30">·</span>
-                        )}
-                        {post.readingTime && (
-                          <span>{post.readingTime} min de lectura</span>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {posts.map((post) => {
+                const coverUrl = post.mainImage
+                  ? urlForImage(post.mainImage)?.width(800).height(450).url() ?? null
+                  : null
+                return (
+                  <article key={post.slug} className="group">
+                    <Link
+                      href={`/blog/${post.slug}`}
+                      className="flex h-full flex-col overflow-hidden rounded-xl border border-brand-border bg-brand-card transition-all duration-200 hover:border-brand-accent/40 hover:shadow-[0_0_28px_-8px_rgba(57,217,138,0.18)]"
+                    >
+                      <div className="relative aspect-video overflow-hidden bg-brand-surface">
+                        {coverUrl ? (
+                          <Image
+                            src={coverUrl}
+                            alt={post.mainImage?.alt || post.title}
+                            fill
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                          />
+                        ) : (
+                          <div className="flex h-full items-center justify-center">
+                            <span className="text-xs font-medium uppercase tracking-widest text-brand-muted/30">
+                              tonyalvarado.com
+                            </span>
+                          </div>
                         )}
                       </div>
-                      <span className="text-sm font-semibold text-brand-accent transition-opacity group-hover:opacity-70">
-                        Leer →
-                      </span>
-                    </div>
-                  </Link>
-                </article>
-              ))}
+                      <div className="flex flex-1 flex-col p-5 md:p-6">
+                        {post.category && (
+                          <span className="text-xs font-semibold uppercase tracking-widest text-brand-accent">
+                            {post.category}
+                          </span>
+                        )}
+                        <h2 className="mt-2.5 text-lg font-bold leading-snug text-brand-text transition-colors group-hover:text-brand-accent md:text-xl">
+                          {post.title}
+                        </h2>
+                        {post.summary && (
+                          <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-brand-muted">
+                            {post.summary}
+                          </p>
+                        )}
+                        <div className="mt-auto flex items-center justify-between pt-5">
+                          <div className="flex items-center gap-2 text-xs text-brand-muted/60">
+                            {post.publishedAt && (
+                              <span>{formatDate(post.publishedAt)}</span>
+                            )}
+                            {post.publishedAt && post.readingTime && (
+                              <span className="text-brand-muted/30">·</span>
+                            )}
+                            {post.readingTime && (
+                              <span>{post.readingTime} min de lectura</span>
+                            )}
+                          </div>
+                          <span className="text-sm font-semibold text-brand-accent transition-opacity group-hover:opacity-70">
+                            Leer →
+                          </span>
+                        </div>
+                      </div>
+                    </Link>
+                  </article>
+                )
+              })}
             </div>
           )}
         </div>

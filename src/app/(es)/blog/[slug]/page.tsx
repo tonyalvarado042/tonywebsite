@@ -317,6 +317,23 @@ export default async function BlogPostPage({ params }: Props) {
             </div>
           )}
 
+          {/* YouTube CTA */}
+          {post.youtubeUrl && (
+            <div className="mt-10 rounded-2xl border border-brand-border bg-brand-card p-8 text-center">
+              <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-brand-muted">
+                {post.youtubeButtonText || 'Ver entrevista completa en YouTube'}
+              </p>
+              <a
+                href={post.youtubeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-brand-accent/50 px-7 py-3 text-sm font-semibold text-brand-accent transition-colors hover:bg-brand-accent/10"
+              >
+                Ver en YouTube →
+              </a>
+            </div>
+          )}
+
           <div className="mt-10 text-center">
             <Link
               href="/blog"

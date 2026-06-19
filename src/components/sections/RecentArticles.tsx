@@ -1,7 +1,9 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
 import { client } from '@/sanity/lib/client'
 import { recentPostsQuery, type SanityRecentPost } from '@/sanity/lib/queries'
+import { urlForImage } from '@/sanity/lib/image'
 
 function formatDate(iso: string, locale: 'es' | 'en') {
   return new Date(iso).toLocaleDateString(locale === 'en' ? 'en-US' : 'es-CR', {
@@ -64,42 +66,67 @@ export default async function RecentArticles({ locale = 'es' }: { locale?: 'es' 
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          {posts.map((post) => (
-            <Link
-              key={post._id}
-              href={`/blog/${post.slug}`}
-              {...(locale === 'en' ? { hrefLang: 'es' } : {})}
-              className="group flex h-full flex-col rounded-xl border border-brand-border bg-brand-card p-5 transition-colors hover:border-brand-green/50 md:p-6"
-            >
-              {post.category && (
-                <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-brand-green">
-                  {post.category}{locale === 'en' ? ' · ES' : ''}
-                </p>
-              )}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+          {posts.map((post) => {
+            const coverUrl = post.mainImage
+              ? urlForImage(post.mainImage)?.width(600).height(338).url() ?? null
+              : null
+            return (
+              <Link
+                key={post._id}
+                href={`/blog/${post.slug}`}
+                {...(locale === 'en' ? { hrefLang: 'es' } : {})}
+                className="group flex h-full flex-col overflow-hidden rounded-xl border border-brand-border bg-brand-card transition-colors hover:border-brand-green/50"
+              >
+                <div className="relative aspect-video overflow-hidden bg-brand-surface">
+                  {coverUrl ? (
+                    <Image
+                      src={coverUrl}
+                      alt={post.mainImage?.alt || post.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                    />
+                  ) : (
+                    <div className="flex h-full items-center justify-center">
+                      <span className="text-xs font-medium uppercase tracking-widest text-brand-muted/30">
+                        tonyalvarado.com
+                      </span>
+                    </div>
+                  )}
+                </div>
 
-              <h3 className="line-clamp-3 text-lg font-bold leading-snug text-brand-text transition-colors group-hover:text-brand-green">
-                {post.title}
-              </h3>
+                <div className="flex flex-1 flex-col p-5 md:p-6">
+                  {post.category && (
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-brand-green">
+                      {post.category}{locale === 'en' ? ' · ES' : ''}
+                    </p>
+                  )}
 
-              {post.summary && (
-                <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-brand-muted">
-                  {post.summary}
-                </p>
-              )}
+                  <h3 className="line-clamp-3 text-lg font-bold leading-snug text-brand-text transition-colors group-hover:text-brand-green">
+                    {post.title}
+                  </h3>
 
-              <div className="mt-auto pt-5">
-                <p className="text-xs text-brand-muted">
-                  {formatDate(post.publishedAt, locale)}
-                  {post.readingTime != null ? ` · ${post.readingTime} ${t.minRead}` : ''}
-                </p>
+                  {post.summary && (
+                    <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-brand-muted">
+                      {post.summary}
+                    </p>
+                  )}
 
-                <p className="mt-3 text-sm font-semibold text-brand-green">
-                  {t.readArticle}
-                </p>
-              </div>
-            </Link>
-          ))}
+                  <div className="mt-auto pt-5">
+                    <p className="text-xs text-brand-muted">
+                      {formatDate(post.publishedAt, locale)}
+                      {post.readingTime != null ? ` · ${post.readingTime} ${t.minRead}` : ''}
+                    </p>
+
+                    <p className="mt-3 text-sm font-semibold text-brand-green">
+                      {t.readArticle}
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            )
+          })}
         </div>
 
       </div>

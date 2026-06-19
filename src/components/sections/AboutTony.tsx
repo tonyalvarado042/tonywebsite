@@ -59,11 +59,11 @@ export default function AboutTony({ locale = 'es' }: { locale?: 'es' | 'en' }) {
         >
           <div className="overflow-hidden rounded-2xl">
             <Image
-              src="/images/tony/tony-about.jpg"
+              src="/images/tony/tony-hero.jpg"
               alt={t.imageAlt}
               width={600}
               height={750}
-              className="w-full object-cover"
+              className="w-full object-cover object-top"
             />
           </div>
         </motion.div>

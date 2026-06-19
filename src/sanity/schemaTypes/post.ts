@@ -73,10 +73,10 @@ export const postType = defineType({
       type: 'number',
     }),
 
-    // ── Imagen principal ──────────────────────────────────────────────────────
+    // ── Imagen de portada ─────────────────────────────────────────────────────
     defineField({
       name: 'mainImage',
-      title: 'Imagen principal',
+      title: 'Imagen de portada',
       type: 'image',
       options: { hotspot: true },
       fields: [
@@ -293,6 +293,21 @@ export const postType = defineType({
           return 'El enlace debe comenzar con "/" (ruta interna) o "https://" (URL externa).'
         }).warning(),
       ],
+    }),
+
+    // ── YouTube ───────────────────────────────────────────────────────────────
+    defineField({
+      name: 'youtubeUrl',
+      title: 'YouTube — URL del video',
+      type: 'url',
+      description: 'Si el artículo tiene una entrevista o video en YouTube, pega aquí la URL.',
+    }),
+    defineField({
+      name: 'youtubeButtonText',
+      title: 'YouTube — Texto del botón',
+      type: 'string',
+      description: 'Texto que aparece sobre el botón de YouTube.',
+      initialValue: 'Ver entrevista completa en YouTube',
     }),
 
     // ── SEO ───────────────────────────────────────────────────────────────────

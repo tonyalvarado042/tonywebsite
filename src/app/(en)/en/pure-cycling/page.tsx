@@ -163,8 +163,8 @@ export default async function EnPureCyclingPage() {
             <div className="mx-auto mt-10 flex max-w-xl flex-col items-center justify-center gap-8 sm:flex-row">
               <div className="text-center">
                 <Users size={20} className="mx-auto mb-2 text-brand-green" />
-                <p className="text-3xl font-bold text-white md:text-4xl">Online</p>
-                <p className="mt-1 text-xs uppercase tracking-wider text-white/60">Community platform</p>
+                <p className="text-3xl font-bold text-white md:text-4xl">700+</p>
+                <p className="mt-1 text-xs uppercase tracking-wider text-white/60">Members</p>
               </div>
               <div className="hidden h-10 w-px bg-white/20 sm:block" />
               <div className="text-center">
@@ -345,8 +345,8 @@ export default async function EnPureCyclingPage() {
                 </div>
                 <div className="h-px w-20 bg-brand-border" />
                 <div className="text-center">
-                  <p className="text-6xl font-bold text-brand-text">Online</p>
-                  <p className="mt-2 text-xs uppercase tracking-widest text-brand-muted">training platform</p>
+                  <p className="text-6xl font-bold text-brand-text">700+</p>
+                  <p className="mt-2 text-xs uppercase tracking-widest text-brand-muted">members</p>
                 </div>
               </div>
 
