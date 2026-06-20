@@ -63,6 +63,21 @@ const breadcrumbSchemaEn = {
   ],
 }
 
+const profilePageSchemaEn = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  '@id': `${SITE_URL}/en/about#profilepage`,
+  url: `${SITE_URL}/en/about`,
+  name: 'About Tony Alvarado',
+  description:
+    'Tony Alvarado is a cycling coach, entrepreneur, author and faith-driven leader from Costa Rica. Founder of Pure Cycling, PuroMTB and Bike & Bed Hotels, with over 22 years of experience.',
+  inLanguage: 'en-US',
+  isPartOf: websiteRef,
+  mainEntity: {
+    '@id': `${SITE_URL}/#tony-alvarado`,
+  },
+}
+
 const highlights = [
   'Computer engineer by training, entrepreneur by calling',
   'Certified cycling coach',
@@ -111,6 +126,7 @@ export default function EnAboutPage() {
   return (
     <main>
       <JsonLd data={webPageSchemaEn} />
+      <JsonLd data={profilePageSchemaEn} />
       <JsonLd data={breadcrumbSchemaEn} />
       <JsonLd data={faqSchemaEn} />
 

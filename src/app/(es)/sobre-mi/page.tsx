@@ -85,6 +85,21 @@ const breadcrumbSchema = {
   ],
 }
 
+const profilePageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  '@id': `${SITE_URL}/sobre-mi#profilepage`,
+  url: `${SITE_URL}/sobre-mi`,
+  name: 'Sobre Tony Alvarado',
+  description:
+    'Conoce la historia de Tony Alvarado (Anthony Alvarado): su accidente a los 16 años, cómo el ciclismo de montaña y de ruta transformó su vida y el propósito detrás de sus empresas en Costa Rica.',
+  inLanguage: 'es-CR',
+  isPartOf: websiteRef,
+  mainEntity: {
+    '@id': `${SITE_URL}/#tony-alvarado`,
+  },
+}
+
 const highlights = [
   'Ingeniero de computación y empresario',
   'Coach y entrenador certificado de ciclismo',
@@ -100,6 +115,7 @@ export default function SobreMiPage() {
   return (
     <main>
       <JsonLd data={webPageSchema} />
+      <JsonLd data={profilePageSchema} />
       <JsonLd data={breadcrumbSchema} />
       <JsonLd data={faqSchema} />
 
