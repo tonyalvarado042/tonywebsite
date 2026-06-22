@@ -3,17 +3,12 @@ import { Resend } from 'resend'
 import {
   getInteresLabel,
   getInternalSubject,
-  getAutoReplySubject,
   buildInternalHtml,
-  buildAutoReplyHtml,
 } from '@/lib/email-templates'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-function readString(value: unknown): string {
-  return typeof value === 'string' ? value.trim() : ''
-}
-
+// ── Whitelist de valores permitidos ──────────────────────────────────────────
 const VALID_INTERES = [
   'pure-cycling',
   'puromtb',
@@ -24,6 +19,28 @@ const VALID_INTERES = [
   'contacto-general',
   'otro',
 ]
+
+// ── Mapeo de plantillas Resend (solo servidor — nunca expuesto al navegador) ─
+// El navegador solo envía el valor de `interes`; el ID de plantilla se
+// selecciona aquí a partir del valor ya validado contra VALID_INTERES.
+const CONTACT_TEMPLATE_IDS: Record<string, string> = {
+  'pure-cycling':       'd18b0bcd-3995-49a6-95c4-7ab4b5a5ab98',
+  puromtb:              'ee085399-c743-4615-8c5b-26a254a561f4',
+  'bike-bed':           '79091ea9-c80f-4f06-ae75-5ff49c218bc6',
+  'bike-bed-inversion': '156fb09f-9cd2-46b0-a3d0-5b8baf6af5cb',
+  conferencias:         'c28266ea-e8dc-46d2-9ef2-985e4e033def',
+  libros:               '357d4254-800d-4b56-acd2-b2c3ce1a2b8d',
+  'contacto-general':   '73fae7c1-a04d-4c11-9e5b-0bbbd913d65b',
+  otro:                 '5b5e294f-4f24-4e3f-a4ce-c26c5e447c38',
+}
+
+function getTemplateId(interes: string): string {
+  return CONTACT_TEMPLATE_IDS[interes] ?? CONTACT_TEMPLATE_IDS['contacto-general']
+}
+
+function readString(value: unknown): string {
+  return typeof value === 'string' ? value.trim() : ''
+}
 
 // Dominios siempre permitidos
 const ALWAYS_ALLOWED_ORIGINS = [
@@ -103,18 +120,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: true, filtered: true })
     }
 
-    // 7. Whitelist de interés: vacío → contacto-general; inválido → 422
-    const interes = interesRaw === ''
-      ? 'contacto-general'
-      : VALID_INTERES.includes(interesRaw)
-        ? interesRaw
-        : null
-    if (!interes) {
-      return NextResponse.json(
-        { success: false, error: 'Interés no válido.' },
-        { status: 422 }
-      )
-    }
+    // 7. Whitelist de interés: valor válido → usar tal cual; vacío o desconocido → contacto-general.
+    //    El navegador nunca puede inyectar un ID de plantilla: solo el valor de `interes`
+    //    llega aquí y el ID se resuelve en servidor desde CONTACT_TEMPLATE_IDS.
+    const interes = VALID_INTERES.includes(interesRaw) ? interesRaw : 'contacto-general'
 
     // 8. Campos requeridos presentes
     if (!nombre || !correo || !mensaje) {
@@ -162,7 +171,7 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    const toEmail = process.env.CONTACT_TO_EMAIL
+    const toEmail  = process.env.CONTACT_TO_EMAIL
     const fromEmail = process.env.CONTACT_FROM_EMAIL || 'onboarding@resend.dev'
 
     if (!toEmail) {
@@ -176,6 +185,7 @@ export async function POST(req: NextRequest) {
     const interesLabel = getInteresLabel(interes)
     const now = new Date().toLocaleString('es-CR', { timeZone: 'America/Costa_Rica' })
 
+    // 10. Notificación interna — prioritaria; fallo bloquea la respuesta al formulario
     const { error: internalError } = await resend.emails.send({
       from: `Formulario Web Tony Alvarado <${fromEmail}>`,
       to: toEmail,
@@ -191,28 +201,54 @@ export async function POST(req: NextRequest) {
     })
 
     if (internalError) {
-      console.error('[contact/route] Error enviando email interno:', internalError)
+      console.error('[contact/route] Error enviando notificación interna:', internalError.name)
       return NextResponse.json(
         { success: false, error: 'No se pudo enviar el mensaje.' },
         { status: 500 }
       )
     }
 
-    // Auto-respuesta — puede fallar si el dominio no está verificado; no bloquea el flujo.
-    try {
-      await resend.emails.send({
-        from: `Tony Alvarado <${fromEmail}>`,
-        to: correo,
-        subject: getAutoReplySubject(interes),
-        html: buildAutoReplyHtml({ nombre, interes, interesLabel }),
-      })
-    } catch (autoReplyErr) {
-      console.warn('[contact/route] Auto-respuesta no enviada:', autoReplyErr)
+    // 11. Respuesta automática con plantilla Resend
+    //
+    // Desactivada por defecto (RESEND_CONTACT_AUTOREPLY_ENABLED != 'true') porque
+    // el dominio tonyalvarado.com aún no está verificado en Resend.
+    // La notificación interna (paso 10) ya fue entregada al equipo, por lo que
+    // un fallo en el autoreply no cancela el envío ni devuelve error al formulario.
+    const autoReplyEnabled = process.env.RESEND_CONTACT_AUTOREPLY_ENABLED === 'true'
+
+    if (autoReplyEnabled) {
+      const autoReplyFrom    = process.env.RESEND_CONTACT_AUTOREPLY_FROM
+      const autoReplyReplyTo = process.env.RESEND_CONTACT_AUTOREPLY_REPLY_TO || undefined
+
+      if (!autoReplyFrom) {
+        console.warn('[contact/route] Autoreply habilitado pero RESEND_CONTACT_AUTOREPLY_FROM no está configurado.')
+      } else {
+        try {
+          const { error: autoReplyError } = await resend.emails.send({
+            from: autoReplyFrom,
+            to: correo,
+            replyTo: autoReplyReplyTo,
+            template: {
+              id: getTemplateId(interes),
+              variables: { NOMBRE: nombre },
+            },
+          })
+          if (autoReplyError) {
+            console.warn('[contact/route] Autoreply no enviado:', autoReplyError.name)
+          }
+        } catch (autoReplyErr) {
+          // El equipo ya recibió el lead. El autoreply no bloquea el flujo.
+          console.warn(
+            '[contact/route] Error en autoreply:',
+            autoReplyErr instanceof Error ? autoReplyErr.name : 'unknown',
+          )
+        }
+      }
     }
 
     return NextResponse.json({ success: true })
   } catch (err) {
-    console.error('[contact/route] Error inesperado:', err)
+    console.error('[contact/route] Error inesperado:', err instanceof Error ? err.name : 'unknown')
     return NextResponse.json(
       { success: false, error: 'Error interno al procesar la solicitud.' },
       { status: 500 }
