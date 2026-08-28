@@ -1,10 +1,11 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ShoppingCart } from 'lucide-react'
+import { ShoppingCart, Bell, ArrowRight } from 'lucide-react'
 import JsonLd from '@/components/JsonLd'
 import PageFAQ, { type PageFAQItem } from '@/components/sections/PageFAQ'
-import { SITE_URL, websiteRef, personRef, bookSchema, bookSchema2 } from '@/lib/structured-data'
+import BookCover2027 from '@/components/ui/BookCover2027'
+import { SITE_URL, websiteRef, personRef, bookSchema, bookSchema2, bookSchema3 } from '@/lib/structured-data'
 
 export const metadata: Metadata = {
   title: {
@@ -100,6 +101,7 @@ export default function EnBooksPage() {
     <main className="bg-brand-bg">
       <JsonLd data={webPageSchemaEn} />
       <JsonLd data={breadcrumbSchemaEn} />
+      <JsonLd data={bookSchema3} />
       <JsonLd data={bookSchema} />
       <JsonLd data={bookSchema2} />
       <JsonLd data={faqSchemaEn} />
@@ -116,15 +118,89 @@ export default function EnBooksPage() {
             Books by Tony Alvarado
           </p>
           <h1 className="mx-auto max-w-4xl text-5xl font-bold leading-[1.1] tracking-tight text-brand-text md:text-7xl">
-            Two books.{' '}
+            Three books.{' '}
             <span className="text-brand-gold">One mission.</span>
           </h1>
           <div className="mx-auto mt-7 h-px w-32 bg-gradient-to-r from-transparent via-brand-gold/55 to-transparent" />
           <p className="mx-auto mt-8 max-w-2xl text-base leading-relaxed text-brand-muted md:text-lg">
-            Two paths, two chapters and one shared purpose: to inspire, strengthen and
+            Three paths, three chapters and one shared purpose: to inspire, strengthen and
             transform lives through leadership, faith, entrepreneurship and perseverance.
           </p>
         </div>
+      </section>
+
+      {/* ── Featured: the third book ── */}
+      <section className="px-6 pb-16 md:px-10">
+        <article
+          className="group relative mx-auto flex max-w-6xl flex-col overflow-hidden rounded-3xl
+                     border border-brand-gold/25 bg-brand-card
+                     shadow-[0_0_0_1px_rgba(201,162,77,0.12),0_0_70px_-12px_rgba(201,162,77,0.22),0_25px_60px_-20px_rgba(0,0,0,0.55)]
+                     lg:flex-row lg:items-center"
+        >
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0
+                       bg-[radial-gradient(ellipse_55%_85%_at_82%_50%,rgba(201,162,77,0.16)_0%,transparent_68%)]"
+          />
+
+          <div className="relative z-10 flex-1 px-9 py-11 text-left md:px-12 md:py-14">
+            <span
+              className="mb-6 inline-flex items-center gap-2.5 rounded-full bg-brand-gold/10
+                         px-4 py-1.5 ring-1 ring-brand-gold/30"
+            >
+              <Bell size={12} className="text-brand-gold" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-brand-gold">
+                New · In preparation
+              </span>
+            </span>
+
+            <h2 className="mb-5 text-3xl font-bold leading-[1.12] tracking-tight text-brand-text md:text-[2.6rem]">
+              The New Tourism<br />
+              Business{' '}
+              <span className="text-brand-gold">2027</span>
+            </h2>
+
+            <p className="mb-8 max-w-xl text-[15px] leading-[1.78] text-brand-muted">
+              Guests stopped travelling for the room, and the generic hotel stopped being a
+              good business. Tony’s third book covers what changed in the craft of building
+              and running hotels — written from La Fortuna de San Carlos, while one hotel
+              goes up and another one runs.
+            </p>
+
+            <div className="mb-8 flex flex-wrap gap-2">
+              {['Tourism', 'Hospitality', 'Wellness', 'Operations', 'Costa Rica'].map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-full bg-brand-gold/10 px-3.5 py-1.5
+                             text-[11px] font-semibold tracking-wide text-brand-gold
+                             ring-1 ring-brand-gold/20"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            <Link
+              href="/en/books/the-new-tourism-business-2027"
+              className="inline-flex items-center gap-2.5 rounded-2xl bg-brand-gold px-8 py-4
+                         text-[15px] font-bold text-brand-bg
+                         shadow-[0_8px_32px_rgba(201,162,77,0.35)]
+                         transition-all hover:opacity-90 hover:shadow-[0_12px_48px_rgba(201,162,77,0.45)]"
+            >
+              See the book
+              <ArrowRight size={16} />
+            </Link>
+          </div>
+
+          <div className="relative z-10 flex shrink-0 justify-center px-9 pb-12 lg:px-14 lg:py-14">
+            <BookCover2027
+              className="w-[190px] rounded-[3px]
+                         shadow-[0_30px_70px_-18px_rgba(0,0,0,0.8),0_0_55px_-14px_rgba(201,162,77,0.4)]
+                         transition-transform duration-500 group-hover:scale-[1.03]
+                         md:w-[220px]"
+            />
+          </div>
+        </article>
       </section>
 
       {/* ── Book cards ── */}

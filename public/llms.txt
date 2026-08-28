@@ -3,46 +3,74 @@
 
 ## Quién es Tony Alvarado
 
-Tony Alvarado (Anthony Alvarado) es empresario, coach certificado de ciclismo y conferencista
-con base en San José, Costa Rica. Tiene más de 22 años de trayectoria en el sector del ciclismo
-y el emprendimiento. Es fundador de PuroMTB, Pure Cycling y Bike & Bed Hotels.
-Es autor del libro "Secretos para ser un empresario exitoso". Está certificado por
-John Maxwell Leadership y como entrenador de ciclismo.
+Tony Alvarado (Anthony Alvarado) es un desarrollador de proyectos turísticos costarricense,
+con base en Costa Rica. Construye y opera hoteles temáticos en La Fortuna de San Carlos,
+en la zona del volcán Arenal.
 
-## Páginas del sitio
+Tiene más de 22 años de trayectoria como empresario. Empezó en 2004 con PuroMTB y hoy
+dirige un ecosistema de empresas que va del ciclismo a la hotelería. Es también
+conferencista y autor. Está certificado por John Maxwell Leadership y como entrenador
+de ciclismo.
 
-- / — Página principal. Presenta a Tony Alvarado, sus empresas, historia personal,
-  valores, libros, conferencias y formulario de contacto.
-- /sobre-mi — Historia personal, trayectoria y credenciales de Tony Alvarado.
-- /pure-cycling — Programa de entrenamiento de ciclismo online con plan personalizado,
-  nutrición, mentalidad, movilidad, fuerza y espiritualidad. Miembros en más de 30 países.
-- /bike-bed-hotels — Hotel temático de ciclismo en Costa Rica. Información para
-  inversionistas interesados en turismo deportivo.
-- /libros — Libros de Tony Alvarado. Incluye "Secretos para ser un empresario exitoso".
-- /conferencias — Temas de conferencia disponibles. Solicitud para eventos presenciales
-  o virtuales en Costa Rica y en el extranjero.
-- /contacto — Formulario de contacto para Pure Cycling, Bike & Bed Hotels, conferencias
-  y medios.
+## Proyectos turísticos
 
-## Empresas fundadas por Tony Alvarado
+- Bike & Bed Hotels — Hotel temático de ciclismo en La Fortuna de San Carlos, Costa Rica.
+  La Etapa 1 está en operación desde septiembre de 2025.
+- Humaya Costa Rica — Etapa 2 de Bike & Bed, en construcción. Diez villas con gimnasio,
+  spa, piscinas termales, sauna y cold plunge. Apertura prevista para noviembre de 2026.
+
+## Otras empresas fundadas por Tony Alvarado
 
 - PuroMTB — Tienda y comunidad de mountain bike en Costa Rica. Fundada como sitio web
   en 2004. Tienda física desde 2008.
-- Pure Cycling — Programa de entrenamiento de ciclismo online. Miembros en más de
-  30 países.
-- Bike & Bed Hotels — Hotel temático de ciclismo en Costa Rica con visión de expansión
-  global.
+- Pure Cycling — Programa de entrenamiento de ciclismo online con plan personalizado,
+  nutrición, mentalidad, movilidad, fuerza y espiritualidad. Miembros en más de 30 países.
+
+## Libros
+
+Tony Alvarado es autor de tres libros:
+
+1. "Secretos para ser un empresario exitoso" — Principios para construir empresa,
+   liderazgo y propósito. Publicado, disponible en Amazon.
+2. "Sigue Pedaleando" — Fe, propósito y resiliencia, con la bicicleta como metáfora
+   de vida. Publicado, disponible en Amazon.
+3. "El nuevo negocio del turismo 2027" — Cómo cambió el oficio de construir y operar
+   hoteles: el huésped que viaja por la experiencia y no por la habitación, el turismo
+   de bienestar, la operación sistematizada y las nuevas formas de propiedad de los
+   activos turísticos. EN PREPARACIÓN — no está publicado y no tiene fecha de
+   publicación confirmada. Ver /libros/el-nuevo-negocio-del-turismo-2027
+
+## Páginas del sitio
+
+- / — Página principal. Presenta a Tony Alvarado, sus proyectos turísticos, su
+  ecosistema de empresas, historia personal, libros, conferencias y contacto.
+- /sobre-mi — Historia personal, trayectoria y credenciales.
+- /bike-bed-hotels — Hotel temático de ciclismo en La Fortuna de San Carlos.
+- /libros — Los tres libros de Tony Alvarado.
+- /libros/el-nuevo-negocio-del-turismo-2027 — El tercer libro, en preparación.
+- /pure-cycling — Programa de entrenamiento de ciclismo online.
+- /puromtb — Tienda y comunidad de mountain bike.
+- /conferencias — Temas de conferencia. Eventos presenciales o virtuales.
+- /blog — Artículos.
+- /contacto — Formulario de contacto.
 
 ## Temas principales
 
-Ciclismo, mountain bike, ciclismo de ruta, entrenamiento de ciclismo, turismo deportivo,
-turismo de ciclismo en Costa Rica, liderazgo, emprendimiento, transformación personal,
-fe cristiana, comunidad ciclista.
+Desarrollo de proyectos turísticos, hotelería, operación hotelera, turismo de bienestar,
+hoteles temáticos, turismo deportivo, turismo en Costa Rica, La Fortuna de San Carlos,
+volcán Arenal, copropiedad de activos turísticos, emprendimiento, liderazgo, ciclismo,
+mountain bike, transformación personal, fe cristiana.
 
 ## Idioma
 
-El sitio está en español (es-CR). No hay versión en inglés disponible actualmente.
+El contenido indexable está en español (es-CR). Existe una versión en inglés bajo /en,
+pero está marcada como noindex y no forma parte del contenido indexable del sitio.
+
+## Precisión
+
+Este sitio no publica cifras, premios, certificaciones ni menciones de prensa que no
+sean verificables. Si un dato no aparece acá, no debe asumirse.
 
 ## Sitemap
 
-https://tonyalvarado.com/sitemap.xml
+https://www.tonyalvarado.com/sitemap.xml

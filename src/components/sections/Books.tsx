@@ -3,15 +3,23 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { ShoppingCart } from 'lucide-react'
+import { ShoppingCart, Bell, ArrowRight } from 'lucide-react'
 import { pushGTMEvent } from '@/lib/gtm'
+import BookCover2027 from '@/components/ui/BookCover2027'
 
 export default function Books({ locale = 'es' }: { locale?: 'es' | 'en' }) {
   const t = locale === 'en' ? {
     sectionLabel: 'Books',
-    h2text: 'Two books.',
+    h2text: 'Three books.',
     h2span: 'One mission.',
-    paragraph: 'From entrepreneurship with faith to the bicycle as a tool for transformation.',
+    paragraph: 'From building companies with faith to the craft of developing and running hotels.',
+    newBadge: 'New · In preparation',
+    newTitle1: 'The New Tourism',
+    newTitle2: 'Business',
+    newYear: '2027',
+    newDesc: 'Guests stopped travelling for the room and the generic hotel stopped being a good business. Tony’s third book covers what changed in the craft of building and running hotels — written from La Fortuna de San Carlos.',
+    newCta: 'See the book',
+    newHref: '/en/books/the-new-tourism-business-2027',
     book1Available: 'Available on Amazon',
     book1Alt: 'Secretos para ser un empresario exitoso — Tony Alvarado',
     book1Desc: 'The principles Tony used to build an ecosystem of companies around cycling for over two decades. Not theory — lessons learned through failures, victories and faith in the process.',
@@ -24,9 +32,16 @@ export default function Books({ locale = 'es' }: { locale?: 'es' | 'en' }) {
     allBooksHref: '/en/books',
   } : {
     sectionLabel: 'Libros',
-    h2text: 'Dos libros.',
+    h2text: 'Tres libros.',
     h2span: 'Una misma misión.',
-    paragraph: 'Desde el emprendimiento con fe hasta la bicicleta como herramienta de transformación.',
+    paragraph: 'Desde construir empresa con fe hasta el oficio de levantar y operar hoteles.',
+    newBadge: 'Nuevo · En preparación',
+    newTitle1: 'El nuevo negocio',
+    newTitle2: 'del turismo',
+    newYear: '2027',
+    newDesc: 'El huésped dejó de viajar por la habitación y el hotel genérico dejó de ser un buen negocio. El tercer libro de Tony cuenta qué cambió en el oficio de construir y operar hoteles — escrito desde La Fortuna de San Carlos.',
+    newCta: 'Ver el libro',
+    newHref: '/libros/el-nuevo-negocio-del-turismo-2027',
     book1Available: 'Disponible en Amazon',
     book1Alt: 'Secretos para ser un empresario exitoso — Tony Alvarado',
     book1Desc: 'Los principios que Tony usó para construir un ecosistema de empresas alrededor del ciclismo durante más de dos décadas. No es teoría — son lecciones aprendidas con fracasos, victorias y fe en el proceso.',
@@ -61,6 +76,64 @@ export default function Books({ locale = 'es' }: { locale?: 'es' | 'en' }) {
             {t.paragraph}
           </p>
         </motion.div>
+
+        {/* Destacado — el tercer libro */}
+        <motion.article
+          className="group relative mb-6 flex flex-col overflow-hidden rounded-2xl
+                     border border-brand-gold/25 bg-brand-card
+                     shadow-[0_0_0_1px_rgba(201,162,77,0.12),0_0_60px_-12px_rgba(201,162,77,0.20)]
+                     sm:flex-row sm:items-center"
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+        >
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0
+                       bg-[radial-gradient(ellipse_50%_90%_at_88%_50%,rgba(201,162,77,0.15)_0%,transparent_70%)]"
+          />
+
+          <div className="relative z-10 flex-1 px-8 py-9 md:px-10">
+            <span className="mb-5 inline-flex items-center gap-2 rounded-full bg-brand-gold/10
+                             px-4 py-1.5 ring-1 ring-brand-gold/30">
+              <Bell size={12} className="text-brand-gold" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-brand-gold">
+                {t.newBadge}
+              </span>
+            </span>
+
+            <h3 className="mb-4 text-2xl font-bold leading-[1.15] tracking-tight text-brand-text md:text-3xl">
+              {t.newTitle1}<br />
+              {t.newTitle2}{' '}
+              <span className="text-brand-gold">{t.newYear}</span>
+            </h3>
+
+            <p className="mb-6 max-w-xl text-sm leading-[1.75] text-brand-muted">
+              {t.newDesc}
+            </p>
+
+            <Link
+              href={t.newHref}
+              className="inline-flex items-center gap-2 rounded-full bg-brand-gold px-6 py-2.5
+                         text-sm font-semibold text-brand-bg
+                         shadow-[0_6px_24px_rgba(201,162,77,0.30)]
+                         transition-opacity hover:opacity-90"
+            >
+              {t.newCta}
+              <ArrowRight size={14} />
+            </Link>
+          </div>
+
+          <div className="relative z-10 flex shrink-0 justify-center px-8 pb-9 sm:py-9 md:px-12">
+            <BookCover2027
+              className="w-[150px] rounded-[3px]
+                         shadow-[0_24px_56px_-16px_rgba(0,0,0,0.8),0_0_45px_-12px_rgba(201,162,77,0.4)]
+                         transition-transform duration-500 group-hover:scale-[1.03]
+                         md:w-[175px]"
+            />
+          </div>
+        </motion.article>
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
 

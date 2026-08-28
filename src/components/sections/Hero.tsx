@@ -3,37 +3,39 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { ArrowRight, Play } from 'lucide-react'
+import { ArrowRight, BookOpen } from 'lucide-react'
 
 export default function Hero({ locale = 'es' }: { locale?: 'es' | 'en' }) {
   const t = locale === 'en' ? {
-    tagline: 'Cycling coach & trainer · Entrepreneur · Costa Rica',
-    h1line1: 'Your life can',
-    h1line2: 'transform',
-    h1span: 'on two wheels.',
-    paragraph: 'Over 22 years building stores, communities and programs around a bicycle. All from Costa Rica. Founder of Pure Cycling, PuroMTB and Bike & Bed Hotels.',
-    cta1: 'Join Pure Cycling',
-    cta1Href: '/en/pure-cycling',
-    cta2: "Discover Tony's story",
-    cta2Href: '/en/about',
+    tagline: 'Tourism developer · Hospitality · Costa Rica',
+    h1line1: 'You don’t build',
+    h1line2: 'hotels.',
+    h1span: 'You build reasons to travel.',
+    paragraph: 'I develop and run themed hotels in La Fortuna de San Carlos. Bike & Bed has been operating since 2025; Humaya opens in November 2026. All of it from Costa Rica.',
+    cta1: 'See the projects',
+    cta1Href: '/en/bike-bed-hotels',
+    cta2: 'The new book',
+    cta2Href: '/en/books/the-new-tourism-business-2027',
+    imgAlt: 'Bike & Bed Hotels in La Fortuna de San Carlos, with the Arenal volcano behind it',
   } : {
-    tagline: 'Coach y entrenador de ciclismo · Empresario · Costa Rica',
-    h1line1: 'Tu vida puede',
-    h1line2: 'transformarse',
-    h1span: 'sobre dos ruedas.',
-    paragraph: 'Más de 22 años construyendo tiendas, comunidades y programas alrededor de una bicicleta. Todo desde Costa Rica. Fundador de Pure Cycling, PuroMTB y Bike & Bed Hotels.',
-    cta1: 'Únete a Pure Cycling',
-    cta1Href: '/pure-cycling',
-    cta2: 'Conoce la historia de Tony',
-    cta2Href: '#historia',
+    tagline: 'Desarrollador de proyectos turísticos · Hotelería · Costa Rica',
+    h1line1: 'No se construyen',
+    h1line2: 'hoteles.',
+    h1span: 'Se construyen razones para viajar.',
+    paragraph: 'Desarrollo y opero hoteles temáticos en La Fortuna de San Carlos. Bike & Bed opera desde 2025; Humaya abre en noviembre de 2026. Todo desde Costa Rica.',
+    cta1: 'Conocer los proyectos',
+    cta1Href: '/bike-bed-hotels',
+    cta2: 'El nuevo libro',
+    cta2Href: '/libros/el-nuevo-negocio-del-turismo-2027',
+    imgAlt: 'Bike & Bed Hotels en La Fortuna de San Carlos, con el volcán Arenal detrás',
   }
 
   return (
     <section className="relative min-h-[600px] overflow-hidden bg-brand-bg md:min-h-[700px]">
-      {/* Fondo — paisaje montañoso con ciclista */}
+      {/* Fondo — Bike & Bed desde el aire, con el Arenal detrás */}
       <Image
-        src="/images/og/ciclista-paisaje-montanoso-luz.png"
-        alt=""
+        src="/images/bike-bed/bike-bed-aerial-volcano-01.png"
+        alt={t.imgAlt}
         fill
         priority
         quality={80}
@@ -77,7 +79,7 @@ export default function Hero({ locale = 'es' }: { locale?: 'es' | 'en' }) {
               href={t.cta2Href}
               className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/5 px-8 py-3.5 text-sm font-semibold text-brand-text backdrop-blur-sm transition-colors hover:bg-white/10"
             >
-              <Play size={16} className="text-brand-green" />
+              <BookOpen size={16} className="text-brand-green" />
               {t.cta2}
             </Link>
           </div>
