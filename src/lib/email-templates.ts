@@ -139,7 +139,7 @@ export function buildInternalHtml(d: InternalEmailData): string {
       <tr>
         <td style="padding:10px 0;color:#888;border-bottom:1px solid #f0f0f0;vertical-align:top">Interés</td>
         <td style="padding:10px 0;border-bottom:1px solid #f0f0f0">
-          <span style="display:inline-block;background:#39D98A;color:#0B0E14;font-weight:700;font-size:12px;padding:3px 10px;border-radius:20px">
+          <span style="display:inline-block;background:#8B5CF6;color:#0B0E14;font-weight:700;font-size:12px;padding:3px 10px;border-radius:20px">
             ${d.interesLabel}
           </span>
         </td>

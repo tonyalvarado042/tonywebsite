@@ -165,7 +165,7 @@ export default async function PureCyclingPage() {
                 params={{ cta_text: 'Únete a la comunidad', cta_location: 'pure_cycling_hero', destination_type: 'external', interest: 'pure-cycling' }}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-brand-green px-8 py-3.5 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(57,217,138,0.35)] transition-opacity hover:opacity-90"
+                className="inline-flex items-center gap-2 rounded-full bg-brand-green px-8 py-3.5 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(139,92,246,0.35)] transition-opacity hover:opacity-90"
               >
                 Únete a la comunidad →
               </TrackedLink>
@@ -254,7 +254,7 @@ export default async function PureCyclingPage() {
                 params={{ cta_text: 'Conocer el programa', cta_location: 'pure_cycling_program', destination_type: 'external', interest: 'pure-cycling' }}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-brand-green px-7 py-3.5 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(57,217,138,0.35)] transition-opacity hover:opacity-90"
+                className="inline-flex items-center gap-2 rounded-full bg-brand-green px-7 py-3.5 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(139,92,246,0.35)] transition-opacity hover:opacity-90"
               >
                 Conocer el programa <ArrowRight size={15} />
               </TrackedLink>

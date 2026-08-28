@@ -125,7 +125,7 @@ export default async function BlogPage() {
                   <article key={post.slug} className="group">
                     <Link
                       href={`/blog/${post.slug}`}
-                      className="flex h-full flex-col overflow-hidden rounded-xl border border-brand-border bg-brand-card transition-all duration-200 hover:border-brand-accent/40 hover:shadow-[0_0_28px_-8px_rgba(57,217,138,0.18)]"
+                      className="flex h-full flex-col overflow-hidden rounded-xl border border-brand-border bg-brand-card transition-all duration-200 hover:border-brand-accent/40 hover:shadow-[0_0_28px_-8px_rgba(139,92,246,0.18)]"
                     >
                       <div className="relative aspect-video overflow-hidden bg-brand-surface">
                         {coverUrl ? (

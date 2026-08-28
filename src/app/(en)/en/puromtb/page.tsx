@@ -146,7 +146,7 @@ export default function EnPuroMTBPage() {
                 href="https://puromtb.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-brand-green px-7 py-3 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(57,217,138,0.3)] transition-opacity hover:opacity-90"
+                className="inline-flex items-center gap-2 rounded-full bg-brand-green px-7 py-3 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(139,92,246,0.3)] transition-opacity hover:opacity-90"
               >
                 Visit PuroMTB
                 <ExternalLink size={14} />
@@ -346,7 +346,7 @@ export default function EnPuroMTBPage() {
               href="https://puromtb.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-brand-green px-8 py-3 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(57,217,138,0.3)] transition-opacity hover:opacity-90"
+              className="inline-flex items-center gap-2 rounded-full bg-brand-green px-8 py-3 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(139,92,246,0.3)] transition-opacity hover:opacity-90"
             >
               Go to PuroMTB
               <ExternalLink size={14} />

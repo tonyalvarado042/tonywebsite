@@ -13,15 +13,32 @@ const config: Config = {
           bg: '#0B0E14',
           surface: '#0d1117',
           card: '#111824',
-          accent: '#39D98A',
-          'accent-light': '#86EFAC',
+
+          // ── Acento de marca: MORADO ──────────────────────────────────────
+          // La marca personal de Tony es morado y blanco (ver sección 17 de
+          // este CLAUDE.md). Antes acá había un verde menta (#39D98A).
+          //
+          // `#8B5CF6` da 4.58:1 contra el fondo `#0B0E14` — pasa WCAG AA
+          // (4.5:1) tanto de texto sobre fondo oscuro como de fondo de botón
+          // con texto `brand-bg` encima. Va justo, así que si alguien lo
+          // oscurece más, deja de pasar.
+          accent: '#8B5CF6',
+          'accent-light': '#C4B5FD',
+
+          // ⚠️ `green` es un ALIAS HEREDADO. Ya no es verde: apunta al mismo
+          // morado que `accent`. Se dejó el nombre para no tocar los 172 usos
+          // repartidos en 42 archivos en este cambio. Renombrarlo a
+          // `brand-accent` queda pendiente.
+          green: '#8B5CF6',
+
+          // El morado profundo de la marca, para fondos sólidos grandes.
+          pop: '#7C2FD6',
+
           text: '#F0F0F0',
           muted: '#9CA3AF',
           border: '#1F2937',
           warm: '#D7BA9E',
-          deep: '#071410',
-          pop: '#1DCBBC',
-          green: '#39D98A',
+          deep: '#0A0713',
           gold: '#C9A24D',
         },
       },

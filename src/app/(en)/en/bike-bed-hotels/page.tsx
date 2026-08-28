@@ -221,7 +221,7 @@ export default function EnBikeBedHotelsPage() {
                 params={{ cta_text: 'Visit the hotel', cta_location: 'bike_bed_hero', destination_type: 'external' }}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-brand-green px-7 py-3.5 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(57,217,138,0.4)] transition-opacity hover:opacity-90"
+                className="inline-flex items-center gap-2 rounded-full bg-brand-green px-7 py-3.5 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(139,92,246,0.4)] transition-opacity hover:opacity-90"
               >
                 Visit the hotel <ArrowRight size={15} />
               </TrackedLink>
@@ -486,7 +486,7 @@ export default function EnBikeBedHotelsPage() {
                     href="/en/contact?interest=bike-bed-inversion#form"
                     event="click_contact_investment"
                     params={{ cta_text: 'Request information', cta_location: 'bike_bed_investment', destination_type: 'internal', interest: 'bike-bed-inversion' }}
-                    className="inline-flex items-center gap-2 rounded-full bg-brand-green px-7 py-3.5 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(57,217,138,0.3)] transition-opacity hover:opacity-90"
+                    className="inline-flex items-center gap-2 rounded-full bg-brand-green px-7 py-3.5 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(139,92,246,0.3)] transition-opacity hover:opacity-90"
                   >
                     Request information <ArrowRight size={15} />
                   </TrackedLink>
@@ -565,7 +565,7 @@ export default function EnBikeBedHotelsPage() {
               params={{ cta_text: 'Visit the hotel', cta_location: 'bike_bed_cta_final', destination_type: 'external' }}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-brand-green px-8 py-3.5 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(57,217,138,0.35)] transition-opacity hover:opacity-90"
+              className="inline-flex items-center gap-2 rounded-full bg-brand-green px-8 py-3.5 text-sm font-semibold text-brand-bg shadow-[0_6px_20px_rgba(139,92,246,0.35)] transition-opacity hover:opacity-90"
             >
               Visit the hotel <ArrowRight size={15} />
             </TrackedLink>
