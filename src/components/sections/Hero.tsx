@@ -8,9 +8,9 @@ import { ArrowRight, BookOpen } from 'lucide-react'
 export default function Hero({ locale = 'es' }: { locale?: 'es' | 'en' }) {
   const t = locale === 'en' ? {
     tagline: 'Tourism developer · Hospitality · Costa Rica',
-    h1line1: 'You don’t build',
+    h1line1: 'We don’t build',
     h1line2: 'hotels.',
-    h1span: 'You build reasons to travel.',
+    h1span: 'We build reasons to travel.',
     paragraph: 'I develop and run themed hotels in La Fortuna de San Carlos. Bike & Bed has been operating since 2025; Humaya opens in November 2026. All of it from Costa Rica.',
     cta1: 'See the projects',
     cta1Href: '/en/bike-bed-hotels',
@@ -19,9 +19,9 @@ export default function Hero({ locale = 'es' }: { locale?: 'es' | 'en' }) {
     imgAlt: 'Tony Alvarado, tourism developer from Costa Rica',
   } : {
     tagline: 'Desarrollador de proyectos turísticos · Hotelería · Costa Rica',
-    h1line1: 'No se construyen',
+    h1line1: 'No construimos',
     h1line2: 'hoteles.',
-    h1span: 'Se construyen razones para viajar.',
+    h1span: 'Construimos razones para viajar.',
     paragraph: 'Desarrollo y opero hoteles temáticos en La Fortuna de San Carlos. Bike & Bed opera desde 2025; Humaya abre en noviembre de 2026. Todo desde Costa Rica.',
     cta1: 'Conocer los proyectos',
     cta1Href: '/bike-bed-hotels',
