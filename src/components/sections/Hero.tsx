@@ -58,7 +58,7 @@ export default function Hero({ locale = 'es' }: { locale?: 'es' | 'en' }) {
         }}
       />
 
-      <div className="relative z-10 mx-auto grid min-h-[620px] max-w-7xl grid-cols-1 items-end gap-8 px-6 pt-20 md:min-h-[720px] md:px-12 lg:grid-cols-[1fr_minmax(0,440px)] lg:gap-12">
+      <div className="relative z-10 mx-auto grid min-h-[620px] max-w-7xl grid-cols-1 items-end gap-8 px-6 pt-20 md:min-h-[720px] md:px-12 lg:grid-cols-[1fr_minmax(0,520px)] lg:gap-10">
 
         {/* ── Texto ── */}
         <motion.div
@@ -99,9 +99,9 @@ export default function Hero({ locale = 'es' }: { locale?: 'es' | 'en' }) {
         </motion.div>
 
         {/* ── Tony ── */}
-        {/* Recorte con transparencia, apoyado en el borde inferior. Se dimensiona
-            por ALTURA, no por ancho: la proporción es 1:2.06 y a lo ancho de la
-            columna se saldría por abajo.
+        {/* Recorte con transparencia, apoyado en el borde inferior.
+            Se dimensiona por ALTURA: la foto viene cortada a la altura del muslo,
+            así que tiene que asentarse abajo, no escalar por ancho.
             En móvil se oculta — detrás del texto no se leería ninguno de los dos. */}
         <motion.div
           className="relative hidden self-end justify-center lg:flex"
@@ -112,19 +112,19 @@ export default function Hero({ locale = 'es' }: { locale?: 'es' | 'en' }) {
           {/* Sombra de piso: lo asienta en vez de dejarlo flotando */}
           <div
             aria-hidden
-            className="absolute inset-x-8 bottom-0 h-16 rounded-[50%] bg-black/70 blur-2xl"
+            className="absolute inset-x-10 bottom-0 h-14 rounded-[50%] bg-black/70 blur-2xl"
           />
           <Image
             src="/images/tony/tony-alvarado-recorte.png"
             alt={t.imgAlt}
-            width={900}
-            height={1850}
+            width={1000}
+            height={1188}
             priority
             quality={90}
-            sizes="(min-width: 1024px) 400px, 0px"
-            className="relative h-[560px] w-auto max-w-none object-contain object-bottom
+            sizes="(min-width: 1280px) 620px, (min-width: 1024px) 520px, 0px"
+            className="relative h-[500px] w-auto max-w-none object-contain object-bottom
                        drop-shadow-[0_24px_50px_rgba(0,0,0,0.65)]
-                       xl:h-[660px]"
+                       xl:h-[580px]"
           />
         </motion.div>
       </div>
