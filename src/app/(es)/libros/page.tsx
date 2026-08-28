@@ -1,30 +1,31 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { ShoppingCart, Bell } from 'lucide-react'
+import { ShoppingCart, Bell, ArrowRight } from 'lucide-react'
 import JsonLd from '@/components/JsonLd'
 import PageFAQ, { type PageFAQItem } from '@/components/sections/PageFAQ'
-import { SITE_URL, websiteRef, personRef, bookSchema, bookSchema2 } from '@/lib/structured-data'
+import BookCover2027 from '@/components/ui/BookCover2027'
+import { SITE_URL, websiteRef, personRef, bookSchema, bookSchema2, bookSchema3 } from '@/lib/structured-data'
 
 export const metadata = {
-  title: 'Libros de Tony Alvarado — Ciclismo, transformación y liderazgo',
+  title: 'Libros de Tony Alvarado — Turismo, emprendimiento y transformación',
   description:
-    'Libros de Tony Alvarado: "Secretos para ser un empresario exitoso" y "Sigue Pedaleando", ambos disponibles en Amazon. Ciclismo, transformación personal, fe y emprendimiento desde Costa Rica.',
+    'Los tres libros de Tony Alvarado: "El nuevo negocio del turismo 2027" (en preparación), "Secretos para ser un empresario exitoso" y "Sigue Pedaleando". Hotelería, emprendimiento, fe y transformación personal desde Costa Rica.',
   alternates: { canonical: '/libros' },
   openGraph: {
     type: 'website',
     locale: 'es_CR',
     url: 'https://www.tonyalvarado.com/libros',
     siteName: 'Tony Alvarado',
-    title: 'Libros de Tony Alvarado — Sigue Pedaleando y más',
+    title: 'Libros de Tony Alvarado — tres títulos, una misma misión',
     description:
-      '"Sigue Pedaleando" y "Secretos para ser un empresario exitoso". Disponibles en Amazon. Ciclismo, transformación personal, fe y emprendimiento.',
-    images: [{ url: '/images/books/libro-secretos-mockup.jpg', width: 1600, height: 1067, alt: 'Libros de Tony Alvarado — disponibles en Amazon' }],
+      '"El nuevo negocio del turismo 2027", "Secretos para ser un empresario exitoso" y "Sigue Pedaleando". Hotelería, emprendimiento, fe y transformación personal.',
+    images: [{ url: '/images/books/libro-secretos-mockup.jpg', width: 1600, height: 1067, alt: 'Libros de Tony Alvarado' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Libros de Tony Alvarado — Sigue Pedaleando y más',
+    title: 'Libros de Tony Alvarado — tres títulos, una misma misión',
     description:
-      '"Sigue Pedaleando" y "Secretos para ser un empresario exitoso". Disponibles en Amazon. Ciclismo, transformación personal, fe y emprendimiento.',
+      '"El nuevo negocio del turismo 2027", "Secretos para ser un empresario exitoso" y "Sigue Pedaleando". Hotelería, emprendimiento, fe y transformación personal.',
     images: ['/images/books/libro-secretos-mockup.jpg'],
   },
 }
@@ -33,16 +34,44 @@ const webPageSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
   '@id': `${SITE_URL}/libros#webpage`,
-  name: 'Libros de Tony Alvarado — Ciclismo, transformación y liderazgo',
+  name: 'Libros de Tony Alvarado — Turismo, emprendimiento y transformación',
   description:
-    'Libros de Tony Alvarado: "Secretos para ser un empresario exitoso" y "Sigue Pedaleando", ambos disponibles en Amazon. Ciclismo, transformación personal, fe y emprendimiento desde Costa Rica.',
+    'Los tres libros de Tony Alvarado: "El nuevo negocio del turismo 2027" (en preparación), "Secretos para ser un empresario exitoso" y "Sigue Pedaleando". Hotelería, emprendimiento, fe y transformación personal desde Costa Rica.',
   url: `${SITE_URL}/libros`,
   inLanguage: 'es-CR',
   isPartOf: websiteRef,
   about: [
     personRef,
+    { '@type': 'Book', '@id': `${SITE_URL}/#nuevo-negocio-turismo-2027` },
     { '@type': 'Book', '@id': `${SITE_URL}/#secretos-empresario-exitoso` },
     { '@type': 'Book', '@id': `${SITE_URL}/#sigue-pedaleando` },
+  ],
+}
+
+// ItemList — le dice a Google y a las IAs que esto es una colección ordenada
+// de tres obras del mismo autor, no tres páginas sueltas.
+const bookListSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  '@id': `${SITE_URL}/libros#lista`,
+  name: 'Libros de Tony Alvarado',
+  numberOfItems: 3,
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      item: { '@type': 'Book', '@id': `${SITE_URL}/#nuevo-negocio-turismo-2027` },
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      item: { '@type': 'Book', '@id': `${SITE_URL}/#secretos-empresario-exitoso` },
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      item: { '@type': 'Book', '@id': `${SITE_URL}/#sigue-pedaleando` },
+    },
   ],
 }
 
@@ -57,9 +86,19 @@ const breadcrumbSchema = {
 
 const pageFaqs: PageFAQItem[] = [
   {
+    question: '¿Cuántos libros ha escrito Tony Alvarado?',
+    answer:
+      'Tres. "Secretos para ser un empresario exitoso" y "Sigue Pedaleando" ya están publicados y disponibles en Amazon. El tercero, "El nuevo negocio del turismo 2027", está en preparación y todavía no tiene fecha de publicación.',
+  },
+  {
+    question: '¿De qué trata "El nuevo negocio del turismo 2027"?',
+    answer:
+      'De cómo cambió el negocio de construir y operar hoteles: el huésped que ya no viaja por la habitación sino por la experiencia, el turismo de bienestar, la operación sistematizada y las nuevas formas de propiedad de los activos turísticos. Está escrito desde la experiencia directa de Tony desarrollando hoteles en La Fortuna de San Carlos.',
+  },
+  {
     question: '¿Dónde puedo adquirir los libros de Tony Alvarado?',
     answer:
-      'En esta página encontrarás los enlaces disponibles para cada título. La disponibilidad, los formatos y las opciones de compra pueden variar según el libro y el país desde el que accedas.',
+      'En esta página encontrarás los enlaces disponibles para cada título publicado. La disponibilidad, los formatos y las opciones de compra pueden variar según el libro y el país desde el que accedas. El tercer libro todavía no está a la venta.',
   },
   {
     question: '¿Para quién está escrito "Secretos para ser un empresario exitoso"?',
@@ -72,9 +111,9 @@ const pageFaqs: PageFAQItem[] = [
       'Es un libro de fe, propósito y resiliencia construido alrededor de la bicicleta. Recoge vivencias, caídas y esperanza, mostrando cómo seguir avanzando aun cuando la vida se pone cuesta arriba.',
   },
   {
-    question: '¿Qué tienen en común los dos libros?',
+    question: '¿Qué tienen en común los tres libros?',
     answer:
-      'Los dos comparten el mismo hilo conductor: el propósito, la disciplina y la transformación personal. Uno desde la perspectiva del emprendimiento y el liderazgo; el otro desde la fe, la resiliencia y la historia de vida de Tony alrededor de la bicicleta.',
+      'El mismo hilo conductor: propósito, disciplina y construir algo que dure. El primero desde el emprendimiento y el liderazgo; el segundo desde la fe, la resiliencia y la historia de vida de Tony alrededor de la bicicleta; el tercero desde el oficio de levantar y operar proyectos turísticos.',
   },
 ]
 
@@ -93,6 +132,8 @@ export default function LibrosPage() {
     <main className="bg-brand-bg">
       <JsonLd data={webPageSchema} />
       <JsonLd data={breadcrumbSchema} />
+      <JsonLd data={bookListSchema} />
+      <JsonLd data={bookSchema3} />
       <JsonLd data={bookSchema} />
       <JsonLd data={bookSchema2} />
       <JsonLd data={faqSchema} />
@@ -110,15 +151,91 @@ export default function LibrosPage() {
             Libros de Tony Alvarado
           </p>
           <h1 className="mx-auto max-w-4xl text-5xl font-bold leading-[1.1] tracking-tight text-brand-text md:text-7xl">
-            Dos libros.{' '}
+            Tres libros.{' '}
             <span className="text-brand-gold">Una misma misión.</span>
           </h1>
           <div className="mx-auto mt-7 h-px w-32 bg-gradient-to-r from-transparent via-brand-gold/55 to-transparent" />
           <p className="mx-auto mt-8 max-w-2xl text-base leading-relaxed text-brand-muted md:text-lg">
-            Dos caminos, dos etapas y un mismo propósito: inspirar, fortalecer y transformar
+            Tres caminos, tres etapas y un mismo propósito: inspirar, fortalecer y transformar
             vidas a través del liderazgo, la fe, el emprendimiento y la perseverancia.
           </p>
         </div>
+      </section>
+
+      {/* ── Destacado: el tercer libro ── */}
+      <section className="px-6 pb-16 md:px-10">
+        <article
+          className="group relative mx-auto flex max-w-6xl flex-col overflow-hidden rounded-3xl
+                     border border-brand-gold/25 bg-brand-card
+                     shadow-[0_0_0_1px_rgba(201,162,77,0.12),0_0_70px_-12px_rgba(201,162,77,0.22),0_25px_60px_-20px_rgba(0,0,0,0.55)]
+                     lg:flex-row lg:items-center"
+        >
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0
+                       bg-[radial-gradient(ellipse_55%_85%_at_82%_50%,rgba(201,162,77,0.16)_0%,transparent_68%)]"
+          />
+
+          {/* Texto */}
+          <div className="relative z-10 flex-1 px-9 py-11 md:px-12 md:py-14">
+            <span
+              className="mb-6 inline-flex items-center gap-2.5 rounded-full bg-brand-gold/10
+                         px-4 py-1.5 ring-1 ring-brand-gold/30"
+            >
+              <Bell size={12} className="text-brand-gold" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-brand-gold">
+                Nuevo · En preparación
+              </span>
+            </span>
+
+            <h2 className="mb-5 text-3xl font-bold leading-[1.12] tracking-tight text-brand-text md:text-[2.6rem]">
+              El nuevo negocio<br />
+              del turismo{' '}
+              <span className="text-brand-gold">2027</span>
+            </h2>
+
+            <p className="mb-8 max-w-xl text-[15px] leading-[1.78] text-brand-muted">
+              El huésped dejó de viajar por la habitación y el hotel genérico dejó de ser
+              un buen negocio. El tercer libro de Tony cuenta qué cambió en el oficio de
+              construir y operar hoteles — escrito desde La Fortuna de San Carlos,
+              mientras se levanta un hotel y se opera otro.
+            </p>
+
+            <div className="mb-8 flex flex-wrap gap-2">
+              {['Turismo', 'Hotelería', 'Bienestar', 'Operación', 'Costa Rica'].map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-full bg-brand-gold/10 px-3.5 py-1.5
+                             text-[11px] font-semibold tracking-wide text-brand-gold
+                             ring-1 ring-brand-gold/20"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            <Link
+              href="/libros/el-nuevo-negocio-del-turismo-2027"
+              className="inline-flex items-center gap-2.5 rounded-2xl bg-brand-gold px-8 py-4
+                         text-[15px] font-bold text-brand-bg
+                         shadow-[0_8px_32px_rgba(201,162,77,0.35)]
+                         transition-all hover:opacity-90 hover:shadow-[0_12px_48px_rgba(201,162,77,0.45)]"
+            >
+              Ver el libro
+              <ArrowRight size={16} />
+            </Link>
+          </div>
+
+          {/* Portada */}
+          <div className="relative z-10 flex shrink-0 justify-center px-9 pb-12 lg:px-14 lg:py-14">
+            <BookCover2027
+              className="w-[190px] rounded-[3px]
+                         shadow-[0_30px_70px_-18px_rgba(0,0,0,0.8),0_0_55px_-14px_rgba(201,162,77,0.4)]
+                         transition-transform duration-500 group-hover:scale-[1.03]
+                         md:w-[220px]"
+            />
+          </div>
+        </article>
       </section>
 
       {/* ── Showcase de libros ── */}

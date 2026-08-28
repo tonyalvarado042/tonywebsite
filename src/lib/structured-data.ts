@@ -9,7 +9,7 @@ export const websiteSchema: Record<string, unknown> = {
   name: 'Tony Alvarado',
   url: SITE_URL,
   description:
-    'Coach y entrenador de ciclismo en Costa Rica. Fundador de Pure Cycling, PuroMTB y Bike & Bed Hotels.',
+    'Desarrollador de proyectos turísticos en Costa Rica. Construye y opera hoteles temáticos: Bike & Bed Hotels y Humaya Costa Rica, en La Fortuna de San Carlos. Autor y conferencista.',
   inLanguage: 'es-CR',
   potentialAction: {
     '@type': 'SearchAction',
@@ -29,9 +29,9 @@ export const personSchema: Record<string, unknown> = {
   '@id': `${SITE_URL}/#tony-alvarado`,
   name: 'Tony Alvarado',
   alternateName: 'Anthony Alvarado',
-  jobTitle: 'Coach y entrenador de ciclismo',
+  jobTitle: 'Desarrollador de proyectos turísticos',
   description:
-    'Coach y entrenador de ciclismo en Costa Rica con más de 22 años de trayectoria. Fundador de Pure Cycling, PuroMTB y Bike & Bed Hotels. Autor, conferencista y líder con propósito.',
+    'Desarrollador de proyectos turísticos costarricense. Construye y opera hoteles temáticos en La Fortuna de San Carlos — Bike & Bed Hotels y Humaya Costa Rica — y dirige un ecosistema de empresas alrededor del ciclismo: PuroMTB y Pure Cycling. Autor y conferencista.',
   url: SITE_URL,
   image: {
     '@type': 'ImageObject',
@@ -51,7 +51,12 @@ export const personSchema: Record<string, unknown> = {
   hasOccupation: [
     {
       '@type': 'Occupation',
-      name: 'Coach y entrenador de ciclismo',
+      name: 'Desarrollador de proyectos turísticos',
+      occupationLocation: { '@type': 'Country', name: 'Costa Rica' },
+    },
+    {
+      '@type': 'Occupation',
+      name: 'Hotelero y operador de hospitalidad',
       occupationLocation: { '@type': 'Country', name: 'Costa Rica' },
     },
     {
@@ -65,26 +70,48 @@ export const personSchema: Record<string, unknown> = {
     },
   ],
   worksFor: [
-    { '@type': 'Organization', name: 'Pure Cycling' },
-    { '@type': 'Organization', name: 'PuroMTB' },
     { '@type': 'Organization', name: 'Bike & Bed Hotels' },
+    { '@type': 'Organization', name: 'Humaya Costa Rica' },
+    { '@type': 'Organization', name: 'PuroMTB' },
+    { '@type': 'Organization', name: 'Pure Cycling' },
   ],
+  // knowsAbout — Fase 6 del DAB. Las IAs lo leen para decidir sobre qué temas
+  // citar a esta persona. Solo áreas donde la experiencia es verificable.
   knowsAbout: [
+    'Desarrollo de proyectos turísticos',
+    'Hotelería',
+    'Operación hotelera',
+    'Turismo de bienestar',
+    'Turismo deportivo',
+    'Hoteles temáticos',
+    'Copropiedad de activos turísticos',
+    'La Fortuna de San Carlos',
+    'Arenal',
+    'Turismo en Costa Rica',
+    'Emprendimiento',
+    'Liderazgo',
     'Ciclismo',
     'Mountain bike',
-    'Ciclismo de ruta',
-    'Entrenamiento de ciclismo',
-    'Turismo deportivo',
-    'Liderazgo',
-    'Emprendimiento',
+    'Comunidad ciclista',
     'Transformación personal',
     'Fe y propósito',
-    'Comunidad ciclista',
     'Costa Rica',
   ],
   knowsLanguage: [
     { '@type': 'Language', name: 'Español' },
+    { '@type': 'Language', name: 'Inglés' },
   ],
+  author: [
+    { '@type': 'Book', '@id': `${SITE_URL}/#secretos-empresario-exitoso` },
+    { '@type': 'Book', '@id': `${SITE_URL}/#sigue-pedaleando` },
+    { '@type': 'Book', '@id': `${SITE_URL}/#nuevo-negocio-turismo-2027` },
+  ],
+  mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE_URL}/sobre-mi#webpage` },
+  // ⚠️ PENDIENTE DE TONY — no se inventa nada (regla 24 del CLAUDE.md de este repo):
+  //   · alumniOf → falta el nombre de la universidad donde estudió computación.
+  //   · interactionStatistic → faltan los follower counts exactos por plataforma.
+  //   · award → solo si hay reconocimientos verificables.
+  //   · sameAs → faltan YouTube, TikTok, Amazon Author Central y Wikidata (Fase 4 del DAB).
   sameAs: [
     'https://www.facebook.com/profile.php?id=100090599181641',
     'https://www.linkedin.com/in/tony-alvarado-a1b3a820/',
@@ -138,12 +165,23 @@ export const bikeBedOrg: Record<string, unknown> = {
   '@id': `${SITE_URL}/#bike-bed-hotels`,
   name: 'Bike & Bed Hotels',
   description:
-    'Hotel temático de ciclismo en Costa Rica con operación profesional y visión de expansión global.',
+    'Hotel temático de ciclismo en La Fortuna de San Carlos, Costa Rica. Etapa 1 en operación desde septiembre de 2025.',
   url: `${SITE_URL}/bike-bed-hotels`,
   founder: { '@type': 'Person', '@id': `${SITE_URL}/#tony-alvarado` },
 }
 
-// ─── Book ─────────────────────────────────────────────────────────────────────
+export const humayaOrg: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${SITE_URL}/#humaya`,
+  name: 'Humaya Costa Rica',
+  description:
+    'Etapa 2 de Bike & Bed en La Fortuna de San Carlos: 10 villas con gimnasio, spa, piscinas termales, sauna y cold plunge. Apertura prevista para noviembre de 2026.',
+  founder: { '@type': 'Person', '@id': `${SITE_URL}/#tony-alvarado` },
+  parentOrganization: { '@type': 'Organization', '@id': `${SITE_URL}/#bike-bed-hotels` },
+}
+
+// ─── Books ────────────────────────────────────────────────────────────────────
 
 export const bookSchema: Record<string, unknown> = {
   '@context': 'https://schema.org',
@@ -172,5 +210,34 @@ export const bookSchema2: Record<string, unknown> = {
     '@type': 'Offer',
     availability: 'https://schema.org/InStock',
     url: 'https://www.amazon.com/-/es/Tony-Alvarado/dp/B0H2QD8PPD/',
+  },
+}
+
+// Tercer libro — en preparación. NO lleva enlace de compra, ISBN ni fecha exacta
+// hasta que existan. `PreOrder` es la señal correcta para un título anunciado
+// y todavía no publicado.
+export const bookSchema3: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': 'Book',
+  '@id': `${SITE_URL}/#nuevo-negocio-turismo-2027`,
+  name: 'El nuevo negocio del turismo 2027',
+  author: { '@type': 'Person', '@id': `${SITE_URL}/#tony-alvarado` },
+  publisher: { '@type': 'Person', '@id': `${SITE_URL}/#tony-alvarado` },
+  inLanguage: 'es',
+  about: [
+    'Turismo',
+    'Hotelería',
+    'Desarrollo de proyectos turísticos',
+    'Turismo de bienestar',
+    'Copropiedad',
+    'Operación hotelera',
+    'Costa Rica',
+  ],
+  url: `${SITE_URL}/libros/el-nuevo-negocio-del-turismo-2027`,
+  bookFormat: 'https://schema.org/Paperback',
+  offers: {
+    '@type': 'Offer',
+    availability: 'https://schema.org/PreOrder',
+    url: `${SITE_URL}/libros/el-nuevo-negocio-del-turismo-2027`,
   },
 }

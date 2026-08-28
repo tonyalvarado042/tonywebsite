@@ -17,17 +17,43 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: BASE_URL, lastModified: now, changeFrequency: 'weekly', priority: 1 },
-    { url: `${BASE_URL}/pure-cycling`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${BASE_URL}/bike-bed-hotels`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${BASE_URL}/sobre-mi`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/bike-bed-hotels`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${BASE_URL}/pure-cycling`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${BASE_URL}/libros`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${BASE_URL}/libros/el-nuevo-negocio-del-turismo-2027`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${BASE_URL}/puromtb`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/libros`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE_URL}/blog`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${BASE_URL}/conferencias`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE_URL}/contacto`, lastModified: now, changeFrequency: 'yearly', priority: 0.6 },
     { url: `${BASE_URL}/politica-de-privacidad`, lastModified: now, changeFrequency: 'yearly' as const, priority: 0.4 },
     { url: `${BASE_URL}/terminos-y-condiciones`, lastModified: now, changeFrequency: 'yearly' as const, priority: 0.4 },
   ]
+
+  // ⚠️ Las páginas en inglés NO van aquí a propósito.
+  //
+  // Todas llevan `robots: { index: false, follow: true }` puesto a mano —
+  // en el layout de (en) y además en cada una de las 8 páginas. Verificado en
+  // producción el 28-ago-2026: /en devuelve <meta name="robots" content="noindex, follow">.
+  //
+  // Meter una URL noindex en el sitemap le manda a Google dos señales opuestas
+  // ("indexá esto" / "no indexés esto") y no ayuda a ninguna de las dos.
+  //
+  // La Fase 1 del DAB pide el sitio bilingüe SÍ indexado, con hreflang. Cuando
+  // Tony decida abrir el inglés, el cambio es: quitar los 9 `index: false`
+  // y descomentar el bloque de abajo.
+  //
+  // const englishRoutes: MetadataRoute.Sitemap = [
+  //   { url: `${BASE_URL}/en`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
+  //   { url: `${BASE_URL}/en/bike-bed-hotels`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
+  //   { url: `${BASE_URL}/en/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+  //   { url: `${BASE_URL}/en/books`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+  //   { url: `${BASE_URL}/en/books/the-new-tourism-business-2027`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
+  //   { url: `${BASE_URL}/en/pure-cycling`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
+  //   { url: `${BASE_URL}/en/puromtb`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
+  //   { url: `${BASE_URL}/en/speaking`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
+  //   { url: `${BASE_URL}/en/contact`, lastModified: now, changeFrequency: 'yearly', priority: 0.5 },
+  // ]
 
   const blogRoutes: MetadataRoute.Sitemap = blogSlugs.map((slug) => ({
     url: `${BASE_URL}/blog/${slug}`,

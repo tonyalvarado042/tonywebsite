@@ -4,6 +4,7 @@ import { CheckCircle2, ArrowRight } from 'lucide-react'
 import Hero from '@/components/sections/Hero'
 import MetricsStrip from '@/components/sections/MetricsStrip'
 import AboutTony from '@/components/sections/AboutTony'
+import BikeAndBed from '@/components/sections/BikeAndBed'
 import FaithAndPurpose from '@/components/sections/FaithAndPurpose'
 import BusinessEcosystem from '@/components/sections/BusinessEcosystem'
 import PhotoStrip from '@/components/ui/PhotoStrip'
@@ -16,7 +17,7 @@ import Speaking from '@/components/sections/Speaking'
 import FAQ from '@/components/sections/FAQ'
 import Contact from '@/components/sections/Contact'
 import JsonLd from '@/components/JsonLd'
-import { puroMTBOrg, SITE_URL, websiteRef, personRef } from '@/lib/structured-data'
+import { puroMTBOrg, bikeBedOrg, humayaOrg, SITE_URL, websiteRef, personRef } from '@/lib/structured-data'
 import { faqs, faqAnswerToPlainText } from '@/data/faqs'
 import { homeMetrics, type MetricItem } from '@/data/metrics'
 import { client } from '@/sanity/lib/client'
@@ -26,9 +27,9 @@ const webPageSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
   '@id': `${SITE_URL}/#webpage`,
-  name: 'Tony Alvarado — Coach y entrenador de ciclismo en Costa Rica',
+  name: 'Tony Alvarado — Desarrollador de proyectos turísticos en Costa Rica',
   description:
-    'Coach y entrenador de ciclismo en Costa Rica. Fundador de Pure Cycling, PuroMTB y Bike & Bed Hotels. Más de 22 años construyendo comunidad y propósito alrededor del mountain bike y el ciclismo de ruta.',
+    'Desarrollador de proyectos turísticos en Costa Rica. Construye y opera hoteles temáticos en La Fortuna de San Carlos: Bike & Bed Hotels y Humaya Costa Rica. Autor de tres libros y conferencista.',
   url: SITE_URL,
   inLanguage: 'es-CR',
   isPartOf: websiteRef,
@@ -88,12 +89,17 @@ export default async function HomePage() {
   return (
     <main>
       <JsonLd data={webPageSchema} />
+      <JsonLd data={bikeBedOrg} />
+      <JsonLd data={humayaOrg} />
       <JsonLd data={puroMTBOrg} />
       <JsonLd data={faqSchema} />
 
       <Hero />
       <MetricsStrip metrics={metrics} />
       <AboutTony />
+      <SectionDivider />
+      {/* El eje del sitio es el desarrollo turístico: el hotel va arriba, no al final. */}
+      <BikeAndBed />
       <SectionDivider />
       <FaithAndPurpose />
       <SectionDivider />

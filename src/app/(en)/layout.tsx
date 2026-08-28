@@ -14,11 +14,11 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.tonyalvarado.com'),
   title: {
-    default: 'Tony Alvarado — Cycling Coach & Entrepreneur from Costa Rica',
+    default: 'Tony Alvarado — Tourism Developer from Costa Rica',
     template: '%s | Tony Alvarado',
   },
   description:
-    'Cycling coach and entrepreneur from Costa Rica. Founder of Pure Cycling, PuroMTB and Bike & Bed Hotels. Over 22 years building community and purpose around cycling.',
+    'Tourism developer from Costa Rica. Builds and operates themed hotels in La Fortuna de San Carlos: Bike & Bed Hotels and Humaya Costa Rica. Author and speaker.',
   robots: { index: false, follow: true },
 }
 

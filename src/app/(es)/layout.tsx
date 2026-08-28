@@ -14,9 +14,9 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Tony Alvarado — Coach y entrenador de ciclismo en Costa Rica',
+  title: 'Tony Alvarado — Desarrollador de proyectos turísticos en Costa Rica',
   description:
-    'Coach y entrenador de ciclismo en Costa Rica. Fundador de Pure Cycling, PuroMTB y Bike & Bed Hotels. Más de 22 años construyendo comunidad y propósito alrededor del mountain bike y el ciclismo de ruta.',
+    'Desarrollador de proyectos turísticos en Costa Rica. Construye y opera hoteles temáticos en La Fortuna de San Carlos: Bike & Bed Hotels y Humaya Costa Rica. Autor de tres libros y conferencista.',
   metadataBase: new URL('https://www.tonyalvarado.com'),
   alternates: { canonical: '/' },
   openGraph: {
@@ -24,15 +24,15 @@ export const metadata: Metadata = {
     locale: 'es_CR',
     url: 'https://www.tonyalvarado.com',
     siteName: 'Tony Alvarado',
-    title: 'Tony Alvarado — Coach y entrenador de ciclismo en Costa Rica',
+    title: 'Tony Alvarado — Desarrollador de proyectos turísticos en Costa Rica',
     description:
-      'Coach y entrenador de ciclismo en Costa Rica, fundador de Pure Cycling, PuroMTB y Bike & Bed Hotels.',
-    images: [{ url: '/images/og/tony-alvarado-og-source.jpeg', width: 1600, height: 900, alt: 'Tony Alvarado — coach y entrenador de ciclismo en Costa Rica' }],
+      'Construye y opera hoteles temáticos en La Fortuna de San Carlos: Bike & Bed Hotels y Humaya Costa Rica. Autor y conferencista.',
+    images: [{ url: '/images/og/tony-alvarado-og-source.jpeg', width: 1600, height: 900, alt: 'Tony Alvarado — desarrollador de proyectos turísticos en Costa Rica' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Tony Alvarado — Coach y entrenador de ciclismo en Costa Rica',
-    description: 'Coach y entrenador de ciclismo en Costa Rica. Fundador de Pure Cycling, PuroMTB y Bike & Bed Hotels.',
+    title: 'Tony Alvarado — Desarrollador de proyectos turísticos en Costa Rica',
+    description: 'Construye y opera hoteles temáticos en La Fortuna de San Carlos: Bike & Bed Hotels y Humaya Costa Rica.',
     images: ['/images/og/tony-alvarado-og-source.jpeg'],
   },
   robots: {
