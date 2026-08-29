@@ -13,6 +13,7 @@ const navLinks: NavLink[] = [
   { href: '/sobre-mi', label: 'Sobre mí' },
   { href: '/conferencias', label: 'Conferencias' },
   { href: '/libros', label: 'Libros' },
+  { href: '/recursos', label: 'Recursos gratis' },
   { href: '/blog', label: 'Blog' },
   { href: '/contacto', label: 'Contacto' },
 ]
