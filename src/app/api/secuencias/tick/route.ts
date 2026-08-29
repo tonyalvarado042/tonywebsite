@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import { REMITENTE_CON_NOMBRE } from '@/lib/correo'
 import {
   getCrm,
   registrarActividad,
@@ -142,9 +143,8 @@ export async function POST(req: NextRequest) {
     if (prueba) { anotar('se enviaría'); continue }
 
     try {
-      const de = process.env.CONTACT_FROM_EMAIL || 'onboarding@resend.dev'
       await getResend().emails.send({
-        from: `Tony Alvarado <${de}>`,
+        from: REMITENTE_CON_NOMBRE,
         to: contacto.email,
         subject: paso.asunto ?? '',
         text: [

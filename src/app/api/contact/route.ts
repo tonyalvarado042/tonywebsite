@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import { CORREO_REMITENTE } from '@/lib/correo'
 import {
   getInteresLabel,
   getInternalSubject,
@@ -194,7 +195,7 @@ export async function POST(req: NextRequest) {
     }
 
     const toEmail  = process.env.CONTACT_TO_EMAIL
-    const fromEmail = process.env.CONTACT_FROM_EMAIL || 'onboarding@resend.dev'
+    const fromEmail = CORREO_REMITENTE
 
     if (!toEmail) {
       console.error('[contact/route] CONTACT_TO_EMAIL no configurado')
