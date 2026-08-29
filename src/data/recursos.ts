@@ -38,17 +38,16 @@ export type Recurso = {
 export const recursos: Recurso[] = [
   {
     slug: 'ebook-turismo',
-    titulo: 'El ebook',
-    gancho: 'Lo que aprendí construyendo hoteles, en un PDF',
+    titulo: 'El nuevo negocio del turismo',
+    gancho: 'La revolución de la copropiedad turística',
     descripcion:
-      'Los errores que me costaron dinero levantando Bike & Bed y Humaya, y qué haría distinto hoy. Sin relleno.',
-    // ⚠️ PENDIENTE: falta el título real, el número de páginas y el archivo.
-    // Tony dijo que lo pasa. Al llegar: subir el PDF a /public/recursos/,
-    // poner el href, y cambiar estado a 'disponible'.
-    formato: 'PDF · gratis',
+      'El modelo del anfitrión individual llegó a su techo. Este ebook cambia la pregunta: no cómo administro un alojamiento, sino cómo se construye un activo que factura solo.',
+    formato: 'Ebook · lectura en línea',
     icono: BookOpen,
-    estado: 'proximamente',
-    cta: 'Avisame cuando salga',
+    estado: 'disponible',
+    // La página completa del ebook, servida desde /public.
+    href: '/el-nuevo-negocio-del-turismo.html',
+    cta: 'Leerlo gratis',
     acento: 'morado',
   },
   {
