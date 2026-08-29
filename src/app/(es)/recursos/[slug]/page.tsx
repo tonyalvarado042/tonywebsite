@@ -121,14 +121,13 @@ export default async function PuertaPage({ params }: Props) {
           <p className="mb-9 text-[15px] leading-[1.75] text-brand-muted">{recurso.descripcion}</p>
 
           {disponible ? (
-            <div className="rounded-3xl border border-brand-border bg-brand-card p-6 sm:p-7">
-              <PuertaDeRecurso
-                slug={recurso.slug}
-                titulo={recurso.titulo}
-                destino={recurso.destino_url!}
-                acento={(recurso.acento as 'morado' | 'dorado' | 'calido') ?? 'morado'}
-              />
-            </div>
+            <PuertaDeRecurso
+              slug={recurso.slug}
+              titulo={recurso.titulo}
+              destino={recurso.destino_url!}
+              acento={(recurso.acento as 'morado' | 'dorado' | 'calido') ?? 'morado'}
+              llamado={recurso.tipo === 'pdf' ? 'Descargar gratis' : 'Leerlo gratis'}
+            />
           ) : (
             <div className="rounded-3xl border border-brand-border bg-brand-card p-7 text-center">
               <p className="mb-2 text-lg font-bold text-brand-text">Todavía no está listo</p>
