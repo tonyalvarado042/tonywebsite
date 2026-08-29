@@ -3,27 +3,37 @@ import { createClient, type SupabaseClient } from '@supabase/supabase-js'
 /**
  * Acceso al CRM de Tony (Supabase `mlhhhwbgymobcxiklnoz`).
  *
- * ⚠️ SOLO SERVIDOR. La tabla tiene RLS prendida con CERO políticas: la llave
- * pública no lee ni escribe nada. Son teléfonos de personas reales. Este
- * módulo usa la service-role key y **nunca** debe importarse desde un
- * componente de cliente.
+ * ⚠️ SOLO SERVIDOR. Usa la service-role key sobre teléfonos de personas reales.
+ * Nunca importar esto desde un componente de cliente.
  *
- * ⚠️ El cliente se crea PEREZOSAMENTE — misma lección que nos tumbó el build
- * con Resend: nada que exija un secreto se construye al cargar el módulo.
+ * ⚠️ El cliente se crea PEREZOSAMENTE — la lección que nos tumbó el build con
+ * Resend: nada que exija un secreto se construye al cargar el módulo.
+ *
+ * ── Por qué `cta_contactos` y no la otra ────────────────────────────────────
+ * En este proyecto hay DOS tablas de contactos:
+ *   · public.crm_tony_alvarado_contactos  → 872 filas, la vieja del grupo de
+ *     WhatsApp. La app del CRM NO la muestra.
+ *   · crm_tony_alvarado.cta_contactos     → 1.375 filas, EL CRM DE VERDAD,
+ *     el que se ve en crm-tony-alvarado.vercel.app
+ *
+ * La primera versión de este archivo escribía en la vieja: los leads caían
+ * donde Tony nunca los habría visto. Corregido el 28-ago-2026.
  */
 
 const SUPABASE_URL = 'https://mlhhhwbgymobcxiklnoz.supabase.co'
 
-export const TABLA_CONTACTOS = 'crm_tony_alvarado_contactos'
-export const TABLA_EVENTOS = 'crm_tony_alvarado_eventos'
+export const TABLA_CONTACTOS = 'cta_contactos'
+export const TABLA_ACTIVIDADES = 'cta_actividades'
+export const TABLA_RECURSOS = 'cta_recursos'
+export const TABLA_AUTOMATIZACIONES = 'cta_automatizaciones'
+export const TABLA_PASOS = 'cta_automatizacion_pasos'
+export const TABLA_INSCRIPCIONES = 'cta_inscripciones'
 
 let cliente: SupabaseClient | null = null
 
 export function getCrm(): SupabaseClient {
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY
-  if (!key) {
-    throw new Error('SUPABASE_SERVICE_ROLE_KEY no está configurada en el entorno.')
-  }
+  if (!key) throw new Error('SUPABASE_SERVICE_ROLE_KEY no está configurada en el entorno.')
   if (!cliente) {
     cliente = createClient(SUPABASE_URL, key, {
       auth: { persistSession: false, autoRefreshToken: false },
@@ -39,179 +49,189 @@ export function hayCrm(): boolean {
 // ── Teléfono ────────────────────────────────────────────────────────────────
 
 /**
- * Normaliza a E.164 porque **el teléfono es la llave de la tabla**. Si no se
- * normaliza, "8888-8888" y "+50688888888" quedan como dos personas distintas
- * y esa persona recibe todo dos veces — que es exactamente lo que quema una
- * lista (ver la nota `mi-crm` del cerebro).
+ * Normaliza a E.164. `telefono_whatsapp` tiene índice ÚNICO, así que sin
+ * normalizar "8888-8888" y "+50688888888" serían dos personas distintas —
+ * y esa persona recibiría todo dos veces, que es lo que quema una lista.
  *
- * Costa Rica es el default: 8 dígitos sin prefijo se asumen +506.
- * Devuelve null si no parece un teléfono.
+ * Costa Rica por defecto: 8 dígitos sueltos se asumen +506.
  */
 export function normalizarTelefono(entrada: string): string | null {
   const limpio = (entrada ?? '').replace(/[^\d+]/g, '')
   if (!limpio) return null
 
   if (limpio.startsWith('+')) {
-    const digitos = limpio.slice(1)
-    if (digitos.length < 8 || digitos.length > 15) return null
-    return `+${digitos}`
+    const d = limpio.slice(1)
+    return d.length >= 8 && d.length <= 15 ? `+${d}` : null
   }
 
-  const digitos = limpio.replace(/\D/g, '')
-
-  // 8 dígitos → número tico sin prefijo
-  if (digitos.length === 8) return `+506${digitos}`
-  // ya viene con 506 al frente
-  if (digitos.length === 11 && digitos.startsWith('506')) return `+${digitos}`
-  // otro país escrito sin el +
-  if (digitos.length >= 10 && digitos.length <= 15) return `+${digitos}`
-
+  const d = limpio.replace(/\D/g, '')
+  if (d.length === 8) return `+506${d}`
+  if (d.length === 11 && d.startsWith('506')) return `+${d}`
+  if (d.length >= 10 && d.length <= 15) return `+${d}`
   return null
 }
 
-// ── Eventos ─────────────────────────────────────────────────────────────────
+// ── Bitácora ────────────────────────────────────────────────────────────────
 
 /**
- * ⚠️ La columna `tipo` tiene un CHECK en la base con un vocabulario CERRADO.
- * Verificado el 28-ago-2026 contra `crm_tony_alvarado_eventos_tipo_check`:
- *
- *   nota · llamada · whatsapp · correo_enviado · correo_recibido ·
- *   reunion · cambio_estado · baja
- *
- * Un tipo fuera de esa lista revienta el insert. Lo específico va en
- * `detalle`, no en `tipo`.
+ * ⚠️ Vocabulario CERRADO por CHECK en la base. Verificado el 28-ago-2026
+ * contra `cta_actividades_tipo_check`:
+ *   llamada · whatsapp · email · reunion · visita_sitio · nota
+ * Lo específico va en `cuerpo`, no en `tipo`.
  */
-export type TipoEvento =
-  | 'nota'
-  | 'llamada'
-  | 'whatsapp'
-  | 'correo_enviado'
-  | 'correo_recibido'
-  | 'reunion'
-  | 'cambio_estado'
-  | 'baja'
+export type TipoActividad = 'llamada' | 'whatsapp' | 'email' | 'reunion' | 'visita_sitio' | 'nota'
 
-export async function registrarEvento(
+export async function registrarActividad(
   contactoId: string,
-  tipo: TipoEvento,
-  detalle: string
+  tipo: TipoActividad,
+  cuerpo: string
 ): Promise<void> {
   const { error } = await getCrm()
-    .from(TABLA_EVENTOS)
-    .insert({ contacto_id: contactoId, tipo, detalle })
+    .from(TABLA_ACTIVIDADES)
+    .insert({ contacto_id: contactoId, tipo, cuerpo })
 
-  // Un evento que no se pudo anotar no debe tumbar la operación principal:
-  // es peor perder el lead que perder la línea de bitácora.
-  if (error) {
-    console.error('[crm] no se pudo registrar el evento', tipo, error.message)
-  }
+  // Perder una línea de bitácora es mejor que perder el lead: no se propaga.
+  if (error) console.error('[crm] no se pudo registrar la actividad', tipo, error.message)
 }
 
-// ── Alta de contacto ────────────────────────────────────────────────────────
+// ── Alta ────────────────────────────────────────────────────────────────────
 
 export type ResultadoAlta = {
   contactoId: string
   yaExistia: boolean
-  /** true si la persona ya se había dado de baja: NO se le vuelve a escribir. */
+  /** `baja = true` es un "no me escriba". No se revierte nunca. */
   estaDeBaja: boolean
 }
 
-/**
- * Da de alta (o actualiza) un contacto que pidió un recurso.
- *
- * Reglas que respeta, de la nota `mi-crm`:
- *  · Una sola fila por teléfono. Las listas son etiquetas, no tablas.
- *  · `baja = true` es un "no me escriba". **Nunca se revierte automáticamente**,
- *    ni siquiera si la persona vuelve a llenar el formulario.
- *  · `nombre` y `correo` solo se rellenan si venían vacíos: no se pisa un dato
- *    bueno con uno peor.
- */
-export async function altaContactoPorRecurso(datos: {
-  telefono: string
+export type DatosAlta = {
+  /** Puede venir null: el boletín solo pide nombre y correo. */
+  telefono: string | null
   nombre: string
   correo: string
-  recursoSlug: string
-  recursoTitulo: string
-}): Promise<ResultadoAlta> {
+  /** Qué formulario lo trajo. Va a `fuente_lead`. */
+  fuente: 'recurso_gratis' | 'boletin'
+  /** Etiqueta descriptiva, ej. 'recurso:ebook-turismo'. */
+  etiqueta: string
+  /** Texto para la bitácora. */
+  detalle: string
+}
+
+/**
+ * Da de alta o actualiza un contacto en el CRM real.
+ *
+ * ⚠️ `cta_contactos` tiene DOS índices únicos parciales: `email` y
+ * `telefono_whatsapp`. Por eso se busca por LOS DOS antes de insertar —
+ * si no, alguien que se registra con un correo ya conocido pero teléfono
+ * nuevo (o al revés) haría reventar el insert.
+ */
+export async function altaContacto(datos: DatosAlta): Promise<ResultadoAlta> {
   const crm = getCrm()
-  const etiqueta = `recurso:${datos.recursoSlug}`
-  const origen = `recurso-gratis:${datos.recursoSlug}`
+  const campos = 'id, nombre_completo, email, telefono_whatsapp, tags, baja, fuente_lead'
 
-  const { data: existente, error: errorBusca } = await crm
-    .from(TABLA_CONTACTOS)
-    .select('id, nombre, correo, etiquetas, baja, origen')
-    .eq('telefono', datos.telefono)
-    .maybeSingle()
+  // Buscar por teléfono primero (más específico), luego por correo.
+  let existente: Record<string, unknown> | null = null
 
-  if (errorBusca) throw new Error(`CRM: ${errorBusca.message}`)
-
-  if (existente) {
-    const etiquetas: string[] = Array.isArray(existente.etiquetas) ? existente.etiquetas : []
-    const etiquetasNuevas = etiquetas.includes(etiqueta) ? etiquetas : [...etiquetas, etiqueta]
-
-    const { error: errorUpd } = await crm
-      .from(TABLA_CONTACTOS)
-      .update({
-        nombre: existente.nombre || datos.nombre,
-        correo: existente.correo || datos.correo,
-        etiquetas: etiquetasNuevas,
-        origen: existente.origen || origen,
-        actualizado_en: new Date().toISOString(),
-      })
-      .eq('id', existente.id)
-
-    if (errorUpd) throw new Error(`CRM: ${errorUpd.message}`)
-
-    await registrarEvento(
-      existente.id,
-      'nota',
-      `Pidió el recurso gratis «${datos.recursoTitulo}» (${datos.recursoSlug})`
-    )
-
-    return {
-      contactoId: existente.id,
-      yaExistia: true,
-      estaDeBaja: Boolean(existente.baja),
-    }
+  if (datos.telefono) {
+    const { data, error } = await crm
+      .from(TABLA_CONTACTOS).select(campos)
+      .eq('telefono_whatsapp', datos.telefono).maybeSingle()
+    if (error) throw new Error(`CRM: ${error.message}`)
+    existente = data
+  }
+  if (!existente) {
+    const { data, error } = await crm
+      .from(TABLA_CONTACTOS).select(campos)
+      .eq('email', datos.correo).maybeSingle()
+    if (error) throw new Error(`CRM: ${error.message}`)
+    existente = data
   }
 
-  const { data: creado, error: errorIns } = await crm
-    .from(TABLA_CONTACTOS)
-    .insert({
-      telefono: datos.telefono,
-      nombre: datos.nombre,
-      correo: datos.correo,
-      etiquetas: [etiqueta],
-      origen,
-      estado: 'nuevo',
-    })
-    .select('id')
-    .single()
+  if (existente) {
+    const id = existente.id as string
+    const tags: string[] = Array.isArray(existente.tags) ? (existente.tags as string[]) : []
 
-  if (errorIns) throw new Error(`CRM: ${errorIns.message}`)
+    const { error } = await crm.from(TABLA_CONTACTOS).update({
+      // No se pisa un dato bueno con uno peor.
+      nombre_completo: (existente.nombre_completo as string) || datos.nombre,
+      email: (existente.email as string) || datos.correo,
+      telefono_whatsapp: (existente.telefono_whatsapp as string) || datos.telefono,
+      tags: tags.includes(datos.etiqueta) ? tags : [...tags, datos.etiqueta],
+      ultimo_contacto: new Date().toISOString(),
+      actualizado_el: new Date().toISOString(),
+    }).eq('id', id)
+    if (error) throw new Error(`CRM: ${error.message}`)
 
-  await registrarEvento(
-    creado.id,
-    'nota',
-    `Pidió el recurso gratis «${datos.recursoTitulo}» (${datos.recursoSlug})`
-  )
+    await registrarActividad(id, 'nota', datos.detalle)
+    return { contactoId: id, yaExistia: true, estaDeBaja: Boolean(existente.baja) }
+  }
 
+  const { data: creado, error } = await crm.from(TABLA_CONTACTOS).insert({
+    nombre_completo: datos.nombre,
+    email: datos.correo,
+    telefono_whatsapp: datos.telefono,
+    fuente_lead: datos.fuente,
+    etapa_pipeline: 'nuevo',
+    tags: [datos.etiqueta],
+    ultimo_contacto: new Date().toISOString(),
+  }).select('id').single()
+
+  if (error) throw new Error(`CRM: ${error.message}`)
+
+  await registrarActividad(creado.id, 'nota', datos.detalle)
   return { contactoId: creado.id, yaExistia: false, estaDeBaja: false }
+}
+
+// ── Inscripción en una automatización ───────────────────────────────────────
+
+/**
+ * Mete al contacto en la automatización que tenga enganchada ese recurso.
+ * Si el recurso no tiene automatización, no hace nada — y está bien.
+ */
+export async function inscribirEnAutomatizacion(
+  contactoId: string,
+  automatizacionId: string | null,
+  recursoId: string | null
+): Promise<void> {
+  if (!automatizacionId) return
+  const crm = getCrm()
+
+  // ¿Cuándo toca el primer paso?
+  const { data: primerPaso } = await crm
+    .from(TABLA_PASOS)
+    .select('dias_despues')
+    .eq('automatizacion_id', automatizacionId)
+    .eq('activo', true)
+    .order('paso', { ascending: true })
+    .limit(1)
+    .maybeSingle()
+
+  const dias = primerPaso?.dias_despues ?? 0
+  const cuando = new Date()
+  cuando.setUTCDate(cuando.getUTCDate() + dias)
+
+  // `unique (contacto_id, automatizacion_id)`: si ya estaba, no se reinicia.
+  const { error } = await crm.from(TABLA_INSCRIPCIONES).upsert(
+    {
+      contacto_id: contactoId,
+      automatizacion_id: automatizacionId,
+      recurso_id: recursoId,
+      paso_actual: 1,
+      proximo_envio_el: cuando.toISOString().slice(0, 10),
+      estado: 'activa',
+    },
+    { onConflict: 'contacto_id,automatizacion_id', ignoreDuplicates: true }
+  )
+  if (error) console.error('[crm] no se pudo inscribir en la automatización', error.message)
 }
 
 // ── Baja ────────────────────────────────────────────────────────────────────
 
-/** Marca la baja. Es irreversible desde el sitio: se respeta a la primera. */
+/** Se respeta a la primera y no se revierte desde el sitio. */
 export async function darDeBaja(contactoId: string, motivo: string): Promise<boolean> {
   const crm = getCrm()
-  const { error } = await crm
-    .from(TABLA_CONTACTOS)
-    .update({
-      baja: true,
-      proximo_paso: null,
-      proximo_paso_el: null,
-      actualizado_en: new Date().toISOString(),
-    })
+
+  const { error } = await crm.from(TABLA_CONTACTOS)
+    .update({ baja: true, actualizado_el: new Date().toISOString() })
     .eq('id', contactoId)
 
   if (error) {
@@ -219,6 +239,57 @@ export async function darDeBaja(contactoId: string, motivo: string): Promise<boo
     return false
   }
 
-  await registrarEvento(contactoId, 'baja', motivo)
+  // Se detienen TODAS sus automatizaciones, no solo la que traía el correo.
+  await crm.from(TABLA_INSCRIPCIONES)
+    .update({ estado: 'detenida', proximo_envio_el: null, actualizado_el: new Date().toISOString() })
+    .eq('contacto_id', contactoId)
+    .eq('estado', 'activa')
+
+  await registrarActividad(contactoId, 'nota', `Se dio de baja: ${motivo}`)
   return true
+}
+
+// ── Recursos (los lee el sitio, los edita Tony desde el CRM) ────────────────
+
+export type RecursoCrm = {
+  id: string
+  slug: string
+  titulo: string
+  gancho: string | null
+  descripcion: string | null
+  formato: string | null
+  imagen_url: string | null
+  imagen_alt: string | null
+  destino_url: string | null
+  tipo: string
+  estado: string
+  acento: 'morado' | 'dorado' | 'calido'
+  orden: number
+  destacado: boolean
+  automatizacion_id: string | null
+}
+
+/** Los que se muestran en /recursos. Los 'borrador' y 'archivado' quedan fuera. */
+export async function traerRecursosPublicos(): Promise<RecursoCrm[]> {
+  const { data, error } = await getCrm()
+    .from(TABLA_RECURSOS)
+    .select('*')
+    .in('estado', ['disponible', 'proximamente'])
+    .order('orden', { ascending: true })
+
+  if (error) {
+    console.error('[crm] no se pudieron traer los recursos', error.message)
+    return []
+  }
+  return (data ?? []) as RecursoCrm[]
+}
+
+export async function traerRecursoPorSlug(slug: string): Promise<RecursoCrm | null> {
+  const { data, error } = await getCrm()
+    .from(TABLA_RECURSOS).select('*').eq('slug', slug).maybeSingle()
+  if (error) {
+    console.error('[crm] no se pudo traer el recurso', error.message)
+    return null
+  }
+  return (data as RecursoCrm) ?? null
 }
