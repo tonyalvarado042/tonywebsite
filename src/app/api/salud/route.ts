@@ -41,10 +41,23 @@ export async function GET(req: NextRequest) {
     crm = { conecta: false, error: e instanceof Error ? e.message : String(e) }
   }
 
+  // Las tablas nuevas se prueban aparte: que el CRM conteste no significa que
+  // la service-role vea las que se crearon después de arrancar la API.
+  const tablas: Record<string, string> = {}
+  for (const t of ['cta_recursos', 'cta_automatizaciones', 'cta_automatizacion_pasos', 'cta_inscripciones']) {
+    try {
+      const { count, error } = await getCrm().from(t).select('id', { count: 'exact', head: true })
+      tablas[t] = error ? `ERROR: ${error.message}` : `ok · ${count ?? 0} filas`
+    } catch (e) {
+      tablas[t] = `ERROR: ${e instanceof Error ? e.message : String(e)}`
+    }
+  }
+
   return NextResponse.json({
     ok: true,
     llaves,
     crm,
+    tablas,
     secuencia: {
       activa: secuenciasActivas(),
       nota: secuenciasActivas()
