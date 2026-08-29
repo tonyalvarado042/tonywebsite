@@ -108,14 +108,14 @@ export default function RecursosPage() {
               className="absolute -inset-3 rounded-full bg-brand-green/20 blur-2xl"
             />
             <Image
-              src="/images/tony/tony-hero.jpg"
+              src="/images/tony/tony-alvarado-retrato.jpg"
               alt="Tony Alvarado"
-              width={200}
-              height={200}
+              width={629}
+              height={629}
               priority
               quality={90}
-              sizes="112px"
-              className="relative h-28 w-28 rounded-full object-cover object-[52%_22%]
+              sizes="128px"
+              className="relative h-32 w-32 rounded-full object-cover
                          ring-2 ring-brand-green/40"
             />
           </div>
@@ -153,24 +153,37 @@ export default function RecursosPage() {
                 className={`group relative block overflow-hidden rounded-3xl border ${a.borde} ${a.bordeHover}
                             bg-brand-card p-6 transition-colors duration-300 sm:p-8`}
               >
-                <div aria-hidden className={`pointer-events-none absolute inset-0 ${a.resplandor}`} />
+                {/* Foto arriba, a lo ancho. Es lo que hace que den ganas de tocarla. */}
+                <div className="relative -mx-6 -mt-6 mb-6 aspect-[16/10] overflow-hidden sm:-mx-8 sm:-mt-8">
+                  <Image
+                    src={destacado.imagen}
+                    alt={destacado.imagenAlt}
+                    fill
+                    priority
+                    quality={90}
+                    sizes="(min-width: 640px) 576px, 100vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                  />
+                  {/* Funde la foto con la tarjeta para que no quede un corte duro */}
+                  <div aria-hidden className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-brand-card to-transparent" />
+
+                  <span
+                    className={`absolute left-4 top-4 flex h-11 w-11 items-center justify-center
+                                rounded-2xl bg-brand-bg/80 backdrop-blur-sm ring-1 ${a.anillo}`}
+                  >
+                    <Icono size={20} className={a.texto} strokeWidth={1.75} />
+                  </span>
+
+                  <span
+                    className={`absolute right-4 top-4 rounded-full bg-brand-bg/80 px-3 py-1
+                                text-[10px] font-bold uppercase tracking-[0.14em] backdrop-blur-sm
+                                ${a.texto} ring-1 ${a.anillo}`}
+                  >
+                    {disponible ? destacado.formato : 'Próximamente'}
+                  </span>
+                </div>
 
                 <div className="relative">
-                  <div className="mb-5 flex items-start justify-between gap-4">
-                    <span
-                      className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl
-                                  ${a.fondoSuave} ring-1 ${a.anillo}`}
-                    >
-                      <Icono size={22} className={a.texto} strokeWidth={1.75} />
-                    </span>
-                    <span
-                      className={`rounded-full px-3 py-1 text-[10px] font-bold uppercase
-                                  tracking-[0.14em] ${a.fondoSuave} ${a.texto} ring-1 ${a.anillo}`}
-                    >
-                      {disponible ? destacado.formato : 'Próximamente'}
-                    </span>
-                  </div>
-
                   <p className={`mb-2 text-[11px] font-bold uppercase tracking-[0.16em] ${a.texto}`}>
                     {destacado.titulo}
                   </p>
@@ -184,7 +197,7 @@ export default function RecursosPage() {
                   </p>
 
                   <span
-                    className={`flex min-h-[52px] w-full items-center justify-center gap-2.5
+                    className={`flex min-h-[54px] w-full items-center justify-center gap-2.5
                                 rounded-2xl px-6 text-[15px] font-bold ${a.boton}
                                 transition-opacity group-hover:opacity-90`}
                   >
@@ -218,11 +231,23 @@ export default function RecursosPage() {
               >
                 <div aria-hidden className={`pointer-events-none absolute inset-0 ${a.resplandor}`} />
 
-                <span
-                  className={`relative flex h-11 w-11 shrink-0 items-center justify-center
-                              rounded-xl ${a.fondoSuave} ring-1 ${a.anillo}`}
-                >
-                  <Icono size={19} className={a.texto} strokeWidth={1.75} />
+                {/* Miniatura cuadrada: da cara a la tarjeta sin robarle altura */}
+                <span className={`relative h-[68px] w-[68px] shrink-0 overflow-hidden rounded-xl
+                                  ring-1 ${a.anillo} sm:h-[76px] sm:w-[76px]`}>
+                  <Image
+                    src={r.imagen}
+                    alt={r.imagenAlt}
+                    fill
+                    quality={80}
+                    sizes="76px"
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.06]"
+                  />
+                  <span
+                    aria-hidden
+                    className="absolute inset-0 flex items-center justify-center bg-brand-bg/45"
+                  >
+                    <Icono size={20} className={a.texto} strokeWidth={2} />
+                  </span>
                 </span>
 
                 <div className="relative min-w-0 flex-1">

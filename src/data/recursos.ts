@@ -24,6 +24,10 @@ export type Recurso = {
   gancho: string
   descripcion: string
   formato: string
+  /** Foto de la tarjeta. Es lo que hace que den ganas de tocarla. */
+  imagen: string
+  /** Texto alternativo de la foto. Obligatorio: es contenido, no decoración. */
+  imagenAlt: string
   icono: LucideIcon
   estado: EstadoRecurso
   /** Sólo cuando estado === 'disponible'. Archivo en /public o enlace externo. */
@@ -43,6 +47,8 @@ export const recursos: Recurso[] = [
     descripcion:
       'El modelo del anfitrión individual llegó a su techo. Este ebook cambia la pregunta: no cómo administro un alojamiento, sino cómo se construye un activo que factura solo.',
     formato: 'Ebook · lectura en línea',
+    imagen: '/img/nuevo-negocio-turismo/portada.jpg',
+    imagenAlt: 'Villas al atardecer con el volcán Arenal de fondo, en La Fortuna de San Carlos',
     icono: BookOpen,
     estado: 'disponible',
     // La página completa del ebook, servida desde /public.
@@ -59,6 +65,8 @@ export const recursos: Recurso[] = [
     // ⚠️ PENDIENTE: Tony dijo que ya la tiene armada. Falta que pase el enlace
     // o el archivo. Al llegar: poner el href y cambiar estado a 'disponible'.
     formato: 'Herramienta · gratis',
+    imagen: '/img/nuevo-negocio-turismo/aerea-villas.jpg',
+    imagenAlt: 'Vista aérea de las villas del proyecto',
     icono: Calculator,
     estado: 'proximamente',
     cta: 'Avisame cuando salga',
