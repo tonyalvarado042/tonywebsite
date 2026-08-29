@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El Nuevo Negocio del Turismo — La Revolución de la Copropiedad Turística | Tony Alvarado</title>
+<meta name="description" content="El modelo del anfitrión individual llegó a su techo. La copropiedad turística cambia la pregunta: no cómo administro un alojamiento, sino de qué activo quiero ser dueño. Guía completa de Tony Alvarado.">
+<meta name="author" content="Tony Alvarado">
+<meta property="og:title" content="El Nuevo Negocio del Turismo — La Revolución de la Copropiedad Turística">
+<meta property="og:description" content="De anfitrión a co-dueño. El modelo que cambia la pregunta de fondo del negocio turístico.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="/img/nuevo-negocio-turismo/portada.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- Marca que JS está vivo ANTES de pintar, para que el CSS pueda ocultar
+     los bloques animados sin arriesgar una página en blanco si JS falla. -->
+<script>document.documentElement.className += ' js';</script>
+
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   EL NUEVO NEGOCIO DEL TURISMO — La Revolución de la Copropiedad Turística
+   Paleta heredada de tonyalvarado.com (tailwind.config.ts)
+   ═══════════════════════════════════════════════════════════════════ */
+:root{
+  --bg:#0B0E14;
+  --surface:#0d1117;
+  --card:#111824;
+  --accent:#8B5CF6;
+  --accent-light:#C4B5FD;
+  --pop:#7C2FD6;
+  --text:#F0F0F0;
+  --muted:#9CA3AF;
+  --border:#1F2937;
+  --warm:#D7BA9E;
+  --deep:#0A0713;
+  --gold:#C9A24D;
+
+  --maxw:1120px;
+  --narrow:760px;
+  --r:16px;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  font-size:17px;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block}
+a{color:var(--accent-light);text-decoration:none}
+h1,h2,h3,h4{line-height:1.1;letter-spacing:-.03em;margin:0;font-weight:800}
+p{margin:0 0 1.1em}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+.wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.narrow{max-width:var(--narrow);margin-left:auto;margin-right:auto}
+section{position:relative}
+
+/* ── Barra de progreso de lectura ────────────────────────────────── */
+#progress{
+  position:fixed;top:0;left:0;height:3px;width:0%;
+  background:linear-gradient(90deg,var(--pop),var(--accent),var(--accent-light));
+  z-index:200;transition:width .1s linear;
+}
+
+/* ── Nav flotante ───────────────────────────────────────────────── */
+#topbar{
+  position:fixed;top:0;left:0;right:0;z-index:150;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:16px;padding:14px 24px;
+  background:rgba(11,14,20,0);
+  border-bottom:1px solid transparent;
+  transition:background .35s var(--ease),border-color .35s var(--ease),backdrop-filter .35s;
+}
+#topbar.stuck{
+  background:rgba(11,14,20,.82);
+  backdrop-filter:blur(14px);
+  border-bottom-color:var(--border);
+}
+.brandmark{
+  font-size:12px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--text);white-space:nowrap;
+}
+.brandmark span{color:var(--accent)}
+#topbar .btn-sm{
+  font-size:13px;padding:9px 18px;border-radius:999px;
+  background:var(--accent);color:#0B0E14;font-weight:700;
+  white-space:nowrap;transition:transform .2s var(--ease),background .2s;
+}
+#topbar .btn-sm:hover{background:var(--accent-light);transform:translateY(-1px)}
+
+/* ── Utilidades ─────────────────────────────────────────────────── */
+.eyebrow{
+  display:inline-flex;align-items:center;gap:9px;
+  font-size:11.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--accent-light);margin-bottom:22px;
+}
+.eyebrow::before{
+  content:"";width:26px;height:1.5px;background:var(--accent);flex:none;
+}
+.lead{font-size:20px;color:#D5D8DF;line-height:1.65}
+.muted{color:var(--muted)}
+.hl{color:var(--accent-light);font-weight:600}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  padding:16px 32px;border-radius:999px;font-weight:700;font-size:16px;
+  background:var(--accent);color:#0B0E14;border:none;cursor:pointer;
+  transition:transform .25s var(--ease),background .25s,box-shadow .25s;
+  box-shadow:0 8px 30px -10px rgba(139,92,246,.7);
+}
+.btn:hover{background:var(--accent-light);transform:translateY(-2px);box-shadow:0 14px 40px -12px rgba(139,92,246,.9)}
+.btn-ghost{
+  background:transparent;color:var(--text);
+  border:1px solid var(--border);box-shadow:none;
+}
+.btn-ghost:hover{background:rgba(139,92,246,.1);border-color:var(--accent);color:var(--accent-light);transform:translateY(-2px);box-shadow:none}
+
+/* ── Animación de entrada ───────────────────────────────────────────
+   El estado oculto SOLO se aplica si JS está vivo (clase .js puesta por
+   el script del <head>). Sin JS —o si el IntersectionObserver falla— el
+   contenido queda visible. Una landing de captación nunca puede
+   depender de una animación para mostrarse.
+─────────────────────────────────────────────────────────────────────── */
+.reveal{opacity:1;transform:none}
+.js .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.js .reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .js .reveal{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
+}
+
+/* ═══ HERO ═══════════════════════════════════════════════════════ */
+#hero{
+  min-height:100svh;display:flex;align-items:center;
+  position:relative;overflow:hidden;padding:120px 0 80px;
+}
+#hero .bgimg{
+  position:absolute;inset:0;
+  background:url('/img/nuevo-negocio-turismo/portada.jpg') center 55%/cover no-repeat;
+  transform:scale(1.06);
+}
+#hero .scrim{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,rgba(11,14,20,.86) 0%,rgba(11,14,20,.55) 35%,rgba(11,14,20,.88) 78%,var(--bg) 100%),
+    radial-gradient(90% 70% at 18% 40%,rgba(124,47,214,.34),transparent 65%);
+}
+#hero .wrap{position:relative;z-index:2}
+#hero h1{
+  font-size:clamp(42px,7.6vw,86px);font-weight:900;letter-spacing:-.045em;
+  margin-bottom:20px;text-wrap:balance;
+}
+#hero h1 .accentline{
+  display:block;
+  background:linear-gradient(100deg,var(--accent-light),var(--accent) 55%,var(--pop));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero-sub{
+  font-size:clamp(17px,2.5vw,23px);font-weight:600;color:var(--warm);
+  letter-spacing:-.01em;margin-bottom:26px;
+}
+#hero p.lead{max-width:600px;margin-bottom:36px}
+.hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:52px}
+.hero-facts{
+  display:flex;flex-wrap:wrap;gap:14px;
+  padding-top:26px;border-top:1px solid rgba(255,255,255,.1);max-width:720px;
+}
+.hero-facts div{
+  padding:11px 18px;border:1px solid var(--border);border-radius:999px;
+  background:rgba(17,24,36,.6);backdrop-filter:blur(8px);
+  font-size:13px;color:#C9CDD6;
+}
+.hero-facts b{color:var(--accent-light);font-weight:700}
+
+/* ═══ Bloques genéricos ══════════════════════════════════════════ */
+.band{padding:110px 0}
+.band-alt{background:var(--surface);border-block:1px solid var(--border)}
+.band h2{font-size:clamp(30px,4.6vw,48px);margin-bottom:22px;text-wrap:balance}
+.band h3{font-size:clamp(21px,2.6vw,26px);margin-bottom:12px}
+
+.kicker-quote{
+  font-size:clamp(22px,3.4vw,34px);font-weight:700;line-height:1.35;
+  letter-spacing:-.03em;text-wrap:balance;
+}
+
+/* Tarjetas */
+.grid{display:grid;gap:20px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(270px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+
+.card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--r);
+  padding:30px;position:relative;overflow:hidden;
+  transition:border-color .35s var(--ease),transform .35s var(--ease);
+}
+.card:hover{border-color:rgba(139,92,246,.5);transform:translateY(-3px)}
+.card .num{
+  font-size:12px;font-weight:800;letter-spacing:.16em;color:var(--accent);
+  display:block;margin-bottom:14px;
+}
+.card p:last-child{margin-bottom:0}
+.card .ico{font-size:26px;display:block;margin-bottom:14px;line-height:1}
+
+/* ═══ Fila de cifras de la historia ══════════════════════════════ */
+.stat-hero{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:2px;background:var(--border);border:1px solid var(--border);
+  border-radius:var(--r);overflow:hidden;margin-top:44px;
+}
+.stat{background:var(--card);padding:32px 30px}
+.stat .sv{
+  display:block;font-size:clamp(36px,6vw,52px);font-weight:900;letter-spacing:-.05em;
+  line-height:1;margin-bottom:12px;
+  background:linear-gradient(120deg,var(--accent-light),var(--accent));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.stat .sk{display:block;font-size:13px;font-weight:800;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--text);margin-bottom:9px}
+.stat .sd{display:block;font-size:14px;color:var(--muted);line-height:1.6}
+
+/* ═══ El techo del modelo ════════════════════════════════════════ */
+.ceiling{display:grid;gap:2px;background:var(--border);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.ceiling .row{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:2px;background:var(--border);
+}
+.ceiling .cell{background:var(--card);padding:26px 28px}
+.ceiling .cell.a{background:#0f131c}
+.ceiling .lbl{
+  font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+  margin-bottom:9px;display:block;
+}
+.ceiling .a .lbl{color:#6B7280}
+.ceiling .b .lbl{color:var(--accent)}
+.ceiling p{margin:0;font-size:15.5px;line-height:1.6}
+.ceiling .a p{color:var(--muted)}
+@media(max-width:720px){.ceiling .row{grid-template-columns:1fr}}
+
+/* ═══ Figura conceptual ══════════════════════════════════════════ */
+.concept{margin:0 0 36px;padding:0}
+.concept img{
+  width:100%;border-radius:var(--r);border:1px solid var(--border);
+  background:var(--deep);
+}
+.concept figcaption{
+  margin-top:14px;font-size:14px;color:var(--muted);text-align:center;
+  max-width:560px;margin-inline:auto;line-height:1.6;
+}
+
+/* ═══ Comparador de 3 columnas ═══════════════════════════════════ */
+.compare{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r);border:1px solid var(--border)}
+.compare table{border-collapse:collapse;width:100%;min-width:660px;font-size:15px}
+.compare th,.compare td{padding:17px 20px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+.compare thead th{
+  background:var(--surface);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+  font-weight:800;color:var(--muted);position:sticky;top:0;
+}
+.compare thead th.win{color:var(--accent);background:rgba(124,47,214,.14)}
+.compare tbody th{
+  font-weight:600;color:#C9CDD6;font-size:14.5px;background:var(--surface);width:22%;
+}
+.compare td{color:var(--muted)}
+.compare td.win{color:var(--text);background:rgba(124,47,214,.08);font-weight:500}
+.compare tr:last-child th,.compare tr:last-child td{border-bottom:none}
+
+/* ═══ Capítulos ══════════════════════════════════════════════════ */
+.chapter{padding:96px 0;border-top:1px solid var(--border)}
+.chapter-head{display:flex;align-items:flex-start;gap:26px;margin-bottom:38px}
+.chapter-n{
+  flex:none;width:66px;height:66px;border-radius:50%;
+  display:grid;place-items:center;
+  border:1.5px solid var(--accent);color:var(--accent);
+  font-size:22px;font-weight:900;letter-spacing:-.02em;
+  background:rgba(124,47,214,.1);
+}
+.chapter-head h2{font-size:clamp(26px,4vw,40px);margin-bottom:8px}
+.chapter-head .tag{
+  font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);
+}
+.chapter-img{
+  width:100%;height:clamp(200px,32vw,340px);object-fit:cover;
+  border-radius:var(--r);border:1px solid var(--border);margin-bottom:34px;
+  filter:saturate(.92);
+}
+.pull{
+  border-left:3px solid var(--accent);padding:6px 0 6px 22px;margin:30px 0;
+  font-size:18px;color:#DDE0E6;font-weight:500;line-height:1.6;
+}
+@media(max-width:640px){
+  .chapter-head{gap:16px}
+  .chapter-n{width:52px;height:52px;font-size:18px}
+}
+
+/* Lista con check morado */
+ul.checks{list-style:none;padding:0;margin:0;display:grid;gap:13px}
+ul.checks li{position:relative;padding-left:32px;color:#C9CDD6;font-size:15.5px;line-height:1.6}
+ul.checks li::before{
+  content:"";position:absolute;left:0;top:.55em;width:16px;height:16px;border-radius:50%;
+  border:1.5px solid var(--accent);
+  background:radial-gradient(circle at center,var(--accent) 0 3.5px,transparent 4px);
+}
+ul.checks li b{color:var(--text);font-weight:600}
+
+/* Etapas del huésped */
+.stages{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:0;
+  border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.stage{padding:28px 24px;border-right:1px solid var(--border);background:var(--card);position:relative}
+.stage:last-child{border-right:none}
+.stage .st-n{font-size:11px;font-weight:800;letter-spacing:.16em;color:var(--accent);display:block;margin-bottom:10px}
+.stage h4{font-size:17px;margin-bottom:8px}
+.stage p{font-size:14.5px;color:var(--muted);margin:0}
+@media(max-width:820px){.stage{border-right:none;border-bottom:1px solid var(--border)}.stage:last-child{border-bottom:none}}
+
+/* ═══ CALCULADORA ════════════════════════════════════════════════ */
+#calc-band{background:
+  radial-gradient(120% 90% at 50% -10%,rgba(124,47,214,.22),transparent 60%),
+  var(--deep);
+  border-block:1px solid var(--border);padding:110px 0}
+.calc{
+  background:linear-gradient(180deg,#12151f,#0e1119);
+  border:1px solid rgba(139,92,246,.32);border-radius:22px;
+  padding:clamp(26px,4vw,44px);
+  box-shadow:0 30px 80px -40px rgba(124,47,214,.75);
+}
+.calc-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:30px}
+.calc-top h3{font-size:clamp(20px,3vw,26px)}
+.calc-top .of{font-size:13px;color:var(--muted)}
+
+.slider-row{margin-bottom:34px}
+.slider-val{
+  display:flex;align-items:baseline;gap:12px;margin-bottom:18px;flex-wrap:wrap;
+}
+.slider-val .big{
+  font-size:clamp(46px,9vw,72px);font-weight:900;letter-spacing:-.05em;
+  color:var(--accent-light);line-height:1;font-variant-numeric:tabular-nums;
+}
+.slider-val .unit{font-size:16px;color:var(--muted);font-weight:600}
+
+input[type=range]{
+  -webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:99px;
+  background:linear-gradient(90deg,var(--accent) 0%,var(--accent) var(--pct,8%),#212836 var(--pct,8%),#212836 100%);
+  outline:none;cursor:pointer;margin:0;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;width:26px;height:26px;border-radius:50%;
+  background:var(--accent-light);border:4px solid #0e1119;cursor:grab;
+  box-shadow:0 0 0 1px var(--accent),0 4px 16px rgba(139,92,246,.7);
+}
+input[type=range]::-webkit-slider-thumb:active{cursor:grabbing}
+input[type=range]::-moz-range-thumb{
+  width:22px;height:22px;border-radius:50%;background:var(--accent-light);
+  border:4px solid #0e1119;cursor:grab;box-shadow:0 0 0 1px var(--accent);
+}
+.range-ends{display:flex;justify-content:space-between;font-size:12px;color:#6B7280;margin-top:10px}
+
+.calc-out{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:26px}
+.out{background:rgba(255,255,255,.032);border:1px solid var(--border);border-radius:13px;padding:20px 22px}
+.out .k{font-size:11.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:9px}
+.out .v{font-size:clamp(24px,4vw,32px);font-weight:800;letter-spacing:-.035em;font-variant-numeric:tabular-nums;line-height:1.1}
+.out.hero-out{border-color:rgba(139,92,246,.45);background:rgba(124,47,214,.13)}
+.out.hero-out .v{color:var(--accent-light)}
+
+/* Barra visual de las 250 acciones */
+.shares-viz{margin-bottom:26px}
+.shares-viz .cap{font-size:12px;color:var(--muted);margin-bottom:11px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.shares-bar{display:flex;height:34px;border-radius:9px;overflow:hidden;border:1px solid var(--border)}
+.shares-bar span{display:block;transition:width .3s var(--ease)}
+.sb-op{background:repeating-linear-gradient(45deg,#2b3040,#2b3040 5px,#333949 5px,#333949 10px)}
+.sb-you{background:linear-gradient(90deg,var(--accent),var(--accent-light))}
+.sb-free{background:#161b26}
+.legend{display:flex;flex-wrap:wrap;gap:18px;margin-top:12px;font-size:12.5px;color:var(--muted)}
+.legend i{width:11px;height:11px;border-radius:3px;display:inline-block;margin-right:7px;vertical-align:-1px}
+
+.calc-note{
+  background:rgba(201,162,77,.07);border:1px solid rgba(201,162,77,.3);
+  border-radius:12px;padding:17px 20px;font-size:14px;color:#D8CEB6;line-height:1.6;
+}
+.calc-note b{color:var(--gold)}
+
+/* ═══ El 51% ═════════════════════════════════════════════════════ */
+.lock{
+  display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);
+  gap:48px;align-items:center;
+}
+@media(max-width:860px){.lock{grid-template-columns:1fr;gap:34px}}
+.dial{position:relative;width:min(100%,290px);aspect-ratio:1;margin:0 auto}
+.dial svg{width:100%;height:100%;transform:rotate(-90deg)}
+.dial .mid{
+  position:absolute;inset:0;display:grid;place-content:center;text-align:center;
+}
+.dial .mid .pc{font-size:44px;font-weight:900;letter-spacing:-.05em;color:var(--accent-light);line-height:1}
+.dial .mid .lb{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:7px}
+
+/* ═══ Ronda / progreso Humaya ════════════════════════════════════ */
+.round{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:clamp(24px,3.5vw,38px)}
+.round-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:22px;margin-bottom:30px}
+.round-grid .k{font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:7px;font-weight:700}
+.round-grid .v{font-size:clamp(20px,3vw,26px);font-weight:800;letter-spacing:-.03em}
+.round-grid .v small{font-size:13px;font-weight:500;color:var(--muted);letter-spacing:0}
+
+/* ═══ Acordeón de objeciones ═════════════════════════════════════ */
+.acc{border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.acc details{border-bottom:1px solid var(--border);background:var(--card)}
+.acc details:last-child{border-bottom:none}
+.acc summary{
+  cursor:pointer;list-style:none;padding:22px 26px;
+  display:flex;align-items:center;justify-content:space-between;gap:18px;
+  font-weight:600;font-size:16.5px;color:var(--text);
+  transition:background .25s,color .25s;
+}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary:hover{background:rgba(139,92,246,.07);color:var(--accent-light)}
+.acc summary .chev{
+  flex:none;width:22px;height:22px;border-radius:50%;border:1px solid var(--border);
+  display:grid;place-items:center;color:var(--accent);font-size:15px;line-height:1;
+  transition:transform .3s var(--ease),background .25s;
+}
+.acc details[open] summary{color:var(--accent-light);background:rgba(139,92,246,.05)}
+.acc details[open] .chev{transform:rotate(45deg);background:rgba(139,92,246,.16)}
+.acc .body{padding:0 26px 24px;color:#C2C6CE;font-size:15.5px;line-height:1.7}
+.acc .body p:last-child{margin-bottom:0}
+.acc .body em{color:var(--accent-light);font-style:normal;font-weight:600}
+
+/* ═══ Bloque honesto ═════════════════════════════════════════════ */
+.honest{
+  border:1px dashed rgba(201,162,77,.45);border-radius:var(--r);
+  background:rgba(201,162,77,.045);padding:clamp(26px,4vw,40px);
+}
+.honest h3{color:var(--gold)}
+.honest ol{margin:22px 0 0;padding-left:22px;display:grid;gap:12px;color:#C9CDD6}
+.honest ol li{padding-left:6px;font-size:15.5px;line-height:1.6}
+.honest ol li b{color:var(--text)}
+
+/* ═══ FORMULARIO ═════════════════════════════════════════════════ */
+#contacto{
+  background:
+    radial-gradient(100% 80% at 50% 0%,rgba(124,47,214,.2),transparent 62%),
+    var(--surface);
+  border-top:1px solid var(--border);padding:110px 0 90px;
+}
+.form-shell{
+  display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:52px;align-items:start;
+}
+@media(max-width:900px){.form-shell{grid-template-columns:1fr;gap:40px}}
+form.contact{
+  background:var(--card);border:1px solid var(--border);border-radius:20px;
+  padding:clamp(26px,3.6vw,38px);
+}
+.field{margin-bottom:19px}
+.field label{display:block;font-size:12.5px;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.field label .req{color:var(--accent)}
+.field input,.field textarea,.field select{
+  width:100%;padding:14px 16px;border-radius:11px;
+  background:#0b0f17;border:1px solid var(--border);color:var(--text);
+  font-family:inherit;font-size:15.5px;line-height:1.5;
+  transition:border-color .25s,box-shadow .25s,background .25s;
+}
+.field textarea{resize:vertical;min-height:118px}
+.field input::placeholder,.field textarea::placeholder{color:#5b6273}
+.field input:focus,.field textarea:focus,.field select:focus{
+  outline:none;border-color:var(--accent);background:#0d1220;
+  box-shadow:0 0 0 3px rgba(139,92,246,.18);
+}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:560px){.field-row{grid-template-columns:1fr}}
+.hp{position:absolute!important;left:-9999px!important;width:1px;height:1px;overflow:hidden}
+form.contact .btn{width:100%;margin-top:6px}
+.form-legal{font-size:12.5px;color:#6B7280;margin:16px 0 0;line-height:1.6}
+#formmsg{
+  margin-top:16px;padding:14px 16px;border-radius:11px;font-size:14.5px;display:none;line-height:1.6;
+}
+#formmsg.ok{display:block;background:rgba(139,92,246,.13);border:1px solid rgba(139,92,246,.45);color:var(--accent-light)}
+#formmsg.err{display:block;background:rgba(220,80,80,.11);border:1px solid rgba(220,80,80,.42);color:#F1A6A6}
+.btn[disabled]{opacity:.55;cursor:not-allowed;transform:none}
+
+.form-side ul.checks{margin-top:26px}
+.side-quote{
+  margin-top:34px;padding:24px;border-radius:var(--r);
+  background:rgba(255,255,255,.03);border:1px solid var(--border);
+}
+.side-quote p{font-size:17px;font-weight:600;color:#DDE0E6;line-height:1.55;margin-bottom:10px}
+.side-quote span{font-size:13px;color:var(--muted)}
+
+/* ═══ FOOTER ═════════════════════════════════════════════════════ */
+footer{background:var(--deep);border-top:1px solid var(--border);padding:52px 0 60px;font-size:13.5px;color:#6B7280;line-height:1.75}
+footer .disc{
+  border:1px solid var(--border);border-radius:12px;padding:20px 24px;
+  margin-bottom:28px;background:rgba(255,255,255,.018);
+}
+footer .disc b{color:#9CA3AF;display:block;margin-bottom:7px;font-size:12px;letter-spacing:.13em;text-transform:uppercase}
+footer .fbot{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center}
+footer a{color:var(--muted)}
+footer a:hover{color:var(--accent-light)}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<nav id="topbar">
+  <span class="brandmark">TONY<span>·</span>ALVARADO</span>
+  <a href="#contacto" class="btn-sm">Hablemos</a>
+</nav>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section id="hero">
+  <div class="bgimg" aria-hidden="true"></div>
+  <div class="scrim" aria-hidden="true"></div>
+  <div class="wrap">
+    <span class="eyebrow">Guía 2026 · Tony Alvarado</span>
+    <h1>El Nuevo Negocio<br>del Turismo</h1>
+    <p class="hero-sub">La Revolución de la Copropiedad Turística</p>
+    <p class="lead">
+      El modelo del anfitrión individual llegó a su techo. Lo que viene no es
+      administrar mejor un alojamiento — es cambiar la pregunta de fondo:
+      <span class="hl">¿querés operar un hospedaje, o querés ser dueño de uno?</span>
+    </p>
+    <div class="hero-cta">
+      <a href="#contacto" class="btn">Quiero entender el modelo</a>
+      <a href="#tesis" class="btn btn-ghost">Leer la guía ↓</a>
+    </div>
+    <div class="hero-facts">
+      <div>📖 <b>6 capítulos</b> + calculadora de fracción</div>
+      <div>🏛️ Caso real: <b>Humaya</b>, La Fortuna</div>
+      <div>🔒 El operador conserva <b>51%</b> — bloqueado en la base</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ LA TESIS ═══════════════════ -->
+<section id="tesis" class="band">
+  <div class="wrap narrow reveal">
+    <span class="eyebrow">El punto de partida</span>
+    <h2>Un alojamiento se reserva.<br>Un destino se busca.</h2>
+    <p class="lead">
+      Esa frase resume por qué unos cobran lo que pueden y otros cobran lo que
+      valen. Pero hay una capa más profunda, y es la que casi nadie discute:
+      <strong>no es lo mismo trabajar dentro de un activo turístico que ser dueño de él.</strong>
+    </p>
+    <p>
+      Durante quince años construí negocios alrededor de una sola pasión, hasta que
+      la operación aprendió a caminar sin mí. Hoy le dedico unas cuatro horas a la
+      semana. Ese fue el descubrimiento: <span class="hl">el objetivo nunca fue trabajar
+      mejor — era dejar de ser la pieza indispensable.</span>
+    </p>
+    <p>
+      Esta guía recorre los seis frentes que convierten una propiedad en un destino.
+      Y después hace la pregunta incómoda: una vez que sabés cómo se construye un
+      activo así, ¿de verdad querés construirlo solo?
+    </p>
+
+    <div class="pull">
+      «No construimos hoteles. Construimos razones para viajar.»
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ LA HISTORIA ═══════════════════
+     ⚠️ VALIDACIÓN DEL CLIENTE REQUERIDA
+     La cifra de $200.000 en el primer año viene del ebook original
+     "De Airbnb a Destino Altamente Rentable". NO está verificada en
+     ninguna fuente propia. Tony: confirmá o corregí este número ANTES
+     de publicar. Si no lo podés respaldar, borrá el bloque .stat-hero
+     completo — el resto de la sección funciona sin él.
+═══════════════════════════════════════════════════════ -->
+<section class="band band-alt">
+  <div class="wrap">
+    <div class="narrow reveal">
+      <span class="eyebrow">Por qué escribo esto</span>
+      <h2>Empecé por donde empieza todo el mundo</h2>
+      <p class="lead">
+        Una sola propiedad y la convicción de que el alojamiento vacacional podía ser
+        bastante más que un ingreso extra. En mi primer año de operación generé más de
+        <strong>$200.000 en ingresos brutos</strong> — y quiero ser preciso con esa cifra:
+        <span class="hl">es facturación del negocio, no plata que me quedó en el bolsillo.</span>
+      </p>
+      <p>
+        Lo que descubrí ahí es lo que sostiene toda esta guía: la diferencia entre un
+        anfitrión promedio y un empresario turístico no está en la ubicación ni en el
+        presupuesto inicial. Está en entender el negocio como <strong>un destino completo</strong>,
+        no como un alojamiento con buenas fotos.
+      </p>
+      <p>
+        Pero hay una segunda parte que en su momento no vi, y me tomó años entenderla:
+        <span class="hl">llegar ahí solo tiene un techo, y llega antes de lo que uno cree.</span>
+        De eso trata el resto de este documento.
+      </p>
+    </div>
+
+    <div class="stat-hero reveal">
+      <div class="stat">
+        <span class="sv">$200K</span>
+        <span class="sk">Primer año de operación</span>
+        <span class="sd">Ingresos brutos del negocio en los primeros 12 meses. Facturación, no utilidad.</span>
+      </div>
+      <div class="stat">
+        <span class="sv">2004</span>
+        <span class="sk">Cuando arrancó todo</span>
+        <span class="sd">El primer dominio y el primer evento. Salto a tiempo completo en 2008.</span>
+      </div>
+      <div class="stat">
+        <span class="sv">4 h</span>
+        <span class="sk">Por semana, hoy</span>
+        <span class="sd">Lo que le dedico a la operación. No es talento: son sistemas y equipo.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ EL TECHO ═══════════════════ -->
+<section class="band band-alt">
+  <div class="wrap">
+    <div class="narrow reveal" style="margin-bottom:44px">
+      <span class="eyebrow">Capítulo 0 · El diagnóstico</span>
+      <h2>Dónde topa el anfitrión que hace todo bien</h2>
+      <p class="lead">
+        No es un problema de esfuerzo. Es un problema de estructura. Estos cuatro
+        techos aparecen exactamente cuando el negocio empieza a funcionar.
+      </p>
+    </div>
+
+    <div class="ceiling reveal">
+      <div class="row">
+        <div class="cell a"><span class="lbl">El techo</span>
+          <p>Competís contra hoteles boutique con el presupuesto de una sola persona: una fotografía, un colchón, una campaña a la vez.</p></div>
+        <div class="cell b"><span class="lbl">Lo que cambia con copropiedad</span>
+          <p>El presupuesto de marca, diseño y operación se reparte entre todos los co-dueños. Cada uno accede a un estándar que solo no podría pagar.</p></div>
+      </div>
+      <div class="row">
+        <div class="cell a"><span class="lbl">El techo</span>
+          <p>El activo depende de vos. Si te enfermás, viajás o te cansás, la operación se resiente ese mismo día.</p></div>
+        <div class="cell b"><span class="lbl">Lo que cambia con copropiedad</span>
+          <p>Hay un operador profesional con la responsabilidad — y el incentivo — de que el activo funcione. Tu presencia no es un insumo de la operación.</p></div>
+      </div>
+      <div class="row">
+        <div class="cell a"><span class="lbl">El techo</span>
+          <p>Todo tu capital está inmovilizado en una sola propiedad, en una sola zona, expuesto a una sola temporada.</p></div>
+        <div class="cell b"><span class="lbl">Lo que cambia con copropiedad</span>
+          <p>Comprás fracciones. Podés estar en más de un activo, en más de una zona, con el mismo capital que antes alcanzaba para una sola puerta.</p></div>
+      </div>
+      <div class="row">
+        <div class="cell a"><span class="lbl">El techo</span>
+          <p>La plataforma es dueña de la relación con el huésped. Cambian el algoritmo y tu calendario cambia con él.</p></div>
+        <div class="cell b"><span class="lbl">Lo que cambia con copropiedad</span>
+          <p>Un destino con marca propia genera demanda directa. La gente no busca «cabina en Arenal»: busca el lugar por su nombre.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ QUÉ ES Y QUÉ NO ES ═══════════════════ -->
+<section class="band">
+  <div class="wrap">
+    <div class="narrow reveal" style="margin-bottom:40px">
+      <span class="eyebrow">La distinción que importa</span>
+      <h2>Copropiedad no es tiempo compartido</h2>
+      <p class="lead">
+        Se confunden todo el tiempo y no son parientes. En el tiempo compartido comprás
+        <em>derecho de uso</em> por unas semanas. En la copropiedad
+        <span class="hl">comprás una fracción real del activo</span> — quedás en la
+        estructura de propiedad, no en un calendario.
+      </p>
+    </div>
+
+    <figure class="concept reveal">
+      <img src="/img/nuevo-negocio-turismo/fraccion.jpg"
+           alt="Esquema de un activo turístico dividido en fracciones iguales, con una fracción iluminada en morado"
+           loading="lazy">
+      <figcaption>
+        Un activo, muchas fracciones. La que se ilumina es tuya — y es propiedad real,
+        no un turno en un calendario.
+      </figcaption>
+    </figure>
+
+    <div class="compare reveal">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Comprar una propiedad solo</th>
+            <th scope="col">Tiempo compartido</th>
+            <th scope="col" class="win">Copropiedad turística</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Qué comprás</th>
+            <td>El inmueble completo</td>
+            <td>Derecho de uso por semanas</td>
+            <td class="win">Una fracción real del activo</td>
+          </tr>
+          <tr>
+            <th scope="row">Capital que hace falta</th>
+            <td>El 100% del valor, de una</td>
+            <td>Bajo, pero no comprás propiedad</td>
+            <td class="win">El valor de las fracciones que tomés</td>
+          </tr>
+          <tr>
+            <th scope="row">Quién opera</th>
+            <td>Vos, o alguien que contratás y supervisás</td>
+            <td>La empresa vendedora</td>
+            <td class="win">Un operador con fracción mayoritaria en el mismo activo</td>
+          </tr>
+          <tr>
+            <th scope="row">Cuánto trabajo tuyo pide</th>
+            <td>Alto y permanente</td>
+            <td>Ninguno</td>
+            <td class="win">Ninguno en la operación diaria</td>
+          </tr>
+          <tr>
+            <th scope="row">Estándar del inmueble</th>
+            <td>Hasta donde alcance tu bolsillo</td>
+            <td>El del complejo</td>
+            <td class="win">Nivel resort, financiado entre todos</td>
+          </tr>
+          <tr>
+            <th scope="row">Diversificación</th>
+            <td>Nula: un activo, una zona</td>
+            <td>Nula</td>
+            <td class="win">Podés repartirte entre varios activos</td>
+          </tr>
+          <tr>
+            <th scope="row">Riesgo de decisiones</th>
+            <td>Todo tuyo</td>
+            <td>Todo de la empresa</td>
+            <td class="win">Regla fija: el operador conserva mínimo 51%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="muted reveal" style="font-size:13.5px;margin-top:14px">
+      Deslizá la tabla horizontalmente si vas en teléfono.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════ CAPÍTULO 1 ═══════════════════ -->
+<section class="chapter">
+  <div class="wrap">
+    <div class="reveal">
+      <img class="chapter-img" src="/img/nuevo-negocio-turismo/villa-interior.jpg"
+           alt="Interior de villa boutique tropical de noche, con vista a una piscina termal iluminada" loading="lazy">
+      <div class="chapter-head">
+        <div class="chapter-n">01</div>
+        <div>
+          <span class="tag">Fundamentos del activo</span>
+          <h2>Qué hace que un activo turístico facture</h2>
+        </div>
+      </div>
+    </div>
+    <div class="narrow reveal">
+      <p class="lead">
+        La mayoría cree que su propiedad ya está lista para dar lo máximo. Casi nunca lo está.
+        Lo que separa a un alojamiento de un activo son tres decisiones que se toman
+        <strong>antes</strong> de recibir al primer huésped.
+      </p>
+      <div class="grid g3" style="margin:34px 0">
+        <div class="card">
+          <span class="ico">◈</span>
+          <h3>Diseño que sostiene tarifa</h3>
+          <p class="muted" style="font-size:15px">Un espacio bien diseñado no solo atrae más reservas: <strong style="color:var(--text)">justifica la tarifa</strong>. La estética, la funcionalidad y la identidad del lugar deciden la compra antes de que el huésped lea una sola reseña.</p>
+        </div>
+        <div class="card">
+          <span class="ico">◉</span>
+          <h3>Experiencia en cada rincón</h3>
+          <p class="muted" style="font-size:15px">Desde el área de llegada hasta el último detalle del baño, cada punto de contacto comunica algo. En un activo bien pensado, ninguno comunica por accidente.</p>
+        </div>
+        <div class="card">
+          <span class="ico">◎</span>
+          <h3>Tecnología e infraestructura</h3>
+          <p class="muted" style="font-size:15px">Acceso inteligente, automatización y conectividad de verdad ya no son lujos: son la expectativa base. Y bien hechos, <strong style="color:var(--text)">bajan el costo operativo</strong> en lugar de subirlo.</p>
+        </div>
+      </div>
+      <div class="pull">
+        Tu propiedad no compite con el Airbnb de al lado. Compite con hoteles boutique,
+        con experiencias únicas y con el recuerdo que el huésped quiere llevarse a la casa.
+      </div>
+      <p>
+        Y acá aparece el problema de fondo: <span class="hl">ese estándar cuesta.</span>
+        Piscinas termales, spa, gimnasio, sauna, un laboratorio de biohacking — nada de eso
+        lo financia una persona sola con una cabina. Se financia repartiendo el activo.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ CAPÍTULO 2 ═══════════════════ -->
+<section class="chapter">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="chapter-head">
+        <div class="chapter-n">02</div>
+        <div>
+          <span class="tag">Marketing y posicionamiento</span>
+          <h2>De alojamiento a destino</h2>
+        </div>
+      </div>
+    </div>
+    <div class="narrow reveal">
+      <p class="lead">
+        Cuando tu espacio se convierte en un destino reconocido, los huéspedes llegan con
+        expectativas altas, disposición a pagar más y ganas de contarlo. Cuatro pilares
+        sostienen ese salto.
+      </p>
+    </div>
+    <div class="grid g4 reveal" style="margin-top:34px">
+      <div class="card"><span class="num">PILAR 01</span><h3 style="font-size:19px">Identidad de marca</h3><p class="muted" style="font-size:14.5px;margin-top:8px">Nombre, narrativa y personalidad que te separan de cientos de opciones parecidas en la misma zona.</p></div>
+      <div class="card"><span class="num">PILAR 02</span><h3 style="font-size:19px">Fotografía profesional</h3><p class="muted" style="font-size:14.5px;margin-top:8px">Las imágenes son tu primer vendedor. Es el único gasto de marketing que trabaja las 24 horas durante años.</p></div>
+      <div class="card"><span class="num">PILAR 03</span><h3 style="font-size:19px">Presencia multicanal</h3><p class="muted" style="font-size:14.5px;margin-top:8px">Airbnb, Vrbo, Booking <em>y canal directo</em>. Diversificar reduce la dependencia de un solo algoritmo.</p></div>
+      <div class="card"><span class="num">PILAR 04</span><h3 style="font-size:19px">Marketing de contenidos</h3><p class="muted" style="font-size:14.5px;margin-top:8px">Guías locales, comunidad y colaboraciones que posicionan el lugar como referente de la zona.</p></div>
+    </div>
+    <div class="narrow reveal">
+      <div class="pull" style="margin-top:36px">
+        La marca no es el logo. Es la razón por la que alguien escribe el nombre del lugar
+        en el buscador en vez de escribir «hotel cerca del volcán».
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ CAPÍTULO 3 ═══════════════════ -->
+<section class="chapter">
+  <div class="wrap">
+    <div class="reveal">
+      <img class="chapter-img" src="/img/nuevo-negocio-turismo/spa-detalle.jpg"
+           alt="Detalle de spa tropical: piedra volcánica, agua termal humeante y toallas de lino" loading="lazy">
+      <div class="chapter-head">
+        <div class="chapter-n">03</div>
+        <div>
+          <span class="tag">Experiencia y hospitalidad</span>
+          <h2>Las reseñas no son la meta: son el resultado</h2>
+        </div>
+      </div>
+    </div>
+    <div class="narrow reveal">
+      <p class="lead">
+        Las cinco estrellas no se persiguen, se provocan. El huésped que se siente cuidado,
+        sorprendido y valorado no solo regresa: se vuelve tu mejor equipo de marketing.
+      </p>
+    </div>
+    <div class="stages reveal" style="margin:34px 0">
+      <div class="stage"><span class="st-n">ETAPA 01</span><h4>Llegada</h4><p>Check-in sin fricción y una bienvenida que se siente personal, no protocolar.</p></div>
+      <div class="stage"><span class="st-n">ETAPA 02</span><h4>Estancia</h4><p>Experiencias locales y atención proactiva: responder antes de que pregunten.</p></div>
+      <div class="stage"><span class="st-n">ETAPA 03</span><h4>Salida</h4><p>Checkout flexible y un detalle de despedida que se recuerda más que la factura.</p></div>
+      <div class="stage"><span class="st-n">ETAPA 04</span><h4>Post-estadía</h4><p>Seguimiento, reseña y una razón concreta para volver.</p></div>
+    </div>
+    <div class="narrow reveal">
+      <ul class="checks">
+        <li><b>Bienvenida personalizada.</b> Un detalle local o una nota escrita a mano crea conexión emocional desde el primer minuto — y cuesta menos que un anuncio.</li>
+        <li><b>Comunicación proactiva.</b> Adelantarse a la pregunta demuestra atención genuina y desactiva problemas antes de que escalen a reseña.</li>
+        <li><b>Reseñas orgánicas.</b> El huésped satisfecho reseña solo. El sistema correcto hace que eso pase de forma consistente, no por suerte.</li>
+      </ul>
+      <div class="pull" style="margin-top:32px">
+        Esta es la parte que casi nadie sostiene en el tiempo estando solo. No por falta de
+        ganas: por falta de estructura. Un equipo que hace esto todos los días
+        <span class="hl">solo se financia con un activo de tamaño suficiente.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ CAPÍTULO 4 ═══════════════════ -->
+<section class="chapter">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="chapter-head">
+        <div class="chapter-n">04</div>
+        <div>
+          <span class="tag">Estrategia de precios</span>
+          <h2>Las palancas que mueven la facturación</h2>
+        </div>
+      </div>
+    </div>
+    <div class="narrow reveal">
+      <p class="lead">
+        El precio fijo es dinero dejado sobre la mesa. Los operadores serios ajustan según
+        demanda, temporada, eventos locales y comportamiento del mercado — noche por noche.
+      </p>
+      <div class="grid g3" style="margin:32px 0">
+        <div class="card"><span class="num">PALANCA 01</span><h3 style="font-size:19px">Precios por temporada</h3><p class="muted" style="font-size:14.5px;margin-top:8px">Alta, media y baja no son tres precios: son tres negocios distintos dentro del mismo activo.</p></div>
+        <div class="card"><span class="num">PALANCA 02</span><h3 style="font-size:19px">Eventos y fechas clave</h3><p class="muted" style="font-size:14.5px;margin-top:8px">Festivales, congresos y feriados se anticipan con meses. El que los tiene en el calendario cobra distinto.</p></div>
+        <div class="card"><span class="num">PALANCA 03</span><h3 style="font-size:19px">Estadías mínimas</h3><p class="muted" style="font-size:14.5px;margin-top:8px">Mínimos bien puestos en fines de semana y temporada alta ordenan la ocupación en vez de fragmentarla.</p></div>
+      </div>
+      <h3 style="margin-bottom:14px">Más allá del precio por noche</h3>
+      <p>Existen palancas que el anfitrión promedio ni toca:</p>
+      <ul class="checks">
+        <li><b>Experiencias y tours locales</b> integrados como upsell dentro de la misma reserva.</li>
+        <li><b>Paquetes</b> armados para parejas, familias o grupos corporativos.</li>
+        <li><b>Alianzas con negocios de la zona</b> que generan comisión sin costo adicional.</li>
+        <li><b>Membresías</b> para huéspedes frecuentes que vuelven todos los años.</li>
+        <li><b>Check-in temprano y check-out tardío</b> como servicio, no como favor.</li>
+      </ul>
+      <div class="calc-note" style="margin-top:30px">
+        <b>Una advertencia honesta.</b> Vas a ver por ahí porcentajes exactos de cuánto
+        «sube» cada palanca. Yo no te voy a dar ese número, porque depende de tu zona, tu
+        temporada y tu producto — y quien te lo promete redondo, te lo está inventando.
+        Lo que sí es cierto y verificable es la dirección: <b>un activo con varias palancas
+        activas factura distinto que uno con una sola.</b>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ CAPÍTULO 5 ═══════════════════ -->
+<section class="chapter">
+  <div class="wrap">
+    <div class="reveal">
+      <img class="chapter-img" src="/img/nuevo-negocio-turismo/terraza.jpg"
+           alt="Terraza cubierta de lodge tropical al amanecer, con mesa comunal y niebla en el bosque" loading="lazy">
+      <div class="chapter-head">
+        <div class="chapter-n">05</div>
+        <div>
+          <span class="tag">Operaciones y equipo</span>
+          <h2>El negocio escala cuando funciona sin vos</h2>
+        </div>
+      </div>
+    </div>
+    <div class="narrow reveal">
+      <p class="lead">
+        Esta es, para mí, la parte más importante de toda la guía. Una operación bien
+        estructurada te libera para pensar en crecimiento en lugar de apagar incendios.
+        Mi empresa lleva años funcionando con unas cuatro horas mías por semana — y eso
+        no pasó por talento: pasó por sistemas.
+      </p>
+      <div class="grid g2" style="margin:32px 0">
+        <div class="card"><h3>Sistemas y procesos</h3><p class="muted" style="font-size:15px;margin-top:8px">Checklists de limpieza, protocolos de mantenimiento, flujos de comunicación y procedimientos de emergencia documentados. La consistencia deja de depender de quién esté de turno.</p></div>
+        <div class="card"><h3>Equipo de confianza</h3><p class="muted" style="font-size:15px;margin-top:8px">Limpieza, mantenimiento, co-anfitrión y soporte. Cada rol con expectativas claras, compensación justa y capacitación de verdad.</p></div>
+        <div class="card"><h3>Mantenimiento preventivo</h3><p class="muted" style="font-size:15px;margin-top:8px">Un programa calendarizado evita emergencias caras, protege el activo y asegura que cada huésped encuentre el lugar impecable.</p></div>
+        <div class="card"><h3>Métricas que importan</h3><p class="muted" style="font-size:15px;margin-top:8px">Ocupación, ingreso por noche disponible (RevPAR), costo de adquisición por huésped y NPS. Lo que se mide, se mejora.</p></div>
+      </div>
+      <div class="pull">
+        Acá está el nudo: montar todo esto para <em>una</em> propiedad es carísimo por unidad.
+        Montarlo para un activo de diez villas cuesta prácticamente lo mismo — repartido
+        entre muchos más dueños.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ CAPÍTULO 6 ═══════════════════ -->
+<section class="chapter">
+  <div class="wrap">
+    <div class="reveal">
+      <img class="chapter-img" src="/img/nuevo-negocio-turismo/aerea-villas.jpg"
+           alt="Vista aérea al atardecer de diez villas iluminadas en el bosque tropical" loading="lazy">
+      <div class="chapter-head">
+        <div class="chapter-n">06</div>
+        <div>
+          <span class="tag">Crecimiento y escala</span>
+          <h2>De una propiedad a un portafolio</h2>
+        </div>
+      </div>
+    </div>
+    <div class="narrow reveal">
+      <p class="lead">
+        Una propiedad exitosa es una prueba de concepto. Un portafolio bien gestionado ya es
+        un negocio. Y el camino de la escala no significa más trabajo: significa mejores
+        sistemas y más apalancamiento.
+      </p>
+      <div class="grid g2" style="margin:32px 0">
+        <div class="card"><span class="num">NIVEL 01</span><h3>La propiedad: el modelo</h3><p class="muted" style="font-size:15px;margin-top:8px">Validás el modelo, afinás los sistemas y generás el capital y la credibilidad para el paso siguiente.</p></div>
+        <div class="card"><span class="num">NIVEL 02</span><h3>La réplica</h3><p class="muted" style="font-size:15px;margin-top:8px">Aplicás los sistemas probados a activos nuevos: arrendamiento con subalquiler, gestión para terceros o compra directa, según tu capital.</p></div>
+        <div class="card"><span class="num">NIVEL 03</span><h3>El portafolio</h3><p class="muted" style="font-size:15px;margin-top:8px">Con varios activos negociás mejor con proveedores, contratás gerencia y diversificás riesgo geográfico y de temporada.</p></div>
+        <div class="card"><span class="num">NIVEL 04</span><h3>La marca de destino</h3><p class="muted" style="font-size:15px;margin-top:8px">Cuando tu nombre se asocia con una experiencia excepcional, los huéspedes te buscan a vos — no a la plataforma.</p></div>
+      </div>
+      <div class="pull">
+        La copropiedad es un atajo estructural a este mapa: en vez de subir los cuatro niveles
+        con tu propio capital y tus propios años, <span class="hl">entrás directo a un activo
+        que ya va por el nivel tres</span> — comprando una fracción, no una llave.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ LA CALCULADORA ═══════════════════ -->
+<section id="calc-band">
+  <div class="wrap">
+    <div class="narrow reveal" style="margin-bottom:40px;text-align:center">
+      <span class="eyebrow" style="justify-content:center">La herramienta</span>
+      <h2>Calculá tu fracción</h2>
+      <p class="lead">
+        Movés el deslizador y ves exactamente qué porcentaje del activo te corresponde.
+        Las cifras son las de <strong>Humaya</strong>, el proyecto real que tengo abierto
+        hoy en La Fortuna.
+      </p>
+    </div>
+
+    <div class="calc reveal">
+      <div class="calc-top">
+        <h3>Humaya · La Fortuna, Arenal</h3>
+        <span class="of">10 villas · gym · spa · piscinas termales · sauna · cold plunge · laboratorio de biohacking</span>
+      </div>
+
+      <div class="slider-row">
+        <label for="shares" style="font-size:12.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:14px">
+          Acciones que tomás
+        </label>
+        <div class="slider-val">
+          <span class="big" id="v-shares">3</span>
+          <span class="unit" id="v-shares-unit">acciones de 250</span>
+        </div>
+        <input type="range" id="shares" min="1" max="122" value="3" step="1"
+               aria-describedby="calc-disclaimer">
+        <div class="range-ends"><span>1 acción</span><span>122 disponibles en esta ronda</span></div>
+      </div>
+
+      <div class="calc-out">
+        <div class="out hero-out">
+          <span class="k">Tu fracción del activo</span>
+          <span class="v" id="v-pct">1,20 %</span>
+        </div>
+        <div class="out">
+          <span class="k">Valor de tu fracción</span>
+          <span class="v" id="v-cap">$30.000</span>
+        </div>
+        <div class="out">
+          <span class="k">Activo completo</span>
+          <span class="v">$2.500.000</span>
+        </div>
+      </div>
+
+      <div class="shares-viz">
+        <div class="cap">
+          <span>Cómo queda repartido el activo</span>
+          <span id="v-caption">Vos: 3 · Operador: 128 · Resto de la ronda: 119</span>
+        </div>
+        <div class="shares-bar" role="img" aria-label="Reparto de las 250 acciones del activo">
+          <span class="sb-op" id="bar-op" style="width:51.2%"></span>
+          <span class="sb-you" id="bar-you" style="width:1.2%"></span>
+          <span class="sb-free" id="bar-free" style="width:47.6%"></span>
+        </div>
+        <div class="legend">
+          <span><i class="sb-op" style="background:#2b3040"></i>Operador — fijo en 128 (51,2%)</span>
+          <span><i style="background:var(--accent)"></i>Tu fracción</span>
+          <span><i style="background:#161b26;border:1px solid var(--border)"></i>Resto de la ronda</span>
+        </div>
+      </div>
+
+      <p class="calc-note" id="calc-disclaimer">
+        <b>Qué calcula y qué NO calcula esto.</b>
+        Calcula tu <b>porcentaje de propiedad</b> sobre un activo de $2.500.000 dividido en
+        250 acciones de $10.000. <b>No proyecta, no estima y no promete ningún retorno,
+        rendimiento ni ganancia.</b> Cualquier cifra de facturación describe lo que produce
+        el activo, nunca lo que recibiría una persona. Si alguien te promete un número de
+        retorno, desconfiá — incluido yo.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ EL 51% ═══════════════════ -->
+<section class="band">
+  <div class="wrap">
+    <div class="lock reveal">
+      <div>
+        <div class="dial">
+          <svg viewBox="0 0 120 120" aria-hidden="true">
+            <circle cx="60" cy="60" r="52" fill="none" stroke="#1F2937" stroke-width="11"/>
+            <circle cx="60" cy="60" r="52" fill="none" stroke="url(#gr)" stroke-width="11"
+                    stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="159.4"/>
+            <defs>
+              <linearGradient id="gr" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#7C2FD6"/>
+                <stop offset="100%" stop-color="#C4B5FD"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="mid">
+            <div class="pc">51,2%</div>
+            <div class="lb">del operador</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <span class="eyebrow">La regla que no se negocia</span>
+        <h2>No es una promesa.<br>Es un candado en la base de datos.</h2>
+        <p class="lead">
+          El operador conserva un mínimo del 51% del activo en todo momento. Y esa no es
+          una política que alguien pueda relajar un martes: es una restricción escrita en la
+          base de datos que administra el inventario de acciones.
+        </p>
+        <p>
+          Se probó a propósito. Pasar <strong>una sola acción</strong> del operador a un
+          co-dueño deja el porcentaje en 50,80% — y el sistema rechaza la operación con su
+          propio mensaje de error. No hay forma de vender por debajo del piso, ni por
+          descuido ni por presión.
+        </p>
+        <div class="pull">
+          Yo no te voy a pedir que me creas. Te voy a pedir que lo veas.
+        </div>
+        <p class="muted" style="font-size:15px">
+          Por qué importa: quien opera el activo tiene la mayor parte de su propio patrimonio
+          adentro. Si al activo le va mal, al operador le va mal primero y más fuerte.
+          Los incentivos apuntan al mismo lado.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ HUMAYA — LA RONDA ═══════════════════ -->
+<section class="band band-alt">
+  <div class="wrap">
+    <div class="narrow reveal" style="margin-bottom:38px">
+      <span class="eyebrow">El caso concreto</span>
+      <h2>Humaya, en números</h2>
+      <p class="lead">
+        Etapa 2 de Bike &amp; Bed, en La Fortuna de San Carlos. Diez villas, gimnasio, spa,
+        piscinas termales, sauna, cold plunge y laboratorio de biohacking.
+      </p>
+    </div>
+    <div class="round reveal">
+      <div class="round-grid">
+        <div><span class="k">Valor del proyecto</span><span class="v">$2.500.000</span></div>
+        <div><span class="k">Total de acciones</span><span class="v">250</span></div>
+        <div><span class="k">Precio por acción</span><span class="v">$10.000</span></div>
+        <div><span class="k">Acciones del operador</span><span class="v">128 <small>· 51,2%</small></span></div>
+        <div><span class="k">Acciones en esta ronda</span><span class="v">122</span></div>
+        <div><span class="k">Capital de la ronda</span><span class="v">$1.220.000</span></div>
+        <div><span class="k">Apertura de la ronda</span><span class="v">Agosto 2026</span></div>
+        <div><span class="k">Meta de inauguración</span><span class="v">Noviembre 2026</span></div>
+      </div>
+      <div class="calc-note">
+        <b>Una precisión que casi nadie hace.</b> El avance de la ronda se mide contra
+        <b>$1.220.000</b> — el capital que efectivamente se está levantando — y nunca contra
+        los $2.500.000 del proyecto completo. Medirlo contra el valor total infla el avance
+        y produce una cifra mentirosa.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ OBJECIONES ═══════════════════ -->
+<section class="band">
+  <div class="wrap">
+    <div class="narrow reveal" style="margin-bottom:36px">
+      <span class="eyebrow">Sin rodeos</span>
+      <h2>Las preguntas que siempre salen</h2>
+      <p class="lead">
+        Estas son, palabra por palabra, las que más me hacen. Las contesto igual acá que
+        en una llamada.
+      </p>
+    </div>
+    <div class="acc narrow reveal">
+      <details open>
+        <summary>¿Cuánto voy a ganar? <span class="chev">+</span></summary>
+        <div class="body">
+          <p>No te puedo prometer un número — <em>y desconfiá de quien te lo prometa.</em></p>
+          <p>Lo que sí te puedo mostrar es qué factura el activo y cómo se distribuye según
+          tu fracción. Esa diferencia no es un tecnicismo de abogado: prometer rendimiento
+          sobre un activo es exactamente la línea que separa una copropiedad legítima de
+          un problema regulatorio.</p>
+        </div>
+      </details>
+      <details>
+        <summary>¿Por qué no me compro algo yo solo? <span class="chev">+</span></summary>
+        <div class="body">
+          <p>Podés, y a veces es la respuesta correcta. La pregunta que te devuelvo es otra:
+          <em>¿vos querés operar un hospedaje, o querés ser dueño de uno?</em></p>
+          <p>Con el mismo capital, solo llegás a una propiedad que vos tenés que levantar,
+          amueblar, promocionar y atender. En copropiedad ese capital entra a un activo de
+          nivel resort que ya tiene marca, equipo y operación andando.</p>
+        </div>
+      </details>
+      <details>
+        <summary>No quiero ser socio de un montón de desconocidos <span class="chev">+</span></summary>
+        <div class="body">
+          <p><em>No vas a tener que ponerte de acuerdo con cuarenta personas para cambiar una toalla.</em></p>
+          <p>Por eso existe la regla del 51%. Las decisiones operativas las toma el operador,
+          que es quien tiene la mayor parte del activo adentro. No es una asamblea de
+          condominio: es una estructura con un responsable claro.</p>
+        </div>
+      </details>
+      <details>
+        <summary>¿Quién decide las cosas? <span class="chev">+</span></summary>
+        <div class="body">
+          <p>El operador, con fracción mayoritaria permanente. Y es verificable, no declarativo:
+          el piso del 51% está bloqueado en el sistema que administra el inventario de acciones.
+          <em>Casi nadie más en este mercado puede decir eso y demostrarlo.</em></p>
+        </div>
+      </details>
+      <details>
+        <summary>No te conozco. ¿Por qué te creería? <span class="chev">+</span></summary>
+        <div class="body">
+          <p><em>Yo no te voy a pedir que me creas. Te voy a pedir que lo veas.</em></p>
+          <p>Bike &amp; Bed Etapa 1 ya está operando: no es un render. Humaya es la Etapa 2,
+          en el mismo lugar y con el mismo equipo. Vení, quedate, hablá con la gente que
+          trabaja ahí. Después conversamos de fracciones.</p>
+        </div>
+      </details>
+      <details>
+        <summary>¿Esto no es lo mismo que un tiempo compartido? <span class="chev">+</span></summary>
+        <div class="body">
+          <p>No, y la diferencia es de fondo. En tiempo compartido comprás <em>derecho de uso</em>
+          por unas semanas al año. Acá comprás <em>una fracción del activo</em>: quedás en la
+          estructura de propiedad.</p>
+          <p>Por eso el inventario se lleva como una fila por acción y no como un contador.
+          Un contador se puede vender dos veces; una fila con bloqueo, no.</p>
+        </div>
+      </details>
+      <details>
+        <summary>Dejame pensarlo <span class="chev">+</span></summary>
+        <div class="body">
+          <p>Perfecto — <em>¿qué es lo que querés pensar?</em></p>
+          <p>Lo pregunto en serio, no como técnica de cierre. Casi siempre debajo de un
+          «déjame pensarlo» hay una duda concreta que no se dijo en voz alta. Si la ponemos
+          sobre la mesa, o te la contesto o te digo honestamente que esto no es para vos.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ LO QUE FALTA (HONESTO) ═══════════════════ -->
+<section class="band band-alt">
+  <div class="wrap narrow reveal">
+    <div class="honest">
+      <span class="eyebrow" style="color:var(--gold)">Transparencia</span>
+      <h3 style="font-size:clamp(22px,3.2vw,30px);margin-bottom:14px">
+        Cinco cosas que no se contestan en una página web
+      </h3>
+      <p style="color:#C9CDD6;margin-bottom:0">
+        Podría llenar esta sección de párrafos que suenen bien. No lo voy a hacer, porque
+        estas cinco respuestas dependen de la estructura legal definitiva y de tu situación
+        particular — y una respuesta mal dada acá te podría costar caro. Estas son las
+        preguntas que <strong>tenés que hacerme en una conversación</strong>:
+      </p>
+      <ol>
+        <li><b>La salida.</b> Si un día querés vender tu fracción: a quién, con qué preaviso, y si el resto de co-dueños tiene derecho de preferencia.</li>
+        <li><b>Las noches de uso.</b> Si un co-dueño puede hospedarse en el activo, bajo qué reglas y con qué calendario.</li>
+        <li><b>La estructura legal.</b> Bajo qué figura queda registrada tu fracción y qué documento firmás. Esto lo redacta un abogado de mercado de valores, no yo.</li>
+        <li><b>La distribución.</b> Cómo y cuándo se reparte lo que factura el activo entre las fracciones.</li>
+        <li><b>Si sos extranjero.</b> Qué cambia para alguien que no es residente en Costa Rica.</li>
+      </ol>
+      <p style="margin-top:22px;color:#C9CDD6;font-size:15px">
+        Si alguien te vende copropiedad y tiene estas cinco respuestas listas en un PDF
+        bonito sin conocer tu caso, esa es la señal de alarma — no la mía por no tenerlas acá.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ CIERRE ═══════════════════ -->
+<section class="band">
+  <div class="wrap narrow reveal" style="text-align:center">
+    <span class="eyebrow" style="justify-content:center">La conclusión</span>
+    <h2>El turismo de alojamiento no está en declive.<br>Está cambiando de dueño.</h2>
+    <p class="lead" style="margin-top:20px">
+      Los viajeros de hoy buscan experiencias auténticas, lugares con personalidad y
+      anfitriones que los hagan sentir especiales. Eso ya no lo entrega una cabina bien
+      intencionada: lo entrega un activo diseñado para eso.
+    </p>
+    <p class="kicker-quote" style="margin:44px 0">
+      «La diferencia entre un anfitrión y un empresario turístico no está en el tamaño de la
+      propiedad. Está en <span class="hl">de qué lado de la escritura</span> aparece su nombre.»
+    </p>
+    <a href="#contacto" class="btn">Conversemos sobre tu caso</a>
+  </div>
+</section>
+
+<!-- ═══════════════════ FORMULARIO ═══════════════════ -->
+<section id="contacto">
+  <div class="wrap">
+    <div class="form-shell">
+      <div class="form-side reveal">
+        <span class="eyebrow">Hablemos directo</span>
+        <h2 style="font-size:clamp(28px,4.2vw,40px);margin-bottom:18px">
+          Escribime a mí, no a un formulario
+        </h2>
+        <p class="lead" style="font-size:18px">
+          Esto llega a mi correo. Lo leo yo. Si tu caso no calza con lo que estoy haciendo,
+          te lo digo de frente y te ahorro la llamada.
+        </p>
+        <ul class="checks">
+          <li><b>Sin presentación de ventas.</b> Una conversación para ver si el modelo te sirve.</li>
+          <li><b>Sin números prometidos.</b> Te muestro qué factura el activo y cómo se reparte.</li>
+          <li><b>Con respuestas incómodas incluidas.</b> Las cinco preguntas de arriba, contestadas para tu caso.</li>
+        </ul>
+        <div class="side-quote">
+          <p>«¿Vos querés operar un hospedaje, o querés ser dueño de uno?»</p>
+          <span>— Tony Alvarado</span>
+        </div>
+      </div>
+
+      <form class="contact reveal" id="contactForm" novalidate>
+        <div class="field">
+          <label for="nombre">Nombre completo <span class="req">*</span></label>
+          <input type="text" id="nombre" name="nombre" required minlength="2" maxlength="100"
+                 autocomplete="name" placeholder="Tu nombre">
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="correo">Correo <span class="req">*</span></label>
+            <input type="email" id="correo" name="correo" required maxlength="254"
+                   autocomplete="email" placeholder="vos@correo.com">
+          </div>
+          <div class="field">
+            <label for="whatsapp">WhatsApp</label>
+            <input type="tel" id="whatsapp" name="whatsapp" maxlength="40"
+                   autocomplete="tel" placeholder="+506 8888 8888">
+          </div>
+        </div>
+        <div class="field">
+          <label for="momento">¿En qué momento estás?</label>
+          <select id="momento" name="momento">
+            <option value="">Elegí una opción</option>
+            <option>Ya tengo una propiedad operando</option>
+            <option>Estoy evaluando entrar al negocio turístico</option>
+            <option>Quiero ser co-dueño sin operar nada</option>
+            <option>Solo estoy investigando el modelo</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="mensaje">Contame tu caso <span class="req">*</span></label>
+          <textarea id="mensaje" name="mensaje" required minlength="5" maxlength="3000"
+                    placeholder="¿Qué te trajo hasta acá y qué querés resolver?"></textarea>
+        </div>
+
+        <!-- Trampa anti-bots: si se llena, el servidor descarta en silencio -->
+        <div class="hp" aria-hidden="true">
+          <label for="website">No llenar</label>
+          <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+        </div>
+
+        <button type="submit" class="btn" id="submitBtn">Enviar mi consulta</button>
+        <div id="formmsg" role="status" aria-live="polite"></div>
+        <p class="form-legal">
+          Tus datos se usan únicamente para responderte. No se comparten con terceros y no
+          te van a llegar correos masivos por escribir acá.
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="disc">
+      <b>Aviso importante</b>
+      Este documento es material informativo y educativo. <strong>No constituye una oferta
+      pública de valores</strong>, ni asesoría financiera, legal o tributaria. Las cifras
+      presentadas describen el valor y la estructura del activo, no un rendimiento personal
+      para ningún co-dueño, y ninguna debe interpretarse como promesa, proyección o garantía
+      de retorno. La participación en cualquier proyecto de copropiedad está sujeta a la
+      documentación legal correspondiente. Consultá siempre con tu propio asesor legal y
+      tributario antes de tomar una decisión.
+    </div>
+    <div class="fbot">
+      <span>© <span id="yr">2026</span> Tony Alvarado · El Nuevo Negocio del Turismo</span>
+      <span><a href="/">tonyalvarado.com</a> · <a href="/politica-de-privacidad">Privacidad</a> · <a href="/terminos-y-condiciones">Términos</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ── Año ───────────────────────────────────────────────────── */
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  /* ── Barra de progreso + nav pegajosa ──────────────────────── */
+  var bar = document.getElementById('progress');
+  var topbar = document.getElementById('topbar');
+  var ticking = false;
+  function onScroll(){
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var y = window.scrollY || window.pageYOffset;
+    bar.style.width = (h > 0 ? (y / h) * 100 : 0) + '%';
+    topbar.classList.toggle('stuck', y > 80);
+    ticking = false;
+  }
+  window.addEventListener('scroll', function(){
+    if(!ticking){ window.requestAnimationFrame(onScroll); ticking = true; }
+  }, {passive:true});
+  onScroll();
+
+  /* ── Reveal al hacer scroll ────────────────────────────────── */
+  var items = document.querySelectorAll('.reveal');
+  function revelarTodo(){
+    for(var i=0;i<items.length;i++){ items[i].classList.add('in'); }
+  }
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, {rootMargin:'0px 0px -8% 0px', threshold:0.08});
+    items.forEach(function(el){ io.observe(el); });
+
+    // Red de seguridad: si a los 3 s el observer no reveló NADA, algo falló
+    // (navegador raro, pestaña sin componer, extensión que estorba).
+    // Antes de dejar la página en blanco, se muestra todo.
+    setTimeout(function(){
+      if(!document.querySelector('.reveal.in')){ revelarTodo(); }
+    }, 3000);
+  } else {
+    revelarTodo();
+  }
+
+  /* ══ CALCULADORA DE FRACCIÓN ═══════════════════════════════════
+     Cifras verificadas del proyecto Humaya:
+       valor total 2.500.000 · 250 acciones · 10.000 por acción
+       operador 128 (51,2%) · ronda a la venta 122
+     Solo calcula PORCENTAJE DE PROPIEDAD. Nunca proyecta retorno.
+  ═════════════════════════════════════════════════════════════ */
+  var TOTAL_ACCIONES = 250;
+  var PRECIO_ACCION  = 10000;
+  var OPERADOR       = 128;
+  var EN_RONDA       = 122;
+
+  var rng   = document.getElementById('shares');
+  var elN   = document.getElementById('v-shares');
+  var elU   = document.getElementById('v-shares-unit');
+  var elPct = document.getElementById('v-pct');
+  var elCap = document.getElementById('v-cap');
+  var elCapt= document.getElementById('v-caption');
+  var barYou= document.getElementById('bar-you');
+  var barFree=document.getElementById('bar-free');
+
+  // Formato de números en español de Costa Rica: punto de miles, coma decimal.
+  function money(n){
+    return '$' + n.toLocaleString('de-DE', {maximumFractionDigits:0});
+  }
+  function pct(n){
+    return n.toLocaleString('de-DE', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' %';
+  }
+
+  function render(){
+    var n = parseInt(rng.value, 10);
+    if(isNaN(n) || n < 1) n = 1;
+    if(n > EN_RONDA) n = EN_RONDA;
+
+    var fraccion = (n / TOTAL_ACCIONES) * 100;
+    var restoRonda = EN_RONDA - n;
+
+    elN.textContent   = n;
+    elU.textContent   = (n === 1 ? 'acción de 250' : 'acciones de 250');
+    elPct.textContent = pct(fraccion);
+    elCap.textContent = money(n * PRECIO_ACCION);
+    elCapt.textContent = 'Vos: ' + n + ' · Operador: ' + OPERADOR + ' · Resto de la ronda: ' + restoRonda;
+
+    barYou.style.width  = fraccion + '%';
+    barFree.style.width = ((restoRonda / TOTAL_ACCIONES) * 100) + '%';
+
+    // Pinta el recorrido ya usado del deslizador
+    var recorrido = ((n - rng.min) / (rng.max - rng.min)) * 100;
+    rng.style.setProperty('--pct', recorrido + '%');
+  }
+  rng.addEventListener('input', render);
+  render();
+
+  /* ══ FORMULARIO → /api/contact ═══════════════════════════════
+     Mismo dominio, así que no hay problema de CORS.
+     `interes` usa un valor de la whitelist del endpoint.
+  ═════════════════════════════════════════════════════════════ */
+  var form = document.getElementById('contactForm');
+  var msg  = document.getElementById('formmsg');
+  var btn  = document.getElementById('submitBtn');
+
+  function show(kind, text){
+    msg.className = kind;
+    msg.textContent = text;
+  }
+  // Un lead no se pierde por una falla técnica: si el servidor se cae,
+  // se le ofrece al visitante otra puerta en lugar de un error críptico.
+  function showFallback(){
+    msg.className = 'err';
+    msg.innerHTML = 'No pude enviar tu mensaje por un problema de mi lado — no es culpa tuya. ' +
+      'Escribime directamente desde <a href="/contacto" style="text-decoration:underline">la página de contacto</a>, ' +
+      'o volvé a intentar en un momento.';
+  }
+
+  form.addEventListener('submit', function(ev){
+    ev.preventDefault();
+
+    var nombre  = form.nombre.value.trim();
+    var correo  = form.correo.value.trim();
+    var mensaje = form.mensaje.value.trim();
+
+    if(nombre.length < 2){ show('err','Escribí tu nombre completo, por favor.'); form.nombre.focus(); return; }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)){ show('err','Ese correo no se ve válido. Revisalo.'); form.correo.focus(); return; }
+    if(mensaje.length < 5){ show('err','Contame aunque sea una línea sobre tu caso.'); form.mensaje.focus(); return; }
+
+    var momento = form.momento.value;
+    var cuerpo  = momento ? ('[Momento: ' + momento + ']\n\n' + mensaje) : mensaje;
+
+    btn.disabled = true;
+    btn.textContent = 'Enviando…';
+    show('', '');
+
+    fetch('/api/contact', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        nombre:   nombre,
+        correo:   correo,
+        whatsapp: form.whatsapp.value.trim(),
+        interes:  'bike-bed-inversion',
+        origen:   'guia-el-nuevo-negocio-del-turismo',
+        mensaje:  cuerpo,
+        website:  form.website.value
+      })
+    })
+    .then(function(r){
+      return r.json()
+        .catch(function(){ return {}; })   // respuesta no-JSON (502, HTML de error…)
+        .then(function(d){ return {ok:r.ok, status:r.status, data:d}; });
+    })
+    .then(function(res){
+      if(res.ok && res.data && res.data.success){
+        form.reset();
+        render();
+        show('ok','Listo — me llegó. Te respondo yo directamente, normalmente en menos de 24 horas.');
+        btn.textContent = 'Enviado ✓';
+        return;
+      }
+      // 4xx = el visitante puede corregirlo, así que se le dice qué pasó.
+      // 5xx = falla nuestra: mensaje humano + otra puerta para no perder el contacto.
+      if(res.status >= 400 && res.status < 500 && res.data && res.data.error){
+        show('err', res.data.error);
+      } else {
+        showFallback();
+      }
+      btn.disabled = false;
+      btn.textContent = 'Enviar mi consulta';
+    })
+    .catch(function(){
+      showFallback();
+      btn.disabled = false;
+      btn.textContent = 'Enviar mi consulta';
+    });
+  });
+})();
+</script>
+</body>
+</html>

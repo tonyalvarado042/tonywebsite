@@ -144,14 +144,12 @@ export default function RecursosPage() {
             const a = acentoClases[destacado.acento]
             const Icono = destacado.icono
             const disponible = destacado.estado === 'disponible'
-            const Wrapper = disponible ? Link : 'a'
 
+            // Siempre a la puerta del recurso, nunca al archivo directo:
+            // ahí se pide nombre, correo y WhatsApp antes de entregarlo.
             return (
-              <Wrapper
-                href={disponible ? destacado.href! : '#avisame'}
-                {...(disponible && destacado.externo
-                  ? { target: '_blank', rel: 'noopener noreferrer' }
-                  : {})}
+              <Link
+                href={`/recursos/${destacado.slug}`}
                 className={`group relative block overflow-hidden rounded-3xl border ${a.borde} ${a.bordeHover}
                             bg-brand-card p-6 transition-colors duration-300 sm:p-8`}
               >
@@ -200,7 +198,7 @@ export default function RecursosPage() {
                     )}
                   </span>
                 </div>
-              </Wrapper>
+              </Link>
             )
           })()}
 
@@ -209,15 +207,11 @@ export default function RecursosPage() {
             const a = acentoClases[r.acento]
             const Icono = r.icono
             const disponible = r.estado === 'disponible'
-            const Wrapper = disponible ? Link : 'a'
 
             return (
-              <Wrapper
+              <Link
                 key={r.slug}
-                href={disponible ? r.href! : '#avisame'}
-                {...(disponible && r.externo
-                  ? { target: '_blank', rel: 'noopener noreferrer' }
-                  : {})}
+                href={`/recursos/${r.slug}`}
                 className={`group relative flex min-h-[92px] items-center gap-4 overflow-hidden
                             rounded-2xl border ${a.borde} ${a.bordeHover} bg-brand-card
                             p-5 transition-colors duration-300 sm:gap-5 sm:p-6`}
@@ -252,7 +246,7 @@ export default function RecursosPage() {
                   className={`relative shrink-0 ${a.texto} transition-transform duration-300
                               group-hover:translate-x-0.5`}
                 />
-              </Wrapper>
+              </Link>
             )
           })}
         </div>
