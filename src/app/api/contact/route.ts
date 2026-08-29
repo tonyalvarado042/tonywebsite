@@ -6,7 +6,29 @@ import {
   buildInternalHtml,
 } from '@/lib/email-templates'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+// ⚠️ El cliente de Resend se crea PEREZOSAMENTE, no al cargar el módulo.
+//
+// Antes acá había `const resend = new Resend(process.env.RESEND_API_KEY)`.
+// El constructor de Resend revienta si la llave no existe, y Next.js importa
+// este archivo durante `Collecting page data` del build. Resultado: el build
+// fallaba en Vercel con «Missing API key. Pass it to the constructor» y el
+// sitio entero no desplegaba — por una llave que solo hace falta en tiempo de
+// ejecución, cuando alguien manda el formulario.
+//
+// Regla general: nunca construir un cliente que exige un secreto en el ámbito
+// del módulo. Se compila sin secretos; se ejecuta con ellos.
+let resendClient: Resend | null = null
+
+function getResend(): Resend {
+  const apiKey = process.env.RESEND_API_KEY
+  if (!apiKey) {
+    throw new Error('RESEND_API_KEY no está configurada en el entorno.')
+  }
+  if (!resendClient) {
+    resendClient = new Resend(apiKey)
+  }
+  return resendClient
+}
 
 // ── Whitelist de valores permitidos ──────────────────────────────────────────
 const VALID_INTERES = [
@@ -186,7 +208,7 @@ export async function POST(req: NextRequest) {
     const now = new Date().toLocaleString('es-CR', { timeZone: 'America/Costa_Rica' })
 
     // 10. Notificación interna — prioritaria; fallo bloquea la respuesta al formulario
-    const { error: internalError } = await resend.emails.send({
+    const { error: internalError } = await getResend().emails.send({
       from: `Formulario Web Tony Alvarado <${fromEmail}>`,
       to: toEmail,
       replyTo: correo,
@@ -224,7 +246,7 @@ export async function POST(req: NextRequest) {
         console.warn('[contact/route] Autoreply habilitado pero RESEND_CONTACT_AUTOREPLY_FROM no está configurado.')
       } else {
         try {
-          const { error: autoReplyError } = await resend.emails.send({
+          const { error: autoReplyError } = await getResend().emails.send({
             from: autoReplyFrom,
             to: correo,
             replyTo: autoReplyReplyTo,
