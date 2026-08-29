@@ -86,11 +86,19 @@ section{position:relative}
   backdrop-filter:blur(14px);
   border-bottom-color:var(--border);
 }
-.brandmark{
-  font-size:12px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--text);white-space:nowrap;
+/* El logo real del sitio, no el texto que habia antes */
+.marca{display:flex;align-items:center;flex:0 0 auto}
+.marca img{height:26px;width:auto;display:block}
+
+/* El mismo menu del sitio, para que no se sienta otra pagina.
+   Se esconde en pantallas angostas: ahi manda el boton de Hablemos. */
+.menu-sitio{display:none;align-items:center;gap:26px}
+.menu-sitio a{
+  font-size:14px;color:var(--muted);white-space:nowrap;
+  transition:color .2s var(--ease);
 }
-.brandmark span{color:var(--accent)}
+.menu-sitio a:hover{color:var(--text)}
+@media (min-width:900px){ .menu-sitio{display:flex} }
 #topbar .btn-sm{
   font-size:13px;padding:9px 18px;border-radius:999px;
   background:var(--accent);color:#0B0E14;font-weight:700;
@@ -510,7 +518,19 @@ footer a:hover{color:var(--accent-light)}
 <div id="progress"></div>
 
 <nav id="topbar">
-  <span class="brandmark">TONY<span>·</span>ALVARADO</span>
+  <a href="/" class="marca" aria-label="Tony Alvarado — ir al inicio">
+    <img src="/images/logos/tony-alvarado-logo-white-horizontal.png" alt="Tony Alvarado" />
+  </a>
+
+  <div class="menu-sitio">
+    <a href="/sobre-mi">Sobre mí</a>
+    <a href="/conferencias">Conferencias</a>
+    <a href="/libros">Libros</a>
+    <a href="/recursos">Recursos gratis</a>
+    <a href="/blog">Blog</a>
+    <a href="/contacto">Contacto</a>
+  </div>
+
   <a href="#contacto" class="btn-sm">Hablemos</a>
 </nav>
 
