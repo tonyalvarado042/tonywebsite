@@ -1,11 +1,12 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight, Bell, Facebook, Instagram, Linkedin } from 'lucide-react'
+import { Facebook, Instagram, Linkedin } from 'lucide-react'
 import JsonLd from '@/components/JsonLd'
 import Boletin from '@/components/recursos/Boletin'
+import TarjetaRecurso from '@/components/recursos/TarjetaRecurso'
 import { SITE_URL, websiteRef, personRef } from '@/lib/structured-data'
 import { hayCrm, traerRecursosPublicos, type RecursoCrm } from '@/lib/crm'
-import { acentoDe, iconoDe, recursosRespaldo } from '@/data/recursos'
+import { recursosRespaldo } from '@/data/recursos'
 
 const TITULO = 'Recursos gratis — Tony Alvarado'
 const DESC =
@@ -136,127 +137,12 @@ export default async function RecursosPage() {
       <section className="relative px-5 pb-4 sm:px-6">
         <div className="mx-auto max-w-xl space-y-4">
 
-          {/* ── El destacado ── */}
-          {destacado && (() => {
-            const a = acentoDe(destacado.acento)
-            const Icono = iconoDe(destacado.icono)
-            const disponible = destacado.estado === 'disponible'
+          {destacado && <TarjetaRecurso recurso={destacado} destacada />}
 
-            return (
-              <Link
-                href={`/recursos/${destacado.slug}`}
-                className={`group relative block overflow-hidden rounded-3xl border ${a.borde} ${a.bordeHover}
-                            bg-brand-card p-6 transition-colors duration-300 sm:p-8`}
-              >
-                {destacado.imagen_url && (
-                  <div className="relative -mx-6 -mt-6 mb-6 aspect-[16/10] overflow-hidden sm:-mx-8 sm:-mt-8">
-                    <Image
-                      src={destacado.imagen_url}
-                      alt={destacado.imagen_alt ?? destacado.titulo}
-                      fill
-                      priority
-                      quality={90}
-                      sizes="(min-width: 640px) 576px, 100vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                    />
-                    <div aria-hidden className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-brand-card to-transparent" />
+          {resto.map((r) => (
+            <TarjetaRecurso key={r.id} recurso={r} destacada={false} />
+          ))}
 
-                    <span className={`absolute left-4 top-4 flex h-11 w-11 items-center justify-center
-                                      rounded-2xl bg-brand-bg/80 backdrop-blur-sm ring-1 ${a.anillo}`}>
-                      <Icono size={20} className={a.texto} strokeWidth={1.75} />
-                    </span>
-
-                    <span className={`absolute right-4 top-4 rounded-full bg-brand-bg/80 px-3 py-1
-                                      text-[10px] font-bold uppercase tracking-[0.14em] backdrop-blur-sm
-                                      ${a.texto} ring-1 ${a.anillo}`}>
-                      {disponible ? destacado.formato : 'Próximamente'}
-                    </span>
-                  </div>
-                )}
-
-                <div className="relative">
-                  <p className={`mb-2 text-[11px] font-bold uppercase tracking-[0.16em] ${a.texto}`}>
-                    {destacado.titulo}
-                  </p>
-                  <h2 className="mb-3 text-[22px] font-bold leading-[1.2] tracking-tight text-brand-text sm:text-[26px]">
-                    {destacado.gancho ?? destacado.titulo}
-                  </h2>
-                  <p className="mb-7 text-[15px] leading-[1.7] text-brand-muted">
-                    {destacado.descripcion}
-                  </p>
-                  <span className={`flex min-h-[54px] w-full items-center justify-center gap-2.5
-                                    rounded-2xl px-6 text-[15px] font-bold ${a.boton}
-                                    transition-opacity group-hover:opacity-90`}>
-                    {!disponible && <Bell size={16} />}
-                    {disponible ? 'Leerlo gratis' : 'Avisame cuando salga'}
-                    {disponible && (
-                      <ArrowRight size={17} className="transition-transform duration-300 group-hover:translate-x-0.5" />
-                    )}
-                  </span>
-                </div>
-              </Link>
-            )
-          })()}
-
-          {/* ── El resto ── */}
-          {resto.map((r) => {
-            const a = acentoDe(r.acento)
-            const Icono = iconoDe(r.icono)
-            const disponible = r.estado === 'disponible'
-
-            return (
-              <Link
-                key={r.id}
-                href={`/recursos/${r.slug}`}
-                className={`group relative flex min-h-[92px] items-center gap-4 overflow-hidden
-                            rounded-2xl border ${a.borde} ${a.bordeHover} bg-brand-card
-                            p-5 transition-colors duration-300 sm:gap-5 sm:p-6`}
-              >
-                <div aria-hidden className={`pointer-events-none absolute inset-0 ${a.resplandor}`} />
-
-                <span className={`relative h-[68px] w-[68px] shrink-0 overflow-hidden rounded-xl
-                                  ring-1 ${a.anillo} sm:h-[76px] sm:w-[76px]`}>
-                  {r.imagen_url ? (
-                    <>
-                      <Image
-                        src={r.imagen_url}
-                        alt={r.imagen_alt ?? r.titulo}
-                        fill
-                        quality={80}
-                        sizes="76px"
-                        className="object-cover transition-transform duration-500 group-hover:scale-[1.06]"
-                      />
-                      <span aria-hidden className="absolute inset-0 flex items-center justify-center bg-brand-bg/45">
-                        <Icono size={20} className={a.texto} strokeWidth={2} />
-                      </span>
-                    </>
-                  ) : (
-                    <span className={`flex h-full w-full items-center justify-center ${a.fondoSuave}`}>
-                      <Icono size={20} className={a.texto} strokeWidth={2} />
-                    </span>
-                  )}
-                </span>
-
-                <div className="relative min-w-0 flex-1">
-                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                    <h2 className="text-[15px] font-bold leading-snug text-brand-text sm:text-base">
-                      {r.titulo}
-                    </h2>
-                    {!disponible && (
-                      <span className={`text-[10px] font-bold uppercase tracking-[0.12em] ${a.texto}`}>
-                        Próximamente
-                      </span>
-                    )}
-                  </div>
-                  <p className="mt-1 text-[13.5px] leading-snug text-brand-muted">
-                    {r.gancho ?? r.formato}
-                  </p>
-                </div>
-
-                <ArrowRight size={18} className={`relative shrink-0 ${a.texto} transition-transform duration-300 group-hover:translate-x-0.5`} />
-              </Link>
-            )
-          })}
         </div>
       </section>
 
