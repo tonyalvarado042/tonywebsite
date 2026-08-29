@@ -44,9 +44,15 @@ type Props = {
   acento: 'morado' | 'dorado' | 'calido'
   /** Texto del botón que abre la ventana. */
   llamado: string
+  /**
+   * Modo "fila entera": en vez de un botón propio, toda la tarjeta abre la
+   * ventana. Se usa en las tarjetas compactas de /recursos, para que un solo
+   * clic lleve del listado al formulario.
+   */
+  comoFila?: { clases: string; contenido: React.ReactNode }
 }
 
-export default function PuertaDeRecurso({ slug, titulo, destino, acento, llamado }: Props) {
+export default function PuertaDeRecurso({ slug, titulo, destino, acento, llamado, comoFila }: Props) {
   const e = ESTILO[acento]
   const [abierta, setAbierta] = useState(false)
   const [prefijo, setPrefijo] = useState('+506')
@@ -122,23 +128,32 @@ export default function PuertaDeRecurso({ slug, titulo, destino, acento, llamado
 
   return (
     <>
-      {/* ── El botón que abre ── */}
-      <button
-        type="button"
-        onClick={() => setAbierta(true)}
-        className={`flex min-h-[56px] w-full items-center justify-center gap-2.5 rounded-2xl
-                    px-6 text-[15px] font-bold ${e.boton}
-                    transition-opacity hover:opacity-90`}
-      >
-        {llamado}
-        <ArrowRight size={18} />
-      </button>
+      {/* ── Lo que abre la ventana ── */}
+      {comoFila ? (
+        // La fila entera es el botón: un solo clic del listado al formulario.
+        <button type="button" onClick={() => setAbierta(true)} className={comoFila.clases}>
+          {comoFila.contenido}
+        </button>
+      ) : (
+        <>
+          <button
+            type="button"
+            onClick={() => setAbierta(true)}
+            className={`flex min-h-[56px] w-full items-center justify-center gap-2.5 rounded-2xl
+                        px-6 text-[15px] font-bold ${e.boton}
+                        transition-opacity hover:opacity-90`}
+          >
+            {llamado}
+            <ArrowRight size={18} />
+          </button>
 
-      {!abierta && (
-        <p className="mt-3 flex items-start justify-center gap-2 text-center text-[12.5px] leading-relaxed text-brand-muted/70">
-          <Lock size={13} className="mt-0.5 shrink-0" />
-          <span>Gratis. Solo te pido tus datos para mandártelo.</span>
-        </p>
+          {!abierta && (
+            <p className="mt-3 flex items-start justify-center gap-2 text-center text-[12.5px] leading-relaxed text-brand-muted/70">
+              <Lock size={13} className="mt-0.5 shrink-0" />
+              <span>Gratis. Solo te pido tus datos para mandártelo.</span>
+            </p>
+          )}
+        </>
       )}
 
       {/* ── La ventana ── */}
