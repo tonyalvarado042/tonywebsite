@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import { REMITENTE_CON_NOMBRE } from '@/lib/correo'
 import {
   altaContacto,
   inscribirEnAutomatizacion,
@@ -111,11 +112,10 @@ export async function POST(req: NextRequest) {
       : `${SITIO}${recurso.destino_url}`
 
     try {
-      const de = process.env.CONTACT_FROM_EMAIL || 'onboarding@resend.dev'
       const baja = alta.estaDeBaja ? '' : enlaceDeBaja(SITIO, alta.contactoId)
 
       await getResend().emails.send({
-        from: `Tony Alvarado <${de}>`,
+        from: REMITENTE_CON_NOMBRE,
         to: correo,
         subject: `Aquí está: ${recurso.titulo}`,
         text: [
