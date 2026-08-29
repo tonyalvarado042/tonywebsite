@@ -1,34 +1,29 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
-import { getCrm, registrarEvento, TABLA_CONTACTOS } from '@/lib/crm'
 import {
-  correoDelPaso,
-  cronAutorizado,
-  enlaceDeBaja,
-  esBorrador,
-  fechaDelPaso,
-  leerMarca,
-  marcaDePaso,
-  secuenciasActivas,
-} from '@/lib/secuencias'
+  getCrm,
+  registrarActividad,
+  TABLA_INSCRIPCIONES,
+  TABLA_PASOS,
+} from '@/lib/crm'
+import { cronAutorizado, enlaceDeBaja, esBorrador, secuenciasActivas } from '@/lib/secuencias'
 
 /**
- * Un "tick" de la secuencia de calentamiento.
+ * Un "tick" de las automatizaciones.
  *
- * Busca a quién le toca hoy, le manda el correo que corresponde, lo anota en
- * la bitácora del CRM y lo adelanta al siguiente paso.
+ * Recorre `cta_inscripciones`, manda el correo que toca, lo anota en la
+ * bitácora del contacto y adelanta al siguiente paso.
  *
- * ── Los tres frenos, en orden ───────────────────────────────────────────────
+ * ── Los frenos, en orden ───────────────────────────────────────────────────
  * 1. `SECUENCIAS_ACTIVAS` tiene que valer 'si'. Viene apagado.
- * 2. Los correos con [BORRADOR] nunca salen, aunque el freno esté quitado.
- * 3. Solo se le escribe a quien cumple `baja = false` y `estado <> 'no_contactar'`.
+ * 2. La automatización tiene que estar `activa = true`. Vienen apagadas.
+ * 3. Un paso con [BORRADOR] no sale nunca, aunque se quiten los frenos 1 y 2.
+ * 4. Solo se escribe a contactos con `baja = false`.
  *
- * Modo prueba: `?dry=1` hace todo el recorrido y devuelve a quién LE TOCARÍA,
- * sin mandar ni un correo y sin tocar la base. Es la "prueba" que Tony pide
- * ver antes de autorizar cualquier envío.
+ * `?dry=1` recorre todo y dice a quién LE TOCARÍA, sin enviar ni tocar la base.
+ * Esa es la prueba que Tony pide ver antes de autorizar cualquier envío.
  *
- * Se llama con:
- *   curl -X POST https://.../api/secuencias/tick \
+ *   curl -X POST https://.../api/secuencias/tick?dry=1 \
  *     -H "x-cron-secret: cron:<CRM_SECRET>"
  */
 
@@ -54,20 +49,22 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       ok: true,
       enviados: 0,
-      nota: 'La secuencia está apagada (SECUENCIAS_ACTIVAS distinto de "si"). No se envió nada.',
+      nota: 'Interruptor general apagado (SECUENCIAS_ACTIVAS ≠ "si"). No se envió nada.',
     })
   }
 
+  const crm = getCrm()
   const hoy = new Date().toISOString().slice(0, 10)
 
-  const { data: pendientes, error } = await getCrm()
-    .from(TABLA_CONTACTOS)
-    .select('id, nombre, correo, proximo_paso, proximo_paso_el, creado_en')
-    .eq('baja', false)
-    .neq('estado', 'no_contactar')
-    .not('correo', 'is', null)
-    .like('proximo_paso', 'secuencia:%')
-    .lte('proximo_paso_el', hoy)
+  const { data: pendientes, error } = await crm
+    .from(TABLA_INSCRIPCIONES)
+    .select(`
+      id, contacto_id, automatizacion_id, paso_actual, proximo_envio_el,
+      cta_contactos!inner ( id, nombre_completo, email, baja ),
+      cta_automatizaciones!inner ( id, nombre, activa )
+    `)
+    .eq('estado', 'activa')
+    .lte('proximo_envio_el', hoy)
     .limit(MAX_POR_TICK)
 
   if (error) {
@@ -79,82 +76,126 @@ export async function POST(req: NextRequest) {
     prueba,
     candidatos: pendientes?.length ?? 0,
     enviados: 0,
-    saltados: [] as string[],
-    detalle: [] as { correo: string; paso: number; recurso: string; accion: string }[],
+    detalle: [] as { correo: string; paso: number; automatizacion: string; accion: string }[],
   }
 
-  for (const c of pendientes ?? []) {
-    const marca = leerMarca(c.proximo_paso)
-    if (!marca) {
-      resultado.saltados.push(`marca ilegible: ${c.proximo_paso}`)
-      continue
-    }
+  for (const ins of (pendientes ?? []) as unknown as Array<{
+    id: string
+    contacto_id: string
+    automatizacion_id: string
+    paso_actual: number
+    cta_contactos: { nombre_completo: string | null; email: string | null; baja: boolean }
+    cta_automatizaciones: { nombre: string; activa: boolean }
+  }>) {
+    const contacto = ins.cta_contactos
+    const automatizacion = ins.cta_automatizaciones
+    const anotar = (accion: string) =>
+      resultado.detalle.push({
+        correo: contacto.email ?? '(sin correo)',
+        paso: ins.paso_actual,
+        automatizacion: automatizacion.nombre,
+        accion,
+      })
 
-    const correoDef = correoDelPaso(marca.paso)
-    if (!correoDef) {
-      // Terminó la secuencia: se limpia para que no vuelva a salir en la consulta.
+    // Freno 4 — la baja manda por encima de todo.
+    if (contacto.baja) {
       if (!prueba) {
-        await getCrm()
-          .from(TABLA_CONTACTOS)
-          .update({ proximo_paso: null, proximo_paso_el: null })
-          .eq('id', c.id)
+        await crm.from(TABLA_INSCRIPCIONES)
+          .update({ estado: 'detenida', proximo_envio_el: null })
+          .eq('id', ins.id)
       }
-      resultado.detalle.push({ correo: c.correo!, paso: marca.paso, recurso: marca.slug, accion: 'secuencia terminada' })
+      anotar('detenida: el contacto está de baja')
       continue
     }
 
-    // Freno 2: el relleno no sale nunca.
-    if (esBorrador(correoDef)) {
-      resultado.saltados.push(`paso ${marca.paso} todavía es [BORRADOR]`)
-      resultado.detalle.push({ correo: c.correo!, paso: marca.paso, recurso: marca.slug, accion: 'bloqueado: borrador' })
+    if (!contacto.email) { anotar('saltado: sin correo'); continue }
+
+    // Freno 2 — la automatización tiene que estar encendida.
+    if (!automatizacion.activa) { anotar('bloqueado: automatización apagada'); continue }
+
+    const { data: paso } = await crm
+      .from(TABLA_PASOS)
+      .select('paso, asunto, cuerpo, activo')
+      .eq('automatizacion_id', ins.automatizacion_id)
+      .eq('paso', ins.paso_actual)
+      .maybeSingle()
+
+    if (!paso) {
+      // Se acabaron los pasos: la inscripción termina.
+      if (!prueba) {
+        await crm.from(TABLA_INSCRIPCIONES)
+          .update({ estado: 'terminada', proximo_envio_el: null })
+          .eq('id', ins.id)
+      }
+      anotar('automatización terminada')
       continue
     }
 
-    if (prueba) {
-      resultado.detalle.push({ correo: c.correo!, paso: marca.paso, recurso: marca.slug, accion: 'se enviaría' })
+    if (!paso.activo) { anotar('saltado: paso desactivado'); continue }
+
+    // Freno 3 — el relleno no sale nunca.
+    if (esBorrador({ asunto: paso.asunto ?? '', cuerpo: paso.cuerpo ?? '' })) {
+      anotar('bloqueado: el texto todavía es [BORRADOR]')
       continue
     }
+
+    if (prueba) { anotar('se enviaría'); continue }
 
     try {
       const de = process.env.CONTACT_FROM_EMAIL || 'onboarding@resend.dev'
       await getResend().emails.send({
         from: `Tony Alvarado <${de}>`,
-        to: c.correo!,
-        subject: correoDef.asunto,
+        to: contacto.email,
+        subject: paso.asunto ?? '',
         text: [
-          `Hola ${c.nombre || ''},`.trim(),
+          `Hola ${contacto.nombre_completo ?? ''},`.trim(),
           '',
-          correoDef.cuerpo,
+          paso.cuerpo ?? '',
           '',
           'Tony Alvarado',
           'tonyalvarado.com',
           '',
           '—',
-          `Si no querés recibir más correos míos: ${enlaceDeBaja(SITIO, c.id)}`,
+          `Si no querés recibir más correos míos: ${enlaceDeBaja(SITIO, ins.contacto_id)}`,
         ].join('\n'),
       })
 
-      await registrarEvento(c.id, 'correo_enviado', `Secuencia ${marca.slug} · correo ${marca.paso}/5 → ${c.correo}`)
+      await registrarActividad(
+        ins.contacto_id,
+        'email',
+        `${automatizacion.nombre} · correo ${ins.paso_actual} enviado a ${contacto.email}`
+      )
 
-      const siguiente = marca.paso + 1
-      const fecha = correoDelPaso(siguiente)
-        ? fechaDelPaso(new Date(c.creado_en), siguiente)
-        : null
+      // Adelantar al siguiente paso, si existe.
+      const siguiente = ins.paso_actual + 1
+      const { data: proximo } = await crm
+        .from(TABLA_PASOS)
+        .select('dias_despues')
+        .eq('automatizacion_id', ins.automatizacion_id)
+        .eq('paso', siguiente)
+        .maybeSingle()
 
-      await getCrm()
-        .from(TABLA_CONTACTOS)
-        .update({
-          proximo_paso: fecha ? marcaDePaso(marca.slug, siguiente) : null,
-          proximo_paso_el: fecha,
-          ultimo_contacto_el: new Date().toISOString(),
-        })
-        .eq('id', c.id)
+      if (proximo) {
+        const cuando = new Date()
+        cuando.setUTCDate(cuando.getUTCDate() + Math.max(1, proximo.dias_despues - 0))
+        await crm.from(TABLA_INSCRIPCIONES).update({
+          paso_actual: siguiente,
+          proximo_envio_el: cuando.toISOString().slice(0, 10),
+          actualizado_el: new Date().toISOString(),
+        }).eq('id', ins.id)
+      } else {
+        await crm.from(TABLA_INSCRIPCIONES).update({
+          estado: 'terminada',
+          proximo_envio_el: null,
+          actualizado_el: new Date().toISOString(),
+        }).eq('id', ins.id)
+      }
 
       resultado.enviados += 1
-      resultado.detalle.push({ correo: c.correo!, paso: marca.paso, recurso: marca.slug, accion: 'enviado' })
+      anotar('enviado')
     } catch (e) {
-      console.error('[secuencias/tick] falló el envío a', c.correo, e)
-      resultado.saltados.push(`falló el envío a ${c.correo}`)
+      console.error('[secuencias/tick] falló el envío a', contacto.email, e)
+      anotar('falló el envío')
     }
   }
 

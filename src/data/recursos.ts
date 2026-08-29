@@ -1,73 +1,40 @@
 import type { LucideIcon } from 'lucide-react'
-import { BookOpen, Calculator } from 'lucide-react'
+import { BookOpen, Calculator, FileText, Gift, LayoutTemplate, Link2, Video } from 'lucide-react'
+import type { RecursoCrm } from '@/lib/crm'
 
 /**
- * Los recursos gratis de /recursos.
+ * Los recursos gratis.
  *
- * ── Cómo agregar uno nuevo ──────────────────────────────────────────────────
- * Se agrega un objeto a este arreglo y la página lo pinta sola. No hay que
- * tocar el JSX.
+ * ⚠️ Ya NO se editan acá. Viven en el CRM, en `cta_recursos`, para que Tony
+ * los agregue, edite y borre sin tocar código.
  *
- * ── Cómo publicar uno que está en 'proximamente' ────────────────────────────
- * 1. Cambiar `estado` a 'disponible'
- * 2. Poner el `href` (un archivo en /public, o un enlace externo)
- * 3. Ajustar el `cta` a la acción real ("Descargar el PDF", no "Ver más")
- *
- * El primero del arreglo sale destacado, más grande. Ese lugar es para el
- * recurso que se quiera empujar.
+ * Este archivo solo guarda lo que la base no puede guardar:
+ *   · la traducción nombre de ícono → componente (la base no sabe de React)
+ *   · las clases de Tailwind por acento
+ *   · un respaldo por si el CRM no responde
  */
-export type EstadoRecurso = 'disponible' | 'proximamente'
 
-export type Recurso = {
-  slug: string
-  titulo: string
-  gancho: string
-  descripcion: string
-  formato: string
-  icono: LucideIcon
-  estado: EstadoRecurso
-  /** Sólo cuando estado === 'disponible'. Archivo en /public o enlace externo. */
-  href?: string
-  /** Si el href sale del sitio, abre en pestaña nueva. */
-  externo?: boolean
-  cta: string
-  /** Acento visual de la tarjeta. */
-  acento: 'morado' | 'dorado' | 'calido'
+// ── Íconos ──────────────────────────────────────────────────────────────────
+// Las claves son EXACTAMENTE los valores que permite el CHECK de la columna
+// `icono`. Si llega uno desconocido se usa el de regalo: una tarjeta nunca
+// debe desaparecer por un valor raro.
+const ICONOS: Record<string, LucideIcon> = {
+  libro: BookOpen,
+  calculadora: Calculator,
+  documento: FileText,
+  video: Video,
+  plantilla: LayoutTemplate,
+  enlace: Link2,
+  regalo: Gift,
 }
 
-export const recursos: Recurso[] = [
-  {
-    slug: 'ebook-turismo',
-    titulo: 'El nuevo negocio del turismo',
-    gancho: 'La revolución de la copropiedad turística',
-    descripcion:
-      'El modelo del anfitrión individual llegó a su techo. Este ebook cambia la pregunta: no cómo administro un alojamiento, sino cómo se construye un activo que factura solo.',
-    formato: 'Ebook · lectura en línea',
-    icono: BookOpen,
-    estado: 'disponible',
-    // La página completa del ebook, servida desde /public.
-    href: '/el-nuevo-negocio-del-turismo.html',
-    cta: 'Leerlo gratis',
-    acento: 'morado',
-  },
-  {
-    slug: 'calculadora-airbnb',
-    titulo: 'Calculadora de ingresos para Airbnb',
-    gancho: 'Cuánto factura de verdad una propiedad',
-    descripcion:
-      'Metés ocupación, tarifa por noche y costos, y ves lo que queda. La misma cuenta que hago yo antes de meterme en un proyecto.',
-    // ⚠️ PENDIENTE: Tony dijo que ya la tiene armada. Falta que pase el enlace
-    // o el archivo. Al llegar: poner el href y cambiar estado a 'disponible'.
-    formato: 'Herramienta · gratis',
-    icono: Calculator,
-    estado: 'proximamente',
-    cta: 'Avisame cuando salga',
-    acento: 'dorado',
-  },
-]
+export function iconoDe(nombre: string | null | undefined): LucideIcon {
+  return ICONOS[nombre ?? ''] ?? Gift
+}
 
-/** Clases de Tailwind por acento. Se resuelven acá y no en el JSX para que
- *  Tailwind no las purgue: tienen que existir como strings completos. */
+// ── Acentos ─────────────────────────────────────────────────────────────────
+// Se escriben completos a propósito: Tailwind purga lo que no encuentre como
+// texto literal, así que estas clases NO se pueden armar concatenando.
 export const acentoClases = {
   morado: {
     texto: 'text-brand-green',
@@ -97,3 +64,34 @@ export const acentoClases = {
     boton: 'bg-brand-warm text-brand-bg shadow-[0_6px_24px_rgba(215,186,158,0.32)]',
   },
 } as const
+
+export function acentoDe(acento: string | null | undefined) {
+  return acentoClases[acento as keyof typeof acentoClases] ?? acentoClases.morado
+}
+
+// ── Respaldo ────────────────────────────────────────────────────────────────
+/**
+ * Si el CRM no responde (llave mal puesta, Supabase caído), la página muestra
+ * esto en lugar de quedar vacía. Es el mínimo para que el sitio no se vea roto.
+ */
+export const recursosRespaldo: RecursoCrm[] = [
+  {
+    id: 'respaldo-ebook',
+    slug: 'ebook-turismo',
+    titulo: 'El nuevo negocio del turismo',
+    gancho: 'La revolución de la copropiedad turística',
+    descripcion:
+      'El modelo del anfitrión individual llegó a su techo. Este ebook cambia la pregunta: no cómo administro un alojamiento, sino cómo se construye un activo que factura solo.',
+    formato: 'Ebook · lectura en línea',
+    imagen_url: '/img/nuevo-negocio-turismo/portada.jpg',
+    imagen_alt: 'Villas al atardecer con el volcán Arenal de fondo, en La Fortuna de San Carlos',
+    destino_url: '/el-nuevo-negocio-del-turismo.html',
+    tipo: 'pagina',
+    estado: 'disponible',
+    acento: 'morado',
+    orden: 10,
+    destacado: true,
+    automatizacion_id: null,
+    icono: 'libro',
+  },
+]
