@@ -267,6 +267,8 @@ export type RecursoCrm = {
   orden: number
   destacado: boolean
   automatizacion_id: string | null
+  /** Nombre del ícono. El sitio lo traduce a componente en src/data/recursos.ts */
+  icono: string
 }
 
 /** Los que se muestran en /recursos. Los 'borrador' y 'archivado' quedan fuera. */

@@ -4,25 +4,33 @@ import { ArrowLeft } from 'lucide-react'
 import JsonLd from '@/components/JsonLd'
 import PuertaDeRecurso from '@/components/recursos/PuertaDeRecurso'
 import { SITE_URL, websiteRef, personRef } from '@/lib/structured-data'
-import { recursos, acentoClases } from '@/data/recursos'
+import { hayCrm, traerRecursoPorSlug } from '@/lib/crm'
+import { acentoDe, iconoDe, recursosRespaldo } from '@/data/recursos'
 
 /** La puerta de un recurso: se registra y se lo entregamos. */
 
-export function generateStaticParams() {
-  return recursos.map((r) => ({ slug: r.slug }))
-}
+// Los recursos se editan desde el CRM, así que esto no puede prerenderizarse.
+export const dynamic = 'force-dynamic'
 
 type Props = { params: Promise<{ slug: string }> }
 
+async function buscar(slug: string) {
+  if (hayCrm()) {
+    const r = await traerRecursoPorSlug(slug)
+    if (r) return r
+  }
+  return recursosRespaldo.find((r) => r.slug === slug) ?? null
+}
+
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params
-  const r = recursos.find((x) => x.slug === slug)
+  const r = await buscar(slug)
   if (!r) return {}
 
   const titulo = `${r.titulo} — gratis`
   return {
     title: `${titulo} | Tony Alvarado`,
-    description: r.descripcion,
+    description: r.descripcion ?? undefined,
     alternates: { canonical: `/recursos/${r.slug}` },
     openGraph: {
       type: 'website',
@@ -30,13 +38,13 @@ export async function generateMetadata({ params }: Props) {
       url: `${SITE_URL}/recursos/${r.slug}`,
       siteName: 'Tony Alvarado',
       title: titulo,
-      description: r.descripcion,
+      description: r.descripcion ?? undefined,
       images: [{ url: '/images/og/tony-alvarado-og.jpg', width: 1600, height: 900, alt: r.titulo }],
     },
     twitter: {
       card: 'summary_large_image',
       title: titulo,
-      description: r.descripcion,
+      description: r.descripcion ?? undefined,
       images: ['/images/og/tony-alvarado-og.jpg'],
     },
   }
@@ -44,19 +52,19 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function PuertaPage({ params }: Props) {
   const { slug } = await params
-  const recurso = recursos.find((r) => r.slug === slug)
+  const recurso = await buscar(slug)
   if (!recurso) notFound()
 
-  const a = acentoClases[recurso.acento]
-  const Icono = recurso.icono
-  const disponible = recurso.estado === 'disponible' && Boolean(recurso.href)
+  const a = acentoDe(recurso.acento)
+  const Icono = iconoDe(recurso.icono)
+  const disponible = recurso.estado === 'disponible' && Boolean(recurso.destino_url)
 
   const webPageSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     '@id': `${SITE_URL}/recursos/${recurso.slug}#webpage`,
     name: recurso.titulo,
-    description: recurso.descripcion,
+    description: recurso.descripcion ?? undefined,
     url: `${SITE_URL}/recursos/${recurso.slug}`,
     inLanguage: 'es-CR',
     isPartOf: websiteRef,
@@ -91,36 +99,34 @@ export default async function PuertaPage({ params }: Props) {
             Recursos gratis
           </Link>
 
-          <span
-            className={`mb-6 flex h-14 w-14 items-center justify-center rounded-2xl
-                        ${a.fondoSuave} ring-1 ${a.anillo}`}
-          >
+          <span className={`mb-6 flex h-14 w-14 items-center justify-center rounded-2xl
+                            ${a.fondoSuave} ring-1 ${a.anillo}`}>
             <Icono size={24} className={a.texto} strokeWidth={1.75} />
           </span>
 
-          <p className={`mb-3 text-[11px] font-bold uppercase tracking-[0.16em] ${a.texto}`}>
-            {recurso.formato}
-          </p>
+          {recurso.formato && (
+            <p className={`mb-3 text-[11px] font-bold uppercase tracking-[0.16em] ${a.texto}`}>
+              {recurso.formato}
+            </p>
+          )}
 
           <h1 className="mb-4 text-[28px] font-bold leading-[1.15] tracking-tight text-brand-text sm:text-4xl">
             {recurso.titulo}
           </h1>
 
-          <p className={`mb-5 text-lg font-semibold leading-snug ${a.texto}`}>
-            {recurso.gancho}
-          </p>
+          {recurso.gancho && (
+            <p className={`mb-5 text-lg font-semibold leading-snug ${a.texto}`}>{recurso.gancho}</p>
+          )}
 
-          <p className="mb-9 text-[15px] leading-[1.75] text-brand-muted">
-            {recurso.descripcion}
-          </p>
+          <p className="mb-9 text-[15px] leading-[1.75] text-brand-muted">{recurso.descripcion}</p>
 
           {disponible ? (
             <div className="rounded-3xl border border-brand-border bg-brand-card p-6 sm:p-7">
               <PuertaDeRecurso
                 slug={recurso.slug}
                 titulo={recurso.titulo}
-                destino={recurso.href!}
-                acento={recurso.acento}
+                destino={recurso.destino_url!}
+                acento={(recurso.acento as 'morado' | 'dorado' | 'calido') ?? 'morado'}
               />
             </div>
           ) : (
