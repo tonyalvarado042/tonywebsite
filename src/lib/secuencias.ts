@@ -69,12 +69,34 @@ export function enlaceDeBaja(sitioUrl: string, contactoId: string): string {
   return `${sitioUrl}/baja?id=${contactoId}&f=${firmarBaja(contactoId)}`
 }
 
-/** Compara el secreto del cron sin filtrar información por tiempo. */
+function comparaSeguro(esperado: string, recibido: string | null): boolean {
+  const a = Buffer.from(esperado)
+  const b = Buffer.from(recibido ?? '')
+  if (a.length !== b.length) return false
+  return timingSafeEqual(a, b)
+}
+
+/**
+ * Para llamarlo a mano (pruebas). Se manda el encabezado `x-cron-secret`
+ * con el valor `cron:<CRM_SECRET>`.
+ */
 export function cronAutorizado(encabezado: string | null): boolean {
   const s = process.env.CRM_SECRET
   if (!s) return false
-  const a = Buffer.from(`cron:${s}`)
-  const b = Buffer.from(encabezado ?? '')
-  if (a.length !== b.length) return false
-  return timingSafeEqual(a, b)
+  return comparaSeguro(`cron:${s}`, encabezado)
+}
+
+/**
+ * Para el reloj automático de Vercel.
+ *
+ * Vercel llama solo, una vez al día, mandando `Authorization: Bearer <valor>`
+ * donde el valor es su variable `CRON_SECRET`.
+ *
+ * Se compara contra `CRM_SECRET` a propósito: así Tony pone **el mismo valor**
+ * que ya tiene, sin generar ni recordar otro secreto distinto.
+ */
+export function cronDeVercelAutorizado(encabezadoAuth: string | null): boolean {
+  const s = process.env.CRM_SECRET
+  if (!s) return false
+  return comparaSeguro(`Bearer ${s}`, encabezadoAuth)
 }

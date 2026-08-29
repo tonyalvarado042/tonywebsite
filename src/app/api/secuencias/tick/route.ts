@@ -7,7 +7,13 @@ import {
   TABLA_INSCRIPCIONES,
   TABLA_PASOS,
 } from '@/lib/crm'
-import { cronAutorizado, enlaceDeBaja, esBorrador, secuenciasActivas } from '@/lib/secuencias'
+import {
+  cronAutorizado,
+  cronDeVercelAutorizado,
+  enlaceDeBaja,
+  esBorrador,
+  secuenciasActivas,
+} from '@/lib/secuencias'
 
 /**
  * Un "tick" de las automatizaciones.
@@ -39,11 +45,7 @@ function getResend(): Resend {
   return resendClient
 }
 
-export async function POST(req: NextRequest) {
-  if (!cronAutorizado(req.headers.get('x-cron-secret'))) {
-    return NextResponse.json({ ok: false, error: 'No autorizado.' }, { status: 401 })
-  }
-
+async function correrElTick(req: NextRequest) {
   const prueba = new URL(req.url).searchParams.get('dry') === '1'
 
   if (!prueba && !secuenciasActivas()) {
@@ -200,4 +202,28 @@ export async function POST(req: NextRequest) {
   }
 
   return NextResponse.json(resultado)
+}
+
+// ── Quién puede llamar esto ─────────────────────────────────────────────────
+
+/**
+ * A mano, para probar:
+ *   curl -X POST .../api/secuencias/tick?dry=1 -H "x-cron-secret: cron:<CRM_SECRET>"
+ */
+export async function POST(req: NextRequest) {
+  if (!cronAutorizado(req.headers.get('x-cron-secret'))) {
+    return NextResponse.json({ ok: false, error: 'No autorizado.' }, { status: 401 })
+  }
+  return correrElTick(req)
+}
+
+/**
+ * El reloj automático de Vercel, una vez al día. Llama con GET y su propia
+ * cabecera de autorización.
+ */
+export async function GET(req: NextRequest) {
+  if (!cronDeVercelAutorizado(req.headers.get('authorization'))) {
+    return NextResponse.json({ ok: false, error: 'No autorizado.' }, { status: 401 })
+  }
+  return correrElTick(req)
 }
