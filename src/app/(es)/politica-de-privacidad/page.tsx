@@ -27,12 +27,7 @@ export default function PoliticaDePrivacidadPage() {
           <p className="text-sm leading-relaxed text-brand-muted">
             Este sitio web es operado por el equipo de Tony Alvarado desde Costa Rica.
             Si tienes alguna pregunta sobre el uso de tus datos, puedes escribir a{' '}
-            <a
-              href="mailto:info@tonyalvarado.com"
-              className="text-brand-accent hover:underline"
-            >
-              info@tonyalvarado.com
-            </a>
+            <Link href="/contacto" className="text-brand-accent hover:underline">nuestro formulario de contacto</Link>
             .
           </p>
         </section>
@@ -118,12 +113,7 @@ export default function PoliticaDePrivacidadPage() {
             Tienes derecho a solicitar acceso, corrección o eliminación de los datos personales
             que hayas compartido con nosotros. Para ejercer cualquiera de estos derechos, escríbenos
             a{' '}
-            <a
-              href="mailto:info@tonyalvarado.com"
-              className="text-brand-accent hover:underline"
-            >
-              info@tonyalvarado.com
-            </a>{' '}
+            <Link href="/contacto" className="text-brand-accent hover:underline">nuestro formulario de contacto</Link>{' '}
             y atenderemos tu solicitud a la brevedad.
           </p>
         </section>
@@ -141,12 +131,7 @@ export default function PoliticaDePrivacidadPage() {
           <h2 className="mb-3 text-xl font-bold text-brand-text">9. Contacto</h2>
           <p className="text-sm leading-relaxed text-brand-muted">
             Para cualquier consulta relacionada con esta política, escríbenos a{' '}
-            <a
-              href="mailto:info@tonyalvarado.com"
-              className="text-brand-accent hover:underline"
-            >
-              info@tonyalvarado.com
-            </a>
+            <Link href="/contacto" className="text-brand-accent hover:underline">nuestro formulario de contacto</Link>
             .
           </p>
         </section>
