@@ -25,7 +25,7 @@ export default function StoryTeaser() {
           <p className="mx-auto mt-6 max-w-lg text-brand-muted">
             A los 16 años, un accidente en bicicleta cambió todo.
             Lo que vino después es la historia de cómo el dolor se convirtió en propósito
-            y el propósito en tres empresas.
+            y el propósito en un grupo de empresas.
           </p>
           <Link
             href="/sobre-mi"
