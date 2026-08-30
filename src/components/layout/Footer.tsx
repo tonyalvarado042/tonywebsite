@@ -36,6 +36,31 @@ const companyLogos = [
     height: 36,
     className: 'h-7 w-auto object-contain brightness-0 invert opacity-60 transition-opacity hover:opacity-90',
   },
+  // Humaya y Lidera se agregaron el 29-ago-2026, a pedido de Tony y al mismo
+  // nivel que las demás. Sus logos ya vienen en blanco, así que NO llevan
+  // `brightness-0 invert` como los otros.
+  {
+    src: '/images/logos/humaya/humaya-lockup-blanco.png',
+    alt: 'Humaya Costa Rica',
+    name: 'Humaya',
+    href: 'https://stayhumaya.com',
+    hrefEn: 'https://stayhumaya.com',
+    external: true,
+    width: 1875,
+    height: 1075,
+    className: 'h-8 w-auto object-contain opacity-60 transition-opacity hover:opacity-90',
+  },
+  {
+    src: '/images/logos/lidera/lidera-horizontal-blanco.png',
+    alt: 'LideraX10',
+    name: 'LideraX10',
+    href: 'https://liderax10.com',
+    hrefEn: 'https://liderax10.com',
+    external: true,
+    width: 200,
+    height: 50,
+    className: 'h-6 w-auto object-contain opacity-60 transition-opacity hover:opacity-90',
+  },
 ]
 
 const footerLinks = [
@@ -125,12 +150,15 @@ export default function Footer({ locale = 'es' }: { locale?: Locale }) {
             <p className="mt-3 text-sm text-brand-muted">
               {t.tagline}
             </p>
-            <a
-              href="mailto:info@tonyalvarado.com"
+            {/* Sin correo a la vista: Tony pidió que el contacto sea solo por
+                formulario. Un correo suelto en el pie lo cosechan los robots
+                de spam en cuestión de días. */}
+            <Link
+              href={locale === 'en' ? '/en/contact' : '/contacto'}
               className="mt-2 text-sm text-brand-muted transition-colors hover:text-brand-accent"
             >
-              info@tonyalvarado.com
-            </a>
+              {locale === 'en' ? 'Write to me →' : 'Escribime →'}
+            </Link>
           </div>
 
           <div className="flex items-center gap-3">

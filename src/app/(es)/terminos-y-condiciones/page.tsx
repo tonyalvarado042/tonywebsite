@@ -124,12 +124,7 @@ export default function TerminosYCondicionesPage() {
           <h2 className="mb-3 text-xl font-bold text-brand-text">10. Contacto</h2>
           <p className="text-sm leading-relaxed text-brand-muted">
             Para consultas relacionadas con estos términos, escríbenos a{' '}
-            <a
-              href="mailto:info@tonyalvarado.com"
-              className="text-brand-accent hover:underline"
-            >
-              info@tonyalvarado.com
-            </a>
+            <Link href="/contacto" className="text-brand-accent hover:underline">nuestro formulario de contacto</Link>
             .
           </p>
         </section>
