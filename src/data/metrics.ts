@@ -9,7 +9,7 @@ export const homeMetrics: MetricItem[] = [
   { value: '400K', label: 'Comunidad ciclista',     color: 'text' },
   { value: '+30',  label: 'Países — Pure Cycling',  color: 'text' },
   { value: '+250', label: 'Reseñas 5★ Bike & Bed',  color: 'gold' },
-  { value: '3',    label: 'Empresas con propósito', color: 'text' },
+  { value: '5',    label: 'Empresas con propósito', color: 'text' },
 ]
 
 export const homeMetricsEn: MetricItem[] = [

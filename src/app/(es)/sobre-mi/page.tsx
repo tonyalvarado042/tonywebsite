@@ -134,7 +134,7 @@ export default function SobreMiPage() {
             <p className="text-brand-muted text-left md:text-justify">
               Ingeniero de computación de formación. Empresario de vocación.
               Fundó PuroMTB en 2004 cuando el ciclismo online en Costa Rica era casi inexistente.
-              Hoy tiene tres empresas que han facturado millones de dólares.
+              Hoy dirige un grupo de empresas que han facturado millones de dólares.
             </p>
           </div>
 

@@ -145,7 +145,7 @@ export default function EnAboutPage() {
             <p className="text-brand-muted text-left md:text-justify">
               Computer engineer by training. Entrepreneur by calling.
               He founded PuroMTB in 2004, when online cycling in Costa Rica barely existed.
-              Today he has three companies that have generated millions of dollars.
+              Today he leads a group of companies that have generated millions of dollars.
             </p>
           </div>
 
