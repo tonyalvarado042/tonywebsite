@@ -27,7 +27,7 @@ export default function AboutTony({ locale = 'es' }: { locale?: 'es' | 'en' }) {
   const t = locale === 'en' ? {
     sectionLabel: 'About Tony',
     h2line1: 'He started selling apples to buy a bicycle.',
-    h2span: 'Today he has three companies that have generated millions of dollars.',
+    h2span: 'Today he leads a group of companies that have generated millions of dollars.',
     sub1Label: 'From engineering to entrepreneurship',
     sub2Label: 'A community without borders',
     ctaLabel: 'Read the full story →',
@@ -36,7 +36,7 @@ export default function AboutTony({ locale = 'es' }: { locale?: 'es' | 'en' }) {
   } : {
     sectionLabel: 'Sobre Tony',
     h2line1: 'Empezó vendiendo manzanas para comprarse una bicicleta.',
-    h2span: 'Hoy tiene tres empresas que han facturado millones de dólares.',
+    h2span: 'Hoy dirige un grupo de empresas que han facturado millones de dólares.',
     sub1Label: 'De la ingeniería al emprendimiento',
     sub2Label: 'Una comunidad sin fronteras',
     ctaLabel: 'Conoce la historia completa →',
@@ -91,15 +91,17 @@ export default function AboutTony({ locale = 'es' }: { locale?: 'es' | 'en' }) {
                 <p className="text-sm leading-relaxed text-brand-muted md:text-base">
                   <strong className="font-semibold text-brand-text">Computer engineer</strong> by training, entrepreneur by calling.{' '}
                   <strong className="font-semibold text-brand-text">Certified cycling coach</strong> and leader trained by{' '}
-                  <strong className="font-semibold text-brand-text">John Maxwell Leadership</strong>. Founder of three companies
-                  sharing one mission: transforming lives through cycling.
+                  <strong className="font-semibold text-brand-text">John Maxwell Leadership</strong>. Founder of PuroMTB,
+                  Pure Cycling, Bike &amp; Bed, Humaya and LideraX10 — all sharing one mission:
+                  adding value and transforming lives.
                 </p>
               ) : (
                 <p className="text-sm leading-relaxed text-brand-muted md:text-base">
                   <strong className="font-semibold text-brand-text">Ingeniero de computación</strong> de formación, empresario de vocación.{' '}
                   <strong className="font-semibold text-brand-text">Coach certificado de ciclismo</strong> y líder formado por{' '}
-                  <strong className="font-semibold text-brand-text">John Maxwell Leadership</strong>. Fundador de tres empresas
-                  que comparten una misión: transformar vidas a través de la bicicleta.
+                  <strong className="font-semibold text-brand-text">John Maxwell Leadership</strong>. Fundador de PuroMTB,
+                  Pure Cycling, Bike &amp; Bed, Humaya y LideraX10 que comparten una misión:
+                  agregar valor y transformar vidas.
                 </p>
               )}
             </div>
