@@ -269,6 +269,15 @@ export type RecursoCrm = {
   automatizacion_id: string | null
   /** Nombre del ícono. El sitio lo traduce a componente en src/data/recursos.ts */
   icono: string
+  /**
+   * `true` = pide nombre, correo y WhatsApp antes de entregarlo.
+   * `false` = se entra directo, sin formulario (la calculadora de Airbnb).
+   *
+   * Se edita desde el CRM. Si viene `undefined` — por ejemplo desde
+   * `recursosRespaldo`, que no toca la base — se trata como `true`, que es lo
+   * seguro: mejor pedir datos de más que regalar un recurso por descuido.
+   */
+  con_registro: boolean
 }
 
 /** Los que se muestran en /recursos. Los 'borrador' y 'archivado' quedan fuera. */

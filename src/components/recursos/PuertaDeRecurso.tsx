@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { ArrowRight, Check, Loader2, Lock, X } from 'lucide-react'
+import { PAISES } from '@/data/paises'
 
 /**
  * La puerta de un recurso, en ventana emergente.
@@ -13,23 +14,6 @@ import { ArrowRight, Check, Loader2, Lock, X } from 'lucide-react'
  * una persona. El código de país va aparte para que solo escriba su número.
  */
 
-const PAISES = [
-  { codigo: '+506', pais: 'Costa Rica',       corto: 'CR', ejemplo: '8888 8888' },
-  { codigo: '+1',   pais: 'EE. UU. / Canadá', corto: 'US', ejemplo: '305 555 0123' },
-  { codigo: '+52',  pais: 'México',           corto: 'MX', ejemplo: '55 1234 5678' },
-  { codigo: '+57',  pais: 'Colombia',         corto: 'CO', ejemplo: '300 1234567' },
-  { codigo: '+34',  pais: 'España',           corto: 'ES', ejemplo: '612 34 56 78' },
-  { codigo: '+507', pais: 'Panamá',           corto: 'PA', ejemplo: '6123 4567' },
-  { codigo: '+503', pais: 'El Salvador',      corto: 'SV', ejemplo: '7123 4567' },
-  { codigo: '+502', pais: 'Guatemala',        corto: 'GT', ejemplo: '5123 4567' },
-  { codigo: '+504', pais: 'Honduras',         corto: 'HN', ejemplo: '9123 4567' },
-  { codigo: '+505', pais: 'Nicaragua',        corto: 'NI', ejemplo: '8123 4567' },
-  { codigo: '+54',  pais: 'Argentina',        corto: 'AR', ejemplo: '11 1234 5678' },
-  { codigo: '+56',  pais: 'Chile',            corto: 'CL', ejemplo: '9 1234 5678' },
-  { codigo: '+51',  pais: 'Perú',             corto: 'PE', ejemplo: '912 345 678' },
-  { codigo: '+593', pais: 'Ecuador',          corto: 'EC', ejemplo: '99 123 4567' },
-  { codigo: '+58',  pais: 'Venezuela',        corto: 'VE', ejemplo: '412 1234567' },
-]
 
 const ESTILO = {
   morado: { texto: 'text-brand-green', anillo: 'focus:ring-brand-green/50', boton: 'bg-brand-green text-brand-bg', borde: 'border-brand-green/30' },

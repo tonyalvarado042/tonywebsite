@@ -93,5 +93,27 @@ export const recursosRespaldo: RecursoCrm[] = [
     destacado: true,
     automatizacion_id: null,
     icono: 'libro',
+    con_registro: true,
+  },
+  {
+    id: 'respaldo-calculadora',
+    slug: 'calculadora-airbnb',
+    titulo: 'Calculadora de ingresos para Airbnb',
+    gancho: 'Cuánto factura de verdad una propiedad',
+    descripcion:
+      'Metés ocupación, tarifa por noche y costos, y ves lo que queda. La misma cuenta que hago yo antes de meterme en un proyecto.',
+    formato: 'Herramienta · gratis',
+    imagen_url: '/img/nuevo-negocio-turismo/aerea-villas.jpg',
+    imagen_alt: 'Vista aérea de las villas de Bike & Bed en La Fortuna de San Carlos',
+    destino_url: '/recursos/calculadora-airbnb',
+    tipo: 'pagina',
+    estado: 'disponible',
+    acento: 'dorado',
+    orden: 20,
+    destacado: false,
+    automatizacion_id: null,
+    icono: 'calculadora',
+    // Entrada libre: Tony la quiso sin formulario para entrar.
+    con_registro: false,
   },
 ]

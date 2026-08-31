@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, Bell } from 'lucide-react'
 import PuertaDeRecurso from './PuertaDeRecurso'
@@ -28,6 +29,10 @@ export default function TarjetaRecurso({
   const a = acentoDe(recurso.acento)
   const Icono = iconoDe(recurso.icono)
   const disponible = recurso.estado === 'disponible' && Boolean(recurso.destino_url)
+  // `con_registro === false` es entrada libre: se entra sin formulario. Se
+  // compara contra `false` a propósito — si la columna viniera vacía, el
+  // recurso sigue pidiendo datos, que es lo seguro.
+  const sinPuerta = recurso.con_registro === false
   const llamado = recurso.tipo === 'pdf' ? 'Descargar gratis' : 'Leerlo gratis'
 
   // ── La destacada: foto grande, texto, y la ventana se abre desde el botón ──
@@ -71,7 +76,16 @@ export default function TarjetaRecurso({
         </h2>
         <p className="mb-7 text-[15px] leading-[1.7] text-brand-muted">{recurso.descripcion}</p>
 
-        {disponible ? (
+        {disponible && sinPuerta ? (
+          <Link
+            href={recurso.destino_url!}
+            className={`flex min-h-[56px] w-full items-center justify-center gap-2.5 rounded-2xl
+                        px-6 text-[15px] font-bold ${a.boton} transition-opacity hover:opacity-90`}
+          >
+            Abrirla gratis
+            <ArrowRight size={16} />
+          </Link>
+        ) : disponible ? (
           <PuertaDeRecurso
             slug={recurso.slug}
             titulo={recurso.titulo}
@@ -145,6 +159,10 @@ export default function TarjetaRecurso({
 
   if (!disponible) {
     return <a href="#avisame" className={clases}>{contenido}</a>
+  }
+
+  if (sinPuerta) {
+    return <Link href={recurso.destino_url!} className={clases}>{contenido}</Link>
   }
 
   return (
