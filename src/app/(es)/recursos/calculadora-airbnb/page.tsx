@@ -56,8 +56,21 @@ const METODO = [
   ['06', 'Patrimonio', 'Mide el flujo, la deuda y el valor del activo a través del tiempo.'],
 ] as const
 
-/** Las preguntas frecuentes, tal cual estaban en la calculadora original. */
-const PREGUNTAS = [
+/**
+ * Las preguntas frecuentes, en dos grupos.
+ *
+ * Las cinco primeras venían de la calculadora original. Las de los indicadores
+ * y las del final las pidió Tony el 31-ago-2026: quería que la página resuelva
+ * sola la duda de «¿lo hago por mi cuenta o con ellos?».
+ *
+ * ⚠️ En todo lo que habla de copropiedad se usa SOLO el vocabulario aprobado
+ * —copropiedad, fracción, acción, co-dueño, «el activo factura»— y NUNCA
+ * rendimiento, retorno, ROI, utilidad, ganancia ni inversión garantizada.
+ * Tampoco se publican precios, cantidad de acciones ni condiciones: eso se
+ * conversa con documentos, no en una página abierta. Es cumplimiento SUGEVAL,
+ * no estilo.
+ */
+const PREGUNTAS_CALCULADORA = [
   [
     '¿Esto garantiza que mi proyecto será rentable?',
     'No. Esta es una calculadora financiera educativa. Debes validar la demanda, la tarifa, los costos y la ubicación de tu proyecto. Estar lejos de los principales atractivos turísticos —especialmente a más de 10 km— y no contar con un buen equipo de operación puede reducir considerablemente el resultado.',
@@ -71,6 +84,22 @@ const PREGUNTAS = [
     'Es la utilidad operativa neta antes de pagar la deuda. Permite ver qué tan eficiente es el activo por sí mismo.',
   ],
   [
+    '¿Qué es el cap rate?',
+    'Es lo que produce el activo por sí solo, sin contar el préstamo: la utilidad operativa de un año dividida entre lo que costó todo. Si da 7%, quiere decir que el activo genera cerca de $7 al año por cada $100 que costó. Sirve para comparar dos proyectos distintos sin que el financiamiento ensucie la comparación.',
+  ],
+  [
+    '¿Qué es el DSCR y por qué me importa?',
+    'Mide cuántas veces la utilidad operativa alcanza para pagar la cuota del banco. En 1.00 apenas alcanza y no queda margen para un mes flojo. Los bancos normalmente quieren ver 1.25 o más. Es el número que más rápido dice si un proyecto aguanta un mal trimestre.',
+  ],
+  [
+    '¿Qué es la ocupación de equilibrio?',
+    'El mínimo de noches que tenés que vender para no perder plata. Si tu ocupación de equilibrio es 40% y esperás vender 75%, tenés colchón. Si es 70% y esperás 75%, cualquier temporada floja te deja en rojo. De todos los números de esta pantalla, es el que mejor mide la fragilidad de un proyecto.',
+  ],
+  [
+    '¿Qué es el retorno sobre capital que muestra la calculadora?',
+    'Compara el flujo de un año contra el dinero propio que pondrías, sin contar lo que financiaría el banco. Es el resultado de un modelo con los supuestos que vos escribiste: si cambiás ocupación o tarifa, cambia. No es una promesa ni un pronóstico.',
+  ],
+  [
     '¿Por qué separar flujo y valorización?',
     'Porque el flujo viene de la operación y la valorización es un aumento estimado del patrimonio. Separarlos evita inflar o confundir el rendimiento.',
   ],
@@ -79,6 +108,27 @@ const PREGUNTAS = [
     'Sí. Introduce el valor actual de la propiedad, sus tarifas, ocupación y gastos reales para obtener una lectura más útil.',
   ],
 ] as const
+
+const PREGUNTAS_NEGOCIO = [
+  [
+    '¿Me conviene hacerlo por mi cuenta o acompañado?',
+    'Depende de qué te falta. Si tenés terreno, quién te construya, quién atienda al huésped y tiempo para estar encima de la operación, se puede solo — y esta calculadora es justo para eso. Lo que suele salir caro no es construir: es operar. Permisos, personal, mantenimiento, responder en menos de una hora, sostener la calificación temporada tras temporada. Si lo que querés es participar de un activo turístico sin cargar con esa operación, ahí es donde tiene sentido que conversemos.',
+  ],
+  [
+    '¿Qué significa ser co-dueño de uno de tus proyectos?',
+    'No es tiempo compartido y no es comprar una unidad aparte. Es copropiedad: el proyecto se divide en fracciones —acciones— y cada acción representa una parte del activo real. El activo se opera como un solo hotel, con un solo equipo y una sola marca, no como casas sueltas. Como operador mantengo siempre al menos el 51%, y eso no es una promesa de palabra: el sistema no deja hacer una operación que lo baje de ahí.',
+  ],
+  [
+    '¿Cómo puedo ser co-dueño?',
+    'Se conversa primero. Hay proyectos en distintos momentos —uno ya operando y otro en desarrollo— y las condiciones, la estructura legal y los plazos se revisan caso por caso, con documentos en la mano. Nada de eso se define desde una página web. Escribime por el formulario de contacto, contame en qué etapa estás y te digo en qué está cada proyecto hoy.',
+  ],
+  [
+    '¿Esta página es una oferta de inversión?',
+    'No. La calculadora es una herramienta educativa y esta página no es una oferta de valores, una recomendación financiera ni una promesa de resultados. Cualquier participación en un proyecto se trata aparte, con documentación y con la asesoría legal y financiera que vos consideres. Los números de esta pantalla son de tu propio escenario, no de ningún proyecto mío.',
+  ],
+] as const
+
+const PREGUNTAS = [...PREGUNTAS_CALCULADORA, ...PREGUNTAS_NEGOCIO] as const
 
 export default function CalculadoraAirbnbPage() {
   const webPageSchema = {
@@ -319,11 +369,15 @@ export default function CalculadoraAirbnbPage() {
       {/* ── Preguntas frecuentes ─────────────────────────────────────── */}
       <section className="border-t border-brand-border px-5 py-16 sm:px-6 sm:py-20">
         <div className="mx-auto max-w-3xl">
-          <h2 className="mb-8 text-[26px] font-bold leading-[1.15] tracking-tight text-brand-text sm:text-[34px]">
+          <h2 className="mb-10 text-[26px] font-bold leading-[1.15] tracking-tight text-brand-text sm:text-[34px]">
             Preguntas frecuentes
           </h2>
-          <div className="space-y-3">
-            {PREGUNTAS.map(([pregunta, respuesta]) => (
+
+          <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.16em] text-brand-green">
+            Sobre la calculadora y sus números
+          </p>
+          <div className="mb-12 space-y-3">
+            {PREGUNTAS_CALCULADORA.map(([pregunta, respuesta]) => (
               <details
                 key={pregunta}
                 className="group rounded-2xl border border-brand-border bg-brand-card p-5 open:border-brand-green/30"
@@ -334,6 +388,41 @@ export default function CalculadoraAirbnbPage() {
                 <p className="mt-3 text-[14px] leading-relaxed text-brand-muted">{respuesta}</p>
               </details>
             ))}
+          </div>
+
+          <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.16em] text-brand-green">
+            Sobre hacerlo por tu cuenta o conmigo
+          </p>
+          <div className="space-y-3">
+            {PREGUNTAS_NEGOCIO.map(([pregunta, respuesta]) => (
+              <details
+                key={pregunta}
+                className="group rounded-2xl border border-brand-border bg-brand-card p-5 open:border-brand-green/30"
+              >
+                <summary className="cursor-pointer list-none text-[15px] font-bold text-brand-text marker:hidden">
+                  {pregunta}
+                </summary>
+                <p className="mt-3 text-[14px] leading-relaxed text-brand-muted">{respuesta}</p>
+              </details>
+            ))}
+          </div>
+
+          <div className="mt-8 rounded-2xl border border-brand-green/25 bg-brand-green/[0.06] p-6 text-center">
+            <p className="mb-1.5 text-[16px] font-bold text-brand-text">
+              ¿Te quedó una duda que no está acá?
+            </p>
+            <p className="mb-5 text-[14px] leading-relaxed text-brand-muted">
+              Contame en qué etapa estás y te respondo.
+            </p>
+            <Link
+              href="/contacto"
+              className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-2xl
+                         bg-brand-green px-6 text-[15px] font-bold uppercase tracking-wide
+                         text-brand-bg transition-opacity hover:opacity-90 sm:w-auto"
+            >
+              Quiero asesoría / ser codueño
+              <ArrowRight size={17} />
+            </Link>
           </div>
         </div>
       </section>

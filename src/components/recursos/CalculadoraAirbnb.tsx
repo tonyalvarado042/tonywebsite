@@ -461,13 +461,23 @@ export default function CalculadoraAirbnb() {
                 ))}
               </div>
 
+              {/* ⚠️ EL BOTÓN MÁS IMPORTANTE DE LA PÁGINA. Acá se captura el lead;
+                  sin esto, la pantalla no sirve de nada. Por eso es el único
+                  verde del sitio y el único que late. Si el verde se empieza a
+                  usar en otros lados, este deja de gritar. */}
               <a
                 href="#solicitar-informe"
-                className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-2xl
-                           border border-brand-green/40 px-4 text-[13.5px] font-bold text-brand-green
-                           transition-colors hover:bg-brand-green/10"
+                className="animate-latido flex min-h-[62px] w-full flex-col items-center justify-center
+                           gap-0.5 rounded-2xl bg-brand-cta px-4 text-center text-brand-bg
+                           transition-transform duration-200 hover:scale-[1.03]"
               >
-                Solicitar informe completo por correo <ArrowRight size={15} />
+                <span className="flex items-center gap-2 text-[15px] font-extrabold leading-none">
+                  Quiero mi análisis GRATIS
+                  <ArrowRight size={16} strokeWidth={2.75} />
+                </span>
+                <span className="text-[11px] font-semibold leading-tight opacity-80">
+                  Estos números se pierden al cerrar la página
+                </span>
               </a>
 
               <p className="mt-4 text-[11px] leading-relaxed text-brand-muted/70">{ADVERTENCIA}</p>
@@ -480,15 +490,24 @@ export default function CalculadoraAirbnb() {
       <section id="solicitar-informe" className="scroll-mt-24 border-t border-brand-border px-5 py-16 sm:px-6 sm:py-20">
         <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2 lg:items-start">
           <div>
-            <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.16em] text-brand-green">
+            <p className="mb-3 flex flex-wrap items-center gap-2 text-[11px] font-bold uppercase tracking-[0.16em] text-brand-muted">
+              <span className="animate-guino rounded-md bg-brand-cta px-2 py-1 text-[10.5px] font-extrabold tracking-[0.12em] text-brand-bg">
+                Gratis
+              </span>
               Tu informe personalizado
             </p>
             <h2 className="mb-4 text-[26px] font-bold leading-[1.15] tracking-tight text-brand-text sm:text-[34px]">
-              Recibí el análisis completo de tu proyecto.
+              <span className="text-brand-cta">Gratis:</span> el análisis completo de tu
+              proyecto.
             </h2>
+            {/* La urgencia es real y por eso se puede escribir: el escenario vive
+                solo en la pestaña abierta. Nada de contadores inventados ni de
+                «quedan 3 cupos» — eso sería mentira y Tony no las quiere. */}
             <p className="mb-6 text-[15px] leading-relaxed text-brand-muted">
-              Los datos básicos quedan visibles siempre. El informe extendido reúne tu
-              escenario para que puedas revisarlo con más profundidad.
+              Los números que armaste viven <strong className="text-brand-text">solo
+              en esta pestaña</strong>. Si la cerrás, se pierden y hay que meter todo
+              otra vez. Dejámelo mandar por correo y quedan tuyos para siempre — para
+              revisarlos con calma, con tu banco o con quien te ayude a decidir.
             </p>
             <ul className="mb-7 space-y-2.5">
               {[
@@ -498,7 +517,7 @@ export default function CalculadoraAirbnb() {
                 'Valorización y patrimonio a 5 y 10 años',
               ].map((x) => (
                 <li key={x} className="flex items-start gap-2.5 text-[14.5px] text-brand-muted">
-                  <Check size={16} className="mt-0.5 shrink-0 text-brand-green" strokeWidth={2.5} />
+                  <Check size={16} className="mt-0.5 shrink-0 text-brand-cta" strokeWidth={2.5} />
                   {x}
                 </li>
               ))}

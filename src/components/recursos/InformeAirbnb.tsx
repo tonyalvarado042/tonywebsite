@@ -77,8 +77,8 @@ export default function InformeAirbnb({ supuestos, escenario, alRegistrar }: Pro
 
   if (listo) {
     return (
-      <div className="rounded-3xl border border-brand-green/30 bg-brand-green/[0.07] p-7 text-center">
-        <span className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-brand-green text-brand-bg">
+      <div className="rounded-3xl border border-brand-cta/40 bg-brand-cta/[0.09] p-7 text-center">
+        <span className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-brand-cta text-brand-bg">
           <Check size={22} strokeWidth={3} />
         </span>
         <p className="mb-2 text-lg font-bold text-brand-text">Solicitud registrada</p>
@@ -106,7 +106,7 @@ export default function InformeAirbnb({ supuestos, escenario, alRegistrar }: Pro
 
   const Palomita = ({ ok }: { ok: boolean }) =>
     ok ? (
-      <Check size={15} className="absolute right-3 top-1/2 -translate-y-1/2 text-brand-green" strokeWidth={3} />
+      <Check size={15} className="absolute right-3 top-1/2 -translate-y-1/2 text-brand-cta" strokeWidth={3} />
     ) : null
 
   return (
@@ -201,28 +201,35 @@ export default function InformeAirbnb({ supuestos, escenario, alRegistrar }: Pro
         </p>
       )}
 
+      {/* Late solo cuando ya se puede enviar. Un botón apagado que parpadea
+          invita a darle clic sin poder — eso frustra en vez de convertir. */}
       <button
         type="submit"
         disabled={!todoListo || enviando}
-        className="mt-6 inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-2xl
-                   bg-brand-green px-6 text-[15px] font-bold text-brand-bg transition-opacity
-                   hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-35"
+        className={`mt-6 inline-flex min-h-[58px] w-full items-center justify-center gap-2
+                    rounded-2xl bg-brand-cta px-6 text-[16px] font-extrabold text-brand-bg
+                    transition-transform duration-200 hover:scale-[1.02]
+                    disabled:cursor-not-allowed disabled:bg-brand-border disabled:text-brand-muted
+                    disabled:hover:scale-100
+                    ${todoListo && !enviando ? 'animate-latido' : ''}`}
       >
         {enviando ? (
           <>
-            <Loader2 size={17} className="animate-spin" />
-            Enviando…
+            <Loader2 size={18} className="animate-spin" />
+            Preparando tu informe…
           </>
         ) : (
           <>
-            <Mail size={17} />
-            Enviame el informe
+            <Mail size={18} strokeWidth={2.5} />
+            Enviame el informe GRATIS
           </>
         )}
       </button>
 
       <p className="mt-3 text-center text-[12px] text-brand-muted/70">
-        Sin costo. Podés salirte de la lista cuando querás.
+        {todoListo
+          ? 'Sin costo. Podés salirte de la lista cuando querás.'
+          : 'Completá los tres campos y el botón se activa.'}
       </p>
     </form>
   )

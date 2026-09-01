@@ -15,4 +15,15 @@
   html {
     scroll-behavior: smooth;
   }
+
+  /* Quien pidió menos movimiento en su sistema no ve latir nada. No es
+     debilitar el botón: es que a alguien con vértigo o sensibilidad a la luz
+     una animación infinita le arruina la página entera. El botón sigue siendo
+     verde, grande y el único así en la pantalla. */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-latido,
+    .animate-guino {
+      animation: none !important;
+    }
+  }
 }
