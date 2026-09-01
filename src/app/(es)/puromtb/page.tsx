@@ -146,14 +146,22 @@ export default function PuroMTBPage() {
           <div className="grid items-center gap-12 md:grid-cols-2">
 
             <div className="overflow-hidden rounded-2xl">
-              {/* Cambiada el 31-ago-2026: antes había una foto de escritorio
-                  que a Tony no le gustaba. Esta es la de portada. */}
+              {/* Cambiada el 31-ago-2026. Tony eligió esta: él en la bici,
+                  en el campo, con el ganado. Dice mucho más de PuroMTB que
+                  un retrato de saco.
+
+                  ⚠️ El encuadre está CALCULADO, no tanteado. La foto es
+                  vertical (4000x6000) y este espacio es apaisado, así que
+                  solo se ve como el 47% de su alto. Él va del 44% al 92%
+                  de la imagen; con `84%` la franja visible arranca en 45%
+                  y termina en 92%, o sea justo él. Con el valor de antes
+                  (18%) se veía solo el cielo. */}
               <Image
-                src="/images/tony/tony-hero.jpg"
-                alt="Tony Alvarado, fundador de PuroMTB"
+                src="/images/tony/tony-ciclismo-bosque-01.jpg"
+                alt="Tony Alvarado en bicicleta de montaña entre el ganado, en el campo costarricense"
                 width={600}
                 height={450}
-                className="h-80 w-full object-cover object-[50%_18%] md:h-96"
+                className="h-80 w-full object-cover object-[50%_84%] md:h-96"
               />
             </div>
 
