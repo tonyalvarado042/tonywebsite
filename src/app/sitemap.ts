@@ -22,6 +22,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE_URL}/pure-cycling`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${BASE_URL}/libros`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE_URL}/libros/el-nuevo-negocio-del-turismo-2027`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${BASE_URL}/preguntas-frecuentes`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE_URL}/recursos`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
     // Entra directo al sitemap porque es de acceso libre: no hay formulario
     // de por medio, así que Google puede indexar la herramienta completa.

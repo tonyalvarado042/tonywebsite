@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Link from 'next/link'
 import { ChevronDown } from 'lucide-react'
 import { faqs, type FAQAnswerBlock, type FAQItem } from '@/data/faqs'
 
@@ -80,17 +81,21 @@ function FAQRow({ question, answer }: { question: string; answer: FAQAnswerBlock
 type FAQProps = {
   locale?: 'es' | 'en'
   questions?: FAQItem[]
+  /** A dónde mandar por «el resto de las preguntas». Si no viene, no sale. */
+  verTodasHref?: string
 }
 
-export default function FAQ({ locale = 'es', questions }: FAQProps) {
+export default function FAQ({ locale = 'es', questions, verTodasHref }: FAQProps) {
   const t = locale === 'en' ? {
     sectionLabel: 'Frequently asked questions',
     h2text: 'The questions',
     h2span: 'we hear most.',
+    verTodas: 'See all the questions →',
   } : {
     sectionLabel: 'Preguntas frecuentes',
     h2text: 'Las preguntas',
     h2span: 'que más nos hacen.',
+    verTodas: 'Ver todas las preguntas →',
   }
 
   const currentFaqs = questions ?? faqs
@@ -120,6 +125,19 @@ export default function FAQ({ locale = 'es', questions }: FAQProps) {
             <FAQRow key={faq.question} question={faq.question} answer={faq.answer} />
           ))}
         </div>
+
+        {verTodasHref && (
+          <div className="mt-10 text-center">
+            <Link
+              href={verTodasHref}
+              className="inline-flex min-h-[48px] items-center rounded-xl border border-brand-border
+                         px-6 text-sm font-semibold text-brand-text transition-colors
+                         hover:border-brand-accent hover:text-brand-accent"
+            >
+              {t.verTodas}
+            </Link>
+          </div>
+        )}
 
       </div>
     </section>

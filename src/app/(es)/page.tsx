@@ -18,7 +18,7 @@ import FAQ from '@/components/sections/FAQ'
 import Contact from '@/components/sections/Contact'
 import JsonLd from '@/components/JsonLd'
 import { puroMTBOrg, bikeBedOrg, humayaOrg, SITE_URL, websiteRef, personRef } from '@/lib/structured-data'
-import { faqs, faqAnswerToPlainText } from '@/data/faqs'
+import { faqsCopropiedad, faqAnswerToPlainText } from '@/data/faqs'
 import { homeMetrics, type MetricItem } from '@/data/metrics'
 import { client } from '@/sanity/lib/client'
 import { homeMetricsQuery, type SanityMetric } from '@/sanity/lib/queries'
@@ -39,7 +39,7 @@ const webPageSchema = {
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: faqs.map((faq) => ({
+  mainEntity: faqsCopropiedad.map((faq) => ({
     '@type': 'Question',
     name: faq.question,
     acceptedAnswer: {
@@ -182,7 +182,7 @@ export default async function HomePage() {
       <SectionDivider />
       <RecentArticles />
       <Contact />
-      <FAQ />
+      <FAQ questions={faqsCopropiedad} verTodasHref="/preguntas-frecuentes" />
     </main>
   )
 }

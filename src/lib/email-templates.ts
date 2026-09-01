@@ -15,7 +15,7 @@ export const interesLabels: Record<string, string> = {
   'pure-cycling':        'Pure Cycling',
   'puromtb':             'PuroMTB',
   'bike-bed':            'Bike & Bed Hotels',
-  'bike-bed-inversion':  'Inversión Bike & Bed',
+  'bike-bed-inversion':  'Copropiedad turística',
   'conferencias':        'Conferencias',
   'libros':              'Libros',
   'contacto-general':    'Contacto general',

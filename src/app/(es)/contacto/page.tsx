@@ -76,7 +76,7 @@ export default async function ContactoPage({
             para darte una respuesta clara y enfocada.
           </p>
           <p className="mt-3 text-xs text-brand-muted/50">
-            Pure Cycling · Conferencias · Bike &amp; Bed Hotels · Inversión · PuroMTB · Libros · Colaboraciones
+            Copropiedad turística · Conferencias · Pure Cycling · Bike &amp; Bed Hotels · PuroMTB · Libros · Colaboraciones
           </p>
         </div>
       </section>

@@ -70,6 +70,10 @@ const footerLinks = [
   { href: '/libros', label: 'Libros' },
   { href: '/blog', label: 'Blog' },
   { href: '/conferencias', label: 'Conferencias' },
+  // Va en el pie y no en la barra de arriba: Tony la quería en el menú «sin
+  // necesidad de ser el menú más grande». Desde el home también se llega con
+  // el botón «Ver todas las preguntas».
+  { href: '/preguntas-frecuentes', label: 'Preguntas frecuentes' },
   { href: '/contacto', label: 'Contacto' },
 ]
 
@@ -79,6 +83,7 @@ const footerLinksEn = [
   { href: '/en/speaking',        label: 'Speaking',          hrefLang: undefined as string | undefined },
   { href: '/en/books',           label: 'Books',             hrefLang: undefined as string | undefined },
   { href: '/blog',               label: 'Blog · ES',         hrefLang: 'es' as string | undefined },
+  { href: '/preguntas-frecuentes', label: 'FAQ · ES',        hrefLang: 'es' as string | undefined },
   { href: '/en/contact',         label: 'Contact',           hrefLang: undefined as string | undefined },
   { href: '/en/pure-cycling',    label: 'Pure Cycling',      hrefLang: undefined as string | undefined },
   { href: '/en/bike-bed-hotels', label: 'Bike & Bed Hotels', hrefLang: undefined as string | undefined },

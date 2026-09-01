@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Bike, Building2, Globe, Users } from 'lucide-react'
+import { Bike, Building2, Globe, Rocket, Users } from 'lucide-react'
 
 const pillars = [
   {
@@ -59,6 +59,13 @@ export default function BusinessEcosystem({ locale = 'es' }: { locale?: 'es' | '
     bikeBedDesc: 'A cycling-themed hotel with professional operation and global expansion vision. Opportunities for investors.',
     bikeBedCta: 'View opportunity →',
     bikeBedHref: '/en/bike-bed-hotels',
+    humayaSubtitle: 'Ten villas at the foot of the Arenal Volcano.',
+    humayaDesc: 'A place to stop running and get back to the essentials. Architecture that disappears into the forest, real silence, and five pillars: move, nourish, connect, create and believe. Opening November 2026 in La Fortuna.',
+    humayaCta: 'Visit Humaya →',
+    lideraSubtitle: 'Consulting so your company runs without you.',
+    lideraDesc: 'Mentoring and methodology to scale companies on six fronts: marketing, leadership, sales, strategy, finance and spirituality.',
+    lideraCta: 'Visit LideraX10 →',
+    segundaFila: 'And two more, born from the same idea.',
   } : {
     sectionLabel: 'Ecosistema empresarial',
     h2text: 'Un ecosistema construido',
@@ -79,6 +86,18 @@ export default function BusinessEcosystem({ locale = 'es' }: { locale?: 'es' | '
     bikeBedDesc: 'Hotel temático de ciclismo con operación profesional y visión de expansión global. Oportunidades para inversionistas.',
     bikeBedCta: 'Ver oportunidad →',
     bikeBedHref: '/bike-bed-hotels',
+    // Humaya y LideraX10 entraron el 31-ago-2026, a pedido de Tony. Los textos
+    // se sacaron de sus propios sitios —stayhumaya.com y liderax10.com— y no
+    // de la cabeza de nadie.
+    humayaSubtitle: 'Diez villas al pie del Volcán Arenal.',
+    humayaDesc: 'Un lugar para dejar de correr y volver a lo esencial: arquitectura que desaparece en el bosque, silencio de verdad, y cinco pilares — moverse, nutrirse, conectar, crear y creer. Abre en noviembre de 2026, en La Fortuna.',
+    humayaCta: 'Conocer Humaya →',
+    // Sin la promesa de «7 cifras» que sale en su propio sitio: en la web de
+    // Tony no se prometen resultados de plata.
+    lideraSubtitle: 'Consultoría para que tu empresa trabaje sin vos.',
+    lideraDesc: 'Mentoría y metodología para escalar empresas en seis frentes: marketing, liderazgo, ventas, estrategia, finanzas y espiritualidad. Emprendé, liderá, evolucioná.',
+    lideraCta: 'Conocer LideraX10 →',
+    segundaFila: 'Y dos más, nacidas de la misma idea.',
   }
 
   const currentPillars = locale === 'en' ? pillarsEn : pillars
@@ -324,6 +343,107 @@ export default function BusinessEcosystem({ locale = 'es' }: { locale?: 'es' | '
                 </Link>
               </div>
             </motion.article>
+
+          </div>
+
+          {/* ══════ Segunda fila: Humaya y LideraX10 ══════
+              Van en su propia fila y no metidas en la de arriba a propósito:
+              esa fila tiene una línea de conexión con nodos calculados al 33%
+              y al 66%, hecha para tres tarjetas. Meter dos más ahí habría
+              descuadrado el dibujo entero. */}
+          <p className="mb-5 mt-14 text-center text-sm font-semibold text-brand-muted">
+            {t.segundaFila}
+          </p>
+
+          <div className="relative z-10 grid grid-cols-1 items-stretch gap-5 md:grid-cols-2">
+
+            {[
+              {
+                clave: 'humaya',
+                nombre: 'Humaya',
+                logo: '/images/logos/humaya/humaya-lockup-blanco.png',
+                ancho: 1875, alto: 1075,
+                claseLogo: 'h-9 w-auto object-contain opacity-90',
+                Icono: Building2,
+                subtitulo: t.humayaSubtitle,
+                desc: t.humayaDesc,
+                cta: t.humayaCta,
+                href: 'https://stayhumaya.com',
+                numero: '04',
+                retraso: 0,
+              },
+              {
+                clave: 'lidera',
+                nombre: 'LideraX10',
+                logo: '/images/logos/lidera/lidera-horizontal-blanco.png',
+                ancho: 200, alto: 50,
+                claseLogo: 'h-7 w-auto object-contain opacity-90',
+                Icono: Rocket,
+                subtitulo: t.lideraSubtitle,
+                desc: t.lideraDesc,
+                cta: t.lideraCta,
+                href: 'https://liderax10.com',
+                numero: '05',
+                retraso: 0.1,
+              },
+            ].map((e) => (
+              <motion.article
+                key={e.clave}
+                className="group relative isolate flex flex-col overflow-hidden rounded-2xl
+                           border border-brand-border bg-brand-card p-8
+                           transition-all duration-300
+                           hover:scale-[1.02] hover:-translate-y-1
+                           hover:border-brand-accent/30 hover:shadow-[0_0_40px_rgba(139,92,246,0.10)]"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: e.retraso }}
+              >
+                <div
+                  aria-hidden
+                  className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(139,92,246,0.06)_0%,transparent_65%)]"
+                />
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute right-4 top-4 select-none text-5xl font-black text-brand-accent/[0.05]"
+                >
+                  {e.numero}
+                </span>
+
+                <div className="relative z-10 flex flex-1 flex-col">
+                  <div className="mb-6 flex items-center gap-3">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl
+                                    bg-brand-accent/10 ring-1 ring-brand-accent/20">
+                      <e.Icono size={19} className="text-brand-accent" />
+                    </div>
+                    {/* Estos dos logos ya vienen en blanco: NO llevan
+                        `brightness-0 invert` como los de las otras marcas. */}
+                    <Image
+                      src={e.logo}
+                      alt={e.nombre}
+                      width={e.ancho}
+                      height={e.alto}
+                      className={e.claseLogo}
+                    />
+                  </div>
+
+                  <h3 className="mb-2 text-xl font-bold text-brand-text">{e.nombre}</h3>
+                  <p className="mb-3 text-sm font-semibold text-brand-accent">{e.subtitulo}</p>
+                  <p className="mb-8 flex-1 text-sm leading-relaxed text-brand-muted">{e.desc}</p>
+
+                  <Link
+                    href={e.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center rounded-full border border-brand-border
+                               px-6 py-2.5 text-sm font-semibold text-brand-text
+                               transition-colors hover:bg-brand-surface"
+                  >
+                    {e.cta}
+                  </Link>
+                </div>
+              </motion.article>
+            ))}
 
           </div>
         </div>
