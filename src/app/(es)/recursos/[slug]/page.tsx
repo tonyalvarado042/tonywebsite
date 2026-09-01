@@ -120,7 +120,19 @@ export default async function PuertaPage({ params }: Props) {
 
           <p className="mb-9 text-[15px] leading-[1.75] text-brand-muted">{recurso.descripcion}</p>
 
-          {disponible ? (
+          {disponible && recurso.con_registro === false ? (
+            /* Recurso de entrada libre: no hay formulario, se entra y ya.
+               La calculadora de Airbnb tiene además su propia página, que
+               gana sobre esta ruta; esto queda para los que vengan después. */
+            <Link
+              href={recurso.destino_url!}
+              className={`inline-flex min-h-[52px] w-full items-center justify-center gap-2
+                          rounded-2xl px-6 text-[15px] font-bold ${a.boton}
+                          transition-opacity hover:opacity-90`}
+            >
+              Abrirla gratis
+            </Link>
+          ) : disponible ? (
             <PuertaDeRecurso
               slug={recurso.slug}
               titulo={recurso.titulo}
