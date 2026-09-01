@@ -6,7 +6,7 @@ export const interestOptions = [
   { value: 'pure-cycling',       es: 'Pure Cycling',           en: 'Pure Cycling' },
   { value: 'puromtb',            es: 'PuroMTB',                en: 'PuroMTB' },
   { value: 'bike-bed',           es: 'Bike & Bed Hotels',      en: 'Bike & Bed Hotels' },
-  { value: 'bike-bed-inversion', es: 'Inversión Bike & Bed',   en: 'Investment in Bike & Bed' },
+  { value: 'bike-bed-inversion', es: 'Copropiedad turística',  en: 'Tourism co-ownership' },
   { value: 'conferencias',       es: 'Conferencias',           en: 'Speaking / Conference' },
   { value: 'libros',             es: 'Libros',                 en: 'Books' },
   { value: 'contacto-general',   es: 'Contacto general',       en: 'General Inquiry' },

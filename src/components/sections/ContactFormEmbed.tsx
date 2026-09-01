@@ -22,7 +22,7 @@ const dict = {
     labelInteres: 'Interés principal',
     labelMensaje: 'Mensaje',
     placeholderMensaje:
-      'Cuéntanos brevemente qué necesitas: tipo de evento, fecha tentativa, país, audiencia, interés en Pure Cycling, Bike & Bed Hotels o el motivo de tu contacto.',
+      'Contame brevemente qué necesitás: si te interesa la copropiedad turística, en qué etapa estás y qué tenés disponible. Si es otra cosa —una conferencia, entrenamiento, prensa— contame el tipo de evento, la fecha y el país.',
     submitIdle: 'Enviar mensaje →',
     submitSending: 'Enviando...',
     successTitle: 'Solicitud recibida.',

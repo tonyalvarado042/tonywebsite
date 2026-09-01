@@ -3,14 +3,17 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { MapPin, Mic, Bike, Building2, BookOpen, Handshake } from 'lucide-react'
+import { MapPin, Mic, Bike, Building2, BookOpen, Handshake, Check } from 'lucide-react'
 import { pushGTMEvent } from '@/lib/gtm'
 
 export const interesOptions = [
   { value: 'pure-cycling',        label: 'Pure Cycling' },
   { value: 'puromtb',            label: 'PuroMTB' },
   { value: 'bike-bed',           label: 'Bike & Bed Hotels' },
-  { value: 'bike-bed-inversion', label: 'Inversión Bike & Bed' },
+  // Tony, 31-ago-2026: en pantalla dice «copropiedad», no «inversión».
+  // El `value` se queda igual — lo usan la API, el CRM y los enlaces de
+  // /bike-bed-hotels. Cambiarlo rompería el enrutado de los leads.
+  { value: 'bike-bed-inversion', label: 'Copropiedad turística' },
   { value: 'conferencias',       label: 'Conferencias' },
   { value: 'libros',             label: 'Libros' },
   { value: 'contacto-general',   label: 'Contacto general' },
@@ -21,7 +24,7 @@ const interesOptionsEn = [
   { value: 'pure-cycling',        label: 'Pure Cycling' },
   { value: 'puromtb',            label: 'PuroMTB' },
   { value: 'bike-bed',           label: 'Bike & Bed Hotels' },
-  { value: 'bike-bed-inversion', label: 'Bike & Bed Investment' },
+  { value: 'bike-bed-inversion', label: 'Tourism co-ownership' },
   { value: 'conferencias',       label: 'Speaking / Conferences' },
   { value: 'libros',             label: 'Books' },
   { value: 'contacto-general',   label: 'General inquiry' },
@@ -30,20 +33,22 @@ const interesOptionsEn = [
 
 const validValues = interesOptions.map((o) => o.value)
 
+// Cada renglón lleva el valor que deja puesto en «Interés principal» al
+// tocarlo. `destacado` es el que Tony quiere de primero.
 const canRequest = [
-  { icon: Mic,       label: 'Conferencia / keynote' },
-  { icon: Bike,      label: 'Entrenamiento con Pure Cycling' },
-  { icon: Building2, label: 'Inversión en Bike & Bed Hotels' },
-  { icon: BookOpen,  label: 'Libros y entrevistas' },
-  { icon: Handshake, label: 'Alianzas profesionales' },
+  { icon: Building2, label: 'Copropiedad turística',          valor: 'bike-bed-inversion', destacado: true },
+  { icon: Mic,       label: 'Conferencia / keynote',          valor: 'conferencias' },
+  { icon: Bike,      label: 'Entrenamiento con Pure Cycling', valor: 'pure-cycling' },
+  { icon: BookOpen,  label: 'Libros y entrevistas',           valor: 'libros' },
+  { icon: Handshake, label: 'Alianzas profesionales',         valor: 'otro' },
 ]
 
 const canRequestEn = [
-  { icon: Mic,       label: 'Conference / keynote' },
-  { icon: Bike,      label: 'Training with Pure Cycling' },
-  { icon: Building2, label: 'Investment in Bike & Bed Hotels' },
-  { icon: BookOpen,  label: 'Books and interviews' },
-  { icon: Handshake, label: 'Professional partnerships' },
+  { icon: Building2, label: 'Tourism co-ownership',       valor: 'bike-bed-inversion', destacado: true },
+  { icon: Mic,       label: 'Conference / keynote',       valor: 'conferencias' },
+  { icon: Bike,      label: 'Training with Pure Cycling', valor: 'pure-cycling' },
+  { icon: BookOpen,  label: 'Books and interviews',       valor: 'libros' },
+  { icon: Handshake, label: 'Professional partnerships',  valor: 'otro' },
 ]
 
 const inputClass =
@@ -115,7 +120,7 @@ export default function Contact({ initialInterest, locale = 'es' }: Props) {
     sectionLabelRight: 'How can we help you?',
     headingRight: "This form is the direct line to Tony's team.",
     responseTitle: 'Response times',
-    responseText: 'For speaking or investment inquiries, the team responds within 24 to 48 business hours.',
+    responseText: 'For speaking or co-ownership inquiries, the team responds within 24 to 48 business hours.',
     locationLabel: 'Location',
     successTitle: 'Request received.',
     successDefaultLabel: 'your inquiry',
@@ -142,7 +147,7 @@ export default function Contact({ initialInterest, locale = 'es' }: Props) {
     sectionLabelRight: '¿En qué te podemos ayudar?',
     headingRight: 'Este formulario es la vía directa al equipo de Tony.',
     responseTitle: 'Tiempos de respuesta',
-    responseText: 'Para consultas de conferencias o inversión, el equipo responde en un plazo de 24 a 48 horas hábiles.',
+    responseText: 'Para consultas de conferencias o copropiedad turística, el equipo responde en un plazo de 24 a 48 horas hábiles.',
     locationLabel: 'Ubicación',
     successTitle: 'Solicitud recibida.',
     successDefaultLabel: 'tu solicitud',
@@ -156,7 +161,7 @@ export default function Contact({ initialInterest, locale = 'es' }: Props) {
     placeholderCompany: 'Nombre de tu empresa',
     labelInteres: 'Interés principal',
     labelMessage: 'Mensaje',
-    placeholderMessage: 'Cuéntanos brevemente qué necesitas: tipo de evento, fecha tentativa, país, audiencia, interés en Pure Cycling, Bike & Bed Hotels o el motivo de tu contacto.',
+    placeholderMessage: 'Contame brevemente qué necesitás: si te interesa la copropiedad turística, en qué etapa estás y qué tenés disponible. Si es otra cosa —una conferencia, entrenamiento, prensa— contame el tipo de evento, la fecha y el país.',
     errorText: 'No se pudo enviar el mensaje. Por favor intenta de nuevo o escríbenos directamente.',
     submitSending: 'Enviando...',
     submitIdle: 'Enviar mensaje →',
@@ -379,15 +384,47 @@ export default function Contact({ initialInterest, locale = 'es' }: Props) {
               <h3 className="mb-5 text-xl font-bold text-brand-text">
                 {t.headingRight}
               </h3>
-              <ul className="space-y-3">
-                {currentCanRequest.map(({ icon: Icon, label }) => (
-                  <li key={label} className="flex items-center gap-3">
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-green/10">
-                      <Icon size={15} className="text-brand-green" />
-                    </div>
-                    <span className="text-sm text-brand-muted">{label}</span>
-                  </li>
-                ))}
+              {/* Esta lista era decorativa. Ahora cada renglón llena el
+                  formulario y manda el cursor al mensaje: quien ya sabe a qué
+                  viene se salta el desplegable. El de copropiedad va de
+                  primero y resaltado. */}
+              <ul className="space-y-2">
+                {currentCanRequest.map(({ icon: Icon, label, valor, destacado }) => {
+                  const elegido = interes === valor
+                  return (
+                    <li key={label}>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setInteres(valor)
+                          document.getElementById('contact-mensaje')?.focus()
+                        }}
+                        className={`flex w-full items-center gap-3 rounded-xl border p-2.5 text-left
+                                    transition-colors ${
+                          elegido
+                            ? 'border-brand-green/60 bg-brand-green/10'
+                            : destacado
+                              ? 'border-brand-green/30 bg-brand-green/[0.05] hover:border-brand-green/60'
+                              : 'border-transparent hover:border-brand-border hover:bg-brand-card'
+                        }`}
+                      >
+                        <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${
+                          elegido || destacado ? 'bg-brand-green/20' : 'bg-brand-green/10'
+                        }`}>
+                          <Icon size={15} className="text-brand-green" />
+                        </span>
+                        <span className={`text-sm ${
+                          elegido || destacado ? 'font-semibold text-brand-text' : 'text-brand-muted'
+                        }`}>
+                          {label}
+                        </span>
+                        {elegido && (
+                          <Check size={15} className="ml-auto shrink-0 text-brand-green" strokeWidth={3} />
+                        )}
+                      </button>
+                    </li>
+                  )
+                })}
               </ul>
             </div>
 
