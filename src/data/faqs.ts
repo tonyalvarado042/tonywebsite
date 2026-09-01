@@ -189,6 +189,112 @@ export const faqs: FAQItem[] = [
   },
 ]
 
+/**
+ * Las preguntas del HOME.
+ *
+ * Tony lo pidió el 31-ago-2026: en la portada va la copropiedad, que es lo
+ * que más le urge. Las de ciclismo y entrenamiento no se borraron — se
+ * mudaron a /preguntas-frecuentes, donde siguen trabajando para Google.
+ *
+ * ⚠️ CUMPLIMIENTO. Acá solo se usa el vocabulario aprobado —copropiedad,
+ * fracción, acción, co-dueño, «el activo factura»— y NUNCA rendimiento,
+ * retorno, ROI, utilidad, ganancia ni inversión garantizada.
+ *
+ * Y no se publican precio por acción, cantidad de acciones disponibles ni
+ * condiciones. Una página abierta con cifras y condiciones se parece
+ * demasiado a una oferta pública de valores; eso se conversa con documentos.
+ */
+export const faqsCopropiedad: FAQItem[] = [
+  {
+    question: '¿Qué es la copropiedad turística?',
+    answer: [
+      {
+        type: 'paragraph',
+        text: 'Es dividir un proyecto turístico real en fracciones —**acciones**— para que varias personas sean dueñas del mismo activo. **No es tiempo compartido:** no se compran semanas de uso, se es dueño de una parte del activo.',
+      },
+      {
+        type: 'list',
+        items: [
+          'El hotel se opera como uno solo, con un solo equipo y una sola marca — no son casas sueltas',
+          'Como operador, Tony mantiene siempre al menos el 51% del proyecto',
+          'Cada acción representa una parte del activo real, no una promesa de resultados',
+        ],
+      },
+    ],
+  },
+  {
+    question: '¿En qué se diferencia de comprar un Airbnb por mi cuenta?',
+    answer: [
+      {
+        type: 'paragraph',
+        text: 'En quién carga con la operación. **Construir es la parte fácil.** Lo que suele salir caro es operar, temporada tras temporada.',
+      },
+      {
+        type: 'list',
+        items: [
+          'Permisos, personal, mantenimiento y atención al huésped en menos de una hora',
+          'Sostener la calificación cuando la temporada viene floja',
+          'Reemplazar a quien renuncia en plena semana santa',
+        ],
+      },
+      {
+        type: 'paragraph',
+        text: 'En copropiedad eso lo lleva un equipo. Si preferís hacerlo por tu cuenta, en la **calculadora de Airbnb** podés correr los números de tu propio proyecto, gratis y sin registrarte.',
+      },
+    ],
+  },
+  {
+    question: '¿Qué proyectos hay hoy?',
+    answer: [
+      {
+        type: 'paragraph',
+        text: 'Dos, los dos en **La Fortuna de San Carlos**, cerca del volcán Arenal.',
+      },
+      {
+        type: 'list',
+        items: [
+          '**Bike & Bed Hotels** — cinco villas, opera desde 2025. Superhost, 4.96 de valoración',
+          '**Humaya** — abre en noviembre de 2026. Diez villas, con gimnasio, spa, piscinas termales, sauna y cold plunge',
+        ],
+      },
+    ],
+  },
+  {
+    question: '¿Cómo puedo ser co-dueño?',
+    answer: [
+      {
+        type: 'paragraph',
+        text: 'Se conversa primero. Cada proyecto está en un momento distinto, y las condiciones, la estructura legal y los plazos se revisan **caso por caso, con documentos en la mano**. Nada de eso se define desde una página web.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Escribime por el formulario de contacto, contame en qué etapa estás y te digo en qué está cada proyecto hoy.',
+      },
+    ],
+  },
+  {
+    question: '¿Esto es una oferta de inversión?',
+    answer: [
+      {
+        type: 'paragraph',
+        text: 'No. Este sitio es informativo: **no es una oferta de valores, una recomendación financiera ni una promesa de resultados.** Cualquier participación en un proyecto se trata aparte, con documentación y con la asesoría legal y financiera que vos consideres.',
+      },
+    ],
+  },
+  {
+    question: '¿Tony Alvarado ofrece conferencias presenciales fuera de Costa Rica?',
+    answer: [
+      {
+        type: 'paragraph',
+        text: 'Sí. Tony Alvarado está disponible para eventos presenciales y virtuales en Costa Rica y en el extranjero. Para solicitar una conferencia, completa el formulario de contacto con los detalles del evento.',
+      },
+    ],
+  },
+]
+
+/** Todas juntas, para la página /preguntas-frecuentes. */
+export const faqsTodas: FAQItem[] = [...faqsCopropiedad, ...faqs]
+
 export function faqAnswerToPlainText(answer: FAQAnswerBlock[]): string {
   return answer
     .map((block) => {

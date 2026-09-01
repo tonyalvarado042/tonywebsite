@@ -22,6 +22,10 @@ const empresasLinks = [
   { href: '/puromtb', label: 'PuroMTB' },
   { href: '/pure-cycling', label: 'Pure Cycling' },
   { href: '/bike-bed-hotels', label: 'Bike & Bed Hotels' },
+  // Humaya y LideraX10 entraron el 31-ago-2026. Van a sus propios sitios
+  // porque todavía no tienen página adentro de tonyalvarado.com.
+  { href: 'https://stayhumaya.com', label: 'Humaya', externo: true },
+  { href: 'https://liderax10.com', label: 'LideraX10', externo: true },
 ]
 
 const navLinksEn: NavLink[] = [
@@ -36,6 +40,8 @@ const empresasLinksEn = [
   { href: '/en/puromtb',         label: 'PuroMTB' },
   { href: '/en/pure-cycling',    label: 'Pure Cycling' },
   { href: '/en/bike-bed-hotels', label: 'Bike & Bed Hotels' },
+  { href: 'https://stayhumaya.com', label: 'Humaya', externo: true },
+  { href: 'https://liderax10.com',  label: 'LideraX10', externo: true },
 ]
 
 interface HeaderProps {
@@ -93,6 +99,9 @@ export default function Header({ locale = 'es' }: HeaderProps) {
                     <Link
                       key={link.href}
                       href={link.href}
+                      {...('externo' in link && link.externo
+                        ? { target: '_blank', rel: 'noopener noreferrer' }
+                        : {})}
                       className="block px-4 py-3 text-sm text-brand-muted transition-colors hover:bg-brand-card hover:text-brand-text"
                     >
                       {link.label}

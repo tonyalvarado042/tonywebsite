@@ -146,12 +146,14 @@ export default function PuroMTBPage() {
           <div className="grid items-center gap-12 md:grid-cols-2">
 
             <div className="overflow-hidden rounded-2xl">
+              {/* Cambiada el 31-ago-2026: antes había una foto de escritorio
+                  que a Tony no le gustaba. Esta es la de portada. */}
               <Image
-                src="/images/tony/tony-puromtb.jpg"
-                alt="Tony Alvarado en PuroMTB"
+                src="/images/tony/tony-hero.jpg"
+                alt="Tony Alvarado, fundador de PuroMTB"
                 width={600}
                 height={450}
-                className="h-80 w-full object-cover object-[50%_25%] md:h-96"
+                className="h-80 w-full object-cover object-[50%_18%] md:h-96"
               />
             </div>
 
