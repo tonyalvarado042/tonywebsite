@@ -26,6 +26,7 @@ const highlightsEn = [
 export default function AboutTony({ locale = 'es' }: { locale?: 'es' | 'en' }) {
   const t = locale === 'en' ? {
     sectionLabel: 'About Tony',
+    h2kicker: 'Entrepreneur and cyclist.',
     h2line1: 'He started selling apples to buy a bicycle.',
     h2span: 'Today he leads a group of companies that have generated millions of dollars.',
     sub1Label: 'From engineering to entrepreneurship',
@@ -35,6 +36,8 @@ export default function AboutTony({ locale = 'es' }: { locale?: 'es' | 'en' }) {
     imageAlt: 'Tony Alvarado — cycling coach and trainer in Costa Rica',
   } : {
     sectionLabel: 'Sobre Tony',
+    // Tony lo pidió el 31-ago-2026: quién es, antes de la historia.
+    h2kicker: 'Empresario y ciclista.',
     h2line1: 'Empezó vendiendo manzanas para comprarse una bicicleta.',
     h2span: 'Hoy dirige un grupo de empresas que han facturado millones de dólares.',
     sub1Label: 'De la ingeniería al emprendimiento',
@@ -79,6 +82,7 @@ export default function AboutTony({ locale = 'es' }: { locale?: 'es' | 'en' }) {
             {t.sectionLabel}
           </p>
           <h2 className="text-4xl font-bold leading-tight text-brand-text">
+            {t.h2kicker}<br />
             {t.h2line1}<br />
             <span className="text-brand-accent">{t.h2span}</span>
           </h2>

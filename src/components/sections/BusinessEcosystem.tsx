@@ -46,7 +46,7 @@ export default function BusinessEcosystem({ locale = 'es' }: { locale?: 'es' | '
     sectionLabel: 'Business ecosystem',
     h2text: 'An ecosystem built',
     h2span: 'around a single mission.',
-    paragraph: 'PuroMTB, Pure Cycling and Bike & Bed Hotels. Each one different. All revolve around a bicycle.',
+    paragraph: 'Transforming the lives of millions of people through cycling, wellness tourism and shared ownership of tourism assets.',
     pureCyclingSubtitle: 'The community that transforms your life through cycling.',
     pureCyclingDesc: 'A transformation program with cycling, nutrition, mindset, mobility and faith. With members in 30+ countries.',
     pureCyclingCta: 'Join Pure Cycling →',
@@ -63,7 +63,10 @@ export default function BusinessEcosystem({ locale = 'es' }: { locale?: 'es' | '
     sectionLabel: 'Ecosistema empresarial',
     h2text: 'Un ecosistema construido',
     h2span: 'alrededor de una sola misión.',
-    paragraph: 'PuroMTB, Pure Cycling y Bike & Bed Hotels. Cada una distinta. Todas giran alrededor de una bicicleta.',
+    // La misión, dictada por Tony el 31-ago-2026. Reemplazó a la lista de
+    // empresas: el encabezado ya dice «una sola misión», así que ahora el
+    // párrafo la dice de verdad en vez de repetir los nombres.
+    paragraph: 'Transformar la vida de millones de personas a través del ciclismo, el turismo de bienestar y la copropiedad turística.',
     pureCyclingSubtitle: 'La comunidad que transforma tu vida a través del ciclismo.',
     pureCyclingDesc: 'Programa de transformación con ciclismo, nutrición, mentalidad, movilidad y fe. Con miembros en más de 30 países.',
     pureCyclingCta: 'Únete a Pure Cycling →',
