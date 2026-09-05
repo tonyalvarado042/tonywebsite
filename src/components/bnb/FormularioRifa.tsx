@@ -307,9 +307,9 @@ export default function FormularioRifa() {
             resaltada={resaltada}
           >
             <span className="font-semibold text-bnb-blanco">
-              También quiero ser parte sin esperar el sorteo.
+              Quiero información de los 10 cupos con precio especial.
             </span>{' '}
-            Escribinos y te pasamos la información de la experiencia completa.
+            No quiero depender de ganar la rifa.
           </Casilla>
 
           <Casilla

@@ -304,6 +304,13 @@ export default function RideAndReset() {
           notita al pie. Manda al MISMO formulario, con la casilla prendida. */}
       <section className="border-y border-bnb-borde bg-bnb-carbon">
         <div className="mx-auto max-w-3xl px-6 py-20 text-center sm:py-24">
+          {/* El número es el gancho: son diez, y son de verdad. */}
+          <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-bnb-lava/50
+                        px-4 py-1.5 font-bnb-titulo text-[12px] font-bold uppercase
+                        tracking-[0.16em] text-bnb-lava">
+            <Flame size={14} /> Solo {RESERVA.cupos} cupos con precio especial
+          </p>
+
           <h2 className="mb-5 font-bnb-titulo text-3xl font-extrabold leading-tight text-bnb-blanco sm:text-4xl">
             {RESERVA.titulo}
           </h2>

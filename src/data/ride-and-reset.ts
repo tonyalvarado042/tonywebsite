@@ -111,13 +111,50 @@ export const CAMPANA_ID_EXTERNO = 'rifa:ride-reset-oct-2026'
  */
 export const RESERVA = {
   publicaPrecio: false,
-  titulo: '¿No querés dejarlo a la suerte?',
+
+  /**
+   * Cuántos cupos hay con precio especial.
+   *
+   * Dato de Tony, 4 de septiembre de 2026: «Abrimos únicamente 10 cupos con
+   * precio especial para quienes no quieran depender de ganar la rifa».
+   * ⚠️ Es un número real, no un adorno de escasez. Si cambia, se cambia acá.
+   */
+  cupos: 10,
+
+  titulo: '¿No querés depender de la suerte?',
   bajada:
-    'Los cupos de la rifa son dos. La experiencia tiene más. Si querés ser parte ' +
-    'de RIDE & RESET sin esperar el sorteo, escribinos y te pasamos toda la ' +
-    'información y las condiciones para esta edición.',
-  llamado: 'Quiero ser parte',
+    'Abrimos únicamente 10 cupos con precio especial para quienes prefieren ' +
+    'asegurar su espacio y no depender de ganar la rifa. Escribinos y te ' +
+    'mandamos toda la información.',
+  llamado: 'Quiero información',
 }
+
+/**
+ * El texto que contesta solo en WhatsApp.
+ *
+ * ⚠️ ESTO NO LO MANDA EL SITIO. Lo manda la app **WhatsApp Business** con su
+ * «mensaje de bienvenida», que contesta al primer mensaje de cada persona
+ * nueva. Como todo el que toca el botón escribe primero, le llega de una.
+ *
+ * Vive acá para que no se pierda y para que se vea junto al resto del copy,
+ * pero se configura en el teléfono del +506 8343 4260:
+ * Ajustes → Herramientas para la empresa → Mensaje de bienvenida.
+ *
+ * Escrito por Tony el 4 de septiembre de 2026.
+ */
+export const BIENVENIDA_WHATSAPP = `🔥 ¡Ya estás participando!
+
+Gracias por aplicar para vivir RIDE & RESET en La Fortuna. 🌋🚴
+
+Y tengo algo más para vos:
+
+Abrimos únicamente 10 cupos con precio especial para quienes no quieran depender de ganar la rifa y prefieran asegurar su espacio.
+
+4 días · 3 noches · Bike & Bed · Rides · Recovery · Wellness · Nutrición · Experiencia completa.
+
+¿Querés que te mande toda la información?
+
+Respondeme "QUIERO INFO" y te la envío.`
 
 /**
  * Quiénes acompañan.

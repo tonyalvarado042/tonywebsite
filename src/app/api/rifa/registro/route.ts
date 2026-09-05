@@ -9,7 +9,7 @@ import {
 } from '@/lib/crm'
 import { enlaceDeBaja } from '@/lib/secuencias'
 import {
-  RIFA, VENTAS, EXPERIENCIA, ANFITRIONES, CAMPANA_ID_EXTERNO, enlaceWhatsApp,
+  RIFA, RESERVA, VENTAS, EXPERIENCIA, ANFITRIONES, CAMPANA_ID_EXTERNO, enlaceWhatsApp,
 } from '@/data/ride-and-reset'
 
 /**
@@ -274,11 +274,11 @@ export async function POST(req: NextRequest) {
           ...ANFITRIONES.map((a) => `  · ${a.nombre} — ${a.rol}`),
           '',
           '───────────────────────────────',
-          '¿NO QUERÉS DEJARLO A LA SUERTE?',
+          '¿NO QUERÉS DEPENDER DE LA SUERTE?',
           '───────────────────────────────',
           '',
-          'Los cupos de la rifa son dos, pero la experiencia tiene más.',
-          `Para quienes entran ahora hay un PRECIO ESPECIAL en esta edición.`,
+          `Abrimos únicamente ${RESERVA.cupos} CUPOS CON PRECIO ESPECIAL para quienes`,
+          'prefieren asegurar su espacio y no depender de ganar la rifa.',
           '',
           `Si querés el detalle completo —qué incluye, el precio y cómo reservar—`,
           `respondé este correo o escribinos a ${VENTAS.correo} y te mandamos`,
