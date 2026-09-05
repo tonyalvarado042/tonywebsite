@@ -342,6 +342,42 @@ export const FOTOS = {
 }
 
 /**
+ * Las fotos del hotel.
+ *
+ * Son copias optimizadas de `public/images/bike-bed/`, que usa la página
+ * `/bike-bed-hotels`. Se copiaron en vez de tocarse **a propósito**: una de las
+ * originales es la imagen de Open Graph de esa página, y comprimirla en su
+ * lugar le habría cambiado la vista previa sin que nadie lo pidiera.
+ *
+ * ⚠️ **`bike-bed-investment-01.jpeg` NO se usa acá.** Es un anuncio para
+ * inversionistas —«INVIERTA EN LA ETAPA 2 · desde US$50.000»— con otro número
+ * de teléfono. En una página que vende un retiro de $1.199 confunde a quien
+ * está a punto de comprar.
+ */
+export const FOTOS_HOTEL = {
+  cabina: {
+    src: '/images/ride-and-reset/hotel-cabina-exterior.jpg',
+    ancho: 800, alto: 1200, encuadre: '50% 50%',
+    alt: 'Cabaña A-frame de Bike & Bed, con ventanal de piso a techo y jardín tropical',
+  },
+  interior: {
+    src: '/images/ride-and-reset/hotel-interior-bici.jpg',
+    ancho: 1000, alto: 1000, encuadre: '50% 50%',
+    alt: 'Interior de una cabaña de Bike & Bed, con la bicicleta colgada en la pared junto a la cocina',
+  },
+  jacuzzi: {
+    src: '/images/ride-and-reset/hotel-jacuzzi-volcan.jpg',
+    ancho: 1000, alto: 1000, encuadre: '50% 55%',
+    alt: 'Jacuzzi al aire libre en Bike & Bed, con el Volcán Arenal de fondo',
+  },
+  cabinas: {
+    src: '/images/ride-and-reset/hotel-cabinas-volcan.jpg',
+    ancho: 1448, alto: 1086, encuadre: '50% 50%',
+    alt: 'Vista aérea de las cabañas de Bike & Bed con el Volcán Arenal detrás',
+  },
+}
+
+/**
  * El logo de Bike & Bed.
  *
  * ⚠️ El original que pasó Tony es blanco sobre negro SÓLIDO, sin transparencia.
