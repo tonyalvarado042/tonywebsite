@@ -121,23 +121,74 @@ export const CAMPANA_ID_EXTERNO = 'rifa:ride-reset-oct-2026'
  * es un bloque propio con el mismo tamaño que la rifa.
  */
 export const RESERVA = {
-  publicaPrecio: false,
+  /**
+   * Los cupos.
+   *
+   * Corregido por Tony el 5 de septiembre de 2026: **10 espacios en total, y
+   * solo 5 con precio especial.** Antes esta nota decía 10 con precio especial
+   * — eso quedó mal en la landing de la rifa y se arregló el mismo día.
+   *
+   * ⚠️ Son números reales, no adorno de escasez. Si cambian, se cambian acá y
+   * quedan bien en las dos páginas.
+   */
+  cupos: 5,
+  cuposTotales: 10,
 
   /**
-   * Cuántos cupos hay con precio especial.
+   * El precio, y ahora SÍ se publica.
    *
-   * Dato de Tony, 4 de septiembre de 2026: «Abrimos únicamente 10 cupos con
-   * precio especial para quienes no quieran depender de ganar la rifa».
-   * ⚠️ Es un número real, no un adorno de escasez. Si cambia, se cambia acá.
+   * Tony cambió de decisión el 5 de septiembre de 2026: antes era «escribinos»
+   * sin monto; ahora la página de reserva muestra **$1.199, antes $2.000**.
+   *
+   * ⚠️ `antes` es un precio de referencia real que dio Tony. Un precio tachado
+   * es una afirmación: si alguna vez deja de ser cierto, se quita — no se deja
+   * «porque vende».
    */
-  cupos: 10,
+  precio: {
+    ahora: 1199,
+    antes: 2000,
+    moneda: 'USD',
+  },
 
+  // ── El bloque dentro de la landing de la rifa ──
   titulo: '¿No querés depender de la suerte?',
   bajada:
-    'Abrimos únicamente 10 cupos con precio especial para quienes prefieren ' +
-    'asegurar su espacio y no depender de ganar la rifa. Escribinos y te ' +
-    'mandamos toda la información.',
+    'De los 10 espacios de la experiencia, solo 5 quedan con precio especial ' +
+    'para quienes prefieren asegurar su lugar y no depender del sorteo.',
   llamado: 'Quiero información',
+}
+
+/**
+ * La página de reserva: `/ride-and-reset/reservar`.
+ *
+ * Es la venta directa, aparte de la rifa. Tony la pidió el 5 de septiembre de
+ * 2026 con el precio a la vista y urgencia.
+ *
+ * ⚠️ **Los dos botones van a WhatsApp, a propósito.** Existe otra página viva
+ * en `arenal-bike-reset.emergent.host` que muestra **$1.995, fechas de
+ * septiembre y una preventa vencida el 1 de julio de 2026**. Mandar ahí desde
+ * acá haría que la persona vea un precio distinto justo al hacer clic. Tony
+ * dijo que él se encarga de esa página; mientras tanto, no se enlaza.
+ */
+export const OFERTA = {
+  titulo: 'Asegurá tu lugar',
+  bajada:
+    'La misma experiencia de la rifa, sin depender del sorteo. Cuatro días al ' +
+    'pie del Volcán Arenal: rides, entrenamiento, recuperación y nutrición, ' +
+    'hospedado en Bike & Bed.',
+  urgencia: 'Cuando se llenen los 5, el precio vuelve a lo normal.',
+
+  /** Lo que NO incluye. Va a propósito: evita el reclamo después. */
+  noIncluye: [
+    'Tiquetes aéreos',
+    'Transporte hasta La Fortuna',
+    'Bicicleta (hay alquiler disponible)',
+    'Gastos personales',
+  ],
+
+  mensajeWhatsApp:
+    'Hola, quiero asegurar uno de los 5 cupos de RIDE & RESET del 5 al 8 de ' +
+    'octubre con el precio especial de $1.199. ¿Me pasan los detalles para reservar?',
 }
 
 /**

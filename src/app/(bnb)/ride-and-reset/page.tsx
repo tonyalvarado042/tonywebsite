@@ -92,10 +92,10 @@ export default function RideAndReset() {
           Solo se ve mientras haya PENDIENTES. Está a propósito arriba de todo:
           es para que nadie publique la página a medias sin darse cuenta. */}
       {faltan.length > 0 && (
-        <div className="border-b-2 border-bnb-lava bg-bnb-lava/10 px-6 py-4 text-center">
+        <div className="border-b-2 border-bnb-verde bg-bnb-verde/10 px-6 py-4 text-center">
           <p className="mx-auto max-w-3xl text-[13.5px] leading-relaxed text-bnb-blanco">
             <strong className="font-bnb-titulo font-bold">Falta llenar {faltan.length} dato{faltan.length > 1 ? 's' : ''}</strong>
-            {' '}en <code className="rounded bg-bnb-negro px-1.5 py-0.5 text-bnb-lava">src/data/ride-and-reset.ts</code>:
+            {' '}en <code className="rounded bg-bnb-negro px-1.5 py-0.5 text-bnb-verde">src/data/ride-and-reset.ts</code>:
             {' '}<span className="text-bnb-humo">{faltan.join(' · ')}</span>.
             {' '}Esta página no debería publicarse así.
           </p>
@@ -135,23 +135,23 @@ export default function RideAndReset() {
               className="inline-flex min-h-[44px] items-center gap-2 rounded-full border
                          border-bnb-blanco/30 bg-bnb-negro/50 px-4 text-[14px] font-semibold
                          text-bnb-blanco backdrop-blur-sm transition-colors
-                         hover:border-bnb-lava hover:text-bnb-lava"
+                         hover:border-bnb-verde hover:text-bnb-verde"
             >
               <Instagram size={16} />
               {RIFA.cuenta}
             </a>
           </div>
 
-          <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-bnb-lava/50
+          <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-bnb-verde/50
                         bg-bnb-negro/60 px-4 py-1.5 font-bnb-titulo text-[12px] font-bold
-                        uppercase tracking-[0.18em] text-bnb-lava backdrop-blur-sm">
+                        uppercase tracking-[0.18em] text-bnb-verde backdrop-blur-sm">
             <Flame size={14} /> Esto no es una rifa normal
           </p>
 
           <h1 className="mb-5 max-w-3xl font-bnb-titulo text-4xl font-extrabold leading-[1.05]
                          text-bnb-blanco sm:text-6xl lg:text-7xl">
             {RIFA.cupos} cupos gratis
-            <span className="block text-bnb-lava">
+            <span className="block text-bnb-verde">
               para vivir{' '}
               {/* El nombre no se parte nunca: «RIDE &» arriba y «RESET» solo
                   abajo se lee como un error de maquetación. */}
@@ -172,9 +172,9 @@ export default function RideAndReset() {
 
           <a
             href="#participar"
-            className="inline-flex min-h-[58px] items-center justify-center rounded-2xl bg-bnb-lava
+            className="inline-flex min-h-[58px] items-center justify-center rounded-2xl bg-bnb-verde
                        px-8 text-[16px] font-bold text-bnb-negro transition-colors
-                       hover:bg-bnb-lava-fuerte"
+                       hover:bg-bnb-verde-fuerte"
           >
             Quiero participar
           </a>
@@ -193,7 +193,7 @@ export default function RideAndReset() {
             const Icono = ICONOS[item.icono as keyof typeof ICONOS] ?? Bike
             return (
               <li key={item.titulo} className="flex items-start gap-4 bg-bnb-carbon p-6">
-                <Icono size={22} className="mt-0.5 shrink-0 text-bnb-lava" strokeWidth={1.75} />
+                <Icono size={22} className="mt-0.5 shrink-0 text-bnb-verde" strokeWidth={1.75} />
                 <span className="text-[15.5px] leading-relaxed text-bnb-humo">{item.titulo}</span>
               </li>
             )
@@ -205,7 +205,7 @@ export default function RideAndReset() {
       <section className="border-y border-bnb-borde bg-bnb-carbon">
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-6 py-20 sm:py-24 lg:grid-cols-2 lg:gap-16">
           <div>
-            <p className="mb-3 font-bnb-titulo text-[12px] font-bold uppercase tracking-[0.18em] text-bnb-lava">
+            <p className="mb-3 font-bnb-titulo text-[12px] font-bold uppercase tracking-[0.18em] text-bnb-verde">
               Pero hay algo mejor
             </p>
             <h2 className="mb-5 font-bnb-titulo text-4xl font-extrabold leading-tight text-bnb-blanco sm:text-5xl">
@@ -218,7 +218,7 @@ export default function RideAndReset() {
             <p className="font-bnb-titulo text-[15px] font-semibold uppercase tracking-[0.14em] text-bnb-blanco">
               {RIFA.fechas.dias} días · {RIFA.fechas.noches} noches · {RIFA.cupos} personas
             </p>
-            <p className="mt-2 font-bnb-titulo text-[15px] font-semibold uppercase tracking-[0.14em] text-bnb-lava">
+            <p className="mt-2 font-bnb-titulo text-[15px] font-semibold uppercase tracking-[0.14em] text-bnb-verde">
               Ride. Recover. Reset.
             </p>
           </div>
@@ -246,7 +246,7 @@ export default function RideAndReset() {
         <div className="grid gap-6 md:grid-cols-2">
           {ANFITRIONES.map((a) => (
             <article key={a.nombre} className="rounded-3xl border border-bnb-borde bg-bnb-carbon p-7">
-              <p className="mb-1 font-bnb-titulo text-[11.5px] font-bold uppercase tracking-[0.16em] text-bnb-lava">
+              <p className="mb-1 font-bnb-titulo text-[11.5px] font-bold uppercase tracking-[0.16em] text-bnb-verde">
                 {a.rol}
               </p>
               <h3 className="mb-1 font-bnb-titulo text-2xl font-bold text-bnb-blanco">{a.nombre}</h3>
@@ -256,7 +256,7 @@ export default function RideAndReset() {
                 rel="noopener noreferrer"
                 className="mb-5 inline-block text-[13px] text-bnb-tenue underline
                            decoration-bnb-borde underline-offset-4 transition-colors
-                           hover:text-bnb-humo hover:decoration-bnb-lava"
+                           hover:text-bnb-humo hover:decoration-bnb-verde"
               >
                 {a.marca}
               </a>
@@ -305,7 +305,7 @@ export default function RideAndReset() {
           {PASOS.map((paso) => (
             <li key={paso.numero} className="rounded-3xl border border-bnb-borde bg-bnb-carbon p-7">
               <span className="mb-4 flex h-11 w-11 items-center justify-center rounded-full
-                               border border-bnb-lava font-bnb-titulo text-lg font-bold text-bnb-lava">
+                               border border-bnb-verde font-bnb-titulo text-lg font-bold text-bnb-verde">
                 {paso.numero}
               </span>
               <h3 className="mb-2 font-bnb-titulo text-lg font-bold text-bnb-blanco">{paso.titulo}</h3>
@@ -321,10 +321,10 @@ export default function RideAndReset() {
       <section className="border-y border-bnb-borde bg-bnb-carbon">
         <div className="mx-auto max-w-3xl px-6 py-20 text-center sm:py-24">
           {/* El número es el gancho: son diez, y son de verdad. */}
-          <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-bnb-lava/50
+          <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-bnb-verde/50
                         px-4 py-1.5 font-bnb-titulo text-[12px] font-bold uppercase
-                        tracking-[0.16em] text-bnb-lava">
-            <Flame size={14} /> Solo {RESERVA.cupos} cupos con precio especial
+                        tracking-[0.16em] text-bnb-verde">
+            <Flame size={14} /> Solo {RESERVA.cupos} de los {RESERVA.cuposTotales} con precio especial
           </p>
 
           <h2 className="mb-5 font-bnb-titulo text-3xl font-extrabold leading-tight text-bnb-blanco sm:text-4xl">
@@ -341,7 +341,7 @@ export default function RideAndReset() {
       <section id="participar" className="scroll-mt-8 px-6 py-20 sm:py-28">
         <div className="mx-auto max-w-2xl">
           <div className="mb-9 text-center">
-            <p className="mb-3 font-bnb-titulo text-[12px] font-bold uppercase tracking-[0.18em] text-bnb-lava">
+            <p className="mb-3 font-bnb-titulo text-[12px] font-bold uppercase tracking-[0.18em] text-bnb-verde">
               Último paso
             </p>
             <h2 className="mb-4 font-bnb-titulo text-3xl font-extrabold leading-tight text-bnb-blanco sm:text-4xl">
@@ -427,7 +427,7 @@ export default function RideAndReset() {
               rel="noopener noreferrer"
               className="inline-flex min-h-[54px] items-center justify-center gap-2.5 rounded-2xl
                          border-2 border-bnb-blanco px-7 text-[15px] font-bold text-bnb-blanco
-                         transition-colors hover:border-bnb-lava hover:bg-bnb-lava hover:text-bnb-negro"
+                         transition-colors hover:border-bnb-verde hover:bg-bnb-verde hover:text-bnb-negro"
             >
               <Instagram size={18} />
               Seguir {RIFA.cuenta}

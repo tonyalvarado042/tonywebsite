@@ -30,8 +30,8 @@ export default function BotonQuieroSerParte({ children }: { children: React.Reac
       type="button"
       onClick={alTocar}
       className="inline-flex min-h-[58px] items-center justify-center gap-2.5 rounded-2xl
-                 border-2 border-bnb-lava px-8 text-[16px] font-bold text-bnb-lava
-                 transition-colors hover:bg-bnb-lava hover:text-bnb-negro"
+                 border-2 border-bnb-verde px-8 text-[16px] font-bold text-bnb-verde
+                 transition-colors hover:bg-bnb-verde hover:text-bnb-negro"
     >
       {children}
       <ArrowDown size={18} />
