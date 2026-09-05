@@ -43,8 +43,21 @@ export async function GET(req: NextRequest) {
 
   // Las tablas nuevas se prueban aparte: que el CRM conteste no significa que
   // la service-role vea las que se crearon después de arrancar la API.
+  //
+  // ⚠️ AL AGREGAR UNA TABLA AL SITIO, AGREGARLA ACÁ. El 4 de septiembre de 2026
+  // `cta_campanas` no estaba en esta lista y le faltaba el grant a service_role:
+  // los leads de la rifa entraban SIN campaña y nadie se enteraba, porque el
+  // código se traga ese error para no perder el lead. Esta lista es lo único
+  // que convierte un fallo mudo en uno que se ve.
   const tablas: Record<string, string> = {}
-  for (const t of ['cta_recursos', 'cta_automatizaciones', 'cta_automatizacion_pasos', 'cta_inscripciones']) {
+  for (const t of [
+    'cta_recursos',
+    'cta_automatizaciones',
+    'cta_automatizacion_pasos',
+    'cta_inscripciones',
+    'cta_campanas',
+    'cta_rifa_participaciones',
+  ]) {
     try {
       const { count, error } = await getCrm().from(t).select('id', { count: 'exact', head: true })
       tablas[t] = error ? `ERROR: ${error.message}` : `ok · ${count ?? 0} filas`
@@ -53,11 +66,34 @@ export async function GET(req: NextRequest) {
     }
   }
 
+  /**
+   * ¿La vista puente de `public` expone las columnas que el sitio escribe?
+   *
+   * Una vista creada con `select *` CONGELA su lista de columnas: agregarle una
+   * columna a la tabla NO se la agrega a la vista. Y como un UPDATE con una sola
+   * columna inexistente se rechaza entero, una columna que falta tumba TODO el
+   * update — no solo su campo.
+   *
+   * Eso paso de verdad: a `cta_contactos` le faltaban 17 columnas, y escribir
+   * `instagram` se llevaba puestas tambien las etiquetas, la campaña y el
+   * seguimiento del mismo update.
+   */
+  const columnas: Record<string, string> = {}
+  for (const col of ['instagram', 'campana_id', 'proximo_seguimiento', 'tags']) {
+    try {
+      const { error } = await getCrm().from(TABLA_CONTACTOS).select(col).limit(1)
+      columnas[col] = error ? `FALTA EN LA VISTA: ${error.message}` : 'ok'
+    } catch (e) {
+      columnas[col] = `ERROR: ${e instanceof Error ? e.message : String(e)}`
+    }
+  }
+
   return NextResponse.json({
     ok: true,
     llaves,
     crm,
     tablas,
+    columnas,
     secuencia: {
       activa: secuenciasActivas(),
       nota: secuenciasActivas()
