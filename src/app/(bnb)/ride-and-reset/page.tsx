@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import {
   Bike, Dumbbell, Waves, Snowflake, Salad, Moon, TreePine, Users,
-  MapPin, CalendarDays, Flame,
+  MapPin, CalendarDays, Flame, Instagram,
 } from 'lucide-react'
 import JsonLd from '@/components/JsonLd'
 import FormularioRifa from '@/components/bnb/FormularioRifa'
@@ -117,14 +117,30 @@ export default function RideAndReset() {
         <div className="absolute inset-0 -z-10 bg-gradient-to-t from-bnb-negro via-bnb-negro/75 to-bnb-negro/25" />
 
         <div className="mx-auto w-full max-w-5xl px-6 pb-16 pt-28 sm:pb-24">
-          <Image
-            src={LOGO_BNB.src}
-            alt={LOGO_BNB.alt}
-            width={LOGO_BNB.ancho}
-            height={LOGO_BNB.alto}
-            priority
-            className="mb-8 h-20 w-auto sm:h-24"
-          />
+          {/* El logo y la cuenta juntos: la rifa también sirve para que
+              conozcan el hotel, no solo para capturar el correo. */}
+          <div className="mb-8 flex flex-wrap items-center gap-x-5 gap-y-3">
+            <Image
+              src={LOGO_BNB.src}
+              alt={LOGO_BNB.alt}
+              width={LOGO_BNB.ancho}
+              height={LOGO_BNB.alto}
+              priority
+              className="h-20 w-auto sm:h-24"
+            />
+            <a
+              href={RIFA.cuentaUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-full border
+                         border-bnb-blanco/30 bg-bnb-negro/50 px-4 text-[14px] font-semibold
+                         text-bnb-blanco backdrop-blur-sm transition-colors
+                         hover:border-bnb-lava hover:text-bnb-lava"
+            >
+              <Instagram size={16} />
+              {RIFA.cuenta}
+            </a>
+          </div>
 
           <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-bnb-lava/50
                         bg-bnb-negro/60 px-4 py-1.5 font-bnb-titulo text-[12px] font-bold
@@ -353,8 +369,17 @@ export default function RideAndReset() {
               {RIFA.fechas.dias} días y {RIFA.fechas.noches} noches de hospedaje en Bike &amp; Bed.
             </li>
             <li>
-              Para participar hay que etiquetar a una persona en el post, compartirlo en
-              historias y completar este formulario. Los tres pasos son necesarios.
+              Para participar hay que <strong className="text-bnb-humo">etiquetar a una
+              persona</strong> en el post, <strong className="text-bnb-humo">compartirlo en
+              historias etiquetando a {RIFA.cuenta}</strong> y completar este formulario.
+              Los tres pasos son necesarios.
+            </li>
+            <li>
+              <strong className="text-bnb-humo">Si salís ganador, vamos a pedirte que
+              confirmes que cumpliste los tres pasos</strong> antes de entregar el premio.
+              Por eso la historia tiene que llevar la etiqueta de {RIFA.cuenta}: sin ella
+              no podemos verla ni comprobarla. Si no se puede confirmar, el cupo pasa a
+              la siguiente persona del sorteo.
             </li>
             <li>Una participación por persona. Los datos repetidos se unifican.</li>
             <li>
@@ -383,8 +408,43 @@ export default function RideAndReset() {
             </li>
           </ul>
 
-          <p className="mt-10 text-[12.5px] text-bnb-tenue">
+          {/* ── El cierre: que se lleven la cuenta, no solo el formulario ── */}
+          <div className="mt-14 rounded-3xl border border-bnb-borde bg-bnb-carbon p-8 text-center">
+            <Image
+              src={LOGO_BNB.src}
+              alt={LOGO_BNB.alt}
+              width={LOGO_BNB.ancho}
+              height={LOGO_BNB.alto}
+              className="mx-auto mb-5 h-16 w-auto"
+            />
+            <p className="mx-auto mb-6 max-w-md text-[15px] leading-relaxed text-bnb-humo">
+              Ganés o no, seguinos: ahí publicamos los rides, la vida del hotel y
+              cuándo abrimos la próxima experiencia.
+            </p>
+            <a
+              href={RIFA.cuentaUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-[54px] items-center justify-center gap-2.5 rounded-2xl
+                         border-2 border-bnb-blanco px-7 text-[15px] font-bold text-bnb-blanco
+                         transition-colors hover:border-bnb-lava hover:bg-bnb-lava hover:text-bnb-negro"
+            >
+              <Instagram size={18} />
+              Seguir {RIFA.cuenta}
+            </a>
+          </div>
+
+          <p className="mt-10 text-center text-[12.5px] text-bnb-tenue">
             Bike &amp; Bed · La Fortuna de San Carlos, Costa Rica ·{' '}
+            <a
+              href={RIFA.cuentaUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline decoration-bnb-borde underline-offset-4 transition-colors hover:text-bnb-humo"
+            >
+              {RIFA.cuenta}
+            </a>
+            {' · '}
             <a
               href="https://www.tonyalvarado.com/politica-de-privacidad"
               className="underline decoration-bnb-borde underline-offset-4 transition-colors hover:text-bnb-humo"

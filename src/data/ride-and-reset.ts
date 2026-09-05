@@ -21,6 +21,17 @@ export const RIFA = {
   nombre: 'RIDE & RESET',
   lugar: 'La Fortuna, Costa Rica',
 
+  /**
+   * La cuenta de Instagram de Bike & Bed.
+   *
+   * Hay que etiquetarla en la historia: **sin esa etiqueta la historia no se
+   * puede verificar**, porque a una cuenta no le llegan las historias donde no
+   * la mencionan. Por eso es requisito y no un detalle.
+   */
+  cuenta: '@bikeandbedarenal',
+  /** El enlace, para que desde la landing también conozcan el hotel. */
+  cuentaUrl: 'https://www.instagram.com/bikeandbedarenal/',
+
   /** Cuántos cupos se regalan. Son 2 a propósito: nadie va solo. */
   cupos: 2,
 
@@ -221,7 +232,9 @@ export const PASOS = [
   {
     numero: 2,
     titulo: 'Compartí el post en tus historias',
-    detalle: 'Subilo a tus historias para que más gente se entere.',
+    detalle:
+      'Subilo a tus historias para que más gente se entere, etiquetando a ' +
+      '@bikeandbedarenal. Sin esa etiqueta no podemos ver tu historia.',
   },
   {
     numero: 3,

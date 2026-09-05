@@ -296,7 +296,10 @@ export default function FormularioRifa() {
         {/* ── Casillas ── */}
         <div className="space-y-3 border-t border-bnb-borde pt-5">
           <Casilla checked={compartio} onChange={setCompartio} id="rifa-compartio">
-            Ya compartí el post en mis historias.
+            <span className="font-semibold text-bnb-blanco">
+              Ya compartí el post en mis historias etiquetando a {RIFA.cuenta}.
+            </span>{' '}
+            Si salís ganador, te vamos a pedir que lo confirmes.
           </Casilla>
 
           <Casilla
