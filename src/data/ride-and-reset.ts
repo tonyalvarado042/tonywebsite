@@ -36,22 +36,35 @@ export const RIFA = {
   },
 
   // ── El cierre de la rifa ──────────────────────────────────────────────────
+  // Confirmado por Tony el 4 de septiembre de 2026: «cierra el 20 de set».
+  // La HORA la puso el sitio: fin del día, que es la lectura natural de «el 20».
+  // Si Tony quiere otra hora, se cambia acá y en `texto`, nada más.
   cierre: {
-    /** ISO con hora de Costa Rica (UTC-6). Ej: '2026-09-25T23:59:00-06:00' */
-    fechaHora: PENDIENTE,
-    /** Cómo se lee. Ej: 'Jueves 25 de septiembre, 11:59 p.m.' */
-    texto: PENDIENTE,
+    /** ISO con hora de Costa Rica (UTC-6). */
+    fechaHora: '2026-09-20T23:59:00-06:00',
+    /** Cómo se lee. */
+    texto: 'Domingo 20 de setiembre, 11:59 p.m.',
   },
 
-  /** Cómo se elige a quien gana y cuándo se anuncia. Va en las bases. */
-  comoSeElige: PENDIENTE,
-  cuandoSeAnuncia: PENDIENTE,
+  /**
+   * Cómo se elige a quien gana y cuándo se anuncia. Va en las bases.
+   *
+   * Confirmado por Tony: **el sorteo se hace en vivo por Facebook Live.**
+   * La fecha y hora exactas del live todavía no las dio; por eso acá dice
+   * «después del cierre» y no una fecha inventada.
+   */
+  comoSeElige:
+    'El sorteo se hace en vivo por Facebook Live, entre todas las participaciones ' +
+    'válidas recibidas antes del cierre.',
+  cuandoSeAnuncia:
+    'Los dos nombres se anuncian en ese mismo Facebook Live, después del cierre, ' +
+    'y quedan publicados en las redes de Bike & Bed.',
 
   // ── WhatsApp ──────────────────────────────────────────────────────────────
-  // El número al que escribe la gente, en formato internacional sin signos:
-  // '50688887777'. Lo usa el botón de wa.me.
+  // El número al que escribe la gente, en formato internacional sin signos.
+  // Confirmado por Tony el 4 de septiembre de 2026: +506 8343 4260.
   whatsapp: {
-    numero: PENDIENTE,
+    numero: '50683434260',
     /** Va precargado en el chat. Lo manda la persona, no nosotros. */
     mensajeRifa:
       'Hola, acabo de apuntarme a la rifa de RIDE & RESET y quiero recibir la info por acá.',
