@@ -108,8 +108,20 @@ export type DatosAlta = {
   telefono: string | null
   nombre: string
   correo: string
-  /** Qué formulario lo trajo. Va a `fuente_lead`. */
-  fuente: 'recurso_gratis' | 'boletin'
+  /**
+   * Qué formulario lo trajo. Va a `fuente_lead`.
+   *
+   * ⚠️ Vocabulario CERRADO por CHECK en la base. Los valores que puede usar el
+   * sitio son estos tres; la lista completa incluye además los que solo escribe
+   * el CRM (comentario_instagram, masterclass, landing_bnbfounders2, referido,
+   * grupo_whatsapp, email_entrante, calendly).
+   *
+   * La rifa de RIDE & RESET usa `otro` a propósito: no hay valor de rifa en el
+   * CHECK, y agregarlo obliga a tocar la base **y** el filtro del CRM, que es
+   * otro repo. Se distingue por etiqueta (`rifa:<slug>`), que es como Marketing
+   * segmenta de todos modos.
+   */
+  fuente: 'recurso_gratis' | 'boletin' | 'otro'
   /** Etiqueta descriptiva, ej. 'recurso:ebook-turismo'. */
   etiqueta: string
   /** Texto para la bitácora. */
