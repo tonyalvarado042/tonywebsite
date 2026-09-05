@@ -6,7 +6,7 @@ import {
 } from 'lucide-react'
 import JsonLd from '@/components/JsonLd'
 import {
-  RIFA, RESERVA, OFERTA, ANFITRIONES, EXPERIENCIA, FOTOS, FOTOS_HOTEL, LOGO_BNB,
+  RIFA, RESERVA, OFERTA, ANFITRIONES, EXPERIENCIA, FOTOS, FOTOS_VILLAS, LOGO_BNB,
   enlaceWhatsApp,
 } from '@/data/ride-and-reset'
 
@@ -241,17 +241,25 @@ export default function Reservar() {
               Bike &amp; Bed, al pie del Arenal
             </h2>
             <p className="text-[16.5px] leading-relaxed text-bnb-humo">
-              El primer hotel temático de ciclismo de Costa Rica. Cabañas donde la
-              bicicleta duerme adentro con vos, y termales para cerrar el día.
+              El primer hotel temático de ciclismo de Costa Rica. Villas donde la
+              bicicleta duerme adentro con vos —montada en la pared, no tirada en un
+              parqueo— y todo pensado para llegar, rodar y descansar.
             </p>
           </div>
 
-          {/* Mosaico: la vertical manda a la izquierda, las cuadradas apiladas. */}
+          {/* Mosaico. La vertical de la bici manda a la izquierda porque es la
+              foto que dice «hotel de ciclismo» sin explicarlo. */}
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <Foto foto={FOTOS_HOTEL.cabina} clase="lg:col-span-2 lg:row-span-2 h-[22rem] lg:h-full" />
-            <Foto foto={FOTOS_HOTEL.interior} clase="h-[15rem]" />
-            <Foto foto={FOTOS_HOTEL.jacuzzi} clase="h-[15rem]" />
-            <Foto foto={FOTOS_HOTEL.cabinas} clase="sm:col-span-2 h-[15rem]" />
+            <Foto foto={FOTOS_VILLAS.bici} clase="lg:col-span-2 lg:row-span-2 h-[24rem] lg:h-full" />
+            <Foto foto={FOTOS_VILLAS.dormitorio} clase="h-[15rem]" />
+            <Foto foto={FOTOS_VILLAS.cocinaConBici} clase="h-[15rem]" />
+            <Foto foto={FOTOS_VILLAS.dormitorioAlto} clase="h-[15rem]" />
+            <Foto foto={FOTOS_VILLAS.cocina} clase="h-[15rem]" />
+            {/* En la franja ancha va el DETALLE, no la cocina: una caja de 4:1
+                sobre una foto 3:2 deja ver apenas un tercio del alto. De una
+                cocina eso es una tajada rara; de un primer plano desenfocado
+                es exactamente lo que se busca. */}
+            <Foto foto={FOTOS_VILLAS.detalle} clase="sm:col-span-2 lg:col-span-4 h-[22rem]" />
           </div>
         </div>
       </section>

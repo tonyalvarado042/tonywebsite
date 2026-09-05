@@ -395,38 +395,61 @@ export const FOTOS = {
 }
 
 /**
- * Las fotos del hotel.
+ * Las fotos de las villas.
  *
- * Son copias optimizadas de `public/images/bike-bed/`, que usa la página
- * `/bike-bed-hotels`. Se copiaron en vez de tocarse **a propósito**: una de las
- * originales es la imagen de Open Graph de esa página, y comprimirla en su
- * lugar le habría cambiado la vista previa sin que nadie lo pidiera.
+ * Sesión propia que pasó Tony el 5 de septiembre de 2026, desde
+ * `Dropbox/Pictures/IA 2026/bikeandbed/villas`. Reemplazan a las que había
+ * antes, que eran recortes de la página /bike-bed-hotels.
  *
- * ⚠️ **`bike-bed-investment-01.jpeg` NO se usa acá.** Es un anuncio para
- * inversionistas —«INVIERTA EN LA ETAPA 2 · desde US$50.000»— con otro número
- * de teléfono. En una página que vende un retiro de $1.199 confunde a quien
- * está a punto de comprar.
+ * De **83,3 MB a 1,20 MB** — los originales venían de 10 a 20 MB cada uno.
+ *
+ * ⚠️ **Dos fotos de esa carpeta NO se usan, a propósito:**
+ *  · `WhatsApp Image ...jpeg` — es una pieza de marketing con el logo y los
+ *    textos QUEMADOS encima, y un teléfono **+506 6153 6064** que no es el de
+ *    esta campaña (el de acá es 8343-4260). Un número equivocado en la página
+ *    manda la venta a otro lado.
+ *  · `_OON0093.jpg` — la cocina desde otro ángulo; `villa-cocina` la cubre.
+ *
+ * La estrella es `bici` : la bicicleta montada en la pared del cuarto. Es la
+ * foto que dice «hotel de ciclismo» sin tener que explicarlo.
  */
-export const FOTOS_HOTEL = {
-  cabina: {
-    src: '/images/ride-and-reset/hotel-cabina-exterior.jpg',
-    ancho: 800, alto: 1200, encuadre: '50% 50%',
-    alt: 'Cabaña A-frame de Bike & Bed, con ventanal de piso a techo y jardín tropical',
+export const FOTOS_VILLAS = {
+  bici: {
+    src: '/images/ride-and-reset/villa-bici-en-la-pared.jpg',
+    ancho: 1200, alto: 1800, encuadre: '50% 45%',
+    alt: 'Bicicleta de montaña montada en la pared de una villa de Bike & Bed, junto a la cocina',
   },
-  interior: {
-    src: '/images/ride-and-reset/hotel-interior-bici.jpg',
-    ancho: 1000, alto: 1000, encuadre: '50% 50%',
-    alt: 'Interior de una cabaña de Bike & Bed, con la bicicleta colgada en la pared junto a la cocina',
+  dormitorio: {
+    src: '/images/ride-and-reset/villa-dormitorio.jpg',
+    ancho: 1600, alto: 1213, encuadre: '50% 50%',
+    alt: 'Dormitorio de una villa de Bike & Bed bajo el techo inclinado, con cama king y madera clara',
   },
-  jacuzzi: {
-    src: '/images/ride-and-reset/hotel-jacuzzi-volcan.jpg',
-    ancho: 1000, alto: 1000, encuadre: '50% 55%',
-    alt: 'Jacuzzi al aire libre en Bike & Bed, con el Volcán Arenal de fondo',
+  cocinaConBici: {
+    src: '/images/ride-and-reset/villa-cocina-con-bici.jpg',
+    // Alineada a la DERECHA: la bici roja vive en ese borde y con el encuadre
+    // centrado quedaba partida a la mitad. Se comparo 50/75/100% reproduciendo
+    // el recorte, y solo al 100% entra completa.
+    ancho: 1600, alto: 1067, encuadre: '100% 50%',
+    alt: 'Cocina y barra de una villa de Bike & Bed, con una bicicleta roja colgada en la pared',
   },
-  cabinas: {
-    src: '/images/ride-and-reset/hotel-cabinas-volcan.jpg',
-    ancho: 1448, alto: 1086, encuadre: '50% 50%',
-    alt: 'Vista aérea de las cabañas de Bike & Bed con el Volcán Arenal detrás',
+  dormitorioAlto: {
+    src: '/images/ride-and-reset/villa-dormitorio-alto.jpg',
+    ancho: 1200, alto: 1800, encuadre: '50% 60%',
+    alt: 'Dormitorio de una villa de Bike & Bed visto a lo alto, bajo el vértice del techo',
+  },
+  detalle: {
+    src: '/images/ride-and-reset/villa-detalle-home.jpg',
+    // Va en una franja ancha, donde se ve poco mas de la mitad del alto.
+    // Se comparo 288/352/416 px de caja contra 40/45% de posicion reproduciendo
+    // el recorte: a 352 px con 45% la palabra se lee y la bicicleta entra
+    // completa, sin que la franja se coma media pantalla.
+    ancho: 1600, alto: 1067, encuadre: '50% 45%',
+    alt: 'Detalle de una villa de Bike & Bed: un letrero de madera que dice «home» junto a una bicicleta decorativa',
+  },
+  cocina: {
+    src: '/images/ride-and-reset/villa-cocina.jpg',
+    ancho: 1600, alto: 1067, encuadre: '50% 50%',
+    alt: 'Cocina equipada de una villa de Bike & Bed, con barra, taburetes y luz natural',
   },
 }
 
