@@ -8,7 +8,9 @@ import {
   registrarActividad,
 } from '@/lib/crm'
 import { enlaceDeBaja } from '@/lib/secuencias'
-import { RIFA, enlaceWhatsApp } from '@/data/ride-and-reset'
+import {
+  RIFA, VENTAS, EXPERIENCIA, ANFITRIONES, CAMPANA_ID_EXTERNO, enlaceWhatsApp,
+} from '@/data/ride-and-reset'
 
 /**
  * Registro de la rifa RIDE & RESET.
@@ -130,27 +132,47 @@ export async function POST(req: NextRequest) {
 
     const crm = getCrm()
 
-    // Segunda etiqueta: la intención de reservar es la que vale plata.
-    if (quiereReservar) {
-      const { data } = await crm
-        .from('cta_contactos').select('tags').eq('id', alta.contactoId).maybeSingle()
-      const tags: string[] = Array.isArray(data?.tags) ? (data!.tags as string[]) : []
-      const quiere = 'bnb:quiere-reservar'
-      if (!tags.includes(quiere)) {
-        await crm.from('cta_contactos')
-          .update({ tags: [...tags, quiere], actualizado_el: new Date().toISOString() })
-          .eq('id', alta.contactoId)
-      }
+    // ── Enganchar el contacto a la campaña, las etiquetas y el seguimiento ──
+    // Todo en UNA lectura y UNA escritura, en vez de tres idas y vueltas.
+    const { data: ficha } = await crm
+      .from('cta_contactos')
+      .select('tags, instagram, campana_id, proximo_seguimiento')
+      .eq('id', alta.contactoId)
+      .maybeSingle()
+
+    const tags: string[] = Array.isArray(ficha?.tags) ? (ficha!.tags as string[]) : []
+    const cambios: Record<string, unknown> = {}
+
+    // La etiqueta que vale plata: quiere la experiencia, no solo el sorteo.
+    if (quiereReservar && !tags.includes('bnb:quiere-reservar')) {
+      cambios.tags = [...tags, 'bnb:quiere-reservar']
     }
 
     // El usuario de Instagram va a su columna, que ya existía en la ficha.
-    if (instagram) {
-      const { data } = await crm
-        .from('cta_contactos').select('instagram').eq('id', alta.contactoId).maybeSingle()
-      // No se pisa lo que ya había: puede estar mejor trabajado a mano.
-      if (!data?.instagram) {
-        await crm.from('cta_contactos').update({ instagram }).eq('id', alta.contactoId)
-      }
+    // No se pisa lo que ya había: puede estar mejor trabajado a mano.
+    if (instagram && !ficha?.instagram) cambios.instagram = instagram
+
+    // La campaña: así estos contactos se ven juntos en la pantalla Campañas.
+    // Se busca por `id_externo` y no por un UUID pegado en el código.
+    if (!ficha?.campana_id) {
+      const { data: campana } = await crm
+        .from('cta_campanas').select('id').eq('id_externo', CAMPANA_ID_EXTERNO).maybeSingle()
+      if (campana?.id) cambios.campana_id = campana.id
+    }
+
+    // Seguimiento: SOLO a quien pidió la info de la experiencia.
+    // Agendárselo a todos llenaría «Mi día» de gente que solo quiso participar
+    // en una rifa gratis, y eso vuelve inútil la pantalla.
+    if (quiereReservar && !ficha?.proximo_seguimiento) {
+      const manana = new Date()
+      manana.setUTCDate(manana.getUTCDate() + 1)
+      cambios.proximo_seguimiento = manana.toISOString().slice(0, 10)
+    }
+
+    if (Object.keys(cambios).length > 0) {
+      cambios.actualizado_el = new Date().toISOString()
+      const { error } = await crm.from('cta_contactos').update(cambios).eq('id', alta.contactoId)
+      if (error) console.error('[rifa/registro] no se pudo completar la ficha:', error.message)
     }
 
     // ── La participación ──
@@ -206,6 +228,12 @@ export async function POST(req: NextRequest) {
       if (error) console.error('[rifa/registro] no se pudo guardar la participación:', error.message)
     }
 
+    // El enlace de WhatsApp: se arma una sola vez y se usa en el correo y en
+    // la respuesta. Es null mientras no haya número configurado.
+    const enlaceWa = enlaceWhatsApp(
+      quiereReservar ? RIFA.whatsapp.mensajeReserva : RIFA.whatsapp.mensajeRifa
+    )
+
     // ── El correo de confirmación ──
     // Sale de una, no es parte de la secuencia: es el acuse de que quedó adentro.
     // Si falla NO se rompe la petición — el lead ya está guardado.
@@ -218,23 +246,60 @@ export async function POST(req: NextRequest) {
       await getResend().emails.send({
         from: REMITENTE_CON_NOMBRE,
         to: correo,
-        subject: `Quedaste adentro: rifa de ${RIFA.nombre}`,
+        // ⚠️ El correo sale desde tonyalvarado.com, que es el dominio verificado
+        // en Resend. Ventas va como reply-to, que NO necesita verificación: al
+        // darle «Responder», la respuesta llega a ventas@puromtb.com.
+        replyTo: VENTAS.correo,
+        subject: `Quedaste adentro: rifa de ${RIFA.nombre} — y esto es lo que vas a vivir`,
         text: [
           `Hola ${nombre},`,
           '',
-          `Ya quedaste participando por uno de los ${RIFA.cupos} cupos de ${RIFA.nombre} en ${RIFA.lugar}.`,
-          `${RIFA.fechas.texto} — ${RIFA.fechas.dias} días y ${RIFA.fechas.noches} noches en Bike & Bed.`,
+          `Ya quedaste participando por uno de los ${RIFA.cupos} cupos de ${RIFA.nombre}.`,
+          ...(etiquetoA ? [`Anotamos que te irías con @${etiquetoA}.`] : []),
+          ...(hayCierre ? [`La rifa cierra el ${cierre}, y el sorteo se hace en vivo por Facebook Live.`] : []),
           '',
-          ...(etiquetoA ? [`Anotamos que te irías con @${etiquetoA}.`, ''] : []),
-          ...(hayCierre ? [`La rifa cierra el ${cierre}.`, ''] : []),
+          '───────────────────────────────',
+          `${RIFA.nombre.toUpperCase()} · ${RIFA.fechas.texto}`,
+          `${RIFA.fechas.dias} días y ${RIFA.fechas.noches} noches en ${RIFA.lugar}`,
+          '───────────────────────────────',
+          '',
+          'Esto es lo que incluye la experiencia:',
+          '',
+          ...EXPERIENCIA.map((e) => `  · ${e.titulo}`),
+          '',
+          'Todo mientras te hospedás en Bike & Bed, el primer hotel temático de',
+          'ciclismo de Costa Rica, en La Fortuna, a minutos del Volcán Arenal.',
+          '',
+          'Te acompañan los cuatro días:',
+          ...ANFITRIONES.map((a) => `  · ${a.nombre} — ${a.rol}`),
+          '',
+          '───────────────────────────────',
+          '¿NO QUERÉS DEJARLO A LA SUERTE?',
+          '───────────────────────────────',
+          '',
+          'Los cupos de la rifa son dos, pero la experiencia tiene más.',
+          `Para quienes entran ahora hay un PRECIO ESPECIAL en esta edición.`,
+          '',
+          `Si querés el detalle completo —qué incluye, el precio y cómo reservar—`,
+          `respondé este correo o escribinos a ${VENTAS.correo} y te mandamos`,
+          'toda la información.',
+          '',
           ...(quiereReservar
             ? [
-                'Además nos dijiste que querés ser parte sin esperar el sorteo:',
-                'te vamos a escribir con toda la información de la experiencia.',
+                'Ya nos dijiste que querés ser parte sin esperar el sorteo, así que',
+                'te vamos a escribir. Si querés adelantarlo, respondé este correo.',
                 '',
               ]
             : []),
-          'Cualquier cosa, respondé este correo — lo leo yo.',
+          ...(enlaceWa
+            ? [
+                'También podés escribirnos por WhatsApp y te llega la información',
+                'de una:',
+                enlaceWa,
+                '',
+              ]
+            : []),
+          'Nos vemos en La Fortuna.',
           '',
           'Tony Alvarado',
           'Bike & Bed · tonyalvarado.com',
@@ -257,10 +322,9 @@ export async function POST(req: NextRequest) {
       yaParticipaba,
       correoEnviado,
       quiereReservar,
-      // El enlace para quien eligió WhatsApp. Null si Tony todavía no puso el número.
-      whatsapp: enlaceWhatsApp(
-        quiereReservar ? RIFA.whatsapp.mensajeReserva : RIFA.whatsapp.mensajeRifa
-      ),
+      // Siempre se devuelve: Tony pidió que el botón de WhatsApp salga en la
+      // pantalla de éxito para todo el mundo, no solo para quien lo eligió.
+      whatsapp: enlaceWa,
     })
   } catch (e) {
     console.error('[rifa/registro] error:', e)

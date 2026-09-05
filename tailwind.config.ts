@@ -71,6 +71,19 @@ const config: Config = {
           humo: '#B3B3B3',     // 10.02:1 — texto secundario
           tenue: '#8A8A8A',    //  6.08:1 — lo más apagado que se permite
 
+          // ── El formulario ────────────────────────────────────────────────
+          // Tony pidió que los campos se vieran más. En un fondo negro un
+          // campo negro se lee como un hueco, no como algo donde escribir.
+          //
+          // Se resolvió con tres cosas medidas, no a ojo:
+          //  · el campo es MÁS CLARO que la tarjeta que lo contiene
+          //  · el contorno pasa 3:1 contra la tarjeta, que es lo que pide
+          //    WCAG 1.4.11 para el borde de un control
+          //  · el texto de ejemplo sube a 6:1 (antes iba en 4.94:1)
+          campo: '#1C1C1C',         // encima de `tarjeta` #121212
+          'borde-campo': '#6E6E6E', // 3.67:1 contra la tarjeta
+          ejemplo: '#9A9A9A',       // 6.06:1 sobre el campo
+
           // El acento. NO es un color de marca: es una decisión de diseño que
           // tomó Tony (lava del Arenal). Por eso se usa SOLO en el botón que
           // captura el lead. Si aparece en varios lados, deja de gritar.

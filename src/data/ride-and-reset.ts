@@ -65,13 +65,42 @@ export const RIFA = {
   // Confirmado por Tony el 4 de septiembre de 2026: +506 8343 4260.
   whatsapp: {
     numero: '50683434260',
-    /** Va precargado en el chat. Lo manda la persona, no nosotros. */
+    /**
+     * Va precargado en el chat. **Lo manda la persona, no nosotros** — por eso
+     * no necesita plantilla aprobada de Meta ni cuesta conversación.
+     *
+     * 💡 Y por eso mismo la respuesta automática SÍ se puede: si el número está
+     * en **WhatsApp Business**, su «mensaje de bienvenida» contesta solo al
+     * primer mensaje de cada persona, con el precio y los detalles. Eso se
+     * configura en el teléfono, no acá. Ver el LÉEME de la rifa.
+     */
     mensajeRifa:
-      'Hola, acabo de apuntarme a la rifa de RIDE & RESET y quiero recibir la info por acá.',
+      'Hola, me apunté a la rifa de RIDE & RESET y QUIERO MÁS INFORMACIÓN de la ' +
+      'experiencia: precio especial, qué incluye y cómo reservar.',
     mensajeReserva:
-      'Hola, quiero ser parte de RIDE & RESET del 5 al 8 de octubre. ¿Me pasan la info?',
+      'Hola, quiero ser parte de RIDE & RESET del 5 al 8 de octubre y QUIERO MÁS ' +
+      'INFORMACIÓN: precio especial, qué incluye y cómo reservar.',
   },
 }
+
+/**
+ * Adónde responde la gente cuando quiere la información completa.
+ *
+ * Decisión de Tony (4 de septiembre de 2026): el correo de confirmación cuenta
+ * la experiencia, dice que **hay un precio especial**, y quien quiera el detalle
+ * responde a `ventas@puromtb.com`.
+ *
+ * ⚠️ El correo NO sale desde esa dirección: sale desde `tony@tonyalvarado.com`,
+ * que es el dominio verificado en Resend. `ventas@puromtb.com` va como
+ * **reply-to**, que no necesita verificación de dominio. Si algún día se quiere
+ * que salga *desde* puromtb.com, hay que verificar ese dominio en Resend.
+ */
+export const VENTAS = {
+  correo: 'ventas@puromtb.com',
+}
+
+/** La campaña de esta rifa en el CRM. Se busca por acá, no por su UUID. */
+export const CAMPANA_ID_EXTERNO = 'rifa:ride-reset-oct-2026'
 
 /**
  * El precio NO se publica.

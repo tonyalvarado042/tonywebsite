@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { ArrowRight, Check, Loader2, Lock, MessageCircle } from 'lucide-react'
+import { AlertCircle, ArrowRight, Check, Loader2, Lock, MessageCircle } from 'lucide-react'
 import { PAISES } from '@/data/paises'
 import { RIFA } from '@/data/ride-and-reset'
 
@@ -48,6 +48,12 @@ export default function FormularioRifa() {
   const [error, setError] = useState<string | null>(null)
   const [listo, setListo] = useState<Respuesta | null>(null)
 
+  /**
+   * Si ya intentó enviar. Antes de eso NO se marca nada en rojo: nadie quiere
+   * un formulario que lo regaña por campos que todavía no llegó a llenar.
+   */
+  const [intentado, setIntentado] = useState(false)
+
   const casillaReservar = useRef<HTMLInputElement>(null)
 
   const paisActual = PAISES.find((p) => p.codigo === prefijo) ?? PAISES[0]
@@ -73,9 +79,48 @@ export default function FormularioRifa() {
   const okEtiqueto = etiquetoA.trim().replace(/^@+/, '').length >= 2
   const todoListo = okNombre && okCorreo && okTelefono && okInstagram && okEtiqueto && aceptoBases
 
+  /**
+   * Lo que falta, en el orden en que aparece en pantalla.
+   *
+   * El botón NO se apaga cuando falta algo: apagado, la persona lo toca, no
+   * pasa nada y no sabe por qué. Se toca siempre, y si falta algo el
+   * formulario lo dice con nombre y apellido y lleva el cursor al primero.
+   */
+  const loQueFalta: { id: string; que: string }[] = [
+    !okNombre && { id: 'rifa-nombre', que: 'tu nombre' },
+    !okCorreo && { id: 'rifa-correo', que: 'tu correo' },
+    !okTelefono && { id: 'rifa-telefono', que: 'tu WhatsApp' },
+    !okInstagram && { id: 'rifa-instagram', que: 'tu Instagram' },
+    !okEtiqueto && { id: 'rifa-etiqueto', que: 'a quién etiquetaste' },
+    !aceptoBases && { id: 'rifa-bases', que: 'aceptar las bases' },
+  ].filter(Boolean) as { id: string; que: string }[]
+
   async function alEnviar(ev: React.FormEvent<HTMLFormElement>) {
     ev.preventDefault()
-    if (enviando || !todoListo) return
+    if (enviando) return
+
+    // ── Falta algo: decirle QUÉ, y llevarlo ahí ──
+    if (!todoListo) {
+      setIntentado(true)
+      const nombres = loQueFalta.map((f) => f.que)
+      const lista =
+        nombres.length === 1
+          ? nombres[0]
+          : `${nombres.slice(0, -1).join(', ')} y ${nombres[nombres.length - 1]}`
+      setError(
+        nombres.length === 1
+          ? `Falta ${lista}.`
+          : `Faltan ${nombres.length} cosas: ${lista}.`
+      )
+
+      const primero = document.getElementById(loQueFalta[0].id)
+      const quietito = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      primero?.scrollIntoView({ behavior: quietito ? 'auto' : 'smooth', block: 'center' })
+      // El foco después del desplazamiento, para que no lo corte a la mitad.
+      setTimeout(() => primero?.focus({ preventScroll: true }), quietito ? 0 : 420)
+      return
+    }
+
     setEnviando(true)
     setError(null)
 
@@ -110,10 +155,19 @@ export default function FormularioRifa() {
     }
   }
 
-  const campo =
-    'min-h-[54px] w-full rounded-xl border border-bnb-borde bg-bnb-negro px-4 pr-11 ' +
-    'text-[16px] text-bnb-blanco placeholder:text-bnb-tenue outline-none transition-colors ' +
-    'focus:border-transparent focus:ring-2 focus:ring-bnb-lava'
+  /**
+   * Tony pidió que los campos se vieran más.
+   *
+   * Antes eran negros sobre una tarjeta gris oscura: se leían como huecos, no
+   * como algo donde escribir. Ahora el campo es **más claro que la tarjeta**,
+   * el contorno pasa 3:1 (WCAG 1.4.11 para bordes de control) y es de 2px, y
+   * el texto de ejemplo subió de 4.94:1 a 6.06:1.
+   */
+  const campo = (malo = false) =>
+    'min-h-[58px] w-full rounded-xl border-2 bg-bnb-campo px-4 pr-11 ' +
+    'text-[16px] text-bnb-blanco placeholder:text-bnb-ejemplo outline-none transition-colors ' +
+    'focus:border-bnb-lava focus:ring-2 focus:ring-bnb-lava/40 ' +
+    (malo ? 'border-red-400' : 'border-bnb-borde-campo hover:border-bnb-humo')
 
   // ── Ya quedó adentro ──
   if (listo) {
@@ -178,23 +232,23 @@ export default function FormularioRifa() {
       </div>
 
       <div className="space-y-5">
-        <Campo etiqueta="Tu nombre" ok={okNombre} id="rifa-nombre">
+        <Campo etiqueta="Tu nombre" ok={okNombre} malo={intentado && !okNombre} id="rifa-nombre">
           <input
             id="rifa-nombre" type="text" autoComplete="name" placeholder="Nombre y apellido"
-            value={nombre} onChange={(e) => setNombre(e.target.value)} className={campo}
+            value={nombre} onChange={(e) => setNombre(e.target.value)} className={campo(intentado && !okNombre)}
           />
         </Campo>
 
-        <Campo etiqueta="Tu correo" ok={okCorreo} id="rifa-correo">
+        <Campo etiqueta="Tu correo" ok={okCorreo} malo={intentado && !okCorreo} id="rifa-correo">
           <input
             id="rifa-correo" type="email" inputMode="email" autoComplete="email"
             placeholder="vos@correo.com"
-            value={correo} onChange={(e) => setCorreo(e.target.value)} className={campo}
+            value={correo} onChange={(e) => setCorreo(e.target.value)} className={campo(intentado && !okCorreo)}
           />
         </Campo>
 
         <div>
-          <Etiqueta ok={okTelefono} htmlFor="rifa-telefono">Tu WhatsApp</Etiqueta>
+          <Etiqueta ok={okTelefono} malo={intentado && !okTelefono} htmlFor="rifa-telefono">Tu WhatsApp</Etiqueta>
           <div className="flex gap-2">
             <select
               value={prefijo} onChange={(e) => setPrefijo(e.target.value)} aria-label="País"
@@ -209,7 +263,7 @@ export default function FormularioRifa() {
             <input
               id="rifa-telefono" type="tel" inputMode="tel" autoComplete="tel-national"
               placeholder={paisActual.ejemplo}
-              value={telefono} onChange={(e) => setTelefono(e.target.value)} className={campo}
+              value={telefono} onChange={(e) => setTelefono(e.target.value)} className={campo(intentado && !okTelefono)}
             />
           </div>
           <p className="mt-1.5 text-[12px] text-bnb-tenue">
@@ -218,19 +272,19 @@ export default function FormularioRifa() {
         </div>
 
         <div className="grid gap-5 sm:grid-cols-2">
-          <Campo etiqueta="Tu Instagram" ok={okInstagram} id="rifa-instagram">
+          <Campo etiqueta="Tu Instagram" ok={okInstagram} malo={intentado && !okInstagram} id="rifa-instagram">
             <input
               id="rifa-instagram" type="text" autoCapitalize="none" autoCorrect="off"
               placeholder="@tuusuario"
-              value={instagram} onChange={(e) => setInstagram(e.target.value)} className={campo}
+              value={instagram} onChange={(e) => setInstagram(e.target.value)} className={campo(intentado && !okInstagram)}
             />
           </Campo>
 
-          <Campo etiqueta="¿A quién etiquetaste?" ok={okEtiqueto} id="rifa-etiqueto">
+          <Campo etiqueta="¿A quién etiquetaste?" ok={okEtiqueto} malo={intentado && !okEtiqueto} id="rifa-etiqueto">
             <input
               id="rifa-etiqueto" type="text" autoCapitalize="none" autoCorrect="off"
               placeholder="@supersona"
-              value={etiquetoA} onChange={(e) => setEtiquetoA(e.target.value)} className={campo}
+              value={etiquetoA} onChange={(e) => setEtiquetoA(e.target.value)} className={campo(intentado && !okEtiqueto)}
             />
           </Campo>
         </div>
@@ -258,7 +312,12 @@ export default function FormularioRifa() {
             Escribinos y te pasamos la información de la experiencia completa.
           </Casilla>
 
-          <Casilla checked={aceptoBases} onChange={setAceptoBases} id="rifa-bases" obligatoria>
+          <Casilla
+            checked={aceptoBases}
+            onChange={setAceptoBases}
+            id="rifa-bases"
+            malo={intentado && !aceptoBases}
+          >
             Acepto las bases de la rifa y que me escriban con novedades de Bike &amp; Bed.
             Me salgo con un clic desde cualquier correo.
           </Casilla>
@@ -294,20 +353,29 @@ export default function FormularioRifa() {
           </div>
         </fieldset>
 
-        {error && (
-          <p role="alert" className="rounded-xl border border-red-500/40 bg-red-500/10 px-4 py-3
-                                     text-[13.5px] text-red-300">
-            {error}
-          </p>
-        )}
+        {/* `aria-live` para que un lector de pantalla también lo cante. */}
+        <div aria-live="polite">
+          {error && (
+            <p role="alert" className="flex items-start gap-2.5 rounded-xl border-2 border-red-400
+                                       bg-red-500/15 px-4 py-3.5 text-[14.5px] font-medium text-red-200">
+              <AlertCircle size={18} className="mt-0.5 shrink-0" />
+              <span>{error}</span>
+            </p>
+          )}
+        </div>
 
+        {/*
+          El botón NO se apaga cuando falta algo. Apagado, la persona lo toca,
+          no pasa nada, y no tiene forma de saber por qué — que es justo lo que
+          Tony vio. Se toca siempre, y el formulario le dice qué falta.
+        */}
         <button
           type="submit"
-          disabled={enviando || !todoListo}
+          disabled={enviando}
           className="flex min-h-[58px] w-full items-center justify-center gap-2.5 rounded-2xl
                      bg-bnb-lava px-6 text-[16px] font-bold text-bnb-negro
                      transition-colors hover:bg-bnb-lava-fuerte
-                     disabled:cursor-not-allowed disabled:opacity-40"
+                     disabled:cursor-not-allowed disabled:opacity-60"
         >
           {enviando ? (
             <><Loader2 size={18} className="animate-spin" /> Un momento…</>
@@ -327,29 +395,35 @@ export default function FormularioRifa() {
 
 // ── Piezas ──────────────────────────────────────────────────────────────────
 
-function Etiqueta({ ok, htmlFor, children }: {
+function Etiqueta({ ok, malo, htmlFor, children }: {
   ok: boolean
+  malo?: boolean
   htmlFor: string
   children: React.ReactNode
 }) {
   return (
-    <label htmlFor={htmlFor} className="mb-1.5 flex items-center gap-2">
-      <span className="text-[13px] font-semibold text-bnb-humo">{children}</span>
+    <label htmlFor={htmlFor} className="mb-2 flex items-center gap-2">
+      {/* Blanca, no gris: es el nombre del campo, tiene que leerse de un vistazo. */}
+      <span className={`text-[14px] font-semibold ${malo ? 'text-red-300' : 'text-bnb-blanco'}`}>
+        {children}
+      </span>
       {ok && <Check size={14} className="text-bnb-lava" strokeWidth={3} />}
+      {malo && <span className="text-[12.5px] font-normal text-red-300">— falta</span>}
     </label>
   )
 }
 
 /** Un campo con su palomita cuando ya está bien lleno. */
-function Campo({ etiqueta, ok, id, children }: {
+function Campo({ etiqueta, ok, malo, id, children }: {
   etiqueta: string
   ok: boolean
+  malo?: boolean
   id: string
   children: React.ReactNode
 }) {
   return (
     <div>
-      <Etiqueta ok={ok} htmlFor={id}>{etiqueta}</Etiqueta>
+      <Etiqueta ok={ok} malo={malo} htmlFor={id}>{etiqueta}</Etiqueta>
       <div className="relative">
         {children}
         {ok && (
@@ -362,24 +436,27 @@ function Campo({ etiqueta, ok, id, children }: {
   )
 }
 
-function Casilla({ checked, onChange, id, children, obligatoria, resaltada, ref }: {
+function Casilla({ checked, onChange, id, children, malo, resaltada, ref }: {
   checked: boolean
   onChange: (v: boolean) => void
   id: string
   children: React.ReactNode
-  obligatoria?: boolean
+  /** Obligatoria y todavía sin marcar, después de haber intentado enviar. */
+  malo?: boolean
   resaltada?: boolean
   ref?: React.Ref<HTMLInputElement>
 }) {
   return (
     <label
       htmlFor={id}
-      className={`flex cursor-pointer items-start gap-3 rounded-xl border p-3.5 transition-colors
-                  ${resaltada
-                    ? 'border-bnb-lava bg-bnb-lava/10'
-                    : checked
-                      ? 'border-bnb-borde bg-bnb-negro'
-                      : 'border-transparent hover:border-bnb-borde'}`}
+      className={`flex cursor-pointer items-start gap-3 rounded-xl border-2 p-3.5 transition-colors
+                  ${malo
+                    ? 'border-red-400 bg-red-500/10'
+                    : resaltada
+                      ? 'border-bnb-lava bg-bnb-lava/10'
+                      : checked
+                        ? 'border-bnb-borde-campo bg-bnb-campo'
+                        : 'border-transparent hover:border-bnb-borde'}`}
     >
       <input
         ref={ref}
@@ -387,10 +464,12 @@ function Casilla({ checked, onChange, id, children, obligatoria, resaltada, ref 
         type="checkbox"
         checked={checked}
         onChange={(e) => onChange(e.target.checked)}
-        required={obligatoria}
         className="mt-0.5 h-5 w-5 shrink-0 cursor-pointer accent-bnb-lava"
       />
-      <span className="text-[13.5px] leading-relaxed text-bnb-humo">{children}</span>
+      <span className="text-[13.5px] leading-relaxed text-bnb-humo">
+        {children}
+        {malo && <span className="ml-1 font-semibold text-red-300">— falta esto</span>}
+      </span>
     </label>
   )
 }
