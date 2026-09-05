@@ -194,7 +194,22 @@ export default function RideAndReset() {
             return (
               <li key={item.titulo} className="flex items-start gap-4 bg-bnb-carbon p-6">
                 <Icono size={22} className="mt-0.5 shrink-0 text-bnb-verde" strokeWidth={1.75} />
-                <span className="text-[15.5px] leading-relaxed text-bnb-humo">{item.titulo}</span>
+                <span className="text-[15.5px] leading-relaxed text-bnb-humo">
+                  {item.titulo}
+                  {/* Solo en ESTA página: el premio no cubre la entrada a las
+                      termales, así que el renglón necesita la aclaración.
+                      En /reservar el mismo dato se dibuja sin asterisco. */}
+                  {'asterisco' in item && item.asterisco && (
+                    <a
+                      href="#que-cubre"
+                      aria-label="Ver qué cubre el premio"
+                      className="ml-0.5 align-super text-[13px] font-bold text-bnb-verde
+                                 transition-opacity hover:opacity-70"
+                    >
+                      *
+                    </a>
+                  )}
+                </span>
               </li>
             )
           })}
@@ -360,7 +375,7 @@ export default function RideAndReset() {
           A la vista y antes de las bases, no en letra chica. Un ganador que
           llega creyendo que la comida y las termales estaban incluidas es un
           problema el día de la experiencia — y ese día ya no se arregla. */}
-      <section className="border-t border-bnb-borde bg-bnb-carbon">
+      <section id="que-cubre" className="scroll-mt-8 border-t border-bnb-borde bg-bnb-carbon">
         <div className="mx-auto max-w-4xl px-6 py-20 sm:py-24">
           <div className="mb-10 max-w-2xl">
             <h2 className="mb-3 font-bnb-titulo text-3xl font-extrabold leading-tight text-bnb-blanco sm:text-4xl">
@@ -401,6 +416,13 @@ export default function RideAndReset() {
               </ul>
             </div>
           </div>
+
+          {/* La nota del asterisco de «Termales y protocolos de recovery». */}
+          <p className="mt-5 rounded-2xl border border-bnb-borde bg-bnb-negro px-6 py-5
+                        text-[14.5px] leading-relaxed text-bnb-humo">
+            <span className="mr-1 font-bold text-bnb-verde">*</span>
+            {PREMIO.nota}
+          </p>
 
           {/* El beneficio para quien viene de afuera. Va aparte porque es
               una buena noticia, no una exclusión más. */}
