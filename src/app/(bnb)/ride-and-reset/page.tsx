@@ -1,13 +1,13 @@
 import Image from 'next/image'
 import {
   Bike, Dumbbell, Waves, Snowflake, Salad, Moon, TreePine, Users,
-  MapPin, CalendarDays, Flame, Instagram,
+  MapPin, CalendarDays, Flame, Instagram, Check, X, Plane,
 } from 'lucide-react'
 import JsonLd from '@/components/JsonLd'
 import FormularioRifa from '@/components/bnb/FormularioRifa'
 import BotonQuieroSerParte from '@/components/bnb/BotonQuieroSerParte'
 import {
-  RIFA, RESERVA, ANFITRIONES, EXPERIENCIA, PASOS, FOTOS, LOGO_BNB,
+  RIFA, RESERVA, PREMIO, ANFITRIONES, EXPERIENCIA, PASOS, FOTOS, LOGO_BNB,
   PENDIENTE, pendientesDeLaRifa,
 } from '@/data/ride-and-reset'
 
@@ -356,6 +356,69 @@ export default function RideAndReset() {
         </div>
       </section>
 
+      {/* ══ Qué cubre el premio ═══════════════════════════════════════════
+          A la vista y antes de las bases, no en letra chica. Un ganador que
+          llega creyendo que la comida y las termales estaban incluidas es un
+          problema el día de la experiencia — y ese día ya no se arregla. */}
+      <section className="border-t border-bnb-borde bg-bnb-carbon">
+        <div className="mx-auto max-w-4xl px-6 py-20 sm:py-24">
+          <div className="mb-10 max-w-2xl">
+            <h2 className="mb-3 font-bnb-titulo text-3xl font-extrabold leading-tight text-bnb-blanco sm:text-4xl">
+              Qué cubre el premio
+            </h2>
+            <p className="text-[16.5px] leading-relaxed text-bnb-humo">
+              Para que nadie se lleve una sorpresa: esto es exactamente lo que ganás
+              y lo que corre por tu cuenta.
+            </p>
+          </div>
+
+          <div className="grid gap-5 md:grid-cols-2">
+            <div className="rounded-3xl border-2 border-bnb-verde/40 bg-bnb-negro p-7">
+              <h3 className="mb-5 flex items-center gap-2.5 font-bnb-titulo text-lg font-bold text-bnb-verde">
+                <Check size={20} strokeWidth={2.5} /> Sí incluye
+              </h3>
+              <ul className="space-y-3.5">
+                {PREMIO.incluye.map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-[15px] leading-relaxed text-bnb-humo">
+                    <Check size={17} className="mt-0.5 shrink-0 text-bnb-verde" strokeWidth={2.5} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="rounded-3xl border border-bnb-borde bg-bnb-negro p-7">
+              <h3 className="mb-5 flex items-center gap-2.5 font-bnb-titulo text-lg font-bold text-bnb-blanco">
+                <X size={20} strokeWidth={2.5} /> No incluye
+              </h3>
+              <ul className="space-y-3.5">
+                {PREMIO.noIncluye.map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-[15px] leading-relaxed text-bnb-tenue">
+                    <X size={17} className="mt-0.5 shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* El beneficio para quien viene de afuera. Va aparte porque es
+              una buena noticia, no una exclusión más. */}
+          <div className="mt-5 flex items-start gap-4 rounded-3xl border border-bnb-verde/40
+                          bg-bnb-verde/10 p-7">
+            <Plane size={22} className="mt-0.5 shrink-0 text-bnb-verde" strokeWidth={1.75} />
+            <div>
+              <h3 className="mb-2 font-bnb-titulo text-lg font-bold text-bnb-blanco">
+                {PREMIO.siVenisDeFuera.titulo}
+              </h3>
+              <p className="text-[15px] leading-relaxed text-bnb-humo">
+                {PREMIO.siVenisDeFuera.detalle}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ══ Bases ═════════════════════════════════════════════════════════ */}
       <section className="border-t border-bnb-borde px-6 py-16">
         <div className="mx-auto max-w-2xl">
@@ -398,8 +461,12 @@ export default function RideAndReset() {
                 : 'El resultado se anuncia en las redes de Bike & Bed.'}
             </li>
             <li>
-              El premio cubre el hospedaje y la experiencia en las fechas indicadas. No
-              incluye transporte hasta La Fortuna ni gastos personales.
+              El premio cubre <strong className="text-bnb-humo">el hospedaje y la
+              experiencia</strong> para dos personas en las fechas indicadas.{' '}
+              <strong className="text-bnb-humo">No incluye alimentación</strong>, ni la
+              entrada a termales, cataratas u otras actividades de pago, ni tiquetes
+              aéreos, ni transporte hasta La Fortuna, ni gastos personales. A quien viene
+              de otro país se le incluye el alquiler de la bicicleta sin costo.
             </li>
             <li>
               Esta promoción <strong className="text-bnb-humo">no está patrocinada, avalada

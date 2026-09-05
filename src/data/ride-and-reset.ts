@@ -272,6 +272,40 @@ export const EXPERIENCIA = [
   { icono: 'equipo',     titulo: 'Sesiones y acompañamiento con Alex Quesada y Tony Alvarado' },
 ]
 
+/**
+ * Qué cubre el premio de la rifa y qué no.
+ *
+ * Dicho por Tony el 5 de septiembre de 2026, y **va a la vista, no en letra
+ * chica**: un ganador que llega creyendo que las termales y la comida estaban
+ * incluidas es un problema el día de la experiencia, no antes.
+ *
+ * ⚠️ Ojo con la tensión: la lista de `EXPERIENCIA` dice «Termales y protocolos
+ * de recovery», y eso se lee como incluido. Acá queda claro que **la entrada**
+ * va aparte. Si algún día se quiere quitar del todo esa ambigüedad, hay que
+ * tocar también ese renglón — no solo este bloque.
+ */
+export const PREMIO = {
+  incluye: [
+    `Hospedaje: ${4} días y ${3} noches en Bike & Bed`,
+    'Toda la experiencia RIDE & RESET: los rides, las sesiones y el acompañamiento',
+    'Para 2 personas — vos y quien elijas',
+  ],
+  noIncluye: [
+    'Alimentación',
+    'Entrada a las termales, las cataratas y otras actividades de pago',
+    'Tiquetes aéreos',
+    'Transporte hasta La Fortuna',
+    'Gastos personales',
+  ],
+  /** El extra para quien viene de afuera. Es un beneficio, no una exclusión. */
+  siVenisDeFuera: {
+    titulo: 'Si venís de otro país',
+    detalle:
+      'Te incluimos el alquiler de la bicicleta sin costo. El resto de los gastos ' +
+      'corre por cuenta del ganador y su acompañante.',
+  },
+}
+
 /** Los tres pasos para participar. */
 export const PASOS = [
   {
