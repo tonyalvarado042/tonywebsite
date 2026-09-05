@@ -166,15 +166,15 @@ export default function FormularioRifa() {
   const campo = (malo = false) =>
     'min-h-[58px] w-full rounded-xl border-2 bg-bnb-campo px-4 pr-11 ' +
     'text-[16px] text-bnb-blanco placeholder:text-bnb-ejemplo outline-none transition-colors ' +
-    'focus:border-bnb-lava focus:ring-2 focus:ring-bnb-lava/40 ' +
+    'focus:border-bnb-verde focus:ring-2 focus:ring-bnb-verde/40 ' +
     (malo ? 'border-red-400' : 'border-bnb-borde-campo hover:border-bnb-humo')
 
   // ── Ya quedó adentro ──
   if (listo) {
     return (
-      <div className="rounded-3xl border border-bnb-lava/40 bg-bnb-tarjeta p-8 text-center sm:p-10">
-        <span className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full border-2 border-bnb-lava">
-          <Check size={30} className="text-bnb-lava" strokeWidth={2.5} />
+      <div className="rounded-3xl border border-bnb-verde/40 bg-bnb-tarjeta p-8 text-center sm:p-10">
+        <span className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full border-2 border-bnb-verde">
+          <Check size={30} className="text-bnb-verde" strokeWidth={2.5} />
         </span>
 
         <h3 className="mb-3 font-bnb-titulo text-2xl font-bold text-bnb-blanco">
@@ -207,8 +207,8 @@ export default function FormularioRifa() {
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex min-h-[56px] items-center justify-center gap-2.5 rounded-2xl
-                       bg-bnb-lava px-7 text-[15px] font-bold text-bnb-negro
-                       transition-colors hover:bg-bnb-lava-fuerte"
+                       bg-bnb-verde px-7 text-[15px] font-bold text-bnb-negro
+                       transition-colors hover:bg-bnb-verde-fuerte"
           >
             <MessageCircle size={18} />
             Escribinos por WhatsApp
@@ -254,7 +254,7 @@ export default function FormularioRifa() {
               value={prefijo} onChange={(e) => setPrefijo(e.target.value)} aria-label="País"
               className="min-h-[54px] w-[104px] shrink-0 rounded-xl border border-bnb-borde
                          bg-bnb-negro px-3 text-[15px] text-bnb-blanco outline-none
-                         transition-colors focus:border-transparent focus:ring-2 focus:ring-bnb-lava"
+                         transition-colors focus:border-transparent focus:ring-2 focus:ring-bnb-verde"
             >
               {PAISES.map((p) => (
                 <option key={p.codigo + p.corto} value={p.codigo}>{p.corto} {p.codigo}</option>
@@ -310,7 +310,7 @@ export default function FormularioRifa() {
             resaltada={resaltada}
           >
             <span className="font-semibold text-bnb-blanco">
-              Quiero información de los 10 cupos con precio especial.
+              Quiero información de los cupos con precio especial.
             </span>{' '}
             No quiero depender de ganar la rifa.
           </Casilla>
@@ -341,7 +341,7 @@ export default function FormularioRifa() {
                 className={`flex min-h-[48px] flex-1 cursor-pointer items-center justify-center
                             gap-2 rounded-xl border px-4 text-[15px] font-medium transition-colors
                             ${canal === op.valor
-                              ? 'border-bnb-lava bg-bnb-lava/10 text-bnb-blanco'
+                              ? 'border-bnb-verde bg-bnb-verde/10 text-bnb-blanco'
                               : 'border-bnb-borde text-bnb-humo hover:border-bnb-tenue'}`}
               >
                 <input
@@ -376,8 +376,8 @@ export default function FormularioRifa() {
           type="submit"
           disabled={enviando}
           className="flex min-h-[58px] w-full items-center justify-center gap-2.5 rounded-2xl
-                     bg-bnb-lava px-6 text-[16px] font-bold text-bnb-negro
-                     transition-colors hover:bg-bnb-lava-fuerte
+                     bg-bnb-verde px-6 text-[16px] font-bold text-bnb-negro
+                     transition-colors hover:bg-bnb-verde-fuerte
                      disabled:cursor-not-allowed disabled:opacity-60"
         >
           {enviando ? (
@@ -410,7 +410,7 @@ function Etiqueta({ ok, malo, htmlFor, children }: {
       <span className={`text-[14px] font-semibold ${malo ? 'text-red-300' : 'text-bnb-blanco'}`}>
         {children}
       </span>
-      {ok && <Check size={14} className="text-bnb-lava" strokeWidth={3} />}
+      {ok && <Check size={14} className="text-bnb-verde" strokeWidth={3} />}
       {malo && <span className="text-[12.5px] font-normal text-red-300">— falta</span>}
     </label>
   )
@@ -431,7 +431,7 @@ function Campo({ etiqueta, ok, malo, id, children }: {
         {children}
         {ok && (
           <span className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2">
-            <Check size={17} className="text-bnb-lava" strokeWidth={3} />
+            <Check size={17} className="text-bnb-verde" strokeWidth={3} />
           </span>
         )}
       </div>
@@ -456,7 +456,7 @@ function Casilla({ checked, onChange, id, children, malo, resaltada, ref }: {
                   ${malo
                     ? 'border-red-400 bg-red-500/10'
                     : resaltada
-                      ? 'border-bnb-lava bg-bnb-lava/10'
+                      ? 'border-bnb-verde bg-bnb-verde/10'
                       : checked
                         ? 'border-bnb-borde-campo bg-bnb-campo'
                         : 'border-transparent hover:border-bnb-borde'}`}
@@ -467,7 +467,7 @@ function Casilla({ checked, onChange, id, children, malo, resaltada, ref }: {
         type="checkbox"
         checked={checked}
         onChange={(e) => onChange(e.target.checked)}
-        className="mt-0.5 h-5 w-5 shrink-0 cursor-pointer accent-bnb-lava"
+        className="mt-0.5 h-5 w-5 shrink-0 cursor-pointer accent-bnb-verde"
       />
       <span className="text-[13.5px] leading-relaxed text-bnb-humo">
         {children}

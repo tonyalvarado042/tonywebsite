@@ -84,14 +84,18 @@ const config: Config = {
           'borde-campo': '#6E6E6E', // 3.67:1 contra la tarjeta
           ejemplo: '#9A9A9A',       // 6.06:1 sobre el campo
 
-          // El acento. NO es un color de marca: es una decisión de diseño que
-          // tomó Tony (lava del Arenal). Por eso se usa SOLO en el botón que
-          // captura el lead. Si aparece en varios lados, deja de gritar.
+          // ── El acento ────────────────────────────────────────────────────
+          // Verde lima, el del arte de la campaña. Tony lo pidió el 5 de
+          // septiembre de 2026; antes acá había un naranja lava que había
+          // deducido yo del sitio viejo. Este SÍ sale de una pieza real de la
+          // marca, así que ya no es una suposición.
           //
-          // 6.73:1 sobre el fondo negro, y 6.73:1 con texto negro encima —
-          // pasa WCAG AA en los dos sentidos. Verificado, no calculado a ojo.
-          lava: '#FF5A1F',
-          'lava-fuerte': '#E04A12', // 5.16:1 — el hover
+          // **12.62:1 sobre el fondo negro, y 12.62:1 con texto negro encima.**
+          // Pasa WCAG AA de sobra en los dos sentidos — el naranja anterior iba
+          // raspando en 6.73:1. O sea que además de ser el color correcto, se
+          // lee bastante mejor. Medido, no calculado a ojo.
+          verde: '#7CE04A',
+          'verde-fuerte': '#63C433', // 9.47:1 — el hover
         },
       },
       fontFamily: {
