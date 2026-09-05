@@ -51,9 +51,56 @@ const config: Config = {
           deep: '#0A0713',
           gold: '#C9A24D',
         },
+
+        // ── BIKE & BED ────────────────────────────────────────────────────
+        // Espacio propio, aparte de `brand-*`, porque es OTRA marca: la de
+        // Bike & Bed, que se usa solo en /ride-and-reset. Nada morado entra acá.
+        //
+        // Los dos archivos de logo que pasó Tony se llaman «varios colores»
+        // pero no lo son: son blanco y negro puro, sin transparencia. Bike &
+        // Bed no tiene color de marca.
+        bnb: {
+          // ⚠️ Negro EXACTO, no un casi-negro. El logo blanco viene con fondo
+          // #000000 sólido: sobre cualquier otro tono se le vería la caja.
+          negro: '#000000',
+          carbon: '#0A0A0A',   // superficies apenas levantadas del fondo
+          tarjeta: '#121212',
+          borde: '#262626',
+
+          blanco: '#FFFFFF',   // 21.00:1 sobre negro
+          humo: '#B3B3B3',     // 10.02:1 — texto secundario
+          tenue: '#8A8A8A',    //  6.08:1 — lo más apagado que se permite
+
+          // ── El formulario ────────────────────────────────────────────────
+          // Tony pidió que los campos se vieran más. En un fondo negro un
+          // campo negro se lee como un hueco, no como algo donde escribir.
+          //
+          // Se resolvió con tres cosas medidas, no a ojo:
+          //  · el campo es MÁS CLARO que la tarjeta que lo contiene
+          //  · el contorno pasa 3:1 contra la tarjeta, que es lo que pide
+          //    WCAG 1.4.11 para el borde de un control
+          //  · el texto de ejemplo sube a 6:1 (antes iba en 4.94:1)
+          campo: '#1C1C1C',         // encima de `tarjeta` #121212
+          'borde-campo': '#6E6E6E', // 3.67:1 contra la tarjeta
+          ejemplo: '#9A9A9A',       // 6.06:1 sobre el campo
+
+          // El acento. NO es un color de marca: es una decisión de diseño que
+          // tomó Tony (lava del Arenal). Por eso se usa SOLO en el botón que
+          // captura el lead. Si aparece en varios lados, deja de gritar.
+          //
+          // 6.73:1 sobre el fondo negro, y 6.73:1 con texto negro encima —
+          // pasa WCAG AA en los dos sentidos. Verificado, no calculado a ojo.
+          lava: '#FF5A1F',
+          'lava-fuerte': '#E04A12', // 5.16:1 — el hover
+        },
       },
       fontFamily: {
         sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+
+        // Las de Bike & Bed, solo para /ride-and-reset. Son las mismas que usa
+        // bikeandbedhotels.com: DM Sans para leer, Poppins para los títulos.
+        bnb: ['var(--font-dm-sans)', 'system-ui', 'sans-serif'],
+        'bnb-titulo': ['var(--font-poppins)', 'var(--font-dm-sans)', 'system-ui', 'sans-serif'],
       },
       keyframes: {
         // El latido del botón de captura. Es un resplandor que crece y se
