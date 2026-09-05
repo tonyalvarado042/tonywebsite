@@ -6,7 +6,7 @@ import {
 } from 'lucide-react'
 import JsonLd from '@/components/JsonLd'
 import {
-  RIFA, RESERVA, OFERTA, ANFITRIONES, EXPERIENCIA, FOTOS, LOGO_BNB,
+  RIFA, RESERVA, OFERTA, ANFITRIONES, EXPERIENCIA, FOTOS, FOTOS_HOTEL, LOGO_BNB,
   enlaceWhatsApp,
 } from '@/data/ride-and-reset'
 
@@ -228,6 +228,57 @@ export default function Reservar() {
         </div>
       </section>
 
+      {/* ══ Dónde dormís ══════════════════════════════════════════════════
+          Para pagar $1.199 hay que VER dónde se duerme. Es lo que más pesa en
+          una venta de hospedaje, y es lo que la página no tenía. */}
+      <section className="border-y border-bnb-borde bg-bnb-carbon">
+        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+          <div className="mb-10 max-w-2xl">
+            <p className="mb-3 font-bnb-titulo text-[12px] font-bold uppercase tracking-[0.18em] text-bnb-verde">
+              Dónde dormís
+            </p>
+            <h2 className="mb-3 font-bnb-titulo text-3xl font-extrabold leading-tight text-bnb-blanco sm:text-4xl">
+              Bike &amp; Bed, al pie del Arenal
+            </h2>
+            <p className="text-[16.5px] leading-relaxed text-bnb-humo">
+              El primer hotel temático de ciclismo de Costa Rica. Cabañas donde la
+              bicicleta duerme adentro con vos, y termales para cerrar el día.
+            </p>
+          </div>
+
+          {/* Mosaico: la vertical manda a la izquierda, las cuadradas apiladas. */}
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <Foto foto={FOTOS_HOTEL.cabina} clase="lg:col-span-2 lg:row-span-2 h-[22rem] lg:h-full" />
+            <Foto foto={FOTOS_HOTEL.interior} clase="h-[15rem]" />
+            <Foto foto={FOTOS_HOTEL.jacuzzi} clase="h-[15rem]" />
+            <Foto foto={FOTOS_HOTEL.cabinas} clase="sm:col-span-2 h-[15rem]" />
+          </div>
+        </div>
+      </section>
+
+      {/* ══ Los rides ═════════════════════════════════════════════════════ */}
+      <section className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
+        <div className="mb-10 max-w-2xl">
+          <p className="mb-3 font-bnb-titulo text-[12px] font-bold uppercase tracking-[0.18em] text-bnb-verde">
+            Los rides
+          </p>
+          <h2 className="mb-3 font-bnb-titulo text-3xl font-extrabold leading-tight text-bnb-blanco sm:text-4xl">
+            Cuatro días rodando el Arenal
+          </h2>
+          <p className="text-[16.5px] leading-relaxed text-bnb-humo">
+            Gravel y ruta a ritmo social, con el volcán siempre de fondo. No es un
+            campamento para sufrir: es para volver mejor de como llegaste.
+          </p>
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <Foto foto={FOTOS.rodando} clase="h-[24rem] lg:row-span-2 lg:h-full" />
+          <Foto foto={FOTOS.potrero} clase="h-[19rem]" />
+          <Foto foto={FOTOS.bicis} clase="h-[19rem]" />
+          <Foto foto={FOTOS.salida} clase="sm:col-span-2 h-[19rem]" />
+        </div>
+      </section>
+
       {/* ══ Quiénes te acompañan ══════════════════════════════════════════ */}
       <section className="border-y border-bnb-borde bg-bnb-carbon">
         <div className="mx-auto max-w-5xl px-6 py-20 sm:py-24">
@@ -363,6 +414,33 @@ function BotonWhatsApp({ href, grande, children }: {
       <MessageCircle size={grande ? 20 : 18} />
       {children}
     </a>
+  )
+}
+
+/**
+ * Una foto del mosaico.
+ *
+ * ⚠️ El `encuadre` (`object-position`) sale de `src/data/ride-and-reset.ts` y
+ * está calculado FOTO POR FOTO. Una vertical dentro de una caja apaisada pierde
+ * más de la mitad del alto: heredar el encuadre de otra foto es la forma más
+ * rápida de publicar una foto decapitada.
+ */
+function Foto({ foto, clase }: {
+  foto: { src: string; ancho: number; alto: number; encuadre: string; alt: string }
+  clase: string
+}) {
+  return (
+    <figure className={`overflow-hidden rounded-2xl border border-bnb-borde ${clase}`}>
+      <Image
+        src={foto.src}
+        alt={foto.alt}
+        width={foto.ancho}
+        height={foto.alto}
+        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+        className="h-full w-full object-cover transition-transform duration-500 hover:scale-[1.03]"
+        style={{ objectPosition: foto.encuadre }}
+      />
+    </figure>
   )
 }
 
