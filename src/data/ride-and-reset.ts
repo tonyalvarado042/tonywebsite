@@ -260,11 +260,21 @@ export const ANFITRIONES = [
   },
 ]
 
-/** Lo que incluye la experiencia. Es el copy de Tony, tal cual lo escribió. */
+/**
+ * Lo que incluye la experiencia. Es el copy de Tony, tal cual lo escribió.
+ *
+ * ⚠️ `asterisco` marca el renglón que necesita aclaración **solo en la landing
+ * de la rifa**: ahí el premio no cubre la entrada a las termales, así que
+ * «Termales y protocolos de recovery» sin más se leería como incluido.
+ *
+ * En `/ride-and-reset/reservar` NO se dibuja el asterisco: esa página vende la
+ * experiencia completa y su bloque de «no incluye» es otro. Por eso la marca
+ * vive en el dato pero la decisión de mostrarla es de cada página.
+ */
 export const EXPERIENCIA = [
   { icono: 'bici',       titulo: 'Rides épicos alrededor del Volcán Arenal' },
   { icono: 'fuerza',     titulo: 'Entrenamiento, fuerza y movilidad' },
-  { icono: 'termales',   titulo: 'Termales y protocolos de recovery' },
+  { icono: 'termales',   titulo: 'Termales y protocolos de recovery', asterisco: true },
   { icono: 'frio',       titulo: 'Recuperación y bienestar' },
   { icono: 'nutricion',  titulo: 'Plan de nutrición para sentirte y rendir mejor' },
   { icono: 'sueno',      titulo: 'Sueño, descanso y hábitos de alto rendimiento' },
@@ -297,6 +307,15 @@ export const PREMIO = {
     'Transporte hasta La Fortuna',
     'Gastos personales',
   ],
+  /**
+   * La nota que explica el asterisco de «Termales y protocolos de recovery».
+   * Solo se muestra en la landing de la rifa.
+   */
+  nota:
+    'Las sesiones de recovery sí van incluidas. Lo que no cubre el premio es la ' +
+    'entrada a las termales, las cataratas y otras actividades de pago: eso corre ' +
+    'por cuenta del ganador y su acompañante.',
+
   /** El extra para quien viene de afuera. Es un beneficio, no una exclusión. */
   siVenisDeFuera: {
     titulo: 'Si venís de otro país',
