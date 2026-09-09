@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
-import { CORREO_REMITENTE } from '@/lib/correo'
+import { CORREO_REMITENTE, REMITENTE_CON_NOMBRE, esDominioPropio } from '@/lib/correo'
 import {
   getInteresLabel,
   getInternalSubject,
@@ -233,19 +233,33 @@ export async function POST(req: NextRequest) {
 
     // 11. Respuesta automática con plantilla Resend
     //
-    // Desactivada por defecto (RESEND_CONTACT_AUTOREPLY_ENABLED != 'true') porque
-    // el dominio tonyalvarado.com aún no está verificado en Resend.
+    // Sigue desactivada por defecto (RESEND_CONTACT_AUTOREPLY_ENABLED != 'true').
+    // ⚠️ El motivo que decía antes acá («el dominio no está verificado en
+    // Resend») YA NO ES CIERTO: el 9 de septiembre de 2026 se comprobó por DNS
+    // que tonyalvarado.com tiene el DKIM y el SPF de Resend publicados. Si Tony
+    // quiere prenderla, ya se puede — pero eso es una decisión suya, no un
+    // efecto secundario de este arreglo.
+    //
     // La notificación interna (paso 10) ya fue entregada al equipo, por lo que
     // un fallo en el autoreply no cancela el envío ni devuelve error al formulario.
     const autoReplyEnabled = process.env.RESEND_CONTACT_AUTOREPLY_ENABLED === 'true'
 
     if (autoReplyEnabled) {
-      const autoReplyFrom    = process.env.RESEND_CONTACT_AUTOREPLY_FROM
+      // ⚠️ Este remitente venía de SU PROPIA variable, sin ninguna validación:
+      // podía ser un dominio ajeno aunque el resto del sitio mandara bien. Ese
+      // era el mejor candidato al «a veces sale del remitente equivocado» que
+      // reportó Tony. Ahora pasa por el mismo filtro que todo lo demás.
+      const puesta = (process.env.RESEND_CONTACT_AUTOREPLY_FROM ?? '').trim()
+      const autoReplyFrom = puesta && esDominioPropio(puesta) ? puesta : REMITENTE_CON_NOMBRE
+      if (puesta && autoReplyFrom !== puesta) {
+        console.error(
+          `[contact/route] ⚠️ RESEND_CONTACT_AUTOREPLY_FROM="${puesta}" SE IGNORA: ` +
+            `no es un dominio de Tony. Se usa ${REMITENTE_CON_NOMBRE}.`
+        )
+      }
       const autoReplyReplyTo = process.env.RESEND_CONTACT_AUTOREPLY_REPLY_TO || undefined
 
-      if (!autoReplyFrom) {
-        console.warn('[contact/route] Autoreply habilitado pero RESEND_CONTACT_AUTOREPLY_FROM no está configurado.')
-      } else {
+      {
         try {
           const { error: autoReplyError } = await getResend().emails.send({
             from: autoReplyFrom,

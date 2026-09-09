@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getCrm, TABLA_CONTACTOS } from '@/lib/crm'
+import { estadoDelRemitente } from '@/lib/correo'
 import { cronAutorizado, secuenciasActivas } from '@/lib/secuencias'
 
 /**
@@ -88,9 +89,20 @@ export async function GET(req: NextRequest) {
     }
   }
 
+  /**
+   * Desde qué dirección sale el correo, de verdad.
+   *
+   * Antes esto solo decía si `CONTACT_FROM_EMAIL` estaba puesta, no QUÉ decía —
+   * y ese era justo el dato que faltaba cuando los correos caían en spam por
+   * salir del remitente de pruebas de Resend. No es un secreto: es una
+   * dirección pública, la que ve cualquiera que reciba un correo del sitio.
+   */
+  const remitente = estadoDelRemitente()
+
   return NextResponse.json({
     ok: true,
     llaves,
+    remitente,
     crm,
     tablas,
     columnas,
