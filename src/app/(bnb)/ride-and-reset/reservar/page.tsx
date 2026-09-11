@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import {
   Bike, Dumbbell, Waves, Snowflake, Salad, Moon, TreePine, Users,
-  MapPin, CalendarDays, Flame, Instagram, MessageCircle, Check, X,
+  MapPin, CalendarDays, Flame, Instagram, MessageCircle, Check, X, CreditCard, Lock,
 } from 'lucide-react'
 import JsonLd from '@/components/JsonLd'
 import {
@@ -146,7 +146,7 @@ export default function Reservar() {
             </Dato>
           </dl>
 
-          <BotonWhatsApp href={wa} grande>Reservar mi cupo</BotonWhatsApp>
+          <BotonesDeCompra wa={wa} grande textoPagar="Reservar y pagar en línea" />
         </div>
       </section>
 
@@ -185,7 +185,7 @@ export default function Reservar() {
           </p>
 
           <div>
-            <BotonWhatsApp href={wa} grande>Quiero reservar ahora</BotonWhatsApp>
+            <BotonesDeCompra wa={wa} grande textoPagar="Pagar en línea ahora" />
           </div>
         </div>
       </section>
@@ -323,11 +323,11 @@ export default function Reservar() {
           {RESERVA.cupos} cupos. {RIFA.fechas.dias} días. Una decisión.
         </h2>
         <p className="mx-auto mb-9 max-w-xl text-[17px] leading-relaxed text-bnb-humo">
-          Escribinos por WhatsApp y te pasamos los detalles para reservar. Te contestamos
-          nosotros, no un robot.
+          Reservá con tarjeta en un minuto, o escribinos y hablás con un asesor de
+          verdad. Te contestamos nosotros, no un robot.
         </p>
 
-        <BotonWhatsApp href={wa} grande>Escribinos por WhatsApp</BotonWhatsApp>
+        <BotonesDeCompra wa={wa} grande />
 
         <div className="mt-14 rounded-3xl border border-bnb-borde bg-bnb-carbon p-8">
           <Image
@@ -393,14 +393,58 @@ export default function Reservar() {
 // ── Piezas ──────────────────────────────────────────────────────────────────
 
 /**
- * El único llamado a la acción de la página.
+ * Los dos caminos para comprar, juntos.
  *
- * Si todavía no hay número de WhatsApp configurado, no se dibuja un botón
- * muerto: se dice qué falta. Un botón que no hace nada es peor que ninguno.
+ * **Pagar en línea es el principal** (verde, relleno): quien ya decidió no
+ * debería tener que escribirle a nadie para poder pagar.
+ * **WhatsApp es el segundo** (contorno): para el que todavía tiene dudas.
+ *
+ * Los dos abren en pestaña nueva, así la página no se pierde si la persona
+ * vuelve atrás.
  */
-function BotonWhatsApp({ href, grande, children }: {
+function BotonesDeCompra({ wa, textoPagar = 'Pagar en línea', grande }: {
+  wa: string | null
+  textoPagar?: string
+  grande?: boolean
+}) {
+  const alto = grande ? 'min-h-[62px] px-9 text-[17px]' : 'min-h-[54px] px-7 text-[15px]'
+  return (
+    <div>
+      <div className="flex flex-wrap items-center justify-center gap-3 sm:justify-start">
+        <a
+          href={OFERTA.pagoUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`inline-flex items-center justify-center gap-2.5 rounded-2xl bg-bnb-verde
+                      font-bold text-bnb-negro transition-colors hover:bg-bnb-verde-fuerte ${alto}`}
+        >
+          <CreditCard size={grande ? 20 : 18} />
+          {textoPagar}
+        </a>
+
+        <BotonWhatsApp href={wa} grande={grande} contorno>
+          Quiero más info o hablar con un asesor
+        </BotonWhatsApp>
+      </div>
+
+      <p className="mt-3 flex items-center justify-center gap-2 text-[13px] text-bnb-tenue sm:justify-start">
+        <Lock size={13} className="shrink-0" />
+        {OFERTA.notaDePago}
+      </p>
+    </div>
+  )
+}
+
+/**
+ * El botón de WhatsApp.
+ *
+ * Si todavía no hay número configurado, no se dibuja un botón muerto: se dice
+ * qué falta. Un botón que no hace nada es peor que ninguno.
+ */
+function BotonWhatsApp({ href, grande, contorno, children }: {
   href: string | null
   grande?: boolean
+  contorno?: boolean
   children: React.ReactNode
 }) {
   if (!href) {
@@ -410,14 +454,17 @@ function BotonWhatsApp({ href, grande, children }: {
       </p>
     )
   }
+  const alto = grande ? 'min-h-[62px] px-9 text-[17px]' : 'min-h-[54px] px-7 text-[15px]'
+  const estilo = contorno
+    ? 'border-2 border-bnb-verde text-bnb-verde hover:bg-bnb-verde hover:text-bnb-negro'
+    : 'bg-bnb-verde text-bnb-negro hover:bg-bnb-verde-fuerte'
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`inline-flex items-center justify-center gap-2.5 rounded-2xl bg-bnb-verde
-                  font-bold text-bnb-negro transition-colors hover:bg-bnb-verde-fuerte
-                  ${grande ? 'min-h-[62px] px-9 text-[17px]' : 'min-h-[54px] px-7 text-[15px]'}`}
+      className={`inline-flex items-center justify-center gap-2.5 rounded-2xl font-bold
+                  transition-colors ${estilo} ${alto}`}
     >
       <MessageCircle size={grande ? 20 : 18} />
       {children}
