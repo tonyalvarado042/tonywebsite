@@ -187,8 +187,34 @@ export const OFERTA = {
   ],
 
   mensajeWhatsApp:
-    'Hola, quiero asegurar uno de los 5 cupos de RIDE & RESET del 5 al 8 de ' +
-    'octubre con el precio especial de $1.199. ¿Me pasan los detalles para reservar?',
+    'Hola, quiero más información sobre RIDE & RESET del 5 al 8 de octubre y ' +
+    'hablar con un asesor. ¿Me pueden ayudar?',
+
+  /**
+   * El pago en línea. Tony lo pasó el 11 de setiembre de 2026.
+   *
+   * Es un enlace de **Tilopay**, la pasarela tica. Se verificó abriéndolo antes
+   * de ponerlo: comercio **PURO MTB**, concepto «Ride and Reset», y cobra
+   * **$1.199,00** — el MISMO monto que muestra esta página.
+   *
+   * ⚠️ Esa verificación no es un adorno. Ya pasó una vez que un enlace de pago
+   * (`arenal-bike-reset.emergent.host`) mostraba $1.995 mientras la página
+   * prometía $1.199. Un botón de pago que cobra otra cosa mata la venta en el
+   * peor momento: justo al hacer clic.
+   *
+   * 👉 **Si el precio de la página cambia, hay que cambiar también el enlace**,
+   * o vuelven a contradecirse.
+   */
+  pagoUrl: 'https://tilo.co/s/2PdkHBJq',
+
+  /**
+   * Que la pasarela acepta cuotas. Verificado en la misma página de pago:
+   * Tasa Cero BAC (3 y 6 meses), MiniCuotas BAC y Credix.
+   *
+   * Se dice en general, sin prometer un plazo ni una tasa concreta: los planes
+   * los define el banco y pueden cambiar sin que nadie nos avise.
+   */
+  notaDePago: 'Pago seguro con tarjeta. Hay opciones de cuotas disponibles.',
 }
 
 /**
