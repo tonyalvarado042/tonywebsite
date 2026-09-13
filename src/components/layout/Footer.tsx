@@ -2,7 +2,32 @@ import Link from 'next/link'
 import Image from 'next/image'
 import type { Locale } from '@/lib/i18n'
 
+/* Orden fijado por Tony el 13 de septiembre de 2026: primero el turismo
+   (Bike & Bed y Humaya, que es donde vive la copropiedad), después el
+   ciclismo. Antes PuroMTB y Pure Cycling iban de primeros. */
 const companyLogos = [
+  {
+    src: '/images/logos/bike-bed/bike_and_bed_logo.png',
+    alt: 'Bike & Bed Hotels',
+    name: 'Bike & Bed Hotels',
+    href: '/bike-bed-hotels',
+    hrefEn: '/en/bike-bed-hotels',
+    external: false,
+    width: 120,
+    height: 36,
+    className: 'h-7 w-auto object-contain brightness-0 invert opacity-60 transition-opacity hover:opacity-90',
+  },
+  {
+    src: '/images/logos/humaya/humaya-lockup-blanco.png',
+    alt: 'Humaya Costa Rica',
+    name: 'Humaya',
+    href: 'https://stayhumaya.com',
+    hrefEn: 'https://stayhumaya.com',
+    external: true,
+    width: 1875,
+    height: 1075,
+    className: 'h-8 w-auto object-contain opacity-60 transition-opacity hover:opacity-90',
+  },
   {
     src: '/images/logos/puromtb/logo_puro_mtb.png',
     alt: 'PuroMTB',
@@ -26,31 +51,6 @@ const companyLogos = [
     className: 'h-7 w-auto object-contain brightness-0 invert opacity-60 transition-opacity hover:opacity-90',
   },
   {
-    src: '/images/logos/bike-bed/bike_and_bed_logo.png',
-    alt: 'Bike & Bed Hotels',
-    name: 'Bike & Bed Hotels',
-    href: '/bike-bed-hotels',
-    hrefEn: '/en/bike-bed-hotels',
-    external: false,
-    width: 120,
-    height: 36,
-    className: 'h-7 w-auto object-contain brightness-0 invert opacity-60 transition-opacity hover:opacity-90',
-  },
-  // Humaya y Lidera se agregaron el 29-ago-2026, a pedido de Tony y al mismo
-  // nivel que las demás. Sus logos ya vienen en blanco, así que NO llevan
-  // `brightness-0 invert` como los otros.
-  {
-    src: '/images/logos/humaya/humaya-lockup-blanco.png',
-    alt: 'Humaya Costa Rica',
-    name: 'Humaya',
-    href: 'https://stayhumaya.com',
-    hrefEn: 'https://stayhumaya.com',
-    external: true,
-    width: 1875,
-    height: 1075,
-    className: 'h-8 w-auto object-contain opacity-60 transition-opacity hover:opacity-90',
-  },
-  {
     src: '/images/logos/lidera/lidera-horizontal-blanco.png',
     alt: 'LideraX10',
     name: 'LideraX10',
@@ -65,8 +65,9 @@ const companyLogos = [
 
 const footerLinks = [
   { href: '/sobre-mi', label: 'Sobre mí' },
+  { href: '/bike-bed-hotels', label: 'Copropiedad turística' },
+  { href: '/mentoria', label: 'Mentoría empresarial' },
   { href: '/pure-cycling', label: 'Pure Cycling' },
-  { href: '/bike-bed-hotels', label: 'Bike & Bed Hotels' },
   { href: '/libros', label: 'Libros' },
   { href: '/blog', label: 'Blog' },
   { href: '/conferencias', label: 'Conferencias' },
@@ -80,13 +81,14 @@ const footerLinks = [
 const footerLinksEn = [
   { href: '/en',                 label: 'Home',              hrefLang: undefined as string | undefined },
   { href: '/en/about',           label: 'About',             hrefLang: undefined as string | undefined },
+  { href: '/en/bike-bed-hotels', label: 'Tourism co-ownership', hrefLang: undefined as string | undefined },
+  { href: '/en/mentoring',       label: 'Business mentoring', hrefLang: undefined as string | undefined },
   { href: '/en/speaking',        label: 'Speaking',          hrefLang: undefined as string | undefined },
   { href: '/en/books',           label: 'Books',             hrefLang: undefined as string | undefined },
   { href: '/blog',               label: 'Blog · ES',         hrefLang: 'es' as string | undefined },
   { href: '/preguntas-frecuentes', label: 'FAQ · ES',        hrefLang: 'es' as string | undefined },
   { href: '/en/contact',         label: 'Contact',           hrefLang: undefined as string | undefined },
   { href: '/en/pure-cycling',    label: 'Pure Cycling',      hrefLang: undefined as string | undefined },
-  { href: '/en/bike-bed-hotels', label: 'Bike & Bed Hotels', hrefLang: undefined as string | undefined },
 ]
 
 const socialLinks = [
