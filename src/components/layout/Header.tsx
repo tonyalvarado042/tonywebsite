@@ -11,6 +11,7 @@ type NavLink = { href: string; label: string; hrefLang?: string }
 
 const navLinks: NavLink[] = [
   { href: '/sobre-mi', label: 'Sobre mí' },
+  { href: '/mentoria', label: 'Mentoría' },
   { href: '/conferencias', label: 'Conferencias' },
   { href: '/libros', label: 'Libros' },
   { href: '/recursos', label: 'Recursos gratis' },
@@ -29,8 +30,9 @@ const empresasLinks = [
 ]
 
 const navLinksEn: NavLink[] = [
-  { href: '/en/about',    label: 'About' },
-  { href: '/en/speaking', label: 'Speaking' },
+  { href: '/en/about',     label: 'About' },
+  { href: '/en/mentoring', label: 'Mentoring' },
+  { href: '/en/speaking',  label: 'Speaking' },
   { href: '/en/books',    label: 'Books' },
   { href: '/blog',        label: 'Blog · ES', hrefLang: 'es' },
   { href: '/en/contact',  label: 'Contact' },

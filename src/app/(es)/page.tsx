@@ -7,6 +7,7 @@ import AboutTony from '@/components/sections/AboutTony'
 import BikeAndBed from '@/components/sections/BikeAndBed'
 import FaithAndPurpose from '@/components/sections/FaithAndPurpose'
 import BusinessEcosystem from '@/components/sections/BusinessEcosystem'
+import MentoriaTeaser from '@/components/sections/MentoriaTeaser'
 import PhotoStrip from '@/components/ui/PhotoStrip'
 import Books from '@/components/sections/Books'
 import Mentors from '@/components/sections/Mentors'
@@ -116,6 +117,10 @@ export default async function HomePage() {
       </section>
       <SectionDivider />
       <BusinessEcosystem />
+      <SectionDivider />
+      {/* Mentoría: va detrás del ecosistema porque primero se ve QUÉ construyó
+          y recién después se ofrece acompañar a otros a hacer lo mismo. */}
+      <MentoriaTeaser locale="es" />
       <SectionDivider />
 
       {/* Bloque editorial — Propósito */}
