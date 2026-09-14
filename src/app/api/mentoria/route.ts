@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { altaContacto, normalizarTelefono } from '@/lib/crm'
+import { altaContacto, normalizarTelefono, getCrm, TABLA_CONTACTOS } from '@/lib/crm'
 
 /**
  * Solicitud de mentoría empresarial → el CRM.
@@ -88,7 +88,7 @@ export async function POST(req: NextRequest) {
       .filter(Boolean)
       .join('\n')
 
-    await altaContacto({
+    const alta = await altaContacto({
       telefono,
       nombre,
       correo,
@@ -96,6 +96,26 @@ export async function POST(req: NextRequest) {
       etiqueta: ETIQUETA,
       detalle,
     })
+
+    /* `altaContacto` no maneja `empresa` —su tipo no lo contempla— y en una
+       consulta de mentoría empresarial ese dato sirve para filtrar y para
+       preparar la conversación. Se guarda aparte, y SOLO si el contacto no
+       traía uno: no se pisa un dato bueno con uno nuevo.
+       Si falla, no se propaga: el lead ya está guardado, que es lo que importa. */
+    if (empresa) {
+      try {
+        const crm = getCrm()
+        const { data } = await crm
+          .from(TABLA_CONTACTOS).select('empresa').eq('id', alta.contactoId).maybeSingle()
+        if (!data?.empresa) {
+          await crm.from(TABLA_CONTACTOS)
+            .update({ empresa, actualizado_el: new Date().toISOString() })
+            .eq('id', alta.contactoId)
+        }
+      } catch (e) {
+        console.error('[mentoria] no se pudo guardar la empresa:', e)
+      }
+    }
 
     return NextResponse.json({ ok: true })
   } catch (e) {
