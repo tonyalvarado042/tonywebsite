@@ -7,9 +7,9 @@ import PageFAQ, { type PageFAQItem } from '@/components/sections/PageFAQ'
 import { SITE_URL, websiteRef, personRef } from '@/lib/structured-data'
 
 export const metadata = {
-  title: 'Sobre Tony Alvarado — Coach y entrenador de ciclismo en Costa Rica',
+  title: 'Sobre Tony Alvarado — Copropiedad turística, mentoría y ciclismo en Costa Rica',
   description:
-    'Conoce la historia de Tony Alvarado (Anthony Alvarado): su accidente a los 16 años, cómo el ciclismo de montaña y de ruta transformó su vida y el propósito detrás de sus empresas en Costa Rica.',
+    'Tony Alvarado (Anthony Alvarado) desarrolla proyectos turísticos con copropiedad y acompaña a dueños de empresa a escalar. Más de 22 años construyendo negocios en Costa Rica, desde una historia que empezó sobre una bicicleta.',
   alternates: { canonical: '/sobre-mi' },
   openGraph: {
     type: 'website',
@@ -36,7 +36,7 @@ const webPageSchema = {
   '@id': `${SITE_URL}/sobre-mi#webpage`,
   name: 'Sobre Tony Alvarado — Coach y entrenador de ciclismo en Costa Rica',
   description:
-    'Conoce la historia de Tony Alvarado (Anthony Alvarado): su accidente a los 16 años, cómo el ciclismo de montaña y de ruta transformó su vida y el propósito detrás de sus empresas en Costa Rica.',
+    'Tony Alvarado (Anthony Alvarado) desarrolla proyectos turísticos con copropiedad y acompaña a dueños de empresa a escalar. Más de 22 años construyendo negocios en Costa Rica, desde una historia que empezó sobre una bicicleta.',
   url: `${SITE_URL}/sobre-mi`,
   inLanguage: 'es-CR',
   isPartOf: websiteRef,
@@ -92,7 +92,7 @@ const profilePageSchema = {
   url: `${SITE_URL}/sobre-mi`,
   name: 'Sobre Tony Alvarado',
   description:
-    'Conoce la historia de Tony Alvarado (Anthony Alvarado): su accidente a los 16 años, cómo el ciclismo de montaña y de ruta transformó su vida y el propósito detrás de sus empresas en Costa Rica.',
+    'Tony Alvarado (Anthony Alvarado) desarrolla proyectos turísticos con copropiedad y acompaña a dueños de empresa a escalar. Más de 22 años construyendo negocios en Costa Rica, desde una historia que empezó sobre una bicicleta.',
   inLanguage: 'es-CR',
   isPartOf: websiteRef,
   mainEntity: {
@@ -100,15 +100,17 @@ const profilePageSchema = {
   },
 }
 
+// Orden fijado por Tony el 13 de septiembre de 2026: copropiedad, mentoría y
+// después ciclismo. Ver la sección 3 del CLAUDE.md de este repo.
 const highlights = [
-  'Ingeniero de computación y empresario',
-  'Coach y entrenador certificado de ciclismo',
+  'Desarrollador de proyectos turísticos con copropiedad',
+  'Mentor de dueños de empresa que quieren escalar',
   'Certificado por John Maxwell Leadership',
-  'Fundador de PuroMTB (desde 2004)',
-  'Fundador de Pure Cycling y Bike & Bed Hotels',
   'Más de 22 años de trayectoria empresarial',
-  'Autor publicado en Amazon',
-  'San José, Costa Rica',
+  'Fundador de Bike & Bed Hotels y Humaya',
+  'Fundador de PuroMTB (desde 2004) y Pure Cycling',
+  'Coach y entrenador certificado de ciclismo',
+  'Autor publicado en Amazon · San José, Costa Rica',
 ]
 
 export default function SobreMiPage() {
@@ -132,9 +134,11 @@ export default function SobreMiPage() {
               <span className="text-brand-green">Hoy lleva más de 22 años construyendo con esa misma disciplina.</span>
             </h1>
             <p className="text-brand-muted text-left md:text-justify">
-              Ingeniero de computación de formación. Empresario de vocación.
-              Fundó PuroMTB en 2004 cuando el ciclismo online en Costa Rica era casi inexistente.
-              Hoy dirige un grupo de empresas que han facturado millones de dólares.
+              Hoy desarrolla <strong className="font-semibold text-brand-text">proyectos
+              turísticos con copropiedad</strong> en Costa Rica y acompaña a dueños de empresa
+              a escalar los suyos. Ingeniero de computación de formación, empresario de vocación,
+              y un grupo de negocios que ha facturado millones de dólares — todo nacido de una
+              bicicleta y de la disciplina que aprendió sobre ella.
             </p>
           </div>
 
@@ -164,18 +168,24 @@ export default function SobreMiPage() {
                 Trayectoria
               </p>
               <h2 className="text-3xl font-bold text-brand-text">
-                Coach certificado.<br />
-                <span className="text-brand-accent">Empresario con historia real.</span>
+                Construye, y después<br />
+                <span className="text-brand-accent">enseña lo que construyó.</span>
               </h2>
               <p className="text-brand-muted text-left md:text-justify">
-                Coach certificado de ciclismo y certificado por John Maxwell Leadership.
-                Autor de <em>Secretos para ser un empresario exitoso</em>.
-                Pure Cycling, su programa online, tiene miembros en más de 30 países.
+                Su frente principal hoy es el <strong className="font-semibold text-brand-text">desarrollo
+                de proyectos turísticos con copropiedad</strong>: hacer posible que otros sean
+                co-dueños de activos turísticos en Costa Rica, sin tener que construir y operar solos.
               </p>
               <p className="text-brand-muted text-left md:text-justify">
-                A lo largo de más de 22 años construyó un ecosistema de empresas
-                alrededor del ciclismo: tiendas, comunidades digitales, programas de entrenamiento
-                y el primer hotel temático de ciclismo en Costa Rica con visión de expansión global.
+                De ahí sale lo segundo: <strong className="font-semibold text-brand-text">acompañar
+                a otros dueños de empresa</strong> a ordenar el negocio, armar el equipo y soltar la
+                operación. Certificado por John Maxwell Leadership y autor de
+                <em> Secretos para ser un empresario exitoso</em>.
+              </p>
+              <p className="text-brand-muted text-left md:text-justify">
+                Y todo eso nació del ciclismo: más de 22 años construyendo tiendas, comunidades
+                digitales, programas de entrenamiento y el primer hotel temático de ciclismo de
+                Costa Rica. El deporte sigue siendo de dónde viene todo lo demás.
               </p>
             </div>
 

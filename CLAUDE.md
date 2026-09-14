@@ -39,38 +39,57 @@ Nota: verificar si el correo está escrito correctamente, ya que aparece como �
 
 ## 3. Posicionamiento principal
 
-El posicionamiento central de Tony Alvarado es:
+> ⚠️ **Actualizado el 13 de septiembre de 2026 por Tony.** Antes este archivo
+> decía que «el enfoque principal debe ser el ciclismo» y que lo empresarial
+> «no debe desplazar el tema central». **Eso ya no aplica.** El sitio cambió de
+> eje en agosto de 2026 y Tony fijó el orden nuevo de forma explícita.
 
-> Tony Alvarado ayuda a transformar vidas a través del ciclismo.
+El orden de prioridad del sitio, de mayor a menor, es:
 
-La web debe presentarlo como:
+### 1. Copropiedad turística — PRIMERO
 
-1. Experto en ciclismo.
-2. Empresario con más de 22 años de experiencia.
-3. Fundador de un ecosistema de empresas alrededor del ciclismo.
-4. Autor.
-5. Coach certificado de ciclismo.
-6. Coach certificado por John Maxwell Leadership.
-7. Líder cristiano / hombre de fe.
-8. Visionario que busca llevar el ciclismo, el turismo deportivo y la transformación personal a escala global.
+Tony desarrolla proyectos turísticos y ofrece **copropiedad**: participar como
+co-dueño de activos turísticos en Costa Rica. Es el frente comercial principal
+y el que más ingresos busca generar.
 
-El enfoque principal debe ser el ciclismo.  
-La parte empresarial debe apoyar la autoridad de Tony, pero no debe desplazar el tema central.
+Va de la mano de Bike & Bed Hotels, Humaya y el libro *El Nuevo Negocio del
+Turismo 2027*.
 
-No posicionar a Tony como un empresario genérico.  
-No posicionarlo únicamente como consultor de negocios.  
-El eje debe ser: ciclismo, transformación, fe, comunidad, negocios y expansión global.
+### 2. Mentoría empresarial — SEGUNDO
 
----
+Acompañamiento y asesoría para dueños de empresa que quieren escalar a 6 o 7
+cifras y que el negocio funcione sin ellos. Cinco frentes: marketing,
+liderazgo, ventas, estrategia y finanzas.
+
+Vive en `/mentoria` y `/en/mentoring`, y es a donde apunta el sitio de
+LIDERAX10 desde su propia sección de mentoría.
+
+### 3. Ciclismo — TERCERO
+
+Sigue siendo parte central de la identidad y de la historia de Tony, y sostiene
+su autoridad: PuroMTB, Pure Cycling, la certificación de la Federación
+Costarricense de Ciclismo. **Pero ya no encabeza el posicionamiento comercial.**
+
+El ciclismo es de dónde viene; la copropiedad y la mentoría son a dónde va.
+
+### Cómo se aplica esto
+- En **Sobre mí**, el footer y los textos de posicionamiento, ese es el orden.
+- El ciclismo **no se borra ni se esconde** — es la historia que da credibilidad
+  a todo lo demás, y el accidente a los 16 años sigue siendo el corazón del relato.
+- No posicionar a Tony como un empresario genérico ni como consultor de negocios
+  a secas. El eje sigue siendo: construir con propósito, fe y disciplina.
 
 ## 4. Ocupación / perfil
 
-Tony Alvarado es empresario, CEO y fundador de un ecosistema de empresas alrededor del ciclismo.
+Tony Alvarado es empresario, CEO y **desarrollador de proyectos turísticos**,
+además de fundador de un ecosistema de empresas nacido alrededor del ciclismo.
 
-También es:
+También es (en el orden de prioridad de la sección 3):
 
-- Experto en ciclismo.
+- Desarrollador de proyectos turísticos y de copropiedad.
+- Mentor empresarial.
 - Autor.
+- Experto en ciclismo.
 - Coach certificado de ciclismo.
 - Coach certificado por John Maxwell Leadership.
 - Fundador de PuroMTB.
@@ -131,10 +150,21 @@ Datos importantes:
 
 ### Lidera por 10
 
-Lidera por 10 es una empresa de consultoría de negocios.
+**LIDERAX10** (antes «Lidera por 10») es la empresa de **software e inteligencia
+artificial** de Tony, con sitio propio en `liderax10.com`. Su producto estrella
+es **Ari**, un ARM (*Agent Relationship Management*).
 
-Debe mencionarse solo de forma secundaria si aporta contexto o autoridad empresarial.  
-No debe ser el foco principal de la página.
+⚠️ **Actualizado el 13 de septiembre de 2026.** Antes acá decía que era una
+consultoría de negocios y que solo debía mencionarse de forma secundaria. Dos
+cosas cambiaron:
+
+1. Ya no es consultoría: es software e IA.
+2. La **mentoría empresarial** pasó a ser la **prioridad 2** del sitio
+   (sección 3), y `liderax10.com` enlaza a `/mentoria` desde su propia sección.
+   El tráfico va en los dos sentidos.
+
+Sigue sin ser el foco visual de tonyalvarado.com —tiene su propio sitio— pero
+la mentoría que Tony da **sí** es prioridad acá.
 
 ---
 
@@ -363,23 +393,20 @@ Evitar garantías de inversión si no están documentadas legalmente.
 
 ## 14. Objetivos de la página web
 
-La página de Tony Alvarado debe lograr:
+En el orden de prioridad de la sección 3 (copropiedad → mentoría → ciclismo):
 
-1. Explicar quién es Tony Alvarado.
-2. Posicionarlo como referente del ciclismo.
-3. Mostrar su historia personal.
-4. Mostrar su fe y propósito.
-5. Presentar su ecosistema empresarial.
-6. Dirigir usuarios hacia Pure Cycling.
-7. Dirigir inversionistas hacia Bike & Bed.
-8. Presentar sus libros.
-9. Mostrar autoridad, entrevistas y mentores.
-10. Recibir solicitudes de conferencias.
-11. Captar contactos profesionales.
-12. Servir como base de SEO/GEO.
-13. Aumentar su credibilidad ante Google, IA y plataformas de autoridad.
-
----
+1. Llevar interesados hacia la **copropiedad turística**.
+2. Llevar dueños de empresa hacia la **mentoría** (`/mentoria`).
+3. Explicar quién es Tony Alvarado y mostrar su historia personal.
+4. Mostrar su fe y su propósito.
+5. Presentar su ecosistema de empresas.
+6. Dirigir usuarios hacia Pure Cycling y PuroMTB.
+7. Presentar sus libros.
+8. Mostrar autoridad, entrevistas y mentores.
+9. Recibir solicitudes de conferencias.
+10. Captar contactos profesionales.
+11. Servir como base de SEO/GEO.
+12. Aumentar su credibilidad ante Google, IA y plataformas de autoridad.
 
 ## 15. Secciones recomendadas para la web
 
@@ -409,25 +436,23 @@ La web debe incluir, como mínimo:
 
 ## 16. CTAs principales
 
-Usar CTAs claros y estratégicos.
+**Los dos prioritarios** (sección 3):
 
-CTAs posibles:
+1. **Copropiedad** — conocer los proyectos, agendar llamada, descargar el libro
+   o usar la calculadora.
+2. **Mentoría** — «Quiero que me acompañen», que lleva al formulario de
+   `/mentoria`.
 
-- Conoce Pure Cycling.
-- Únete a la comunidad.
-- Transforma tu vida a través del ciclismo.
-- Invierte en Bike & Bed.
-- Agenda una llamada de inversión.
+Después, en segundo plano:
+
+- Conoce Pure Cycling / Únete a la comunidad.
 - Solicita una conferencia.
 - Conoce la historia de Tony.
-- Ver entrevistas.
 - Comprar libro.
 - Contactar al equipo.
 
-No saturar la página con demasiados CTAs.  
-Priorizar Pure Cycling y Bike & Bed.
-
----
+No saturar la página con demasiados CTAs. **Antes se priorizaba Pure Cycling y
+Bike & Bed; ahora la prioridad es copropiedad y mentoría.**
 
 ## 17. Estilo visual
 
