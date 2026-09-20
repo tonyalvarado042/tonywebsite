@@ -21,9 +21,15 @@ type Props = {
   escenario: string
   /** Se llama cuando la solicitud quedó registrada, para abrir el informe. */
   alRegistrar: () => void
+  /**
+   * `true` cuando el formulario va dentro de la ventana de rescate: ahí la
+   * tarjeta ya la pone la ventana, así que este no dibuja la suya ni repite
+   * el encabezado.
+   */
+  desnudo?: boolean
 }
 
-export default function InformeAirbnb({ supuestos, escenario, alRegistrar }: Props) {
+export default function InformeAirbnb({ supuestos, escenario, alRegistrar, desnudo }: Props) {
   const [prefijo, setPrefijo] = useState('+506')
   const [nombre, setNombre] = useState('')
   const [correo, setCorreo] = useState('')
@@ -99,10 +105,15 @@ export default function InformeAirbnb({ supuestos, escenario, alRegistrar }: Pro
     )
   }
 
+  // Los campos estaban oscuros sobre oscuro y con borde de 1 px: se veían
+  // apagados y no se notaba dónde escribir. Tony lo pidió el 20-sep-2026.
+  // Ahora: fondo más claro que la tarjeta, borde de 2 px, más altos, y el
+  // que está activo se pinta de verde con halo.
   const campo =
-    'w-full rounded-xl border border-brand-border bg-brand-bg px-4 py-3 text-[15px] text-brand-text ' +
-    'placeholder:text-brand-muted/50 outline-none transition-colors focus:border-brand-green/60 ' +
-    'focus:ring-2 focus:ring-brand-green/30'
+    'w-full rounded-xl border-2 border-brand-border bg-brand-surface px-4 py-3.5 text-[16px] ' +
+    'font-medium text-brand-text placeholder:font-normal placeholder:text-brand-muted/60 ' +
+    'outline-none transition-all focus:border-brand-cta focus:bg-brand-bg ' +
+    'focus:ring-4 focus:ring-brand-cta/20'
 
   const Palomita = ({ ok }: { ok: boolean }) =>
     ok ? (
@@ -110,15 +121,24 @@ export default function InformeAirbnb({ supuestos, escenario, alRegistrar }: Pro
     ) : null
 
   return (
-    <form onSubmit={alEnviar} className="rounded-3xl border border-brand-border bg-brand-card p-6 sm:p-7">
-      <p className="mb-1 text-[15px] font-bold text-brand-text">Te lo mandamos por correo</p>
-      <p className="mb-6 text-sm leading-relaxed text-brand-muted">
-        Dejanos tus datos y preparamos el reporte con el escenario que tenés en pantalla.
-      </p>
+    <form
+      onSubmit={alEnviar}
+      className={desnudo
+        ? ''
+        : 'rounded-3xl border-2 border-brand-cta/25 bg-brand-card p-6 shadow-[0_0_60px_-20px_rgba(34,197,94,0.35)] sm:p-7'}
+    >
+      {!desnudo && (
+        <>
+          <p className="mb-1 text-[17px] font-extrabold text-brand-text">Te lo mandamos por correo</p>
+          <p className="mb-6 text-sm leading-relaxed text-brand-muted">
+            Dejanos tus datos y preparamos el reporte con el escenario que tenés en pantalla.
+          </p>
+        </>
+      )}
 
       <div className="space-y-4">
         <label className="block">
-          <span className="mb-1.5 block text-[13px] font-semibold text-brand-muted">Nombre</span>
+          <span className="mb-1.5 block text-[13px] font-bold text-brand-text/90">Nombre</span>
           <div className="relative">
             <input
               value={nombre}
@@ -133,14 +153,15 @@ export default function InformeAirbnb({ supuestos, escenario, alRegistrar }: Pro
         </label>
 
         <label className="block">
-          <span className="mb-1.5 block text-[13px] font-semibold text-brand-muted">WhatsApp</span>
+          <span className="mb-1.5 block text-[13px] font-bold text-brand-text/90">WhatsApp</span>
           <div className="flex gap-2">
             <select
               value={prefijo}
               onChange={(e) => setPrefijo(e.target.value)}
               aria-label="País"
-              className="shrink-0 rounded-xl border border-brand-border bg-brand-bg px-3 py-3 text-[15px]
-                         text-brand-text outline-none transition-colors focus:border-brand-green/60"
+              className="shrink-0 rounded-xl border-2 border-brand-border bg-brand-surface px-3 py-3.5
+                         text-[16px] font-medium text-brand-text outline-none transition-all
+                         focus:border-brand-cta focus:ring-4 focus:ring-brand-cta/20"
             >
               {PAISES.map((p) => (
                 <option key={p.corto} value={p.codigo}>
@@ -164,7 +185,7 @@ export default function InformeAirbnb({ supuestos, escenario, alRegistrar }: Pro
         </label>
 
         <label className="block">
-          <span className="mb-1.5 block text-[13px] font-semibold text-brand-muted">Correo electrónico</span>
+          <span className="mb-1.5 block text-[13px] font-bold text-brand-text/90">Correo electrónico</span>
           <div className="relative">
             <input
               value={correo}
@@ -185,7 +206,7 @@ export default function InformeAirbnb({ supuestos, escenario, alRegistrar }: Pro
             type="checkbox"
             checked={acepta}
             onChange={(e) => setAcepta(e.target.checked)}
-            className="mt-0.5 h-4 w-4 shrink-0 accent-[#8B5CF6]"
+            className="mt-0.5 h-[18px] w-[18px] shrink-0 accent-[#22C55E]"
           />
           <span className="text-[12.5px] leading-relaxed text-brand-muted">
             Autorizo a Tony Alvarado y su equipo a guardar mis datos y contactarme por
