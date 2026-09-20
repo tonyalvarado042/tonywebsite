@@ -20,6 +20,29 @@ import { PAISES } from '@/data/paises'
  * página de gracias no necesita saber quién entró.
  */
 
+/**
+ * Los UTM que Meta le pega a la URL del anuncio.
+ *
+ * Se leen del navegador y viajan al CRM dentro de la nota de la bitácora. No
+ * se inventa ninguno: si el anuncio no los trae, no va nada.
+ *
+ * Sirve para lo que el slug de la variante no alcanza a contestar: la variante
+ * dice QUÉ página convirtió; el UTM dice QUÉ ANUNCIO la trajo.
+ */
+function leerUtm(): Record<string, string> {
+  try {
+    const p = new URLSearchParams(window.location.search)
+    const salida: Record<string, string> = {}
+    for (const llave of ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']) {
+      const valor = p.get(llave)
+      if (valor) salida[llave] = valor.slice(0, 120)
+    }
+    return salida
+  } catch {
+    return {}
+  }
+}
+
 export default function FormularioClase({
   origen = 'principal',
   compacto = false,
@@ -64,6 +87,7 @@ export default function FormularioClase({
           prefijo,
           whatsapp: telefono.trim(),
           origen,
+          utm: leerUtm(),
           website,
         }),
       })

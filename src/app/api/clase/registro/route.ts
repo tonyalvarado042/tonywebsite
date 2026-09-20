@@ -3,7 +3,7 @@ import { Resend } from 'resend'
 import { REMITENTE_CON_NOMBRE } from '@/lib/correo'
 import { altaContacto, getCrm, normalizarTelefono, registrarActividad } from '@/lib/crm'
 import { enlaceDeBaja } from '@/lib/secuencias'
-import { CLASE, ETIQUETA_CRM } from '@/data/clase-copropiedad'
+import { CLASE, ETIQUETA_CRM, GRUPO } from '@/data/clase-copropiedad'
 import { PAISES } from '@/data/paises'
 
 /**
@@ -89,8 +89,25 @@ export async function POST(req: NextRequest) {
     const correo = leer(cuerpo.correo).toLowerCase()
     const prefijo = leer(cuerpo.prefijo) || '+506'
     const telefonoCrudo = leer(cuerpo.whatsapp)
-    /** De dónde entró: 'principal', 'salida' (la ventana) o 'barra'. */
-    const origen = leer(cuerpo.origen) || 'principal'
+    /**
+     * De dónde entró: el slug de la variante, con `-salida` pegado si vino por
+     * la ventana de intención de salida. Ej.: `revolucion`, `revolucion-salida`.
+     */
+    const origen = leer(cuerpo.origen) || 'numeros'
+    /** La variante sola, sin el sufijo. Es la que se etiqueta en el CRM. */
+    const variante = origen.replace(/-salida$/, '')
+    const porLaVentana = origen.endsWith('-salida')
+
+    // Los UTM del anuncio. Se aceptan solo los cinco conocidos y recortados:
+    // lo que llega de una URL es entrada de afuera, no dato de confianza.
+    const utmCrudo = cuerpo.utm
+    const utm: string[] = []
+    if (utmCrudo && typeof utmCrudo === 'object' && !Array.isArray(utmCrudo)) {
+      for (const llave of ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']) {
+        const valor = leer((utmCrudo as Record<string, unknown>)[llave])
+        if (valor) utm.push(`${llave}=${valor.slice(0, 120)}`)
+      }
+    }
 
     // ── Validación ──
     if (nombre.length < 2 || nombre.length > 100) {
@@ -118,27 +135,44 @@ export async function POST(req: NextRequest) {
       etiqueta: ETIQUETA_CRM,
       detalle:
         `Se registró a la clase «${CLASE.nombre}» del ${CLASE.fechaTexto}, ${CLASE.horaTexto}.` +
-        ` Entró por: ${origen}.`,
+        ` Variante: ${variante}.` +
+        (porLaVentana ? ' Entró por la ventana de salida.' : '') +
+        (utm.length ? ` Anuncio: ${utm.join(' · ')}.` : ''),
     })
 
-    // ── El país, solo si el contacto no lo traía ──
-    // No se pisa lo que ya había: puede estar mejor trabajado a mano desde el CRM.
+    // ── La etiqueta de la variante y el país ──
+    //
+    // La etiqueta `variante:<slug>` es LO QUE HACE MEDIBLE EL A/B: Meta reporta
+    // clics, pero quién se registró de verdad solo lo sabe el CRM. Sin esto,
+    // cinco landings distintas son cinco landings indistinguibles.
+    //
+    // Todo en UNA lectura y UNA escritura, no tres idas y vueltas.
     const pais = paisDelPrefijo(prefijo)
-    if (pais) {
-      const crm = getCrm()
-      const { data: ficha } = await crm
-        .from('cta_contactos')
-        .select('pais')
-        .eq('id', alta.contactoId)
-        .maybeSingle()
+    const etiquetaVariante = `variante:${variante}`
 
-      if (!ficha?.pais) {
-        const { error } = await crm
-          .from('cta_contactos')
-          .update({ pais, actualizado_el: new Date().toISOString() })
-          .eq('id', alta.contactoId)
-        if (error) console.error('[clase/registro] no se pudo guardar el país:', error.message)
-      }
+    const crm = getCrm()
+    const { data: ficha } = await crm
+      .from('cta_contactos')
+      .select('pais, tags')
+      .eq('id', alta.contactoId)
+      .maybeSingle()
+
+    const cambios: Record<string, unknown> = {}
+
+    const tags: string[] = Array.isArray(ficha?.tags) ? (ficha!.tags as string[]) : []
+    if (!tags.includes(etiquetaVariante)) {
+      cambios.tags = [...tags, etiquetaVariante]
+    }
+
+    // No se pisa lo que ya había: puede estar mejor trabajado a mano desde el CRM.
+    if (pais && !ficha?.pais) cambios.pais = pais
+
+    if (Object.keys(cambios).length > 0) {
+      cambios.actualizado_el = new Date().toISOString()
+      const { error } = await crm.from('cta_contactos').update(cambios).eq('id', alta.contactoId)
+      // Si esto falla el lead YA está guardado: no se pierde la persona, pero
+      // esa fila queda sin variante y hay que saberlo.
+      if (error) console.error('[clase/registro] no se pudo completar la ficha:', error.message)
     }
 
     // ── El correo de confirmación ──
@@ -156,6 +190,14 @@ export async function POST(req: NextRequest) {
           `Hola ${nombre.split(' ')[0]},`,
           '',
           `Ya tenés tu campo en la clase «${CLASE.nombre}».`,
+          '',
+          '⚠️ TE FALTA UN PASO',
+          '',
+          'Toda la clase se coordina por el grupo de WhatsApp: el enlace para',
+          'entrar, los recordatorios y el material salen por ahí. Si no entrás',
+          'al grupo, quedaste registrado pero no te vas a enterar.',
+          '',
+          GRUPO.url,
           '',
           '───────────────────────────────',
           `${CLASE.fechaTexto.toUpperCase()} · ${CLASE.horaTexto}`,

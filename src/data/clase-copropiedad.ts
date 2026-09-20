@@ -77,6 +77,27 @@ export const VIP = {
 
 export const hayVip = (): boolean => VIP.enlacePago.trim().length > 0
 
+// ── El grupo de la clase ────────────────────────────────────────
+
+/**
+ * El grupo de WhatsApp donde se coordina TODO lo de la clase.
+ *
+ * Enlace que pasó Tony el 20 de setiembre de 2026.
+ *
+ * ── Por qué el registro «no está completo» hasta entrar acá ────────────────
+ * El lead SÍ queda guardado en el CRM apenas envía el formulario — eso no es
+ * mentira ni se pierde. Lo que falta es el canal: el enlace para entrar a la
+ * clase, los recordatorios y el material salen por el grupo. Quien no entra al
+ * grupo se registró pero no se entera, y para efectos prácticos no llega.
+ *
+ * Por eso la página de gracias lo dice grande y con todas las letras, y el
+ * correo de confirmación lo repite.
+ */
+export const GRUPO = {
+  url: 'https://chat.whatsapp.com/IkZS3GSDgA79S97wIPpYZJ',
+  nombre: 'el grupo de la clase',
+} as const
+
 // ── WhatsApp ──────────────────────────────────────────────────────
 
 /**

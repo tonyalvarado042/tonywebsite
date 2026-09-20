@@ -62,7 +62,7 @@ function marcarVista() {
   }
 }
 
-export default function SalidaIntencion() {
+export default function SalidaIntencion({ origen = 'numeros' }: { origen?: string }) {
   const [abierta, setAbierta] = useState(false)
   const armada = useRef(true)
   const panel = useRef<HTMLDivElement>(null)
@@ -195,7 +195,7 @@ export default function SalidaIntencion() {
           <Contador />
         </div>
 
-        <FormularioClase origen="salida" compacto />
+        <FormularioClase origen={`${origen}-salida`} compacto />
 
         <p className="mt-4 text-center text-xs text-brand-muted/80">
           ¿De verdad no es para vos?{' '}

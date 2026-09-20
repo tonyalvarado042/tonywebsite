@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next'
+import { VARIANTES_CON_SLUG } from './src/data/clase-variantes'
 
 const CANONICAL = 'https://www.tonyalvarado.com'
 
@@ -25,6 +26,17 @@ const nextConfig: NextConfig = {
     return [
       { source: '/', has: enElSubdominio, destination: '/clase' },
       { source: '/gracias', has: enElSubdominio, destination: '/clase/gracias' },
+
+      // Una reescritura POR VARIANTE, sacada del mismo arreglo que dibuja las
+      // páginas. Nada de `/:slug*`: un comodín se tragaría `/favicon.ico` y
+      // cualquier archivo suelto de la raíz. Listarlas una por una también
+      // significa que una URL inventada en un anuncio da 404 en vez de servir
+      // algo raro.
+      ...VARIANTES_CON_SLUG.map((v) => ({
+        source: `/${v.slug}`,
+        has: enElSubdominio,
+        destination: `/clase/v/${v.slug}`,
+      })),
     ]
   },
   async redirects() {
