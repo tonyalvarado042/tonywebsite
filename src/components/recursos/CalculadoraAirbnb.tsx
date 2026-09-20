@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react'
 import { ArrowRight, Check, Info } from 'lucide-react'
 import InformeAirbnb from './InformeAirbnb'
+import RescateDeSalida from './RescateDeSalida'
 import {
   ADVERTENCIA,
   ESCENARIOS,
@@ -123,15 +124,29 @@ export default function CalculadoraAirbnb() {
   const [bikeBedCargado, setBikeBedCargado] = useState(false)
   const [informeAbierto, setInformeAbierto] = useState(false)
 
-  const set = (clave: keyof Supuestos, valor: number) =>
+  /**
+   * ¿Ya movió la calculadora? La ventana de rescate NO sale hasta que esto
+   * sea cierto: si todavía no tocó nada, no hay informe que ofrecerle y la
+   * ventana se leería como publicidad.
+   *
+   * Se enciende al cambiar un campo, al elegir escenario o al cargar un
+   * proyecto de ejemplo — no con solo entrar a la página.
+   */
+  const [haCalculado, setHaCalculado] = useState(false)
+
+  const set = (clave: keyof Supuestos, valor: number) => {
+    setHaCalculado(true)
     setS((prev) => ({ ...prev, [clave]: valor }))
+  }
 
   const aplicarEscenario = (nombre: string) => {
+    setHaCalculado(true)
     setEscenario(nombre)
     setS((prev) => ({ ...prev, ...ESCENARIOS[nombre] }))
   }
 
   const cargarBikeBed = () => {
+    setHaCalculado(true)
     setS(PROYECTOS.bikeBed)
     setEscenario('base')
     setPaso(0)
@@ -185,7 +200,7 @@ export default function CalculadoraAirbnb() {
               <button
                 key={clave}
                 type="button"
-                onClick={() => { setS(PROYECTOS[clave]); setBikeBedCargado(false) }}
+                onClick={() => { setHaCalculado(true); setS(PROYECTOS[clave]); setBikeBedCargado(false) }}
                 className="rounded-xl border border-brand-border bg-brand-card px-3 py-2 text-[12.5px]
                            font-semibold text-brand-muted transition-colors hover:border-brand-green/40 hover:text-brand-text"
               >
@@ -613,6 +628,18 @@ export default function CalculadoraAirbnb() {
           </div>
         </section>
       )}
+
+      {/* La ventana de rescate. Se gobierna sola: mientras `haCalculado` sea
+          falso no existe, y en cuanto la persona deja sus datos deja de poder
+          salir. Las reglas están explicadas en el propio componente. */}
+      <RescateDeSalida
+        supuestos={s}
+        escenario={escenario}
+        resultado={r}
+        haCalculado={haCalculado}
+        yaRegistrado={informeAbierto}
+        alRegistrar={() => setInformeAbierto(true)}
+      />
     </>
   )
 }
