@@ -1,4 +1,5 @@
 import { createHmac, timingSafeEqual } from 'crypto'
+import { getCrm } from '@/lib/crm'
 
 /**
  * Frenos y firmas de las automatizaciones.
@@ -9,18 +10,50 @@ import { createHmac, timingSafeEqual } from 'crypto'
  * los frenos y la firma de los enlaces.
  */
 
-// ── Freno general ───────────────────────────────────────────────────────────
+// ── Freno general ───────────────────────────────────────────────
 
 /**
- * Interruptor maestro. **Viene apagado.** Para encender hay que poner
- * `SECUENCIAS_ACTIVAS=si` en Vercel.
+ * Interruptor maestro. **Viene apagado.**
  *
- * Es a propósito: la regla de Tony es que ningún envío masivo sale sin que él
- * vea la prueba y dé el OK. Cada automatización tiene además su propio
- * interruptor (`activa`) en la base.
+ * ⚠️ Vive en el CRM, en `cta_ajustes.envios_automaticos`, NO en una variable
+ * de entorno. Lo cambió Tony el 20-sep-2026:
+ *
+ *   «No veo por qué deba salir del sistema para esto. No quiero estar
+ *    entrando a Vercel.»
+ *
+ * La regla que quedó: **los secretos van en Vercel, las decisiones van en el
+ * CRM.** Encender los envíos es una decisión suya, no un secreto.
+ *
+ * Si la consulta falla, devuelve `false`. Que un problema de base apague los
+ * envíos es molesto; que los encienda sería grave.
  */
-export function secuenciasActivas(): boolean {
-  return process.env.SECUENCIAS_ACTIVAS === 'si'
+export async function secuenciasActivas(): Promise<boolean> {
+  try {
+    const { data, error } = await getCrm()
+      .from('cta_ajustes')
+      .select('valor')
+      .eq('clave', 'envios_automaticos')
+      .maybeSingle()
+
+    if (error) {
+      console.error('[secuencias] no se pudo leer el interruptor:', error.message)
+      return false
+    }
+    return data?.valor === 'si'
+  } catch (e) {
+    console.error('[secuencias] no se pudo leer el interruptor:', e)
+    return false
+  }
+}
+
+/** Para prenderlo o apagarlo desde el sitio. Devuelve cómo quedó. */
+export async function cambiarSecuencias(encendido: boolean): Promise<boolean> {
+  const { error } = await getCrm()
+    .from('cta_ajustes')
+    .update({ valor: encendido ? 'si' : 'no', actualizado_el: new Date().toISOString() })
+    .eq('clave', 'envios_automaticos')
+  if (error) throw new Error(`No se pudo cambiar el interruptor: ${error.message}`)
+  return encendido
 }
 
 // ── Guardarraíl del borrador ────────────────────────────────────────────────

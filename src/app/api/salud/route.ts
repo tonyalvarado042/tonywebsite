@@ -107,8 +107,8 @@ export async function GET(req: NextRequest) {
     tablas,
     columnas,
     secuencia: {
-      activa: secuenciasActivas(),
-      nota: secuenciasActivas()
+      activa: await secuenciasActivas(),
+      nota: (await secuenciasActivas())
         ? '⚠️ ENCENDIDA: los correos que no sean [BORRADOR] se van a enviar.'
         : 'Apagada. No sale ningún correo de secuencia.',
     },

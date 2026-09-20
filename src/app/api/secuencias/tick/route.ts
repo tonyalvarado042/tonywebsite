@@ -22,7 +22,8 @@ import {
  * bitácora del contacto y adelanta al siguiente paso.
  *
  * ── Los frenos, en orden ───────────────────────────────────────────────────
- * 1. `SECUENCIAS_ACTIVAS` tiene que valer 'si'. Viene apagado.
+ * 1. El interruptor `envios_automaticos` del CRM tiene que estar en 'si'.
+ *    Viene apagado y se mueve desde Marketing, no desde Vercel.
  * 2. La automatización tiene que estar `activa = true`. Vienen apagadas.
  * 3. Un paso con [BORRADOR] no sale nunca, aunque se quiten los frenos 1 y 2.
  * 4. Solo se escribe a contactos con `baja = false`.
@@ -45,14 +46,15 @@ function getResend(): Resend {
   return resendClient
 }
 
-async function correrElTick(req: NextRequest) {
+/** Lo comparte el mando del CRM, en `../panel`. */
+export async function correrElTick(req: NextRequest) {
   const prueba = new URL(req.url).searchParams.get('dry') === '1'
 
-  if (!prueba && !secuenciasActivas()) {
+  if (!prueba && !(await secuenciasActivas())) {
     return NextResponse.json({
       ok: true,
       enviados: 0,
-      nota: 'Interruptor general apagado (SECUENCIAS_ACTIVAS ≠ "si"). No se envió nada.',
+      nota: 'Los envíos automáticos están apagados en el CRM (Marketing → Envíos automáticos). No se envió nada.',
     })
   }
 
