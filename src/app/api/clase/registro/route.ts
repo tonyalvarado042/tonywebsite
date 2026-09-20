@@ -49,6 +49,36 @@ function paisDelPrefijo(prefijo: string): string | null {
   return encontrado ? encontrado.pais : null
 }
 
+/**
+ * Arma la etiqueta del canal a partir de `utm_source` y `utm_medium`.
+ *
+ * Normaliza a minúsculas y guiones porque así se guardan las etiquetas en este
+ * CRM — si no, «Instagram» e «instagram» se vuelven dos etiquetas distintas y el
+ * conteo del filtro queda partido.
+ *
+ * ⚠️ Devuelve `null` si el valor trae llaves. Meta rellena solas cosas como
+ * `{{site_source_name}}`, pero **cuando el parámetro no está bien puesto llega
+ * el texto literal**. Sin esta guarda, el CRM se llenaría de etiquetas
+ * `via:site-source-name`, que no dicen nada y encima ensucian el filtro.
+ */
+function canalDesdeUtm(fuente?: string, medio?: string): string | null {
+  const limpiar = (t?: string) =>
+    (t ?? '')
+      .normalize('NFD')
+      .replace(/[̀-ͯ]/g, '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .slice(0, 40)
+
+  if ((fuente ?? '').includes('{') || (medio ?? '').includes('{')) return null
+
+  const f = limpiar(fuente)
+  if (!f) return null
+  const m = limpiar(medio)
+  return `via:${m ? `${f}-${m}` : f}`
+}
+
 export async function POST(req: NextRequest) {
   try {
     if (!(req.headers.get('content-type') ?? '').includes('application/json')) {
@@ -88,13 +118,23 @@ export async function POST(req: NextRequest) {
     // Los UTM del anuncio. Se aceptan solo los cinco conocidos y recortados:
     // lo que llega de una URL es entrada de afuera, no dato de confianza.
     const utmCrudo = cuerpo.utm
-    const utm: string[] = []
+    const utmValores: Record<string, string> = {}
     if (utmCrudo && typeof utmCrudo === 'object' && !Array.isArray(utmCrudo)) {
       for (const llave of ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']) {
         const valor = leer((utmCrudo as Record<string, unknown>)[llave])
-        if (valor) utm.push(`${llave}=${valor.slice(0, 120)}`)
+        if (valor) utmValores[llave] = valor.slice(0, 120)
       }
     }
+    const utm = Object.entries(utmValores).map(([k, v]) => `${k}=${v}`)
+
+    // La etiqueta del canal: `via:instagram-historia`, `via:correo-automatizacion`.
+    //
+    // La bitácora ya guarda los UTM completos, pero una nota **no se puede
+    // filtrar**. Tony pidió que «siempre se registre de dónde viene el lead», y
+    // en este CRM lo que se filtra son las ETIQUETAS: la pantalla de Contactos
+    // tiene filtro por etiqueta con su conteo. Sin esto, saber cuántos vinieron
+    // de historias de Instagram obliga a leer notas a mano.
+    const etiquetaVia = canalDesdeUtm(utmValores.utm_source, utmValores.utm_medium)
 
     // ── Validación ──
     if (nombre.length < 2 || nombre.length > 100) {
@@ -147,8 +187,11 @@ export async function POST(req: NextRequest) {
     const cambios: Record<string, unknown> = {}
 
     const tags: string[] = Array.isArray(ficha?.tags) ? (ficha!.tags as string[]) : []
-    if (!tags.includes(etiquetaVariante)) {
-      cambios.tags = [...tags, etiquetaVariante]
+    const porAgregar = [etiquetaVariante, etiquetaVia].filter(
+      (e): e is string => Boolean(e) && !tags.includes(e as string)
+    )
+    if (porAgregar.length > 0) {
+      cambios.tags = [...tags, ...porAgregar]
     }
 
     // No se pisa lo que ya había: puede estar mejor trabajado a mano desde el CRM.

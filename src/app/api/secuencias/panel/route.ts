@@ -110,13 +110,17 @@ type Quien = { id: string; rol: string; nombre: string | null }
  * políticas y validaría cualquier cosa. Acá lo que se quiere es justamente
  * que Supabase diga si el token sirve.
  */
-async function quienEs(req: NextRequest): Promise<Quien | null> {
+async function quienEs(req: NextRequest): Promise<Quien | 'sin-configurar' | null> {
   const cabecera = req.headers.get('authorization') ?? ''
   const token = cabecera.toLowerCase().startsWith('bearer ') ? cabecera.slice(7).trim() : ''
   if (!token) return null
 
   const publicable = await llavePublicable()
-  if (!publicable) return null
+  // ⚠️ Esto NO es «no autorizado»: es que al servidor le falta configuración.
+  // Antes los dos casos devolvían el mismo 401 y era imposible saber, desde
+  // afuera, si el problema era el token de quien llama o la instalación.
+  // Un error que no se puede diagnosticar cuesta horas el día que falle.
+  if (!publicable) return 'sin-configurar'
 
   const anon = createClient(SUPABASE_URL, publicable, {
     auth: { persistSession: false, autoRefreshToken: false },
@@ -149,6 +153,13 @@ export async function POST(req: NextRequest) {
     NextResponse.json(cuerpo, { status, headers: ch })
 
   const quien = await quienEs(req)
+
+  if (quien === 'sin-configurar') {
+    return responder(
+      { ok: false, error: 'Al sitio le falta la llave publicable en cta_ajustes.' },
+      500
+    )
+  }
   if (!quien) {
     return responder({ ok: false, error: 'Tenés que entrar al CRM para hacer esto.' }, 401)
   }
