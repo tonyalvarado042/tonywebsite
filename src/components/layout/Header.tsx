@@ -55,8 +55,25 @@ export default function Header({ locale = 'es' }: HeaderProps) {
 
   const t = locale === 'en'
     ? { companies: 'Companies', cta: 'Join Pure Cycling', menuLabel: 'Open menu' }
-    : { companies: 'Empresas',  cta: 'Únete a Pure Cycling', menuLabel: 'Abrir menú' }
-  const ctaHref = locale === 'en' ? '/en/pure-cycling' : '/pure-cycling'
+    : { companies: 'Empresas',  cta: 'Próxima clase gratis', menuLabel: 'Abrir menú' }
+
+  /**
+   * El botón del encabezado pasó a la clase gratuita el 20-sep-2026, a pedido
+   * de Tony. Antes llevaba a Pure Cycling.
+   *
+   * Va a `/clase` y NO a `clase.tonyalvarado.com`: ese subdominio responde,
+   * pero sirve la PÁGINA DE INICIO, no la clase. Mientras no se enrute en
+   * Vercel, mandar la gente ahí es mandarla al lugar equivocado.
+   *
+   * En inglés se queda en Pure Cycling: la clase es en español y para Costa
+   * Rica, y tirar a un visitante en inglés a una página en español es peor que
+   * no ofrecérsela.
+   *
+   * El texto es sin fecha a propósito. La clase del 21 de octubre pasa, y un
+   * encabezado con fecha vieja queda mintiendo en todo el sitio. La fecha vive
+   * en `/clase`, que es donde se mantiene.
+   */
+  const ctaHref = locale === 'en' ? '/en/pure-cycling' : '/clase'
 
   const currentNavLinks = locale === 'en' ? navLinksEn : navLinks
   const currentEmpresasLinks = locale === 'en' ? empresasLinksEn : empresasLinks
