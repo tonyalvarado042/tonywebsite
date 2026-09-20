@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
+import { getCrm } from '@/lib/crm'
 import { cambiarSecuencias, secuenciasActivas } from '@/lib/secuencias'
 import { correrElTick } from '../tick/route'
 
@@ -32,18 +33,45 @@ import { correrElTick } from '../tick/route'
  */
 
 /**
- * La dirección y la llave PUBLICABLE de Supabase, en código.
+ * La llave PUBLICABLE de Supabase, que sirve para verificar la sesión de quien
+ * llama desde el CRM.
  *
- * No son secretos: la llave publicable está hecha para vivir en el navegador
- * y de hecho el CRM la lleva escrita igual. Lo que protege los datos no es
- * esconderla, es RLS.
+ * ⚠️ SE LEE DE LA BASE, no de código ni de Vercel. Regla de Tony del
+ * 20-sep-2026: «todo debería ir a Supabase, una tabla; si el software tiene
+ * persistencia, favor dejarla en la base de datos».
  *
- * Van acá y no en Vercel justamente por la regla de Tony: **los secretos en
- * Vercel, todo lo demás en código.** Meter esto como variable de entorno
- * sería obligarlo a entrar a un panel por algo que no lo necesita.
+ * Esto se puede hacer porque para llegar a la base solo hacen falta dos cosas
+ * —la dirección de Supabase y la llave de servicio— y esas dos SÍ tienen que
+ * vivir afuera: son las únicas que no se pueden guardar dentro de lo que
+ * abren. Huevo y gallina. Todo lo demás vive en la base.
+ *
+ * Se guarda en memoria después de la primera lectura: el valor casi nunca
+ * cambia y no tiene sentido ir a la base en cada llamada.
  */
 const SUPABASE_URL = 'https://mlhhhwbgymobcxiklnoz.supabase.co'
-const SUPABASE_ANON = 'sb_publishable__NtpRbRq44qFQ1UD1KofCQ_09yVSwvF'
+
+let llaveGuardada: string | null = null
+
+async function llavePublicable(): Promise<string | null> {
+  if (llaveGuardada) return llaveGuardada
+  try {
+    const { data, error } = await getCrm()
+      .from('cta_ajustes')
+      .select('valor')
+      .eq('clave', 'supabase_llave_publicable')
+      .maybeSingle()
+
+    if (error || !data?.valor) {
+      console.error('[secuencias/panel] falta `supabase_llave_publicable` en cta_ajustes.')
+      return null
+    }
+    llaveGuardada = data.valor
+    return llaveGuardada
+  } catch (e) {
+    console.error('[secuencias/panel] no se pudo leer la llave publicable:', e)
+    return null
+  }
+}
 
 /**
  * Quién puede llamar a esto desde un navegador.
@@ -87,7 +115,10 @@ async function quienEs(req: NextRequest): Promise<Quien | null> {
   const token = cabecera.toLowerCase().startsWith('bearer ') ? cabecera.slice(7).trim() : ''
   if (!token) return null
 
-  const anon = createClient(SUPABASE_URL, SUPABASE_ANON, {
+  const publicable = await llavePublicable()
+  if (!publicable) return null
+
+  const anon = createClient(SUPABASE_URL, publicable, {
     auth: { persistSession: false, autoRefreshToken: false },
   })
 
@@ -97,7 +128,7 @@ async function quienEs(req: NextRequest): Promise<Quien | null> {
   // El token es válido; ahora, ¿qué rol tiene esta persona en el CRM?
   // Se consulta CON su propio token, así que las políticas de la base
   // siguen aplicando y nadie puede leer lo que no le toca.
-  const comoEl = createClient(SUPABASE_URL, SUPABASE_ANON, {
+  const comoEl = createClient(SUPABASE_URL, publicable, {
     auth: { persistSession: false, autoRefreshToken: false },
     global: { headers: { Authorization: `Bearer ${token}` } },
   })
