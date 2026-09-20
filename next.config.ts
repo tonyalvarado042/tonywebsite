@@ -10,6 +10,23 @@ const nextConfig: NextConfig = {
       { hostname: 'cdn.sanity.io' },
     ],
   },
+  /**
+   * clase.tonyalvarado.com sirve la landing de la clase.
+   *
+   * Se reescriben SOLO las dos rutas de la landing, no `/:path*`. Con un
+   * comodín, `/_next/...`, `/images/...` y `/api/...` también se reescribirían
+   * y el subdominio quedaría sin estáticos ni formulario.
+   *
+   * El redirect de abajo (apex → www) compara el host EXACTO `tonyalvarado.com`,
+   * así que no se lleva puesto este subdominio.
+   */
+  async rewrites() {
+    const enElSubdominio = [{ type: 'host' as const, value: 'clase.tonyalvarado.com' }]
+    return [
+      { source: '/', has: enElSubdominio, destination: '/clase' },
+      { source: '/gracias', has: enElSubdominio, destination: '/clase/gracias' },
+    ]
+  },
   async redirects() {
     return [
       // Non-www → www (preserves path and query string)
