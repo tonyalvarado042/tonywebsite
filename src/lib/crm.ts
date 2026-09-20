@@ -112,16 +112,21 @@ export type DatosAlta = {
    * Qué formulario lo trajo. Va a `fuente_lead`.
    *
    * ⚠️ Vocabulario CERRADO por CHECK en la base. Los valores que puede usar el
-   * sitio son estos tres; la lista completa incluye además los que solo escribe
-   * el CRM (comentario_instagram, masterclass, landing_bnbfounders2, referido,
+   * sitio son estos cuatro; la lista completa incluye además los que solo
+   * escribe el CRM (comentario_instagram, landing_bnbfounders2, referido,
    * grupo_whatsapp, email_entrante, calendly).
+   *
+   * `masterclass` se sumó el 19-set-2026 para la landing de la clase. NO hubo
+   * que tocar la base ni el CRM: ya estaba en el CHECK de `fuente_lead` y ya
+   * estaba en el objeto FUENTES de `lib/formato.js` del repo del CRM
+   * (verificado, no supuesto). Lo único que faltaba era abrir este tipo.
    *
    * La rifa de RIDE & RESET usa `otro` a propósito: no hay valor de rifa en el
    * CHECK, y agregarlo obliga a tocar la base **y** el filtro del CRM, que es
    * otro repo. Se distingue por etiqueta (`rifa:<slug>`), que es como Marketing
    * segmenta de todos modos.
    */
-  fuente: 'recurso_gratis' | 'boletin' | 'otro'
+  fuente: 'recurso_gratis' | 'boletin' | 'masterclass' | 'otro'
   /** Etiqueta descriptiva, ej. 'recurso:ebook-turismo'. */
   etiqueta: string
   /** Texto para la bitácora. */
