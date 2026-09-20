@@ -1,8 +1,14 @@
 import Image from 'next/image'
 import type { Metadata } from 'next'
-import { ArrowRight, BadgeCheck, CalendarPlus, MessageCircle, TriangleAlert } from 'lucide-react'
+import { ArrowRight, BadgeCheck, Check, Download, MessageCircle, TriangleAlert } from 'lucide-react'
 import Contador from '@/components/clase/Contador'
 import { CLASE, GRUPO, GUIA, VIP, hayVip } from '@/data/clase-copropiedad'
+import {
+  enlaceGoogle,
+  enlaceOffice365,
+  enlaceOutlookPersonal,
+  enlaceYahoo,
+} from '@/lib/calendario-clase'
 
 /**
  * La página de gracias — en realidad, la página del PASO QUE FALTA.
@@ -18,8 +24,9 @@ import { CLASE, GRUPO, GUIA, VIP, hayVip } from '@/data/clase-copropiedad'
  * salen por el grupo de WhatsApp.** Quien no entra al grupo se registró pero
  * no se entera, y para efectos prácticos no llega.
  *
- * Una página de gracias que solo dice «gracias» desperdicia el único momento
- * en que la persona ya dijo que sí y todavía está mirando.
+ * La barra del 80% cuenta exactamente eso: cuatro quintos hechos, falta uno.
+ * No es un número decorativo — es dos pasos de tres y medio, redondeado a algo
+ * que se entiende de un vistazo.
  *
  * `noindex` porque no tiene nada que hacer en Google: solo se llega enviando el
  * formulario, y si alguien cae acá desde una búsqueda se pierde el registro.
@@ -30,19 +37,21 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
 
-/** El mismo enlace de Google Calendar que sale en el correo. */
-function enlaceCalendario(): string {
-  const inicio = new Date(CLASE.instanteUtc)
-  const fin = new Date(inicio.getTime() + 90 * 60 * 1000)
-  const fmt = (d: Date) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '')
-  const params = new URLSearchParams({
-    action: 'TEMPLATE',
-    text: `Clase en vivo: ${CLASE.nombre} — Tony Alvarado`,
-    dates: `${fmt(inicio)}/${fmt(fin)}`,
-    details: 'El enlace para entrar se comparte en el grupo de WhatsApp de la clase.',
-  })
-  return `https://calendar.google.com/calendar/render?${params.toString()}`
-}
+/**
+ * Los calendarios.
+ *
+ * Google, Outlook y Yahoo abren su propia pantalla; Apple y el Outlook de
+ * escritorio se llevan el `.ics`. El color de cada tarjeta es el de su marca:
+ * el ojo lo reconoce antes de leer el nombre.
+ */
+const CALENDARIOS = [
+  { nombre: 'Google', url: enlaceGoogle(), color: '#4285F4', externo: true },
+  { nombre: 'Apple', url: '/api/clase/calendario', color: '#A3AAAE', externo: false },
+  { nombre: 'Outlook', url: enlaceOutlookPersonal(), color: '#0078D4', externo: true },
+  { nombre: 'Office 365', url: enlaceOffice365(), color: '#D83B01', externo: true },
+  { nombre: 'Yahoo', url: enlaceYahoo(), color: '#6001D2', externo: true },
+  { nombre: 'Otro (.ics)', url: '/api/clase/calendario', color: '#8B5CF6', externo: false },
+]
 
 export default function GraciasPage() {
   return (
@@ -61,6 +70,35 @@ export default function GraciasPage() {
           priority
           className="mx-auto h-7 w-auto object-contain"
         />
+
+        {/* ───────── La barra de avance ───────── */}
+        <div className="mt-10">
+          <div className="flex items-baseline justify-between gap-3">
+            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-brand-muted">
+              Tu registro
+            </p>
+            <p className="font-mono text-2xl font-bold tabular-nums text-brand-gold">80%</p>
+          </div>
+
+          <div
+            className="mt-2.5 h-3 w-full overflow-hidden rounded-full bg-brand-card"
+            role="progressbar"
+            aria-valuenow={80}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-label="Avance de tu registro"
+          >
+            <div className="h-full w-[80%] origin-left rounded-full bg-gradient-to-r from-brand-accent to-brand-gold animate-llenar80 motion-reduce:animate-none" />
+          </div>
+
+          <div className="mt-3 flex items-center justify-between gap-4 text-xs">
+            <span className="flex items-center gap-1.5 text-brand-cta">
+              <Check size={13} strokeWidth={3} />
+              Tus datos quedaron guardados
+            </span>
+            <span className="text-brand-gold">Falta el último 20%</span>
+          </div>
+        </div>
 
         {/* ───────── El paso que falta ───────── */}
         <div className="mt-10 text-center">
@@ -90,12 +128,18 @@ export default function GraciasPage() {
         </div>
 
         {/* ───────── El botón que importa ───────── */}
+        {/*
+          `animate-latido` es un resplandor que crece y se apaga, no un
+          encendido/apagado. El parpadeo duro se lee como banner de los 2000 y
+          además molesta a quien tiene sensibilidad a la luz. `motion-reduce`
+          lo apaga entero para quien pidió menos movimiento en su sistema.
+        */}
         <div className="mt-9">
           <a
             href={GRUPO.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex w-full items-center justify-center gap-3 rounded-2xl bg-brand-cta px-7 py-6 text-center text-lg font-bold text-brand-bg shadow-[0_10px_40px_rgba(34,197,94,0.35)] transition hover:bg-brand-cta-fuerte sm:text-xl"
+            className="flex w-full animate-latido items-center justify-center gap-3 rounded-2xl bg-brand-cta px-7 py-6 text-center text-lg font-bold text-brand-bg transition hover:bg-brand-cta-fuerte motion-reduce:animate-none sm:text-xl"
           >
             <MessageCircle size={26} strokeWidth={2.4} />
             Entrar al grupo de la clase
@@ -113,15 +157,45 @@ export default function GraciasPage() {
           <div className="mt-5">
             <Contador />
           </div>
-          <a
-            href={enlaceCalendario()}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-6 inline-flex items-center justify-center gap-2.5 rounded-full border border-brand-border px-6 py-3 text-sm font-semibold text-brand-text transition hover:border-brand-accent/50 hover:bg-white/5"
-          >
-            <CalendarPlus size={17} />
-            Apuntala en mi calendario
-          </a>
+        </div>
+
+        {/* ───────── Los calendarios ───────── */}
+        <div className="mt-8">
+          <p className="text-center text-sm font-semibold text-brand-text">
+            Apuntala en tu calendario
+          </p>
+          <p className="mt-1.5 text-center text-xs text-brand-muted">
+            Elegí el tuyo. El recordatorio de una hora antes ya viene puesto.
+          </p>
+
+          <ul className="mt-5 grid grid-cols-2 gap-2.5 sm:grid-cols-3">
+            {CALENDARIOS.map((c) => (
+              <li key={c.nombre}>
+                <a
+                  href={c.url}
+                  {...(c.externo
+                    ? { target: '_blank', rel: 'noopener noreferrer' }
+                    : { download: 'clase-tony-alvarado.ics' })}
+                  className="flex h-full items-center gap-2.5 rounded-xl border border-brand-border bg-brand-card/60 px-3 py-3 transition hover:border-brand-accent/50 hover:bg-brand-card"
+                >
+                  <span
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
+                    style={{ backgroundColor: c.color }}
+                    aria-hidden
+                  >
+                    {c.externo ? (
+                      <CalendarioGlifo />
+                    ) : (
+                      <Download size={15} strokeWidth={2.5} color="#0B0E14" />
+                    )}
+                  </span>
+                  <span className="min-w-0 text-[13px] font-semibold text-brand-text">
+                    {c.nombre}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
 
         {/* ───────── El presencial ───────── */}
@@ -188,5 +262,23 @@ export default function GraciasPage() {
         </p>
       </div>
     </main>
+  )
+}
+
+/**
+ * Un glifo de calendario, blanco, sobre la tarjeta del color de cada marca.
+ *
+ * No se dibujan los logos de Google, Outlook ni Apple: reproducir de memoria el
+ * trazo de una marca registrada sale mal —y se nota— además de ser el logo de
+ * otro. El color de la marca más el nombre escrito identifican igual de rápido
+ * y no hay nada que explicar después. Si Tony quiere los logos oficiales, se
+ * ponen los SVG de verdad y se cambia solo este componente.
+ */
+function CalendarioGlifo() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="3" />
+      <path d="M3 10h18M8 2v4M16 2v4" />
+    </svg>
   )
 }

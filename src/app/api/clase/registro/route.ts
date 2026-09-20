@@ -5,6 +5,7 @@ import { altaContacto, getCrm, normalizarTelefono, registrarActividad } from '@/
 import { enlaceDeBaja } from '@/lib/secuencias'
 import { CLASE, ETIQUETA_CRM, GRUPO } from '@/data/clase-copropiedad'
 import { PAISES } from '@/data/paises'
+import { enlaceGoogle } from '@/lib/calendario-clase'
 
 /**
  * Registro a la clase gratuita «La Revolución de la Copropiedad Turística».
@@ -46,20 +47,6 @@ const marcado = (v: unknown) => v === true || v === 'true' || v === 'on'
 function paisDelPrefijo(prefijo: string): string | null {
   const encontrado = PAISES.find((p) => p.codigo === prefijo)
   return encontrado ? encontrado.pais : null
-}
-
-/** Enlace de Google Calendar. Un archivo adjunto lo bloquean más clientes. */
-function enlaceCalendario(): string {
-  const inicio = new Date(CLASE.instanteUtc)
-  const fin = new Date(inicio.getTime() + 90 * 60 * 1000)
-  const fmt = (d: Date) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '')
-  const params = new URLSearchParams({
-    action: 'TEMPLATE',
-    text: `Clase en vivo: ${CLASE.nombre} — Tony Alvarado`,
-    dates: `${fmt(inicio)}/${fmt(fin)}`,
-    details: 'El enlace para entrar llega por correo antes de la clase.',
-  })
-  return `https://calendar.google.com/calendar/render?${params.toString()}`
 }
 
 export async function POST(req: NextRequest) {
@@ -205,7 +192,8 @@ export async function POST(req: NextRequest) {
           '───────────────────────────────',
           '',
           'Apuntala en tu calendario ahora, que después se olvida:',
-          enlaceCalendario(),
+          `  Google:  ${enlaceGoogle()}`,
+          `  Apple / Outlook de escritorio:  ${SITIO}/api/clase/calendario`,
           '',
           `${CLASE.plataformaTexto}`,
           '',
@@ -249,7 +237,7 @@ export async function POST(req: NextRequest) {
       ok: true,
       yaExistia: alta.yaExistia,
       correoEnviado,
-      calendario: enlaceCalendario(),
+      calendario: enlaceGoogle(),
     })
   } catch (e) {
     console.error('[clase/registro] error:', e)

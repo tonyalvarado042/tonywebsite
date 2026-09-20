@@ -144,6 +144,26 @@ const config: Config = {
             transform: 'scale(1.022)',
           },
         },
+        // La barra de avance de la página de gracias.
+        //
+        // Va en CSS y no en JavaScript a propósito: la página de gracias es un
+        // componente de servidor y no hacía falta convertirla en cliente entera
+        // para animar una barra.
+        //
+        // ⚠️ Anima `scaleX`, NO `width`, y eso no es un detalle: el ancho real
+        // lo pone la clase `w-[80%]` del elemento. Así, si la animación no
+        // corre —porque el navegador no la soporta, porque la pestaña está
+        // oculta o porque alguien pidió menos movimiento— la barra se queda en
+        // su estado CORRECTO (80%) en vez de quedarse en cero.
+        //
+        // La primera versión animaba `width` de 0 a 80 con `both`: con la
+        // pestaña oculta la barra medía 0 px. Se vio midiendo en el navegador.
+        // Una animación que falla tiene que fallar mostrando el resultado, no
+        // escondiéndolo.
+        llenar80: {
+          from: { transform: 'scaleX(0)' },
+          to: { transform: 'scaleX(1)' },
+        },
         // Para la etiqueta de GRATIS: un vaivén corto que llama el ojo.
         guino: {
           '0%, 88%, 100%': { transform: 'rotate(0deg)' },
@@ -154,6 +174,9 @@ const config: Config = {
       animation: {
         latido: 'latido 1.9s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         guino: 'guino 4.5s ease-in-out infinite',
+        // Sin retraso: con retraso y `both` la barra se queda en cero mientras
+        // espera, y si algo interrumpe la animación ahí, se queda vacía.
+        llenar80: 'llenar80 1.2s cubic-bezier(0.2, 0.7, 0.2, 1) both',
       },
     },
   },
