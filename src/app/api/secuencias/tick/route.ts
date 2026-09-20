@@ -144,15 +144,17 @@ async function correrElTick(req: NextRequest) {
 
     if (prueba) { anotar('se enviaría'); continue }
 
+    const nombre = primerNombre(contacto.nombre_completo)
+
     try {
       await getResend().emails.send({
         from: REMITENTE_CON_NOMBRE,
         to: contacto.email,
-        subject: paso.asunto ?? '',
+        subject: personalizar(paso.asunto ?? '', nombre),
         text: [
-          `Hola ${contacto.nombre_completo ?? ''},`.trim(),
+          nombre ? `Hola ${nombre},` : 'Hola,',
           '',
-          paso.cuerpo ?? '',
+          personalizar(paso.cuerpo ?? '', nombre),
           '',
           'Tony Alvarado',
           'tonyalvarado.com',
@@ -210,6 +212,46 @@ async function correrElTick(req: NextRequest) {
  * A mano, para probar:
  *   curl -X POST .../api/secuencias/tick?dry=1 -H "x-cron-secret: cron:<CRM_SECRET>"
  */
+/**
+ * El primer nombre, para saludar como saluda una persona y no un sistema.
+ *
+ * `nombre_completo` suele venir «Anthony Alvarado»; en un asunto de correo eso
+ * se lee raro. Se toma la primera palabra y se le arregla la mayuscula, porque
+ * mucha gente se registra escribiendo todo en minúscula o todo en mayuscula.
+ */
+function primerNombre(completo: string | null): string {
+  const limpio = (completo ?? '').trim().replace(/\s+/g, ' ')
+  if (!limpio) return ''
+  const primero = limpio.split(' ')[0]
+  if (primero.length < 2) return ''
+  return primero.charAt(0).toUpperCase() + primero.slice(1).toLowerCase()
+}
+
+/**
+ * Reemplaza `{nombre}` en el asunto y en el cuerpo.
+ *
+ * Tony lo pidio el 20-sep-2026: el nombre va en el titulo Y en el saludo.
+ *
+ * ⚠️ Si el contacto no tiene nombre, NO deja el hueco ni escribe «Hola ,».
+ * Se limpia el placeholder y de paso se arreglan los restos: la coma o el
+ * espacio que quedaba colgando. Un correo que dice «Hola ,» se lee peor que
+ * uno que no saluda.
+ */
+function personalizar(texto: string, nombre: string): string {
+  if (nombre) return texto.replace(/\{nombre\}/g, nombre)
+  return texto
+    // El hueco puede llevar coma ANTES («…, {nombre}») o DESPUÉS
+    // («{nombre}, el número…»). Hay que barrer las dos, si no queda una coma
+    // suelta al principio de la frase.
+    .replace(/\{nombre\}\s*,\s*/g, '')
+    .replace(/\s*,?\s*\{nombre\}/g, '')
+    .replace(/\s+([,.!?:])/g, '$1')
+    .replace(/[ \t]{2,}/g, ' ')
+    .trim()
+    // Al quitar el nombre del principio, la frase arrancaba en minúscula.
+    .replace(/^([a-záéíóúñ¿¡])/u, (c) => c.toUpperCase())
+}
+
 export async function POST(req: NextRequest) {
   if (!cronAutorizado(req.headers.get('x-cron-secret'))) {
     return NextResponse.json({ ok: false, error: 'No autorizado.' }, { status: 401 })
