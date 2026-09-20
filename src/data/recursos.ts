@@ -98,22 +98,52 @@ export const recursosRespaldo: RecursoCrm[] = [
   {
     id: 'respaldo-calculadora',
     slug: 'calculadora-airbnb',
-    titulo: 'Calculadora de ingresos para Airbnb',
-    gancho: 'Cuánto factura de verdad una propiedad',
+    titulo: 'Calculadora gratis de ingresos Airbnb',
+    // Sin gancho: así el título ES el titular grande de la tarjeta.
+    gancho: null,
     descripcion:
-      'Metés ocupación, tarifa por noche y costos, y ves lo que queda. La misma cuenta que hago yo antes de meterme en un proyecto.',
-    formato: 'Herramienta · gratis',
+      '¿Cuánto puedo ganar en Airbnb? Metés ocupación, tarifa por noche y costos, y ves lo que queda: flujo mensual, cap rate y en cuánto recuperás. La misma cuenta que hago yo antes de meterme en un proyecto.',
+    formato: 'Gratis · sin registro',
     imagen_url: '/img/nuevo-negocio-turismo/aerea-villas.jpg',
     imagen_alt: 'Vista aérea de las villas de Bike & Bed en La Fortuna de San Carlos',
     destino_url: '/recursos/calculadora-airbnb',
     tipo: 'pagina',
     estado: 'disponible',
-    acento: 'dorado',
+    acento: 'morado',
     orden: 20,
-    destacado: false,
+    destacado: true,
     automatizacion_id: null,
     icono: 'calculadora',
     // Entrada libre: Tony la quiso sin formulario para entrar.
     con_registro: false,
   },
 ]
+
+// ── Pruebas sobre la foto ───────────────────────────────────────────────────
+/**
+ * Tres números que se montan sobre la foto de un recurso destacado, para que
+ * se vea QUÉ HACE la herramienta en vez de solo decorar con una foto bonita.
+ *
+ * Tony lo pidió el 20-sep-2026: la calculadora se veía apagada y es uno de los
+ * activos que más va a promocionar.
+ *
+ * ⚠️ Los números NO son una promesa. Son la salida del escenario que la
+ * calculadora trae por defecto, y por eso van con la etiqueta «ejemplo» y el
+ * costo del proyecto a la vista. Si alguien cambia los supuestos por defecto en
+ * `@/lib/calculadora-airbnb`, hay que volver a correrlos y actualizarlos acá.
+ */
+export type PruebaDeRecurso = { valor: string; rotulo: string }
+
+export const pruebasPorRecurso: Record<
+  string,
+  { contexto: string; datos: PruebaDeRecurso[] }
+> = {
+  'calculadora-airbnb': {
+    contexto: 'Ejemplo · una villa de $168.000',
+    datos: [
+      { valor: '$1.805', rotulo: 'al mes' },
+      { valor: '19,9%', rotulo: 'cap rate' },
+      { valor: '2,7 años', rotulo: 'recuperación' },
+    ],
+  },
+}
