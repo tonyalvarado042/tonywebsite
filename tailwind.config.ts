@@ -44,6 +44,29 @@ const config: Config = {
           cta: '#22C55E',
           'cta-fuerte': '#16A34A',
 
+          // ── Los campos de formulario ────────────────────────────────
+          // Tony, 20 de setiembre de 2026: «estos campos deben resaltar mas se
+          // ven muy oscuros». Tenía razón — estaban en `brand-bg/80`, o sea **más
+          // oscuros que la tarjeta que los contiene**, y en un fondo oscuro un
+          // campo oscuro se lee como un hueco, no como algo donde escribir.
+          //
+          // Es la misma receta que ya se había medido para Bike & Bed, traída a
+          // esta paleta. Tres cosas, todas medidas y no a ojo:
+          //  · el campo es MÁS CLARO que la tarjeta `card` #111824 → 1.32:1
+          //  · el contorno pasa 3:1 contra LAS DOS cosas que toca — la tarjeta y
+          //    el interior del campo — que es lo que pide WCAG 1.4.11 para el
+          //    borde de un control → 4.26:1 y 3.22:1
+          //  · el texto de ejemplo llega a 5.30:1 sobre el campo
+          //    (antes iba en `muted/70`, lavado)
+          // El texto escrito queda en 11.8:1.
+          //
+          // ⚠️ El primer intento puso el borde en `#64748B`: daba 3.74:1 contra
+          // la tarjeta pero **2.83:1 contra el campo**, o sea que por el lado de
+          // adentro no llegaba. Se midió en el navegador y se subió. Un borde
+          // solo sirve si se distingue de los dos lados.
+          campo: '#232F44',
+          'campo-borde': '#6E7D94',
+
           text: '#F0F0F0',
           muted: '#9CA3AF',
           border: '#1F2937',

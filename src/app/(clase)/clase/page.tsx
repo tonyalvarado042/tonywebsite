@@ -75,6 +75,37 @@ const MARCAS = [
   },
 ]
 
+/**
+ * Fotos de las villas por dentro y de la zona.
+ *
+ * Son las MISMAS que ya sirve `/ride-and-reset`: se reusan por ruta, no se
+ * vuelven a subir. Una copia más del mismo JPG es peso muerto en el repo y una
+ * foto que después hay que acordarse de cambiar en dos lados.
+ */
+const FOTOS_VILLAS = [
+  {
+    src: '/images/ride-and-reset/portada-pareja-volcan.jpg',
+    alt: 'El Volcán Arenal desde La Fortuna',
+    width: 2000,
+    height: 1333,
+    ancha: true,
+  },
+  {
+    src: '/images/ride-and-reset/villa-dormitorio-alto.jpg',
+    alt: 'El dormitorio alto de una villa de Bike & Bed',
+    width: 1200,
+    height: 1800,
+    ancha: false,
+  },
+  {
+    src: '/images/ride-and-reset/villa-cocina.jpg',
+    alt: 'La cocina de una villa de Bike & Bed',
+    width: 1600,
+    height: 1067,
+    ancha: false,
+  },
+]
+
 export default function ClasePage() {
   return (
     <>
@@ -180,6 +211,27 @@ export default function ClasePage() {
               Es gratis · {CLASE.plataformaTexto}
             </p>
           </div>
+
+          {/* La foto del hotel del que se van a ver los números */}
+          <figure className="relative mt-14">
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -inset-3 rounded-[2rem] bg-brand-accent/25 blur-2xl"
+            />
+            <Image
+              src="/images/clase/bike-and-bed-capo-atardecer.png"
+              alt="Las villas de Bike & Bed en La Fortuna al atardecer, con la piscina iluminada al frente"
+              width={1448}
+              height={1086}
+              priority
+              sizes="(max-width: 768px) 100vw, 896px"
+              className="relative w-full rounded-3xl border border-brand-accent/20 object-cover shadow-[0_30px_80px_-30px_rgba(0,0,0,0.9)]"
+            />
+            <figcaption className="relative mt-4 text-sm text-brand-muted">
+              Bike &amp; Bed, La Fortuna de San Carlos.{' '}
+              <span className="text-brand-text">Este es el hotel cuyos números vas a ver.</span>
+            </figcaption>
+          </figure>
 
           {/* Las marcas */}
           <div className="mt-16 border-t border-brand-border/60 pt-10">
@@ -327,7 +379,29 @@ export default function ClasePage() {
             </p>
           </div>
 
-          <ul className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {/* Las villas por dentro. Fotos reales del hotel, las mismas de
+              /ride-and-reset — no se vuelven a subir, se reusan. */}
+          <ul className="mt-12 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
+            {FOTOS_VILLAS.map((f) => (
+              <li key={f.src} className={f.ancha ? 'col-span-2' : ''}>
+                <Image
+                  src={f.src}
+                  alt={f.alt}
+                  width={f.width}
+                  height={f.height}
+                  /* La ancha ocupa dos columnas: si se le dice 320px, Next
+                     sirve una imagen de 338 px para un hueco de 614 y se ve
+                     suave. Medido en el navegador con `naturalWidth`. */
+                  sizes={
+                    f.ancha ? '(max-width: 768px) 100vw, 640px' : '(max-width: 768px) 50vw, 320px'
+                  }
+                  className="h-44 w-full rounded-2xl border border-brand-border object-cover sm:h-56"
+                />
+              </li>
+            ))}
+          </ul>
+
+          <ul className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {RESENAS_BNB.map((r) => (
               <li
                 key={r.nombre}

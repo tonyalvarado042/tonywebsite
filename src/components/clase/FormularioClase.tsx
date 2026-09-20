@@ -87,11 +87,23 @@ export default function FormularioClase({
       <Check className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-brand-cta" aria-hidden />
     ) : null
 
+  /**
+   * El campo es MÁS CLARO que la tarjeta que lo contiene, no más oscuro.
+   *
+   * Venía en `bg-brand-bg/80` — un campo oscuro dentro de una tarjeta oscura se
+   * lee como un hueco, no como algo donde escribir. Tony lo reclamó y tenía
+   * razón. Los tres valores (`campo`, `campo-borde` y el ejemplo a opacidad
+   * completa) están medidos en `tailwind.config.ts`.
+   *
+   * `min-h-[54px]` es lo mismo que usa la puerta de recursos: en un teléfono un
+   * campo más bajo se falla al tocarlo.
+   */
   const claseCampo = (ok: boolean) =>
     [
-      'w-full rounded-xl border bg-brand-bg/80 px-4 py-3 text-brand-text placeholder:text-brand-muted/70',
+      'min-h-[54px] w-full rounded-xl border-2 bg-brand-campo px-4 py-3 text-[16px] text-brand-text',
+      'placeholder:text-brand-muted',
       'outline-none transition focus:border-brand-accent focus:ring-2 focus:ring-brand-accent/40',
-      intentado && !ok ? 'border-red-500/70' : 'border-brand-border',
+      intentado && !ok ? 'border-red-400' : 'border-brand-campo-borde',
     ].join(' ')
 
   return (
@@ -110,7 +122,7 @@ export default function FormularioClase({
       </div>
 
       <div className="relative">
-        <label htmlFor={`nombre-${origen}`} className="mb-1.5 block text-sm font-medium text-brand-text">
+        <label htmlFor={`nombre-${origen}`} className="mb-1.5 block text-[13px] font-semibold text-brand-text">
           Tu nombre
         </label>
         <input
@@ -126,7 +138,7 @@ export default function FormularioClase({
       </div>
 
       <div className="relative">
-        <label htmlFor={`correo-${origen}`} className="mb-1.5 block text-sm font-medium text-brand-text">
+        <label htmlFor={`correo-${origen}`} className="mb-1.5 block text-[13px] font-semibold text-brand-text">
           Tu correo
         </label>
         <input
@@ -143,7 +155,7 @@ export default function FormularioClase({
       </div>
 
       <div>
-        <label htmlFor={`whatsapp-${origen}`} className="mb-1.5 block text-sm font-medium text-brand-text">
+        <label htmlFor={`whatsapp-${origen}`} className="mb-1.5 block text-[13px] font-semibold text-brand-text">
           Tu WhatsApp
         </label>
         <div className="flex gap-2">
@@ -154,7 +166,7 @@ export default function FormularioClase({
             id={`pais-${origen}`}
             value={prefijo}
             onChange={(e) => setPrefijo(e.target.value)}
-            className="shrink-0 rounded-xl border border-brand-border bg-brand-bg/80 px-3 py-3 text-brand-text outline-none transition focus:border-brand-accent focus:ring-2 focus:ring-brand-accent/40"
+            className="min-h-[54px] shrink-0 rounded-xl border-2 border-brand-campo-borde bg-brand-campo px-3 py-3 text-[16px] text-brand-text outline-none transition focus:border-brand-accent focus:ring-2 focus:ring-brand-accent/40"
           >
             {PAISES.map((p) => (
               <option key={p.codigo + p.corto} value={p.codigo}>

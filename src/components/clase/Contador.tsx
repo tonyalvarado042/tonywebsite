@@ -72,11 +72,16 @@ export default function Contador({ compacto = false }: { compacto?: boolean }) {
 
   return (
     <div>
-      <div className="flex justify-center gap-2 sm:gap-3" role="timer" aria-label="Tiempo que falta para la clase">
+      <div className="mx-auto flex max-w-sm justify-center gap-2 sm:gap-3" role="timer" aria-label="Tiempo que falta para la clase">
         {casillas.map(([valor, rotulo]) => (
           <div
             key={rotulo}
-            className="min-w-[68px] rounded-2xl border border-brand-accent/30 bg-brand-card/80 px-3 py-3 text-center sm:min-w-[84px] sm:px-4"
+            /* Flexibles, no de ancho fijo. Con `min-w-[68px]` los cuatro
+               cuadros + sus separaciones + el margen de la sección sumaban
+               366 px dentro de 360 y sacaban barra horizontal en un teléfono
+               angosto. Medido, no supuesto. El tope evita que se estiren
+               feo en escritorio. */
+            className="min-w-0 flex-1 rounded-2xl border border-brand-accent/30 bg-brand-card/80 px-2 py-3 text-center sm:max-w-[92px] sm:px-4"
           >
             <div className="font-mono text-3xl font-bold tabular-nums text-brand-accent sm:text-4xl">
               {valor}
