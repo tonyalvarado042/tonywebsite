@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { ArrowLeft, ArrowRight, Check } from 'lucide-react'
 import JsonLd from '@/components/JsonLd'
 import CalculadoraAirbnb from '@/components/recursos/CalculadoraAirbnb'
@@ -19,7 +20,9 @@ import { SITE_URL, websiteRef, personRef } from '@/lib/structured-data'
  * en el informe extendido y en el correo.
  */
 
-const TITULO = 'Calculadora de Airbnb — gratis'
+// El nombre se lo puso Tony el 20-sep-2026. Va tal cual en la pestana, en
+// Google y en el encabezado de la pagina.
+const TITULO = 'Calculadora gratis de ingresos Airbnb'
 const DESCRIPCION =
   '¿Cuánto puedo ganar en Airbnb? Calculá ingresos, gastos, financiamiento y ' +
   'valorización de tu propiedad antes de comprar, construir o transformarla. ' +
@@ -36,7 +39,7 @@ export const metadata = {
     siteName: 'Tony Alvarado',
     title: TITULO,
     description: DESCRIPCION,
-    images: [{ url: '/images/og/tony-alvarado-og.jpg', width: 1600, height: 900, alt: 'Calculadora de Airbnb' }],
+    images: [{ url: '/images/og/tony-alvarado-og.jpg', width: 1600, height: 900, alt: TITULO }],
   },
   twitter: {
     card: 'summary_large_image' as const,
@@ -135,7 +138,7 @@ export default function CalculadoraAirbnbPage() {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     '@id': `${SITE_URL}/recursos/calculadora-airbnb#app`,
-    name: 'Calculadora de Airbnb',
+    name: TITULO,
     description: DESCRIPCION,
     url: `${SITE_URL}/recursos/calculadora-airbnb`,
     applicationCategory: 'FinanceApplication',
@@ -152,7 +155,7 @@ export default function CalculadoraAirbnbPage() {
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Inicio', item: SITE_URL },
       { '@type': 'ListItem', position: 2, name: 'Recursos gratis', item: `${SITE_URL}/recursos` },
-      { '@type': 'ListItem', position: 3, name: 'Calculadora de Airbnb', item: `${SITE_URL}/recursos/calculadora-airbnb` },
+      { '@type': 'ListItem', position: 3, name: TITULO, item: `${SITE_URL}/recursos/calculadora-airbnb` },
     ],
   }
 
@@ -174,11 +177,28 @@ export default function CalculadoraAirbnbPage() {
 
       {/* ── Portada ──────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden px-5 pb-14 pt-10 sm:px-6 sm:pb-20 sm:pt-14">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 h-[420px]
-                     bg-[radial-gradient(ellipse_at_top,rgba(139,92,246,0.16),transparent_65%)]"
-        />
+        {/* Foto de fondo. Antes acá solo había un resplandor morado y la
+            portada se veía apagada; Tony la pidió con foto el 20-sep-2026.
+            Es su proyecto real en La Fortuna, no una foto de banco.
+
+            ⚠️ Las tres capas de encima no son decoración: la foto tiene
+            cielo claro arriba y verde brillante en el medio, y el texto es
+            blanco. Sin ellas el titular no se lee. */}
+        <div aria-hidden className="absolute inset-0">
+          <Image
+            src="/img/nuevo-negocio-turismo/aerea-villas.jpg"
+            alt=""
+            fill
+            priority
+            quality={90}
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-brand-bg/72" />
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-bg via-brand-bg/85 to-brand-bg/45" />
+          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-brand-bg to-transparent" />
+        </div>
+
         <div className="relative mx-auto max-w-3xl">
           <Link
             href="/recursos"
@@ -189,14 +209,26 @@ export default function CalculadoraAirbnbPage() {
             Recursos gratis
           </Link>
 
-          <p className="mb-3 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.16em] text-brand-green">
-            <span className="h-px w-6 bg-brand-green" />
-            Calculadora de Airbnb
+          {/* Verde y latiendo: es el color de captura del sitio. */}
+          <p className="mb-4">
+            <span className="animate-latido inline-flex items-center rounded-full bg-brand-cta
+                             px-3.5 py-1.5 text-[11px] font-extrabold uppercase
+                             tracking-[0.14em] text-brand-bg">
+              Gratis · sin registro
+            </span>
           </p>
 
-          <h1 className="mb-5 text-[34px] font-bold leading-[1.08] tracking-tight text-brand-text sm:text-[52px]">
-            ¿Cuánto puedo ganar en <em className="not-italic text-brand-green">Airbnb?</em>
+          {/* El nombre que puso Tony, como titular. La pregunta —que es lo que
+              la gente escribe en Google— pasa a ser el renglon de abajo, en
+              grande, para no perderla. */}
+          <h1 className="mb-4 text-[34px] font-bold leading-[1.05] tracking-tight text-brand-text sm:text-[54px]">
+            Calculadora gratis de ingresos{' '}
+            <em className="not-italic text-brand-green">Airbnb</em>
           </h1>
+
+          <p className="mb-5 max-w-2xl text-[20px] font-semibold leading-snug text-brand-text sm:text-[26px]">
+            ¿Cuánto puedo ganar en Airbnb?
+          </p>
 
           <p className="mb-8 max-w-2xl text-[16px] leading-relaxed text-brand-muted sm:text-[17px]">
             Calculá ingresos, gastos, financiamiento y valorización antes de comprar,

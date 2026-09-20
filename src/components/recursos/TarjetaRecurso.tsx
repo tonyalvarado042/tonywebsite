@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, Bell } from 'lucide-react'
 import PuertaDeRecurso from './PuertaDeRecurso'
-import { acentoDe, iconoDe } from '@/data/recursos'
+import { acentoDe, iconoDe, pruebasPorRecurso } from '@/data/recursos'
 import type { RecursoCrm } from '@/lib/crm'
 
 /**
@@ -33,6 +33,8 @@ export default function TarjetaRecurso({
   // compara contra `false` a propósito — si la columna viniera vacía, el
   // recurso sigue pidiendo datos, que es lo seguro.
   const sinPuerta = recurso.con_registro === false
+  // Los tres numeros que se montan sobre la foto, si este recurso tiene.
+  const prueba = pruebasPorRecurso[recurso.slug]
   const llamado = recurso.tipo === 'pdf' ? 'Descargar gratis' : 'Leerlo gratis'
 
   // ── La destacada: foto grande, texto, y la ventana se abre desde el botón ──
@@ -60,30 +62,73 @@ export default function TarjetaRecurso({
               <Icono size={20} className={a.texto} strokeWidth={1.75} />
             </span>
 
-            <span className={`absolute right-4 top-4 rounded-full bg-brand-bg/80 px-3 py-1
-                              text-[10px] font-bold uppercase tracking-[0.14em] backdrop-blur-sm
-                              ${a.texto} ring-1 ${a.anillo}`}>
+            {/* Si se entra sin formulario, la insignia lo grita: verde y
+                latiendo. El verde es el color de captura del sitio y este es
+                el unico lugar de /recursos donde aparece. */}
+            <span className={
+              disponible && sinPuerta
+                ? 'animate-latido absolute right-4 top-4 rounded-full bg-brand-cta px-3 py-1.5 ' +
+                  'text-[10px] font-extrabold uppercase tracking-[0.14em] text-brand-bg'
+                : `absolute right-4 top-4 rounded-full bg-brand-bg/80 px-3 py-1 ` +
+                  `text-[10px] font-bold uppercase tracking-[0.14em] backdrop-blur-sm ` +
+                  `${a.texto} ring-1 ${a.anillo}`
+            }>
               {disponible ? recurso.formato : 'Próximamente'}
             </span>
+
+            {/* Los numeros, abajo de la foto. Muestran que hace la
+                herramienta; una foto bonita sola no dice nada. */}
+            {prueba && disponible && (
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-bg/95 via-brand-bg/80 to-transparent px-4 pb-3.5 pt-10">
+                <p className="mb-1.5 text-[9.5px] font-bold uppercase tracking-[0.14em] text-brand-muted">
+                  {prueba.contexto}
+                </p>
+                <div className="flex items-end gap-4">
+                  {prueba.datos.map((d) => (
+                    <div key={d.rotulo}>
+                      <b className="block text-[19px] font-extrabold leading-none tracking-tight text-brand-text">
+                        {d.valor}
+                      </b>
+                      <span className="mt-0.5 block text-[10.5px] leading-tight text-brand-muted">
+                        {d.rotulo}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         )}
 
-        <p className={`mb-2 text-[11px] font-bold uppercase tracking-[0.16em] ${a.texto}`}>
-          {recurso.titulo}
-        </p>
+        {/* El renglon chico solo sale si hay gancho. Si no lo hay, el titulo
+            YA es el titular grande y repetirlo arriba se ve a error. */}
+        {recurso.gancho && (
+          <p className={`mb-2 text-[11px] font-bold uppercase tracking-[0.16em] ${a.texto}`}>
+            {recurso.titulo}
+          </p>
+        )}
         <h2 className="mb-3 text-[22px] font-bold leading-[1.2] tracking-tight text-brand-text sm:text-[26px]">
           {recurso.gancho ?? recurso.titulo}
         </h2>
         <p className="mb-7 text-[15px] leading-[1.7] text-brand-muted">{recurso.descripcion}</p>
 
         {disponible && sinPuerta ? (
+          /* Verde y latiendo, igual que el boton de captura de la calculadora
+             por dentro. Es el mismo color y el mismo latido a proposito: el
+             sitio ensena una sola vez que el verde significa «entra aca». */
           <Link
             href={recurso.destino_url!}
-            className={`flex min-h-[56px] w-full items-center justify-center gap-2.5 rounded-2xl
-                        px-6 text-[15px] font-bold ${a.boton} transition-opacity hover:opacity-90`}
+            className="animate-latido flex min-h-[60px] w-full flex-col items-center justify-center
+                       gap-0.5 rounded-2xl bg-brand-cta px-6 text-center text-brand-bg
+                       transition-transform duration-200 hover:scale-[1.02]"
           >
-            Abrirla gratis
-            <ArrowRight size={16} />
+            <span className="flex items-center gap-2 text-[15px] font-extrabold leading-none">
+              Abrirla gratis
+              <ArrowRight size={16} strokeWidth={2.75} />
+            </span>
+            <span className="text-[11px] font-semibold leading-tight opacity-80">
+              Sin registro. Entras y la usas.
+            </span>
           </Link>
         ) : disponible ? (
           <PuertaDeRecurso

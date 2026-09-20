@@ -50,9 +50,14 @@ export default async function RecursosPage() {
   const desdeCrm = hayCrm() ? await traerRecursosPublicos() : []
   const recursos: RecursoCrm[] = desdeCrm.length > 0 ? desdeCrm : recursosRespaldo
 
-  // El destacado es el marcado como tal; si ninguno lo está, el primero.
-  const destacado = recursos.find((r) => r.destacado) ?? recursos[0]
-  const resto = recursos.filter((r) => r.id !== destacado?.id)
+  // Los destacados son TODOS los marcados como tales; si ninguno lo está, el
+  // primero. Antes acá solo cabía UNO (`find`), y por eso la calculadora —que
+  // Tony quiere promocionar— caía como fila compacta debajo de la tarjeta
+  // grande del ebook y se veía apagada. 20-sep-2026.
+  const destacados = recursos.filter((r) => r.destacado)
+  const arriba = destacados.length > 0 ? destacados : recursos.slice(0, 1)
+  const idsArriba = new Set(arriba.map((r) => r.id))
+  const resto = recursos.filter((r) => !idsArriba.has(r.id))
 
   const webPageSchema = {
     '@context': 'https://schema.org',
@@ -137,7 +142,9 @@ export default async function RecursosPage() {
       <section className="relative px-5 pb-4 sm:px-6">
         <div className="mx-auto max-w-xl space-y-4">
 
-          {destacado && <TarjetaRecurso recurso={destacado} destacada />}
+          {arriba.map((r) => (
+            <TarjetaRecurso key={r.id} recurso={r} destacada />
+          ))}
 
           {resto.map((r) => (
             <TarjetaRecurso key={r.id} recurso={r} destacada={false} />
