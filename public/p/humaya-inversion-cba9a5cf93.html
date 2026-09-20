@@ -369,7 +369,7 @@ footer .brand img{height:24px; opacity:.9}
       <div class="row"><div class="k">Nº de participaciones</div><div class="v"><b>40</b> · cada una = <b>1,225%</b> del total</div></div>
       <div class="row"><div class="k">Precio por participación</div><div class="v"><b>US$30.500</b></div></div>
       <div class="row"><div class="k">Capital total a captar</div><div class="v"><b>US$1.220.000</b></div></div>
-      <div class="row"><div class="k">Rendimiento (escenario base)</div><div class="v"><b>≈ 8,99% anual</b> · variable, sujeto a resultados</div></div>
+      <div class="row"><div class="k">Rendimiento (escenario base)</div><div class="v"><b>≈ 9% anual</b> · variable, sujeto a resultados</div></div>
       <div class="row"><div class="k">Beneficio para socios</div><div class="v">3 noches/año para 2 personas (ago–oct) + comunidad</div></div>
     </div>
     <p class="disc reveal">No se ofrece una tasa fija garantizada. La distribución supone que el resultado calculado es repartible; impuestos, deuda, reservas u otras partidas deben descontarse antes de repartir. Una utilidad contable no implica automáticamente efectivo disponible para distribuir.</p>
@@ -466,7 +466,7 @@ footer .brand img{height:24px; opacity:.9}
             <circle cx="100" cy="100" r="86" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="14"></circle>
             <circle id="gaugeArc" cx="100" cy="100" r="86" fill="none" stroke="var(--gold)" stroke-width="14" stroke-linecap="round" stroke-dasharray="540" stroke-dashoffset="540"></circle>
           </svg>
-          <div class="gval"><div class="big" id="gVal">8,99 %</div><div class="cap">rendimiento est.</div></div>
+          <div class="gval"><div class="big" id="gVal">9 %</div><div class="cap">rendimiento est.</div></div>
         </div>
         <div class="gscen" id="gScen" style="color:var(--gold)">Base</div>
         <div class="small" id="gMeta">ADR US$235 · ocupación 60%</div>
@@ -490,12 +490,12 @@ footer .brand img{height:24px; opacity:.9}
         <div class="small">Escenario: <b id="simScen" class="gold">Base</b> · ingresos <span id="simIng" class="gold">US$514.650</span></div>
         <div style="font-family:var(--serif);font-size:26px;color:var(--gold)" id="simGasto">US$162.200</div>
       </div>
-      <input type="range" id="gastoRange" min="120000" max="260000" step="1000" value="162200" aria-label="Gastos anuales">
+      <input type="range" id="gastoRange" min="120000" max="260000" step="100" value="162200" aria-label="Gastos anuales">
       <div class="small" style="display:flex;justify-content:space-between"><span>US$120.000</span><span>gastos anuales</span><span>US$260.000</span></div>
       <div class="grid g3 stagger" style="margin-top:20px">
         <div class="card"><div class="n"><span id="simRes">US$223.788</span></div><div class="l">Resultado calculado</div></div>
         <div class="card"><div class="n"><span id="simPart">US$2.741</span></div><div class="l">Por participación (año)</div></div>
-        <div class="card" style="border-color:var(--gold)"><div class="n gold"><span id="simRend">8,99 %</span></div><div class="l">Rendimiento estimado</div></div>
+        <div class="card" style="border-color:var(--gold)"><div class="n gold"><span id="simRend">9 %</span></div><div class="l">Rendimiento estimado</div></div>
       </div>
       <p class="small" style="margin-top:14px" id="simNote">Cada US$10.000 adicionales de gastos reducen la distribución en ≈ US$122,50 por participación (≈ 0,40 puntos de rendimiento). Para repartir un 10% se requerirían ingresos de ≈ US$548.239 con los demás supuestos constantes.</p>
     </div>
@@ -559,7 +559,7 @@ footer .brand img{height:24px; opacity:.9}
     <div class="cta reveal">
       <div class="kicker">DESTINO OWNERS™ · HUMAYA</div>
       <h2>Sé parte de HUMAYA desde <span class="gold">US$30.500</span>.</h2>
-      <p class="lead" style="max-width:640px;margin:16px auto 0">Escenario base ≈ 8,99% anual estimado (≈ US$2.741 por participación), sujeto al desempeño real y al efectivo disponible. Incluye 3 noches al año y comunidad.</p>
+      <p class="lead" style="max-width:640px;margin:16px auto 0">Escenario base ≈ 9% anual estimado (≈ US$2.741 por participación), sujeto al desempeño real y al efectivo disponible. Incluye 3 noches al año y comunidad.</p>
       <div class="agenda">
         <div class="agenda-side">
           <a class="btn" href="https://calendly.com/tonyalvarado/copropiedad" target="_blank" rel="noopener">Reservar una sesión</a>
@@ -606,7 +606,10 @@ const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion:r
 /* ---------- number format (es) ---------- */
 function fmt(n, dec){
   dec = dec||0;
-  return n.toLocaleString('es-ES',{minimumFractionDigits:dec, maximumFractionDigits:dec});
+  /* useGrouping 'always' porque el espanol NO separa los millares de cuatro cifras:
+     sin esto el texto fijo dice "US$2.741" y el mismo numero calculado sale "US$2741".
+     En un documento de inversion el mismo monto no puede escribirse de dos formas. */
+  return n.toLocaleString('es-ES',{minimumFractionDigits:dec, maximumFractionDigits:dec, useGrouping:'always'});
 }
 function fmtUSD(n,dec){ return 'US$'+fmt(Math.round(dec?n*Math.pow(10,dec):n)/(dec?Math.pow(10,dec):1), dec||0); }
 
@@ -826,7 +829,7 @@ function runSim(){
   document.getElementById('simGasto').textContent=fmtUSD(gasto);
   const res=document.getElementById('simRes'), part=document.getElementById('simPart'), rend=document.getElementById('simRend');
   res.textContent=fmtUSD(r.res); part.textContent=fmtUSD(r.pp);
-  rend.textContent=fmt(r.rend,2)+' %';
+  rend.textContent=fmt(r.rend,0)+' %';
   const dGasto=gasto-GASTO;
   let note='Cada US$10.000 adicionales de gastos reducen la distribución en ≈ US$122,50 por participación (≈ 0,40 puntos de rendimiento).';
   if(dGasto!==0){ const dPart=-dGasto*SHARE/PARTS;
@@ -876,10 +879,20 @@ function setGauge(rend,color){
   gaugeArc.setAttribute('stroke-dashoffset', C*(1-frac));
 }
 function countTextTo(el,target,dec,pre,suf){
-  const t0=performance.now(), dur=900, from=el._v||0;
-  function step(t){ let p=Math.min(1,(t-t0)/dur); p=1-Math.pow(1-p,3); const v=from+(target-from)*p;
-    el.textContent=(pre||'')+fmt(v,dec||0)+(suf||''); if(p<1)requestAnimationFrame(step); else {el.textContent=(pre||'')+fmt(target,dec||0)+(suf||''); el._v=target;} }
+  const pinta=v=>{ el.textContent=(pre||'')+fmt(v,dec||0)+(suf||''); };
+  const from=el._v||0; el._v=target;
+  if(reduce){ pinta(target); return; }
+  let listo=false;
+  const t0=performance.now(), dur=900;
+  function step(t){ let p=Math.min(1,(t-t0)/dur); p=1-Math.pow(1-p,3);
+    pinta(from+(target-from)*p);
+    if(p<1) requestAnimationFrame(step); else { pinta(target); listo=true; } }
   requestAnimationFrame(step);
+  /* Si requestAnimationFrame no avanza -- pestana en segundo plano, ahorro de bateria,
+     algunos navegadores automatizados -- el medidor se quedaria mostrando el numero del
+     escenario ANTERIOR al lado de la etiqueta del nuevo: "Pesimista ... 9 %". Un numero
+     equivocado es peor que ninguno, asi que este respaldo deja siempre el que va. */
+  setTimeout(()=>{ if(!listo) pinta(target); }, dur+400);
 }
 
 let curIdx=2;
@@ -905,7 +918,7 @@ function select(i){
   curIdx=i; const s=SC[i];
   SC.forEach(o=>{ o._node.classList.toggle('sel', o===s); o._pill.classList.toggle('on', o===s); });
   setGauge(s.rend, s.color);
-  const gv=document.getElementById('gVal'); countTextTo(gv, s.rend, 2, '', ' %');
+  const gv=document.getElementById('gVal'); countTextTo(gv, s.rend, 0, '', ' %');
   document.getElementById('gScen').textContent=s.name;
   document.getElementById('gScen').style.color=s.color;
   document.getElementById('gMeta').textContent='ADR US$'+s.adr+' · ocupación '+s.occ+'%';
