@@ -192,13 +192,27 @@ export default function EnBikeBedHotelsPage() {
       {/* ── Hero — editorial full-width ── */}
       <section className="relative bg-brand-bg">
         <div className="relative h-[560px] overflow-hidden md:h-[640px]">
+          {/* Villa Capo al atardecer. Tony la pidió de portada el 21-set-2026;
+              es la villa 01 («The Captain») y la foto insignia del proyecto.
+              Antes acá había la aérea del volcán.
+
+              El recorte: la original es 4:3 y esta banda es 3:1, así que solo
+              se ve el 44%% del alto. El 10%% deja el pico del techo negro
+              completo y llena el resto con el cielo del atardecer.
+
+              ⚠️ El velo oscuro de abajo NO se tocó a propósito. Medido: con
+              esta foto solo el 0,2%% de los píxeles bajo el titular queda por
+              debajo de 3:1 de contraste (el mínimo WCAG AA para texto grande).
+              La aérea que estaba antes dejaba el 9%%. O sea que este cambio
+              MEJORA la legibilidad; si algún día se cambia la foto otra vez,
+              hay que volver a medir antes de asumir que el velo alcanza. */}
           <Image
-            src="/images/bike-bed/bike-bed-aerial-volcano-01.png"
-            alt="Bike & Bed Hotels — aerial view with Arenal Volcano, La Fortuna, Costa Rica"
+            src="/images/bike-bed/bike-bed-capo-atardecer.png"
+            alt="Villa Capo at Bike & Bed Hotels at sunset, with private pool, in La Fortuna, Arenal, Costa Rica"
             fill
             priority
             quality={90}
-            className="object-cover object-[50%_40%]"
+            className="object-cover object-[50%_10%]"
             sizes="100vw"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-brand-bg/55 via-brand-bg/30 to-brand-bg" />
