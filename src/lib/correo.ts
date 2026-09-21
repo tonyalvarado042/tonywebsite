@@ -33,10 +33,17 @@
  *   · `send.tonyalvarado.com` TXT → el SPF de Resend
  *   · `send.tonyalvarado.com` MX → `feedback-smtp.us-east-1.amazonses.com`
  *
- * ⚠️ **Pero NO hay DMARC** (`_dmarc.tonyalvarado.com` no existe) y el dominio
- * raíz **no tiene MX**. Las dos cosas son de DNS y las tiene que poner Tony;
- * ninguna se arregla desde acá. Sin DMARC, Gmail manda a spam mucho más fácil
- * aunque el remitente y la firma estén bien.
+ * ⚠️ **Eso quedó viejo.** Medido de nuevo por DNS el 20 de septiembre de 2026,
+ * las dos cosas que faltaban YA ESTÁN:
+ *   · `_dmarc.tonyalvarado.com` → `v=DMARC1; p=none; rua=mailto:office@tonyalvarado.com`
+ *   · `tonyalvarado.com` MX → `mx10/20/30.antispam.mailspamprotection.com`
+ *
+ * El MX importa para algo más que enviar: significa que **`office@tonyalvarado.com`
+ * SÍ RECIBE correo**, que es lo que permite que sea el destino de los
+ * formularios (abajo). Sin MX, mandar los leads ahí hubiera sido botarlos.
+ *
+ * El `p=none` del DMARC es modo observación: reporta pero no rechaza nada.
+ * Endurecerlo a `quarantine` es decisión de Tony y se hace en el DNS, no acá.
  */
 
 /** La dirección desde la que sale todo el correo automático del sitio. */
@@ -87,6 +94,45 @@ function elegirRemitente(): string {
 }
 
 export const CORREO_REMITENTE = elegirRemitente()
+
+/**
+ * A qué bandeja llegan los leads de los formularios del sitio.
+ *
+ * ── Por qué está acá y no en Vercel ────────────────────────────────────────
+ * Tony: «solo las llaves van en vercel, los correos van en código, total así
+ * debe ser». Esto no es un secreto — es una dirección de su propio dominio.
+ *
+ * ── El día que se cayó ─────────────────────────────────────────────────────
+ * El 20 de septiembre de 2026 el formulario de contacto devolvía 500 y
+ * «No se pudo enviar el mensaje». La causa: `CONTACT_TO_EMAIL` no existía en
+ * producción, y la ruta cortaba ahí mismo con «Configuración de destino no
+ * disponible». Nadie se enteró de cuándo empezó: el sitio se veía perfecto y
+ * el único síntoma era gente que escribía y nunca llegaba.
+ *
+ * Por eso ahora **el valor del código alcanza solo**. La variable de entorno
+ * sigue pudiendo mandar (para una prueba, o si cambia la bandeja sin querer
+ * tocar código), pero si no está NO PASA NADA: se usa esta. Un formulario de
+ * captación no se puede caer porque falte una variable.
+ *
+ * ── Por qué office@ ────────────────────────────────────────────────────────
+ * Verificado por DNS el 20-set-2026: `tonyalvarado.com` tiene MX, así que esta
+ * casilla recibe de verdad. Además es la que ya usa el DMARC como `rua`.
+ * Si Tony quiere los leads en otra bandeja, se cambia esta línea y ya.
+ */
+const DESTINO_OFICIAL = 'office@tonyalvarado.com'
+
+/** La bandeja que recibe los leads. Nunca vacía. */
+export const CORREO_DESTINO = (process.env.CONTACT_TO_EMAIL ?? '').trim() || DESTINO_OFICIAL
+
+/** ¿El destino sale del código o de una variable? Lo reporta `/api/salud`. */
+export function estadoDelDestino() {
+  const puesta = (process.env.CONTACT_TO_EMAIL ?? '').trim()
+  return {
+    destino: CORREO_DESTINO,
+    esElOficial: CORREO_DESTINO === DESTINO_OFICIAL,
+    variablePuesta: puesta || '(sin poner — se usa el del código)',
+  }
+}
 
 /** Con nombre, como lo ve quien recibe: «Tony Alvarado <office@…>» */
 export const REMITENTE_CON_NOMBRE = `Tony Alvarado <${CORREO_REMITENTE}>`

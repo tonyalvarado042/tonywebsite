@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
-import { CORREO_REMITENTE, REMITENTE_CON_NOMBRE, esDominioPropio } from '@/lib/correo'
+import { CORREO_REMITENTE, CORREO_DESTINO, REMITENTE_CON_NOMBRE, esDominioPropio } from '@/lib/correo'
 import {
   getInteresLabel,
   getInternalSubject,
@@ -194,16 +194,18 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    const toEmail  = process.env.CONTACT_TO_EMAIL
+    // ⚠️ Acá estaba el bug del 20 de septiembre de 2026.
+    //
+    // Antes: `process.env.CONTACT_TO_EMAIL` y, si faltaba, cortar con 500 y
+    // «Configuración de destino no disponible». La variable no existía en
+    // producción, así que **el formulario devolvía error a todo el mundo** y
+    // los leads se perdían sin dejar rastro visible.
+    //
+    // Ahora el destino vive en el código (`@/lib/correo`) y nunca viene vacío,
+    // así que esta rama de fallo ya no existe. Una variable que falta no puede
+    // tumbar el formulario que capta los clientes.
+    const toEmail = CORREO_DESTINO
     const fromEmail = CORREO_REMITENTE
-
-    if (!toEmail) {
-      console.error('[contact/route] CONTACT_TO_EMAIL no configurado')
-      return NextResponse.json(
-        { success: false, error: 'Configuración de destino no disponible.' },
-        { status: 500 }
-      )
-    }
 
     const interesLabel = getInteresLabel(interes)
     const now = new Date().toLocaleString('es-CR', { timeZone: 'America/Costa_Rica' })
