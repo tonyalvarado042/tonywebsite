@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { Compass, CheckCircle2, Target, Users, TrendingUp, Wallet, Megaphone } from 'lucide-react'
 import JsonLd from '@/components/JsonLd'
 import PageFAQ, { type PageFAQItem } from '@/components/sections/PageFAQ'
@@ -128,8 +129,39 @@ export default function MentoriaPage() {
       <JsonLd data={faqSchema} />
 
       {/* Hero */}
-      <section className="bg-brand-bg py-24">
-        <div className="mx-auto max-w-3xl px-6 text-center md:px-12">
+      {/* Hero — con foto de negocios difuminada de fondo.
+          Tony la pidió el 21-set-2026 y eligió la de «las personas, sin texto».
+
+          Tres decisiones, todas medidas:
+
+          1. El desenfoque va HORNEADO en el archivo, no en CSS. Un `blur()` de
+             CSS se recalcula en cada pintada y deja los bordes transparentes
+             (hay que compensarlo con `scale-110`). Horneado también comprime
+             muchísimo mejor: el PNG original pesaba 1,2 MB y este JPEG pesa 29 kB.
+
+          2. El velo es FUERTE (65-82%) a propósito. El «con alguien que ya lo
+             hizo» va en morado #8B5CF6, que tiene luminancia 0,198 — o sea que
+             se pierde sobre GRISES MEDIOS (un traje gris, una cara iluminada),
+             no sobre el morado de la foto. Oscurecer empuja los medios al negro
+             y le devuelve contraste. Medido sobre la banda del titular:
+                 velo 62% → 2,62:1  NO llega al mínimo
+                 velo 70% → 3,05:1  justo
+                 velo 78% → 3,55:1  cómodo
+             ⚠️ Si alguien quiere ver más la foto y baja el velo, el titular
+             morado se vuelve ilegible. Hay que volver a medir, no tantear.
+
+          3. Recortar la cuña morada de la derecha NO sirvió de nada — se probó
+             y dio exactamente el mismo contraste. Por eso la foto entra entera. */}
+      <section className="relative overflow-hidden bg-brand-bg py-24">
+        <Image
+          src="/images/tony/tony-mentoria-fondo-difuminado.jpg"
+          alt="Tony Alvarado con un grupo de empresarios — mentoría empresarial en Costa Rica"
+          fill
+          className="object-cover object-[50%_40%]"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-bg/65 via-brand-bg/82 to-brand-bg" />
+        <div className="relative z-10 mx-auto max-w-3xl px-6 text-center md:px-12">
           <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-brand-accent/30 bg-brand-card px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand-accent">
             <Compass size={12} /> Mentoría empresarial
           </span>
