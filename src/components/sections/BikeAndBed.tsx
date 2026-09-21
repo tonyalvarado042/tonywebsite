@@ -77,11 +77,17 @@ export default function BikeAndBed() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
+          {/* El Capo al atardecer — la cabina 01 de Bike & Bed con la piscina.
+              Tony la pidió acá el 20-set-2026. Es LA foto de portada del
+              proyecto y no se toca sin que él lo diga.
+              El recorte: la original es 4:3 (1448×1086) y esta caja es casi
+              2.6:1, así que se pierde la mitad del alto. El 18% deja el pico
+              del techo negro completo arriba y llega hasta la piscina abajo. */}
           <Image
-            src="/images/hotel/bike-bed-exterior-cabana.jpg"
-            alt="Bike & Bed Hotels — hotel temático de ciclismo en Costa Rica, arquitectura tropical"
+            src="/images/bike-bed/bike-bed-capo-atardecer.png"
+            alt="El Capo, cabina de Bike & Bed Hotels al atardecer con piscina privada en La Fortuna, Costa Rica"
             fill
-            className="object-cover object-[50%_40%]"
+            className="object-cover object-[50%_18%]"
             sizes="(max-width: 1024px) 100vw, 1152px"
           />
         </motion.div>
