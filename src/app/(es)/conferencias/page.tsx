@@ -166,7 +166,39 @@ export default function ConferenciasPage() {
       <JsonLd data={breadcrumbSchema} />
       <JsonLd data={faqSchema} />
 
-      {/* Hero */}
+      {/* Hero con foto de fondo.
+
+          ⚠️ EL VELO Y EL PANEL VAN EN `style`, NO EN CLASES DE TAILWIND.
+          No es capricho. El 21-set-2026 esto se subió con
+          `from-brand-bg/74 via-brand-bg/86` y **Tailwind no generó esas
+          reglas**: las clases quedaron en el HTML pero el CSS no existía.
+          Medido en el navegador, en producción:
+
+              conferencias → backgroundImage: "none"          (sin velo)
+              mentoría     → linear-gradient(rgba(..,0.65), rgb(..))
+                              — el `via/82` se cayó en silencio
+
+          Las opacidades que ya existían en el proyecto (/30, /55, /65) sí
+          funcionan; las nuevas no se generaron. Con `style` no depende de que
+          ningún escaneo encuentre la clase, y los números quedan a la vista.
+
+          — Por qué un PANEL y no más velo —
+          Tony, 21-set-2026: «ese difuminado no se ve nada, o sea era un
+          poquito, no borra todo sino no tiene sentido». Tenía razón.
+          Pero el titular lleva un tramo en morado #8B5CF6, luminancia 0,198,
+          que se pierde sobre tonos medios: con la foto visible daba 1,0:1.
+          Tapar toda la foto lo arregla pero mata la foto.
+
+          La salida es separar las dos cosas: velo general flojo (28%%) para
+          que la foto SE VEA, y un panel al 88%% solo detrás del texto.
+          Medido sobre la foto entera:
+
+              velo 28%% + panel 88%%  →  morado 3,9:1   gris 6,6:1
+              (de referencia: el morado sobre el fondo sólido da 4,56:1)
+
+          El desenfoque va horneado en el JPEG (radio 5, suave a propósito).
+          Con radio 12 la foto se perdía; con 4 o menos las caras compiten con
+          el titular. */}
       {/* Hero — con foto de conferencia difuminada de fondo.
           Tony la eligió el 21-set-2026. Mismo tratamiento que /mentoria.
 
@@ -194,11 +226,22 @@ export default function ConferenciasPage() {
           src="/images/tony/tony-conferencias-fondo-difuminado.jpg"
           alt="Conferencia de Tony Alvarado ante un público sentado, con iluminación de escenario"
           fill
-          className="object-cover object-[50%_35%]"
+          className="object-cover"
+          style={{ objectPosition: '50% 35%' }}
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-bg/74 via-brand-bg/86 to-brand-bg" />
-        <div className="relative z-10 mx-auto max-w-3xl px-6 text-center md:px-12">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              'linear-gradient(to bottom, rgba(11,14,20,0.28) 0%, rgba(11,14,20,0.28) 68%, rgb(11,14,20) 100%)',
+          }}
+        />
+        <div
+          className="relative z-10 mx-auto max-w-3xl rounded-3xl px-6 py-10 text-center
+                     backdrop-blur-sm md:px-12"
+          style={{ backgroundColor: 'rgba(11,14,20,0.88)' }}
+        >
           <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-brand-accent/30 bg-brand-card px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand-accent">
             <Mic size={12} /> Conferencias
           </span>

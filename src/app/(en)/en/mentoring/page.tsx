@@ -108,39 +108,60 @@ export default function MentoringPage() {
       <JsonLd data={breadcrumbSchema} />
       <JsonLd data={faqSchema} />
 
-      {/* Hero — con foto de negocios difuminada de fondo.
-          Tony la pidió el 21-set-2026 y eligió la de «las personas, sin texto».
+      {/* Hero con foto de fondo.
 
-          Tres decisiones, todas medidas:
+          ⚠️ EL VELO Y EL PANEL VAN EN `style`, NO EN CLASES DE TAILWIND.
+          No es capricho. El 21-set-2026 esto se subió con
+          `from-brand-bg/74 via-brand-bg/86` y **Tailwind no generó esas
+          reglas**: las clases quedaron en el HTML pero el CSS no existía.
+          Medido en el navegador, en producción:
 
-          1. El desenfoque va HORNEADO en el archivo, no en CSS. Un `blur()` de
-             CSS se recalcula en cada pintada y deja los bordes transparentes
-             (hay que compensarlo con `scale-110`). Horneado también comprime
-             muchísimo mejor: el PNG original pesaba 1,2 MB y este JPEG pesa 29 kB.
+              conferencias → backgroundImage: "none"          (sin velo)
+              mentoría     → linear-gradient(rgba(..,0.65), rgb(..))
+                              — el `via/82` se cayó en silencio
 
-          2. El velo es FUERTE (65-82%) a propósito. El «con alguien que ya lo
-             hizo» va en morado #8B5CF6, que tiene luminancia 0,198 — o sea que
-             se pierde sobre GRISES MEDIOS (un traje gris, una cara iluminada),
-             no sobre el morado de la foto. Oscurecer empuja los medios al negro
-             y le devuelve contraste. Medido sobre la banda del titular:
-                 velo 62% → 2,62:1  NO llega al mínimo
-                 velo 70% → 3,05:1  justo
-                 velo 78% → 3,55:1  cómodo
-             ⚠️ Si alguien quiere ver más la foto y baja el velo, el titular
-             morado se vuelve ilegible. Hay que volver a medir, no tantear.
+          Las opacidades que ya existían en el proyecto (/30, /55, /65) sí
+          funcionan; las nuevas no se generaron. Con `style` no depende de que
+          ningún escaneo encuentre la clase, y los números quedan a la vista.
 
-          3. Recortar la cuña morada de la derecha NO sirvió de nada — se probó
-             y dio exactamente el mismo contraste. Por eso la foto entra entera. */}
+          — Por qué un PANEL y no más velo —
+          Tony, 21-set-2026: «ese difuminado no se ve nada, o sea era un
+          poquito, no borra todo sino no tiene sentido». Tenía razón.
+          Pero el titular lleva un tramo en morado #8B5CF6, luminancia 0,198,
+          que se pierde sobre tonos medios: con la foto visible daba 1,0:1.
+          Tapar toda la foto lo arregla pero mata la foto.
+
+          La salida es separar las dos cosas: velo general flojo (28%%) para
+          que la foto SE VEA, y un panel al 88%% solo detrás del texto.
+          Medido sobre la foto entera:
+
+              velo 28%% + panel 88%%  →  morado 3,9:1   gris 6,6:1
+              (de referencia: el morado sobre el fondo sólido da 4,56:1)
+
+          El desenfoque va horneado en el JPEG (radio 5, suave a propósito).
+          Con radio 12 la foto se perdía; con 4 o menos las caras compiten con
+          el titular. */}
       <section className="relative overflow-hidden bg-brand-bg py-24">
         <Image
           src="/images/tony/tony-mentoria-fondo-difuminado.jpg"
           alt="Tony Alvarado with a group of business owners — business mentoring in Costa Rica"
           fill
-          className="object-cover object-[50%_40%]"
+          className="object-cover"
+          style={{ objectPosition: '50% 40%' }}
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-bg/65 via-brand-bg/82 to-brand-bg" />
-        <div className="relative z-10 mx-auto max-w-3xl px-6 text-center md:px-12">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              'linear-gradient(to bottom, rgba(11,14,20,0.28) 0%, rgba(11,14,20,0.28) 68%, rgb(11,14,20) 100%)',
+          }}
+        />
+        <div
+          className="relative z-10 mx-auto max-w-3xl rounded-3xl px-6 py-10 text-center
+                     backdrop-blur-sm md:px-12"
+          style={{ backgroundColor: 'rgba(11,14,20,0.88)' }}
+        >
           <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-brand-accent/30 bg-brand-card px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand-accent">
             <Compass size={12} /> Business mentoring
           </span>
