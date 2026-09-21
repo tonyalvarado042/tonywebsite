@@ -76,29 +76,62 @@ async function llavePublicable(): Promise<string | null> {
 /**
  * Quién puede llamar a esto desde un navegador.
  *
- * El CRM vive en otro dominio, así que sin CORS el navegador bloquea la
- * llamada antes de que salga. La lista es cerrada a propósito: no se pone `*`
- * en algo que dispara correos.
+ * ⚠️ LA LISTA VIVE EN LA BASE, en `cta_ajustes.origenes_permitidos`.
+ *
+ * La primera versión la tenía escrita en el código y se rompió el mismo día:
+ * el CRM de Tony está en `crm-tony-alvarado-tonyalvarado.vercel.app` y acá
+ * decía `crm-tony-alvarado.vercel.app`. Un pedazo de dominio de diferencia y
+ * el navegador bloqueaba todo, con un mensaje que además culpaba al internet.
+ *
+ * Ahora, si el CRM cambia de dirección, se agrega en la base y listo: **no
+ * hace falta desplegar el sitio**. Que un cambio de dominio obligue a un
+ * despliegue es justo el tipo de amarre que Tony pidió quitar.
+ *
+ * La lista sigue siendo cerrada: nunca `*`. Esto dispara correos.
  */
-const ORIGENES = new Set([
-  'https://crm-tony-alvarado.vercel.app',
-  'http://localhost:3100',
-  'http://localhost:3000',
-])
+let origenesGuardados: Set<string> | null = null
 
-function cors(origen: string | null): Record<string, string> {
-  if (!origen || !ORIGENES.has(origen)) return {}
+async function origenesPermitidos(): Promise<Set<string>> {
+  if (origenesGuardados) return origenesGuardados
+  try {
+    const { data } = await getCrm()
+      .from('cta_ajustes')
+      .select('valor')
+      .eq('clave', 'origenes_permitidos')
+      .maybeSingle()
+
+    const lista = (data?.valor ?? '')
+      .split(',')
+      .map((o: string) => o.trim().replace(/\/+$/, ''))
+      .filter(Boolean)
+
+    origenesGuardados = new Set(lista)
+    return origenesGuardados
+  } catch (e) {
+    console.error('[secuencias/panel] no se pudieron leer los orígenes:', e)
+    return new Set()
+  }
+}
+
+async function cors(origen: string | null): Promise<Record<string, string>> {
+  if (!origen) return {}
+  const permitidos = await origenesPermitidos()
+  if (!permitidos.has(origen.replace(/\/+$/, ''))) return {}
   return {
     'Access-Control-Allow-Origin': origen,
     'Access-Control-Allow-Headers': 'authorization, content-type',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Max-Age': '86400',
+    Vary: 'Origin',
   }
 }
 
 /** El navegador pregunta primero si puede llamar. */
 export async function OPTIONS(req: NextRequest) {
-  return new NextResponse(null, { status: 204, headers: cors(req.headers.get('origin')) })
+  return new NextResponse(null, {
+    status: 204,
+    headers: await cors(req.headers.get('origin')),
+  })
 }
 
 type Quien = { id: string; rol: string; nombre: string | null }
@@ -148,7 +181,7 @@ async function quienEs(req: NextRequest): Promise<Quien | 'sin-configurar' | nul
 }
 
 export async function POST(req: NextRequest) {
-  const ch = cors(req.headers.get('origin'))
+  const ch = await cors(req.headers.get('origin'))
   const responder = (cuerpo: unknown, status = 200) =>
     NextResponse.json(cuerpo, { status, headers: ch })
 
