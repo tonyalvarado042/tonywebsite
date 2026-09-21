@@ -228,7 +228,7 @@ export default function PaginaClase({ variante }: { variante: Variante }) {
               className="pointer-events-none absolute -inset-3 rounded-[2rem] bg-brand-accent/25 blur-2xl"
             />
             <Image
-              src="/images/clase/bike-and-bed-capo-atardecer.png"
+              src="/images/bike-bed/bike-bed-capo-atardecer.png"
               alt="Las villas de Bike & Bed en La Fortuna al atardecer, con la piscina iluminada al frente"
               width={1448}
               height={1086}
