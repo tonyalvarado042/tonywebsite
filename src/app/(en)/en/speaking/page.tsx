@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import TrackedLink from '@/components/common/TrackedLink'
 import { Mic, CheckCircle2, Building2, Bike, Target, Heart, TrendingUp } from 'lucide-react'
 import JsonLd from '@/components/JsonLd'
@@ -172,8 +173,38 @@ export default function EnSpeakingPage() {
       <JsonLd data={faqSchemaEn} />
 
       {/* ── Hero ── */}
-      <section className="bg-brand-bg py-24">
-        <div className="mx-auto max-w-3xl px-6 text-center md:px-12">
+      {/* Hero — con foto de conferencia difuminada de fondo.
+          Tony la eligió el 21-set-2026. Mismo tratamiento que /mentoria.
+
+          Tres cosas que hay que saber antes de tocar esto:
+
+          1. El velo es MÁS FUERTE acá (74-86%) que en mentoría (65-82%), y no
+             por gusto: esta foto es un escenario iluminado con gente de camisa
+             clara, mucho más brillante. Medido sobre la banda del titular:
+                 velo 70% → morado 2,60:1  NO llega
+                 velo 78% → morado 3,19:1  llega
+             El «Habla desde los que construyó» va en morado #8B5CF6, que tiene
+             luminancia 0,198 y se pierde sobre tonos medios. Bajar el velo para
+             «ver mejor la foto» deja el titular ilegible.
+
+          2. La foto original trae TEXTO FALSO de IA en un cartel del fondo
+             («Lalkergoong Fogoar onirt»). Con este desenfoque y este velo
+             desaparece por completo — se comprobó recortando esa zona y
+             aplicándole el tratamiento. ⚠️ Si alguien sube la nitidez o baja el
+             velo, esa basura vuelve a aparecer.
+
+          3. El desenfoque va horneado en el JPEG, no en CSS: el PNG pesaba
+             1,5 MB y este archivo pesa 49 kB. */}
+      <section className="relative overflow-hidden bg-brand-bg py-24">
+        <Image
+          src="/images/tony/tony-conferencias-fondo-difuminado.jpg"
+          alt="Tony Alvarado speaking to a seated audience under stage lighting"
+          fill
+          className="object-cover object-[50%_35%]"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-bg/74 via-brand-bg/86 to-brand-bg" />
+        <div className="relative z-10 mx-auto max-w-3xl px-6 text-center md:px-12">
           <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-brand-accent/30 bg-brand-card px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand-accent">
             <Mic size={12} /> Speaking &amp; Conferences
           </span>
