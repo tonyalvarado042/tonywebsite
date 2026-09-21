@@ -5,39 +5,58 @@ import { motion } from 'framer-motion'
 import { Mic } from 'lucide-react'
 import { pushGTMEvent } from '@/lib/gtm'
 
+/**
+ * Los cuatro temas del teaser del home, en el orden de prioridad del sitio:
+ * copropiedad turística → mentoría → ciclismo. Tony lo aprobó el 21 de
+ * septiembre de 2026.
+ *
+ * Antes abría con «Transformación personal a través del ciclismo» y el turismo
+ * iba de último. Esto tiene que quedar en línea con `/conferencias`: son la
+ * misma oferta contada dos veces, y si una dice una cosa y la otra otra, el
+ * sitio se contradice solo.
+ *
+ * ⚠️ Página pública: nada de rendimiento, retorno, ROI, utilidad, ganancia ni
+ * inversión garantizada (SUGEVAL).
+ */
 const topics = [
   {
-    title: 'Transformación personal a través del ciclismo',
-    tags: ['Inspiración', 'Salud', 'Propósito'],
+    title: 'El nuevo negocio del turismo',
+    tags: ['Turismo', 'Copropiedad'],
     description:
-      'Cómo el ciclismo de montaña y de ruta puede convertirse en una herramienta de cambio físico, mental y espiritual.',
+      'Cómo participar en un activo turístico sin construirlo ni operarlo, contado por alguien que desarrolla y opera hoteles en La Fortuna.',
+  },
+  {
+    title: 'Que el negocio funcione sin vos',
+    tags: ['Mentoría', 'Equipos'],
+    description:
+      'Ordenar la empresa, armar el equipo y soltar la operación para que deje de depender del dueño.',
   },
   {
     title: 'Construir negocios con propósito y fe',
     tags: ['Liderazgo', 'Emprendimiento'],
     description:
-      'Lecciones de 22+ años construyendo empresas desde la fe, la disciplina y el propósito.',
+      'Lecciones de más de 22 años construyendo empresas desde la fe, la disciplina y el propósito.',
   },
   {
-    title: 'Liderazgo: de la teoría a la cancha',
-    tags: ['Liderazgo', 'Equipos'],
+    title: 'Del ciclismo a un ecosistema de empresas',
+    tags: ['Ciclismo', 'Transformación'],
     description:
-      'El ciclismo como metáfora del liderazgo real: pelotón, estrategia, resistencia y visión de meta.',
-  },
-  {
-    title: 'Turismo deportivo: la oportunidad del siglo XXI',
-    tags: ['Negocios', 'Turismo'],
-    description:
-      'El auge del turismo activo y wellness como modelo de negocio con propósito y alcance global.',
+      'Cómo una pasión se convirtió en tiendas, comunidad y hoteles — y el accidente que lo puso todo en perspectiva.',
   },
 ]
 
 const topicsEn = [
   {
-    title: 'Personal transformation through cycling',
-    tags: ['Inspiration', 'Health', 'Purpose'],
+    title: 'The new tourism business',
+    tags: ['Tourism', 'Co-ownership'],
     description:
-      'How mountain biking and road cycling can become a tool for physical, mental and spiritual change.',
+      'How to take part in a tourism asset without building or running it, told by someone who develops and operates hotels in La Fortuna.',
+  },
+  {
+    title: 'A business that runs without you',
+    tags: ['Mentoring', 'Teams'],
+    description:
+      'Putting the company in order, building the team and letting go of the day-to-day so it stops depending on its owner.',
   },
   {
     title: 'Building businesses with purpose and faith',
@@ -46,16 +65,10 @@ const topicsEn = [
       'Lessons from 22+ years building companies from faith, discipline and purpose.',
   },
   {
-    title: 'Leadership: from theory to the field',
-    tags: ['Leadership', 'Teams'],
+    title: 'From cycling to a business ecosystem',
+    tags: ['Cycling', 'Transformation'],
     description:
-      'Cycling as a metaphor for real leadership: peloton, strategy, endurance and vision of the finish line.',
-  },
-  {
-    title: 'Sports tourism: the opportunity of the 21st century',
-    tags: ['Business', 'Tourism'],
-    description:
-      'The rise of active and wellness tourism as a purpose-driven business model with global reach.',
+      'How one passion turned into stores, a community and hotels — and the accident that put it all in perspective.',
   },
 ]
 
@@ -65,7 +78,7 @@ export default function Speaking({ locale = 'es' }: { locale?: 'es' | 'en' }) {
     h2text: "Tony doesn't speak from a pretty idea. He speaks from a story",
     h2span: 'that almost stopped him',
     h2suffix: 'and 22+ years of building.',
-    paragraph: 'Entrepreneur, cycling coach and speaker with over 22 years of experience in Costa Rica.',
+    paragraph: 'Tourism project developer, business mentor and speaker with over 22 years of experience in Costa Rica.',
     ctaLabel: 'Request a speaking engagement',
     ctaHref: '/en/contact?interest=conferencias#form',
   } : {
@@ -73,7 +86,7 @@ export default function Speaking({ locale = 'es' }: { locale?: 'es' | 'en' }) {
     h2text: 'Tony no habla desde una idea bonita. Habla desde una historia',
     h2span: 'que casi lo detuvo',
     h2suffix: 'y más de 22 años construyendo.',
-    paragraph: 'Empresario, coach de ciclismo y conferencista con más de 22 años de trayectoria en Costa Rica.',
+    paragraph: 'Desarrollador de proyectos turísticos, mentor empresarial y conferencista con más de 22 años de trayectoria en Costa Rica.',
     ctaLabel: 'Solicitar una conferencia',
     ctaHref: '/contacto?interes=conferencias#formulario',
   }

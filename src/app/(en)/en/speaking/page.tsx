@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import TrackedLink from '@/components/common/TrackedLink'
-import { Mic, CheckCircle2, Users, Target, Heart, TrendingUp, Compass } from 'lucide-react'
+import { Mic, CheckCircle2, Building2, Bike, Target, Heart, TrendingUp } from 'lucide-react'
 import JsonLd from '@/components/JsonLd'
 import PageFAQ, { type PageFAQItem } from '@/components/sections/PageFAQ'
 import { SITE_URL, websiteRef, personRef } from '@/lib/structured-data'
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     absolute: 'Speaking & Conferences — Tony Alvarado',
   },
   description:
-    'Tony Alvarado is available for keynotes and conferences on cycling, entrepreneurship, leadership, faith and personal transformation. Based in Costa Rica, available internationally.',
+    'Tony Alvarado is available for keynotes and conferences on the new tourism business and co-ownership, business mentoring, leadership, faith and personal transformation. Based in Costa Rica, available internationally.',
   alternates: { canonical: 'https://www.tonyalvarado.com/en/speaking' },
   openGraph: {
     type: 'website',
@@ -46,7 +46,7 @@ const webPageSchemaEn = {
   '@id': `${SITE_URL}/en/speaking#webpage`,
   name: 'Speaking & Conferences — Tony Alvarado',
   description:
-    'Tony Alvarado is available for keynotes and conferences on cycling, entrepreneurship, leadership, faith and personal transformation.',
+    'Tony Alvarado is available for keynotes and conferences on the new tourism business and co-ownership, business mentoring, leadership, faith and personal transformation.',
   url: `${SITE_URL}/en/speaking`,
   inLanguage: 'en-US',
   isPartOf: websiteRef,
@@ -62,29 +62,37 @@ const breadcrumbSchemaEn = {
   ],
 }
 
+/**
+ * Mirror of the Spanish page: co-ownership → mentoring → cycling.
+ * Tony approved that order on 21 September 2026. Keep both pages in step —
+ * if one changes and the other doesn't, the site contradicts itself.
+ *
+ * ⚠️ Nothing here may mention returns, ROI, yield, profit or guaranteed
+ * investment. Public page, and that is SUGEVAL territory.
+ */
 const topics = [
+  {
+    icon: Building2,
+    title: 'The new tourism business',
+    tags: ['Tourism', 'Co-ownership'],
+    description:
+      'How active and wellness tourism changed shape, and how you can take part in a tourism asset today without having to build or run it yourself. Told from the inside: Tony develops and operates hotels in La Fortuna.',
+    featured: true,
+  },
+  {
+    icon: TrendingUp,
+    title: 'A business that runs without you',
+    tags: ['Mentoring', 'Teams'],
+    description:
+      'How to put the company in order, build the team and let go of the day-to-day so the business stops depending on its owner. Five fronts: marketing, leadership, sales, strategy and finance.',
+    featured: false,
+  },
   {
     icon: Target,
     title: 'Leadership with purpose',
     tags: ['Leadership', 'Purpose'],
     description:
-      'Leading from mission rather than ego. How to build teams, make difficult decisions and stay on course when the road gets complicated.',
-    featured: true,
-  },
-  {
-    icon: TrendingUp,
-    title: 'Discipline and personal transformation',
-    tags: ['Discipline', 'Transformation'],
-    description:
-      'Cycling as a school of life: how the habits, consistency and mindset of the athlete translate into every area of existence.',
-    featured: false,
-  },
-  {
-    icon: Compass,
-    title: 'Entrepreneurship around cycling',
-    tags: ['Entrepreneurship', 'Cycling'],
-    description:
-      'How Tony built an ecosystem of companies around a passion. Lessons from 22 years of founding businesses from faith, purpose and discipline.',
+      'Leading from the mission rather than the ego. How to build teams, make hard calls and hold the course when the road gets complicated.',
     featured: false,
   },
   {
@@ -92,25 +100,26 @@ const topics = [
     title: 'Community, faith and perseverance',
     tags: ['Faith', 'Community'],
     description:
-      'Why faith and community are the most powerful assets in moments of adversity. An honest perspective from the real life of Tony Alvarado.',
+      'Why faith and community are the most powerful assets in times of adversity. An honest perspective from Tony Alvarado’s real life.',
     featured: false,
   },
   {
-    icon: Users,
-    title: 'Building a life or business on a mission',
-    tags: ['Mission', 'Vision'],
+    icon: Bike,
+    title: 'From cycling to a business ecosystem',
+    tags: ['Cycling', 'Entrepreneurship'],
     description:
-      'The differentiator that separates those who build something lasting from those who only survive the short term. Purpose as strategy.',
+      'How one passion turned into stores, a community and hotels. Over 22 years founding businesses from faith, purpose and discipline — and the accident that put it all in perspective.',
     featured: false,
   },
 ]
 
 const contributions = [
-  'A real story of adversity, recovery and faith — told without filters',
+  'Tourism projects he operates today in La Fortuna — not someone else’s case studies',
   'Over 22 years of real entrepreneurial experience applied in practice',
-  'Cycling certification from the Costa Rican Cycling Federation',
   'John Maxwell Leadership certification',
-  'A message connecting sport, business, faith and purpose in a single story',
+  'A real story of adversity, recovery and faith — told without filters',
+  'Cycling certification from the Costa Rican Cycling Federation',
+  'A message connecting business, sport, faith and purpose in a single story',
   'Adaptable formats: keynote, panel, workshop, corporate event or community',
 ]
 
@@ -169,13 +178,13 @@ export default function EnSpeakingPage() {
             <Mic size={12} /> Speaking &amp; Conferences
           </span>
           <h1 className="mt-4 text-4xl font-bold leading-tight text-brand-text md:text-5xl">
-            Tony doesn&apos;t speak about cycling.{' '}
-            <span className="text-brand-accent">He speaks from it.</span>
+            Tony doesn&apos;t talk business in theory.{' '}
+            <span className="text-brand-accent">He talks from the ones he built.</span>
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-brand-muted">
-            Entrepreneur, certified cycling coach and speaker with over 22 years of
-            experience building from faith and discipline. Available for in-person
-            and virtual events in Costa Rica and internationally.
+            Tourism project developer, business mentor and speaker with over 22 years
+            building from faith and discipline. Available for in-person and virtual
+            events in Costa Rica and internationally.
           </p>
           <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <TrackedLink
