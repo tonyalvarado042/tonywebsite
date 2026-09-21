@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getCrm, TABLA_CONTACTOS } from '@/lib/crm'
-import { estadoDelRemitente } from '@/lib/correo'
+import { estadoDelRemitente, estadoDelDestino } from '@/lib/correo'
 import { cronAutorizado, secuenciasActivas } from '@/lib/secuencias'
 
 /**
@@ -99,10 +99,18 @@ export async function GET(req: NextRequest) {
    */
   const remitente = estadoDelRemitente()
 
+  /**
+   * Y a dónde llegan los leads. Esto faltó el 20-set-2026: el formulario
+   * estuvo devolviendo 500 porque no había destino, y no había forma de verlo
+   * sin mandar un formulario de prueba contra producción.
+   */
+  const destino = estadoDelDestino()
+
   return NextResponse.json({
     ok: true,
     llaves,
     remitente,
+    destino,
     crm,
     tablas,
     columnas,
