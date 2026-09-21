@@ -1,30 +1,30 @@
 import Link from 'next/link'
 import TrackedLink from '@/components/common/TrackedLink'
-import { Mic, CheckCircle2, Users, Target, Heart, TrendingUp, Compass } from 'lucide-react'
+import { Mic, CheckCircle2, Building2, Bike, Target, Heart, TrendingUp } from 'lucide-react'
 import JsonLd from '@/components/JsonLd'
 import PageFAQ, { type PageFAQItem } from '@/components/sections/PageFAQ'
 import { SITE_URL, websiteRef, personRef } from '@/lib/structured-data'
 
 export const metadata = {
-  title: 'Conferencias — Tony Alvarado | Ciclismo, liderazgo y transformación',
+  title: 'Conferencias — Tony Alvarado | Turismo, liderazgo y transformación',
   description:
-    'Solicita a Tony Alvarado como conferencista para tu evento. Temas de liderazgo con propósito, disciplina, ciclismo, emprendimiento y transformación personal desde Costa Rica.',
+    'Solicita a Tony Alvarado como conferencista para tu evento. Temas del nuevo negocio del turismo y la copropiedad, mentoría empresarial, liderazgo con propósito y transformación personal desde Costa Rica.',
   alternates: { canonical: '/conferencias' },
   openGraph: {
     type: 'website',
     locale: 'es_CR',
     url: 'https://www.tonyalvarado.com/conferencias',
     siteName: 'Tony Alvarado',
-    title: 'Conferencias — Tony Alvarado | Ciclismo, liderazgo y propósito',
+    title: 'Conferencias — Tony Alvarado | Turismo, liderazgo y propósito',
     description:
-      'Historia real, fe y 22 años de experiencia empresarial. Tony Alvarado disponible para keynotes, eventos corporativos y conferencias presenciales o virtuales.',
-    images: [{ url: '/images/og/tony-alvarado-og-source.jpeg', width: 1600, height: 900, alt: 'Tony Alvarado — conferencista de ciclismo, liderazgo y transformación' }],
+      'Desarrollador de proyectos turísticos, mentor empresarial y conferencista. 22 años construyendo desde la fe y la disciplina. Disponible para keynotes y eventos presenciales o virtuales.',
+    images: [{ url: '/images/og/tony-alvarado-og-source.jpeg', width: 1600, height: 900, alt: 'Tony Alvarado — conferencista de turismo, liderazgo y transformación' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Conferencias — Tony Alvarado | Ciclismo, liderazgo y propósito',
+    title: 'Conferencias — Tony Alvarado | Turismo, liderazgo y propósito',
     description:
-      'Historia real, fe y 22 años de experiencia empresarial. Tony Alvarado disponible para keynotes, eventos corporativos y conferencias presenciales o virtuales.',
+      'Desarrollador de proyectos turísticos, mentor empresarial y conferencista. 22 años construyendo desde la fe y la disciplina. Disponible para keynotes y eventos presenciales o virtuales.',
     images: ['/images/og/tony-alvarado-og-source.jpeg'],
   },
 }
@@ -33,9 +33,9 @@ const webPageSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
   '@id': `${SITE_URL}/conferencias#webpage`,
-  name: 'Conferencias — Tony Alvarado | Ciclismo, liderazgo y transformación',
+  name: 'Conferencias — Tony Alvarado | Turismo, liderazgo y transformación',
   description:
-    'Solicita a Tony Alvarado como conferencista para tu evento. Temas de liderazgo con propósito, disciplina, ciclismo, emprendimiento y transformación personal desde Costa Rica.',
+    'Solicita a Tony Alvarado como conferencista para tu evento. Temas del nuevo negocio del turismo y la copropiedad, mentoría empresarial, liderazgo con propósito y transformación personal desde Costa Rica.',
   url: `${SITE_URL}/conferencias`,
   inLanguage: 'es-CR',
   isPartOf: websiteRef,
@@ -55,7 +55,7 @@ const pageFaqs: PageFAQItem[] = [
   {
     question: '¿Qué temas aborda Tony Alvarado en sus conferencias?',
     answer:
-      'Las conferencias de Tony cubren liderazgo con propósito, disciplina y transformación personal, emprendimiento alrededor del ciclismo, comunidad y fe en la adversidad, y cómo construir una vida o negocio desde una misión. Todos los temas nacen de su experiencia real y se adaptan al contexto del evento.',
+      'Las conferencias de Tony cubren el nuevo negocio del turismo y la copropiedad, cómo lograr que una empresa funcione sin su dueño, liderazgo con propósito, comunidad y fe en la adversidad, y cómo el ciclismo se convirtió en un ecosistema de empresas. Todos los temas nacen de su experiencia real y se adaptan al contexto del evento.',
   },
   {
     question: '¿Tony Alvarado puede participar en eventos fuera de Costa Rica?',
@@ -84,29 +84,42 @@ const faqSchema = {
   })),
 }
 
+/**
+ * Los temas, en el orden de prioridad del sitio: copropiedad turística →
+ * mentoría → ciclismo. Tony lo aprobó así el 21 de septiembre de 2026.
+ *
+ * Antes abría con liderazgo y tenía DOS temas de ciclismo entre los tres
+ * primeros, sin uno solo de turismo — que es el frente que más ingresos
+ * busca. El ciclismo no se borró: bajó al quinto, que es de dónde viene todo
+ * lo demás y lo que le da credibilidad al resto.
+ *
+ * ⚠️ Nada acá puede hablar de rendimiento, retorno, ROI, utilidad, ganancia
+ * ni inversión garantizada. Es página pública y eso es tema de SUGEVAL.
+ * Lo aprobado: copropiedad, fracción, co-dueño, participar en un activo.
+ */
 const topics = [
+  {
+    icon: Building2,
+    title: 'El nuevo negocio del turismo',
+    tags: ['Turismo', 'Copropiedad'],
+    description:
+      'Por qué el turismo activo y de bienestar cambió de forma, y cómo hoy se puede participar en un activo turístico sin tener que construirlo ni operarlo. Contado desde adentro: Tony desarrolla y opera hoteles en La Fortuna.',
+    featured: true,
+  },
+  {
+    icon: TrendingUp,
+    title: 'Que el negocio funcione sin vos',
+    tags: ['Mentoría', 'Equipos'],
+    description:
+      'Cómo ordenar la empresa, armar el equipo y soltar la operación para que deje de depender del dueño. Los cinco frentes: marketing, liderazgo, ventas, estrategia y finanzas.',
+    featured: false,
+  },
   {
     icon: Target,
     title: 'Liderazgo con propósito',
     tags: ['Liderazgo', 'Propósito'],
     description:
       'Liderar desde la misión y no desde el ego. Cómo construir equipos, tomar decisiones difíciles y mantener el rumbo cuando el camino se complica.',
-    featured: true,
-  },
-  {
-    icon: TrendingUp,
-    title: 'Disciplina y transformación personal',
-    tags: ['Disciplina', 'Transformación'],
-    description:
-      'El ciclismo como escuela de vida: cómo los hábitos, la constancia y la mentalidad del deportista se trasladan a cada área de la existencia.',
-    featured: false,
-  },
-  {
-    icon: Compass,
-    title: 'Emprendimiento alrededor del ciclismo',
-    tags: ['Emprendimiento', 'Ciclismo'],
-    description:
-      'Cómo Tony construyó un ecosistema de empresas alrededor de una pasión. Lecciones de 22 años fundando negocios desde la fe, el propósito y la disciplina.',
     featured: false,
   },
   {
@@ -118,21 +131,22 @@ const topics = [
     featured: false,
   },
   {
-    icon: Users,
-    title: 'Construir una vida o negocio sobre una misión',
-    tags: ['Misión', 'Visión'],
+    icon: Bike,
+    title: 'Del ciclismo a un ecosistema de empresas',
+    tags: ['Ciclismo', 'Emprendimiento'],
     description:
-      'El diferenciador que separa a quienes construyen algo duradero de quienes solo sobreviven el corto plazo. Propósito como estrategia.',
+      'Cómo una pasión se convirtió en tiendas, comunidad y hoteles. Más de 22 años fundando negocios desde la fe, el propósito y la disciplina — y el accidente que lo puso todo en perspectiva.',
     featured: false,
   },
 ]
 
 const contributions = [
-  'Una historia real de adversidad, recuperación y fe contada sin filtros',
+  'Proyectos turísticos que opera hoy en La Fortuna, no casos de estudio ajenos',
   'Más de 22 años de experiencia empresarial aplicada en la práctica',
-  'Autoridad en ciclismo certificada por la Federación Costarricense de Ciclismo',
   'Certificación en liderazgo por John Maxwell Leadership',
-  'Un mensaje que conecta deporte, negocio, fe y propósito en un solo relato',
+  'Una historia real de adversidad, recuperación y fe contada sin filtros',
+  'Autoridad en ciclismo certificada por la Federación Costarricense de Ciclismo',
+  'Un mensaje que conecta negocio, deporte, fe y propósito en un solo relato',
   'Formatos adaptables: keynote, panel, taller, evento corporativo o comunidad',
 ]
 
@@ -157,14 +171,17 @@ export default function ConferenciasPage() {
           <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-brand-accent/30 bg-brand-card px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand-accent">
             <Mic size={12} /> Conferencias
           </span>
+          {/* Antes: «Tony no habla sobre ciclismo. Habla desde él.» Buena frase,
+              pero ponía el ciclismo de titular en la página donde lo venden a él.
+              Se le guardó la forma y se le cambió el sujeto. */}
           <h1 className="mt-4 text-4xl font-bold leading-tight text-brand-text md:text-5xl">
-            Tony no habla sobre ciclismo.{' '}
-            <span className="text-brand-accent">Habla desde él.</span>
+            Tony no habla de negocios en teoría.{' '}
+            <span className="text-brand-accent">Habla desde los que construyó.</span>
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-brand-muted">
-            Empresario, coach certificado y conferencista con más de 22 años de
-            experiencia construyendo desde la fe y la disciplina. Disponible para
-            eventos presenciales y virtuales en Costa Rica y en el extranjero.
+            Desarrollador de proyectos turísticos, mentor empresarial y conferencista
+            con más de 22 años construyendo desde la fe y la disciplina. Disponible
+            para eventos presenciales y virtuales en Costa Rica y en el extranjero.
           </p>
           <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <TrackedLink
