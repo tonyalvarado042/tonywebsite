@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { CheckCircle2 } from 'lucide-react'
+import { ArrowRight, CheckCircle2 } from 'lucide-react'
 import JsonLd from '@/components/JsonLd'
 import PhotoStrip from '@/components/ui/PhotoStrip'
 import PageFAQ, { type PageFAQItem } from '@/components/sections/PageFAQ'
@@ -129,27 +129,56 @@ export default function SobreMiPage() {
             <p className="text-xs font-semibold uppercase tracking-widest text-brand-green">
               Sobre Tony Alvarado
             </p>
+            {/* Titular y párrafo dictados por Tony el 21-set-2026.
+                Antes abría con las manzanas; esa frase se mudó al inicio de la
+                historia, más abajo, donde pega después de que el visitante ya
+                entendió la propuesta. */}
             <h1 className="text-4xl font-bold leading-tight text-brand-text md:text-5xl">
-              Empezó vendiendo manzanas para comprarse una bicicleta.<br />
-              <span className="text-brand-green">Hoy lleva más de 22 años construyendo con esa misma disciplina.</span>
+              Construyo destinos turísticos en Costa Rica y{' '}
+              <span className="text-brand-green">abro la puerta para que otros sean copropietarios.</span>
             </h1>
             <p className="text-brand-muted text-left md:text-justify">
-              Hoy desarrolla <strong className="font-semibold text-brand-text">proyectos
-              turísticos con copropiedad</strong> en Costa Rica y acompaña a dueños de empresa
-              a escalar los suyos. Ingeniero de computación de formación, empresario de vocación,
-              y un grupo de negocios que ha facturado millones de dólares — todo nacido de una
-              bicicleta y de la disciplina que aprendió sobre ella.
+              Soy Tony Alvarado. Durante más de 22 años he creado empresas alrededor de una
+              idea: <strong className="font-semibold text-brand-text">convertir una visión en
+              algo real</strong>. Hoy desarrollo proyectos turísticos y reúno a personas que
+              quieren participar en su propiedad, con un equipo que se ocupa del desarrollo y
+              la operación.
             </p>
+
+            <div className="flex flex-col gap-3 pt-2 sm:flex-row">
+              <Link
+                href="/bike-bed-hotels"
+                className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-xl
+                           bg-brand-green px-6 text-[15px] font-bold text-brand-bg
+                           transition-opacity hover:opacity-90"
+              >
+                Conocer los proyectos
+                <ArrowRight size={17} />
+              </Link>
+              <a
+                href="#historia"
+                className="inline-flex min-h-[52px] items-center justify-center rounded-xl
+                           border border-brand-border px-6 text-[15px] font-semibold text-brand-text
+                           transition-colors hover:border-brand-green/50"
+              >
+                Conocer mi historia
+              </a>
+            </div>
           </div>
 
           <div className="w-full flex-1">
             <div className="overflow-hidden rounded-2xl">
+              {/* La de portada. Tony, 21-set-2026: «es la escogida ya que aún no
+                  he hecho otras». Lo que quiere para acá es una sesión en
+                  Bike & Bed o en el terreno del próximo proyecto, con el destino
+                  detrás — horizontal para escritorio y vertical para móvil.
+                  Cuando existan esas fotos, se cambia acá. */}
               <Image
-                src="/images/tony/tony-ciclismo-vertical-01.jpg"
-                alt="Tony Alvarado en bicicleta — coach y entrenador de ciclismo en Costa Rica"
+                src="/images/tony/tony-hero.jpg"
+                alt="Tony Alvarado, desarrollador de proyectos turísticos en Costa Rica"
                 width={600}
                 height={750}
-                className="w-full object-cover object-[50%_20%]"
+                className="w-full object-cover object-top"
                 priority
               />
             </div>
@@ -167,19 +196,22 @@ export default function SobreMiPage() {
               <p className="text-xs font-semibold uppercase tracking-widest text-brand-green">
                 Trayectoria
               </p>
+              {/* En PRIMERA persona, igual que el hero. Antes esta sección decía
+                  «Su frente principal…» y quedaba pegada a un titular que dice
+                  «Soy Tony Alvarado»: el lector nota el salto de una. */}
               <h2 className="text-3xl font-bold text-brand-text">
-                Construye, y después<br />
-                <span className="text-brand-accent">enseña lo que construyó.</span>
+                Construyo, y después<br />
+                <span className="text-brand-accent">enseño lo que construí.</span>
               </h2>
               <p className="text-brand-muted text-left md:text-justify">
-                Su frente principal hoy es el <strong className="font-semibold text-brand-text">desarrollo
+                Mi frente principal hoy es el <strong className="font-semibold text-brand-text">desarrollo
                 de proyectos turísticos con copropiedad</strong>: hacer posible que otros sean
                 co-dueños de activos turísticos en Costa Rica, sin tener que construir y operar solos.
               </p>
               <p className="text-brand-muted text-left md:text-justify">
                 De ahí sale lo segundo: <strong className="font-semibold text-brand-text">acompañar
                 a otros dueños de empresa</strong> a ordenar el negocio, armar el equipo y soltar la
-                operación. Certificado por John Maxwell Leadership y autor de
+                operación. Soy certificado por John Maxwell Leadership y autor de
                 <em> Secretos para ser un empresario exitoso</em>.
               </p>
               <p className="text-brand-muted text-left md:text-justify">
@@ -217,8 +249,8 @@ export default function SobreMiPage() {
         </div>
       </section>
 
-      {/* La historia */}
-      <section className="bg-brand-bg py-16">
+      {/* La historia — el botón «Conocer mi historia» del hero cae acá. */}
+      <section id="historia" className="scroll-mt-20 bg-brand-bg py-16">
         <div className="mx-auto max-w-4xl px-6 md:px-12">
 
           <div className="mb-10 text-center">
@@ -232,6 +264,12 @@ export default function SobreMiPage() {
           </div>
 
           <div className="space-y-5 text-brand-muted text-left md:text-justify">
+            {/* Las manzanas abrían el titular de la página. Tony las movió acá
+                el 21-set-2026: «ahí sí tiene fuerza emocional, después de que el
+                visitante ya entendió tu propuesta». */}
+            <p className="text-lg font-semibold text-brand-text">
+              Todo comenzó vendiendo manzanas para comprarme una bicicleta.
+            </p>
             <p>
               Desde niño, Tony tuvo una conexión profunda con la bicicleta. Quería una mejor para competir.
               Su padre le dijo que debía ganársela. Vendió manzanas del terreno de su abuelo hasta reunir
