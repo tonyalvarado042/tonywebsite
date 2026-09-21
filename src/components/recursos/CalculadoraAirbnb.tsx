@@ -13,6 +13,7 @@ import {
   comparativo,
   enDolares,
   enPorcentaje,
+  type EscenarioAirbnb,
   type Supuestos,
 } from '@/lib/calculadora-airbnb'
 
@@ -117,9 +118,12 @@ const PASOS = [
   { nombre: 'Capital', detalle: 'Prima, crédito y valorización' },
 ]
 
+const NOMBRES_ESCENARIOS = Object.keys(ESCENARIOS) as EscenarioAirbnb[]
+type ProyectoRapido = 'villa' | 'doble' | 'boutique'
+
 export default function CalculadoraAirbnb() {
   const [s, setS] = useState<Supuestos>(SUPUESTOS_BASE)
-  const [escenario, setEscenario] = useState('base')
+  const [escenario, setEscenario] = useState<EscenarioAirbnb>('base')
   const [paso, setPaso] = useState(0)
   const [bikeBedCargado, setBikeBedCargado] = useState(false)
   const [informeAbierto, setInformeAbierto] = useState(false)
@@ -139,10 +143,17 @@ export default function CalculadoraAirbnb() {
     setS((prev) => ({ ...prev, [clave]: valor }))
   }
 
-  const aplicarEscenario = (nombre: string) => {
+  const aplicarEscenario = (nombre: EscenarioAirbnb) => {
     setHaCalculado(true)
     setEscenario(nombre)
     setS((prev) => ({ ...prev, ...ESCENARIOS[nombre] }))
+  }
+
+  const cargarProyectoRapido = (clave: ProyectoRapido) => {
+    setHaCalculado(true)
+    setS(PROYECTOS[clave])
+    setEscenario('base')
+    setBikeBedCargado(false)
   }
 
   const cargarBikeBed = () => {
@@ -200,7 +211,7 @@ export default function CalculadoraAirbnb() {
               <button
                 key={clave}
                 type="button"
-                onClick={() => { setHaCalculado(true); setS(PROYECTOS[clave]); setBikeBedCargado(false) }}
+                onClick={() => cargarProyectoRapido(clave)}
                 className="rounded-xl border border-brand-border bg-brand-card px-3 py-2 text-[12.5px]
                            font-semibold text-brand-muted transition-colors hover:border-brand-green/40 hover:text-brand-text"
               >
@@ -379,7 +390,7 @@ export default function CalculadoraAirbnb() {
                   Resultado en tiempo real
                 </p>
                 <div className="flex gap-1 rounded-lg bg-brand-bg p-1">
-                  {Object.keys(ESCENARIOS).map((nombre) => (
+                  {NOMBRES_ESCENARIOS.map((nombre) => (
                     <button
                       key={nombre}
                       type="button"

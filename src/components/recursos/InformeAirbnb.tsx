@@ -1,9 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { ArrowRight, Check, Loader2, Mail } from 'lucide-react'
+import { ArrowRight, Check, Loader2, Mail, MessageCircle } from 'lucide-react'
 import { PAISES } from '@/data/paises'
-import type { Supuestos } from '@/lib/calculadora-airbnb'
+import type { EscenarioAirbnb, Supuestos } from '@/lib/calculadora-airbnb'
 
 /**
  * El único punto de la calculadora donde se piden datos.
@@ -18,9 +18,11 @@ import type { Supuestos } from '@/lib/calculadora-airbnb'
 
 type Props = {
   supuestos: Supuestos
-  escenario: string
+  escenario: EscenarioAirbnb
   /** Se llama cuando la solicitud quedó registrada, para abrir el informe. */
   alRegistrar: () => void
+  /** Permite cerrar la ventana de rescate antes de navegar al análisis. */
+  alVerAnalisis?: () => void
   /**
    * `true` cuando el formulario va dentro de la ventana de rescate: ahí la
    * tarjeta ya la pone la ventana, así que este no dibuja la suya ni repite
@@ -29,7 +31,41 @@ type Props = {
   desnudo?: boolean
 }
 
-export default function InformeAirbnb({ supuestos, escenario, alRegistrar, desnudo }: Props) {
+type ExitoInforme = {
+  correoEnviado: boolean
+  whatsappUrl: string
+}
+
+function esObjeto(valor: unknown): valor is Record<string, unknown> {
+  return valor !== null && typeof valor === 'object' && !Array.isArray(valor)
+}
+
+function errorDeRespuesta(valor: unknown): string | null {
+  if (!esObjeto(valor) || typeof valor.error !== 'string') return null
+  return valor.error
+}
+
+function exitoDeRespuesta(valor: unknown): ExitoInforme | null {
+  if (
+    !esObjeto(valor) ||
+    valor.ok !== true ||
+    typeof valor.correoEnviado !== 'boolean' ||
+    typeof valor.whatsappUrl !== 'string' ||
+    !valor.whatsappUrl.startsWith('https://wa.me/50664417867?text=')
+  ) {
+    return null
+  }
+
+  return { correoEnviado: valor.correoEnviado, whatsappUrl: valor.whatsappUrl }
+}
+
+export default function InformeAirbnb({
+  supuestos,
+  escenario,
+  alRegistrar,
+  alVerAnalisis,
+  desnudo,
+}: Props) {
   const [prefijo, setPrefijo] = useState('+506')
   const [nombre, setNombre] = useState('')
   const [correo, setCorreo] = useState('')
@@ -37,7 +73,7 @@ export default function InformeAirbnb({ supuestos, escenario, alRegistrar, desnu
   const [acepta, setAcepta] = useState(false)
   const [enviando, setEnviando] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [listo, setListo] = useState(false)
+  const [listo, setListo] = useState<ExitoInforme | null>(null)
 
   const paisActual = PAISES.find((p) => p.codigo === prefijo) ?? PAISES[0]
 
@@ -63,17 +99,19 @@ export default function InformeAirbnb({ supuestos, escenario, alRegistrar, desnu
           whatsapp: telefono,
           escenario,
           supuestos,
+          consentimiento: acepta,
         }),
       })
-      const json = await res.json()
+      const json: unknown = await res.json()
+      const exito = exitoDeRespuesta(json)
 
-      if (!res.ok || !json.ok) {
-        setError(json.error ?? 'No se pudo registrar la solicitud.')
+      if (!res.ok || !exito) {
+        setError(errorDeRespuesta(json) ?? 'No se pudo completar la solicitud.')
         setEnviando(false)
         return
       }
 
-      setListo(true)
+      setListo(exito)
       alRegistrar()
     } catch {
       setError('No se pudo conectar. Revisá tu internet e intentá de nuevo.')
@@ -89,12 +127,34 @@ export default function InformeAirbnb({ supuestos, escenario, alRegistrar, desnu
         </span>
         <p className="mb-2 text-lg font-bold text-brand-text">Solicitud registrada</p>
         <p className="mb-6 text-[15px] leading-relaxed text-brand-muted">
-          Te mandamos el informe a <span className="text-brand-text">{correo.trim()}</span> con
-          tu escenario, sus supuestos y sus advertencias. Abajo ya podés ver la versión
-          extendida en pantalla.
+          {listo.correoEnviado ? (
+            <>
+              Te mandamos el informe a <span className="text-brand-text">{correo.trim()}</span> con
+              tu escenario, sus supuestos y sus advertencias.
+            </>
+          ) : (
+            <>
+              Guardamos tu solicitud, pero no pudimos enviar el correo. Igual podés ver el
+              análisis en pantalla y continuar por WhatsApp.
+            </>
+          )}
+        </p>
+        <a
+          href={listo.whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-2xl
+                     bg-brand-cta px-6 text-[15px] font-bold text-brand-bg transition-opacity hover:opacity-90"
+        >
+          <MessageCircle size={18} strokeWidth={2.5} />
+          Continuar por WhatsApp
+        </a>
+        <p className="mb-4 mt-2 text-[12px] leading-relaxed text-brand-muted">
+          Se abrirá un mensaje con tu análisis. Revisalo y presioná Enviar dentro de WhatsApp.
         </p>
         <a
           href="#informe-completo"
+          onClick={alVerAnalisis}
           className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-2xl
                      bg-brand-green px-6 text-[15px] font-bold text-brand-bg transition-opacity hover:opacity-90"
         >
