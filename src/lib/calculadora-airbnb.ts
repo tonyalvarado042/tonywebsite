@@ -41,6 +41,8 @@ export type Supuestos = {
   fixedIncome: number
 }
 
+export type EscenarioAirbnb = 'conservador' | 'base' | 'optimista'
+
 export const SUPUESTOS_BASE: Supuestos = {
   landArea: 600,
   landPrice: 75,
@@ -66,10 +68,14 @@ export const SUPUESTOS_BASE: Supuestos = {
 }
 
 /** Los tres escenarios del interruptor: solo tocan ocupación, tarifa y valorización. */
-export const ESCENARIOS: Record<string, Partial<Supuestos>> = {
+export const ESCENARIOS: Record<EscenarioAirbnb, Partial<Supuestos>> = {
   conservador: { occupancy: 55, adr: 145, appreciation: 3 },
   base: { occupancy: 75, adr: 180, appreciation: 5 },
   optimista: { occupancy: 85, adr: 225, appreciation: 7 },
+}
+
+export function esEscenarioAirbnb(valor: unknown): valor is EscenarioAirbnb {
+  return typeof valor === 'string' && Object.hasOwn(ESCENARIOS, valor)
 }
 
 /** Proyectos de ejemplo para arrancar sin escribir nada. */

@@ -15,8 +15,10 @@ import {
   calcular,
   enDolares,
   enPorcentaje,
+  esEscenarioAirbnb,
   type Supuestos,
 } from '@/lib/calculadora-airbnb'
+import { construirEnlaceWhatsApp } from '@/lib/calculadora-airbnb-whatsapp'
 
 /**
  * Solicitud del informe de la calculadora de Airbnb.
@@ -87,13 +89,22 @@ export async function POST(req: NextRequest) {
     const correo = leer(cuerpo.correo)
     const prefijo = leer(cuerpo.prefijo)
     const telefonoCrudo = leer(cuerpo.whatsapp)
-    const escenario = leer(cuerpo.escenario) || 'base'
+    const escenario = leer(cuerpo.escenario)
 
     if (nombre.length < 2 || nombre.length > 100) {
       return NextResponse.json({ ok: false, error: 'Escribí tu nombre.' }, { status: 422 })
     }
     if (correo.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
       return NextResponse.json({ ok: false, error: 'Ese correo no se ve válido.' }, { status: 422 })
+    }
+    if (cuerpo.consentimiento !== true) {
+      return NextResponse.json(
+        { ok: false, error: 'Tenés que autorizar el contacto para solicitar el informe.' },
+        { status: 422 }
+      )
+    }
+    if (!esEscenarioAirbnb(escenario)) {
+      return NextResponse.json({ ok: false, error: 'Ese escenario no es válido.' }, { status: 422 })
     }
 
     const telefono = normalizarTelefono(
@@ -142,7 +153,7 @@ export async function POST(req: NextRequest) {
     try {
       const baja = alta.estaDeBaja ? '' : enlaceDeBaja(SITIO, alta.contactoId)
 
-      await getResend().emails.send({
+      const { error: errorCorreo } = await getResend().emails.send({
         from: REMITENTE_CON_NOMBRE,
         to: correo,
         subject: 'Tu informe de la calculadora de Airbnb',
@@ -192,17 +203,29 @@ export async function POST(req: NextRequest) {
           ...(baja ? ['', '—', `Si no querés recibir más correos míos: ${baja}`] : []),
         ].join('\n'),
       })
-      correoEnviado = true
-      await registrarActividad(
-        alta.contactoId,
-        'email',
-        `Informe de la calculadora de Airbnb enviado a ${correo}`
-      )
+
+      if (errorCorreo) {
+        console.error('[informe-airbnb] Resend rechazó el informe:', errorCorreo)
+      } else {
+        correoEnviado = true
+        await registrarActividad(
+          alta.contactoId,
+          'email',
+          `Informe de la calculadora de Airbnb enviado a ${correo}`
+        )
+      }
     } catch (e) {
       console.error('[informe-airbnb] no se pudo enviar el informe:', e)
     }
 
-    return NextResponse.json({ ok: true, correoEnviado, yaExistia: alta.yaExistia })
+    const whatsappUrl = construirEnlaceWhatsApp({ nombre, escenario, supuestos, resultado: r }).url
+
+    return NextResponse.json({
+      ok: true,
+      correoEnviado,
+      yaExistia: alta.yaExistia,
+      whatsappUrl,
+    })
   } catch (e) {
     console.error('[informe-airbnb] error:', e)
     return NextResponse.json(

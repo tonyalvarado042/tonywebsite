@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { X } from 'lucide-react'
 import InformeAirbnb from './InformeAirbnb'
-import { enDolares, enPorcentaje, type Resultado, type Supuestos } from '@/lib/calculadora-airbnb'
+import { enDolares, enPorcentaje, type EscenarioAirbnb, type Resultado, type Supuestos } from '@/lib/calculadora-airbnb'
 
 /**
  * La ventana de rescate: se ofrece mandar el informe justo cuando la persona
@@ -34,7 +34,7 @@ const YA_SALIO = 'rescate-calculadora-visto'
 
 type Props = {
   supuestos: Supuestos
-  escenario: string
+  escenario: EscenarioAirbnb
   resultado: Resultado
   /** ¿Ya movió la calculadora? Sin esto la ventana no sale nunca. */
   haCalculado: boolean
@@ -195,7 +195,8 @@ export default function RescateDeSalida({
           desnudo
           supuestos={supuestos}
           escenario={escenario}
-          alRegistrar={() => { alRegistrar(); cerrar() }}
+          alRegistrar={alRegistrar}
+          alVerAnalisis={cerrar}
         />
 
         <button
