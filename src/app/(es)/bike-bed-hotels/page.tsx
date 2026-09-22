@@ -21,14 +21,16 @@ export const metadata = {
     title: 'Bike & Bed Hotels — Hotel boutique para ciclistas en Arenal',
     description:
       'Hotel temático de ciclismo en La Fortuna junto al Volcán Arenal. Más de 250 reseñas de 5 estrellas. Oportunidades de inversión en turismo deportivo.',
-    images: [{ url: '/images/bike-bed/bike-bed-aerial-volcano-01.png', width: 1448, height: 1086, alt: 'Bike & Bed Hotels — hotel para ciclistas en Arenal, Costa Rica' }],
+    // La aérea quedó vetada el 22-set-2026. Esta es la foto insignia del
+    // proyecto y ya es la portada de la página: al compartirla, se ve lo mismo.
+    images: [{ url: '/images/bike-bed/bike-bed-capo-atardecer.png', width: 1448, height: 1086, alt: 'Villa Capo de Bike & Bed Hotels al atardecer, en La Fortuna de Arenal, Costa Rica' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Bike & Bed Hotels — Hotel boutique para ciclistas en Arenal',
     description:
       'Hotel temático de ciclismo en La Fortuna junto al Volcán Arenal. Más de 250 reseñas de 5 estrellas. Oportunidades de inversión en turismo deportivo.',
-    images: ['/images/bike-bed/bike-bed-aerial-volcano-01.png'],
+    images: ['/images/bike-bed/bike-bed-capo-atardecer.png'],
   },
 }
 
