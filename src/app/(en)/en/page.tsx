@@ -11,7 +11,6 @@ import PhotoStrip from '@/components/ui/PhotoStrip'
 import Books from '@/components/sections/Books'
 import Mentors from '@/components/sections/Mentors'
 import PedaleaFelicidad from '@/components/sections/PedaleaFelicidad'
-import RecentArticles from '@/components/sections/RecentArticles'
 import Speaking from '@/components/sections/Speaking'
 import FAQ from '@/components/sections/FAQ'
 import Contact from '@/components/sections/Contact'
@@ -383,7 +382,6 @@ export default function EnHomePage() {
       <Mentors locale="en" />
       <Speaking locale="en" />
       <SectionDivider />
-      <RecentArticles locale="en" />
       <Contact locale="en" />
       <FAQ locale="en" questions={faqsEn} />
     </main>
