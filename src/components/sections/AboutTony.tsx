@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { CheckCircle2 } from 'lucide-react'
@@ -33,7 +32,6 @@ export default function AboutTony({ locale = 'es' }: { locale?: 'es' | 'en' }) {
     sub2Label: 'A community without borders',
     ctaLabel: 'Read the full story →',
     ctaHref: '/en/about',
-    imageAlt: 'Tony Alvarado — cycling coach and trainer in Costa Rica',
   } : {
     sectionLabel: 'Sobre Tony',
     // Tony lo pidió el 31-ago-2026: quién es, antes de la historia.
@@ -44,37 +42,35 @@ export default function AboutTony({ locale = 'es' }: { locale?: 'es' | 'en' }) {
     sub2Label: 'Una comunidad sin fronteras',
     ctaLabel: 'Conoce la historia completa →',
     ctaHref: '/sobre-mi',
-    imageAlt: 'Tony Alvarado — coach y entrenador de ciclismo en Costa Rica',
   }
 
   const currentHighlights = locale === 'en' ? highlightsEn : highlights
 
+  /* Acá había una foto de Tony a la izquierda, y el texto en la columna
+  de al lado. Tony la quitó el 21-set-2026: era **la misma foto del
+  hero**, unos píxeles más arriba en la misma página — el hero usa la
+  versión recortada sin fondo (`tony-alvarado-recorte.png`) y esta era
+  la original (`tony-hero.jpg`). Misma pose, misma sesión.
+  Y de paso esa original es hoy el hero de /sobre-mi, así que la imagen
+  salía tres veces entre dos páginas.
+
+  ⚠️ Al sacarla NO basta con borrar el bloque: el texto era una columna
+  de un `flex` de `max-w-6xl`, y solo quedaba bien angosto porque la foto
+  le comía la mitad. Sin foto se estiraría a 1152 px de ancho, que son
+  demasiados caracteres por línea para leer cómodo. Por eso pasa a
+  `max-w-3xl` centrado, igual que /conferencias y /mentoria.
+
+  La animación también cambió: entraba deslizando desde la derecha
+  (`x: 30`) porque llegaba al lado de la foto. Sin nada a la izquierda
+  eso se ve raro, así que ahora sube (`y: 20`). */
   return (
     <section id="sobre-mi" className="bg-brand-bg py-20">
-      <div className="mx-auto flex max-w-6xl flex-col items-center gap-14 px-6 md:flex-row md:px-12">
+      <div className="mx-auto max-w-3xl px-6 md:px-12">
 
         <motion.div
-          className="w-full flex-1"
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-        >
-          <div className="overflow-hidden rounded-2xl">
-            <Image
-              src="/images/tony/tony-hero.jpg"
-              alt={t.imageAlt}
-              width={600}
-              height={750}
-              className="w-full object-cover object-top"
-            />
-          </div>
-        </motion.div>
-
-        <motion.div
-          className="flex-1 space-y-6"
-          initial={{ opacity: 0, x: 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          className="space-y-6 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
         >
@@ -128,7 +124,7 @@ export default function AboutTony({ locale = 'es' }: { locale?: 'es' | 'en' }) {
               )}
             </div>
           </div>
-          <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <ul className="grid grid-cols-1 gap-3 text-left sm:grid-cols-2">
             {currentHighlights.map((item) => (
               <li key={item} className="flex items-center gap-2 text-sm text-brand-muted">
                 <CheckCircle2 size={15} className="shrink-0 text-brand-green" />
