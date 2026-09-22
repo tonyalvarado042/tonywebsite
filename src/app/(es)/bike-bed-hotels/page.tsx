@@ -146,11 +146,30 @@ const joinModes = [
   },
 ]
 
+/**
+ * La galería de la página.
+ *
+ * ⚠️ Tony, 22-set-2026, mirando esta galería: «estas 3 fotos no van, usa las
+ * del landing de ride-and-reset y de bikeandbedhotels.com; de ahí solo la
+ * primera de la bici».
+ *
+ * SALIERON y NO se vuelven a usar en la web:
+ *   · bike-bed-jacuzzi-01.jpg
+ *   · bike-bed-cabin-exterior-01.jpg
+ *   · bike-bed-aerial-volcano-01.png
+ *
+ * Se quedó la del interior con la bici, que fue la única que aprobó.
+ * Las tres nuevas salen de la sesión profesional de `ride-and-reset`.
+ *
+ * El recorte manda: la galería es 4:3, así que solo entran fotos APAISADAS.
+ * Las verticales de esa carpeta (bici en la pared, ciclista solo) perderían
+ * la mitad del alto acá — sirven para otros espacios, no para este.
+ */
 const galleryImages = [
-  { src: '/images/bike-bed/bike-bed-interior-01.jpg', alt: 'Interior premium de Bike & Bed Hotels — cocina y área social', position: 'object-center' },
-  { src: '/images/bike-bed/bike-bed-jacuzzi-01.jpg', alt: 'Jacuzzi y zona de bienestar en Bike & Bed Hotels', position: 'object-center' },
-  { src: '/images/bike-bed/bike-bed-cabin-exterior-01.jpg', alt: 'Cabaña exterior de Bike & Bed Hotels en La Fortuna, Arenal', position: 'object-center' },
-  { src: '/images/bike-bed/bike-bed-aerial-volcano-01.png', alt: 'Vista desde Bike & Bed Hotels con Volcán Arenal al fondo', position: 'object-[50%_70%]' },
+  { src: '/images/bike-bed/bike-bed-interior-01.jpg', alt: 'Interior de Bike & Bed Hotels — cocina con la bicicleta en la pared', position: 'object-center' },
+  { src: '/images/ride-and-reset/villa-dormitorio.jpg', alt: 'Dormitorio de una villa de Bike & Bed Hotels en La Fortuna', position: 'object-center' },
+  { src: '/images/ride-and-reset/salida-portabicis-arenal.jpg', alt: 'Ciclistas cargando las bicicletas para salir a rodar, con el Volcán Arenal detrás', position: 'object-center' },
+  { src: '/images/ride-and-reset/portada-pareja-volcan.jpg', alt: 'Pareja de ciclistas frente al Volcán Arenal en La Fortuna, Costa Rica', position: 'object-center' },
 ]
 
 export default function BikeBedPage() {
