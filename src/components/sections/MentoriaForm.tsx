@@ -201,7 +201,7 @@ export default function MentoriaForm({ locale = 'es' }: { locale?: 'es' | 'en' }
       </div>
 
       <label className="mt-5 flex cursor-pointer items-start gap-3 text-sm text-brand-muted">
-        <input type="checkbox" required className="mt-0.5 h-4 w-4 shrink-0 accent-[#8B5CF6]" />
+        <input type="checkbox" required className="mt-0.5 h-4 w-4 shrink-0 accent-[#9266F7]" />
         {t.consentimiento}
       </label>
 

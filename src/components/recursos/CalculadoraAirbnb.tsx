@@ -220,14 +220,33 @@ export default function CalculadoraAirbnb() {
             ))}
           </div>
 
-          {/* El proyecto real */}
+          {/* El proyecto real.
+
+              Tony, 22-set-2026: «no resalta, no pareciera un botón». Tenía razón:
+              el borde iba al 25%% de opacidad y el fondo al 6%%, o sea 1,15:1
+              contra la página. Se leía como un panel informativo, no como algo
+              en lo que se puede hacer clic, y la gente se perdía el atajo.
+
+              Tres cosas lo arreglan, y las tres hacen falta:
+                1. El borde sube a 1,5 px al 55%% — ahora se ve el recuadro.
+                2. El fondo toma cuerpo y una sombra morada suave, para que el
+                   bloque se despegue de la página.
+                3. El «Cargar datos» deja de ser texto con flecha y pasa a ser un
+                   BOTÓN RELLENO de verdad. Esto es lo que más pesa: un texto en
+                   color se lee como enlace; una píldora rellena se lee como botón.
+
+              ⚠️ A propósito NO va en morado sólido entero: competiría con
+              «Calcular mis ingresos», que es el CTA principal de la página. */}
           <button
             type="button"
             onClick={cargarBikeBed}
-            className="mb-8 block w-full rounded-2xl border border-brand-green/25 bg-brand-green/[0.06]
-                       p-5 text-left transition-colors hover:border-brand-green/50"
+            className="group mb-8 block w-full rounded-2xl border-[1.5px] border-brand-green/55
+                       bg-gradient-to-b from-brand-green/[0.16] to-brand-green/[0.10]
+                       p-5 text-left shadow-[0_6px_22px_-8px_rgba(146,102,247,0.5)]
+                       transition-all hover:border-brand-green hover:shadow-[0_10px_28px_-8px_rgba(146,102,247,0.65)]"
           >
-            <span className="text-[10.5px] font-bold uppercase tracking-[0.14em] text-brand-green">
+            <span className="inline-block rounded-full bg-brand-green/20 px-2.5 py-1
+                             text-[10.5px] font-bold uppercase tracking-[0.14em] text-brand-green">
               Caso real · La Fortuna
             </span>
             <strong className="mt-1.5 block text-[16px] font-bold text-brand-text">
@@ -237,8 +256,15 @@ export default function CalculadoraAirbnb() {
               5 villas · 1.000 m² de terreno · 320 m² construidos · $600.000 de inversión
               aproximada · $360.000 financiados al 10% · 25% de gastos operativos
             </small>
-            <i className="mt-2.5 inline-flex items-center gap-1.5 not-italic text-[12.5px] font-bold text-brand-green">
-              {bikeBedCargado ? <><Check size={14} strokeWidth={3} /> Proyecto cargado</> : <>Cargar datos <ArrowRight size={14} /></>}
+            <i className={`mt-3 inline-flex items-center gap-1.5 rounded-full px-4 py-2.5 not-italic
+                           text-[13px] font-extrabold transition-colors ${
+              bikeBedCargado
+                ? 'bg-brand-cta text-brand-bg'
+                : 'bg-brand-green text-brand-bg group-hover:bg-brand-accent-light'
+            }`}>
+              {bikeBedCargado
+                ? <><Check size={14} strokeWidth={3} /> Proyecto cargado</>
+                : <>Cargar datos <ArrowRight size={14} strokeWidth={2.5} /></>}
             </i>
           </button>
 

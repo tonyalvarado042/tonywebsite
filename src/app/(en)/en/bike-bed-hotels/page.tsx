@@ -169,11 +169,30 @@ const joinWays = [
   },
 ]
 
+/**
+ * La galería de la página.
+ *
+ * ⚠️ Tony, 22-set-2026, mirando esta galería: «estas 3 fotos no van, usa las
+ * del landing de ride-and-reset y de bikeandbedhotels.com; de ahí solo la
+ * primera de la bici».
+ *
+ * SALIERON y NO se vuelven a usar en la web:
+ *   · bike-bed-jacuzzi-01.jpg
+ *   · bike-bed-cabin-exterior-01.jpg
+ *   · bike-bed-aerial-volcano-01.png
+ *
+ * Se quedó la del interior con la bici, que fue la única que aprobó.
+ * Las tres nuevas salen de la sesión profesional de `ride-and-reset`.
+ *
+ * El recorte manda: la galería es 4:3, así que solo entran fotos APAISADAS.
+ * Las verticales de esa carpeta (bici en la pared, ciclista solo) perderían
+ * la mitad del alto acá — sirven para otros espacios, no para este.
+ */
 const galleryImages = [
-  { src: '/images/bike-bed/bike-bed-interior-01.jpg',       alt: 'Bike & Bed Hotels — premium interior, kitchen and social area',   position: 'object-center' },
-  { src: '/images/bike-bed/bike-bed-jacuzzi-01.jpg',        alt: 'Jacuzzi and wellness area at Bike & Bed Hotels',                   position: 'object-center' },
-  { src: '/images/bike-bed/bike-bed-cabin-exterior-01.jpg', alt: 'Bike & Bed Hotels cabin exterior in La Fortuna, Arenal',           position: 'object-center' },
-  { src: '/images/bike-bed/bike-bed-aerial-volcano-01.png', alt: 'Aerial view of Bike & Bed Hotels with Arenal Volcano in the back', position: 'object-[50%_70%]' },
+  { src: '/images/bike-bed/bike-bed-interior-01.jpg', alt: 'Bike & Bed Hotels interior — kitchen with the bike on the wall', position: 'object-center' },
+  { src: '/images/ride-and-reset/villa-dormitorio.jpg', alt: 'Bedroom in a Bike & Bed Hotels villa in La Fortuna', position: 'object-center' },
+  { src: '/images/ride-and-reset/salida-portabicis-arenal.jpg', alt: 'Cyclists loading their bikes to head out, with Arenal Volcano behind', position: 'object-center' },
+  { src: '/images/ride-and-reset/portada-pareja-volcan.jpg', alt: 'Two cyclists in front of Arenal Volcano in La Fortuna, Costa Rica', position: 'object-center' },
 ]
 
 const visionCards = [

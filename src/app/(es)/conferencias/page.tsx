@@ -185,7 +185,7 @@ export default function ConferenciasPage() {
           — Por qué un PANEL y no más velo —
           Tony, 21-set-2026: «ese difuminado no se ve nada, o sea era un
           poquito, no borra todo sino no tiene sentido». Tenía razón.
-          Pero el titular lleva un tramo en morado #8B5CF6, luminancia 0,198,
+          Pero el titular lleva un tramo en morado #9266F7, luminancia 0,198,
           que se pierde sobre tonos medios: con la foto visible daba 1,0:1.
           Tapar toda la foto lo arregla pero mata la foto.
 
@@ -209,7 +209,7 @@ export default function ConferenciasPage() {
              clara, mucho más brillante. Medido sobre la banda del titular:
                  velo 70% → morado 2,60:1  NO llega
                  velo 78% → morado 3,19:1  llega
-             El «Habla desde los que construyó» va en morado #8B5CF6, que tiene
+             El «Habla desde los que construyó» va en morado #9266F7, que tiene
              luminancia 0,198 y se pierde sobre tonos medios. Bajar el velo para
              «ver mejor la foto» deja el titular ilegible.
 
@@ -234,13 +234,13 @@ export default function ConferenciasPage() {
           className="absolute inset-0"
           style={{
             backgroundImage:
-              'linear-gradient(to bottom, rgba(11,14,20,0.28) 0%, rgba(11,14,20,0.28) 68%, rgb(11,14,20) 100%)',
+              'linear-gradient(to bottom, rgba(21,26,36,0.28) 0%, rgba(21,26,36,0.28) 68%, rgb(21,26,36) 100%)',
           }}
         />
         <div
           className="relative z-10 mx-auto max-w-3xl rounded-3xl px-6 py-10 text-center
                      backdrop-blur-sm md:px-12"
-          style={{ backgroundColor: 'rgba(11,14,20,0.88)' }}
+          style={{ backgroundColor: 'rgba(21,26,36,0.88)' }}
         >
           <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-brand-accent/30 bg-brand-card px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand-accent">
             <Mic size={12} /> Conferencias

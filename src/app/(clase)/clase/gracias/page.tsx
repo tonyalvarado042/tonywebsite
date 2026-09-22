@@ -50,7 +50,7 @@ const CALENDARIOS = [
   { nombre: 'Outlook', url: enlaceOutlookPersonal(), color: '#0078D4', externo: true },
   { nombre: 'Office 365', url: enlaceOffice365(), color: '#D83B01', externo: true },
   { nombre: 'Yahoo', url: enlaceYahoo(), color: '#6001D2', externo: true },
-  { nombre: 'Otro (.ics)', url: '/api/clase/calendario', color: '#8B5CF6', externo: false },
+  { nombre: 'Otro (.ics)', url: '/api/clase/calendario', color: '#9266F7', externo: false },
 ]
 
 export default function GraciasPage() {
@@ -186,7 +186,7 @@ export default function GraciasPage() {
                     {c.externo ? (
                       <CalendarioGlifo />
                     ) : (
-                      <Download size={15} strokeWidth={2.5} color="#0B0E14" />
+                      <Download size={15} strokeWidth={2.5} color="#151A24" />
                     )}
                   </span>
                   <span className="min-w-0 text-[13px] font-semibold text-brand-text">

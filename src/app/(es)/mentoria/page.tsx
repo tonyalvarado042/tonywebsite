@@ -147,7 +147,7 @@ export default function MentoriaPage() {
           — Por qué un PANEL y no más velo —
           Tony, 21-set-2026: «ese difuminado no se ve nada, o sea era un
           poquito, no borra todo sino no tiene sentido». Tenía razón.
-          Pero el titular lleva un tramo en morado #8B5CF6, luminancia 0,198,
+          Pero el titular lleva un tramo en morado #9266F7, luminancia 0,198,
           que se pierde sobre tonos medios: con la foto visible daba 1,0:1.
           Tapar toda la foto lo arregla pero mata la foto.
 
@@ -172,7 +172,7 @@ export default function MentoriaPage() {
              muchísimo mejor: el PNG original pesaba 1,2 MB y este JPEG pesa 29 kB.
 
           2. El velo es FUERTE (65-82%) a propósito. El «con alguien que ya lo
-             hizo» va en morado #8B5CF6, que tiene luminancia 0,198 — o sea que
+             hizo» va en morado #9266F7, que tiene luminancia 0,198 — o sea que
              se pierde sobre GRISES MEDIOS (un traje gris, una cara iluminada),
              no sobre el morado de la foto. Oscurecer empuja los medios al negro
              y le devuelve contraste. Medido sobre la banda del titular:
@@ -197,13 +197,13 @@ export default function MentoriaPage() {
           className="absolute inset-0"
           style={{
             backgroundImage:
-              'linear-gradient(to bottom, rgba(11,14,20,0.28) 0%, rgba(11,14,20,0.28) 68%, rgb(11,14,20) 100%)',
+              'linear-gradient(to bottom, rgba(21,26,36,0.28) 0%, rgba(21,26,36,0.28) 68%, rgb(21,26,36) 100%)',
           }}
         />
         <div
           className="relative z-10 mx-auto max-w-3xl rounded-3xl px-6 py-10 text-center
                      backdrop-blur-sm md:px-12"
-          style={{ backgroundColor: 'rgba(11,14,20,0.88)' }}
+          style={{ backgroundColor: 'rgba(21,26,36,0.88)' }}
         >
           <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-brand-accent/30 bg-brand-card px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand-accent">
             <Compass size={12} /> Mentoría empresarial
