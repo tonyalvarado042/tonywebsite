@@ -1,8 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { REMITENTE_CON_NOMBRE } from '@/lib/correo'
-import { altaContacto, getCrm, normalizarTelefono, registrarActividad } from '@/lib/crm'
-import { enlaceDeBaja } from '@/lib/secuencias'
+import {
+  altaContacto,
+  getCrm,
+  inscribirEnAutomatizacion,
+  normalizarTelefono,
+  registrarActividad,
+} from '@/lib/crm'
+import { automatizacionDeLaClase, enlaceDeBaja } from '@/lib/secuencias'
 import { CLASE, ETIQUETA_CRM, GRUPO } from '@/data/clase-copropiedad'
 import { PAISES } from '@/data/paises'
 import { enlaceGoogle } from '@/lib/calendario-clase'
@@ -15,10 +21,12 @@ import { enlaceGoogle } from '@/lib/calendario-clase'
  * `registrarActividad`— y no se reescribe una sola línea de ella.
  *
  * ── Por qué no se reusa /api/recursos/registro ──────────────────────────────
- * Ese endpoint existe para ENTREGAR un recurso: exige `destino_url`, inscribe
- * en una automatización de correos y su fuente es `recurso_gratis`. Acá no hay
- * archivo que entregar y la fuente tiene que ser `masterclass` para que Tony
- * filtre la clase en el CRM.
+ * Ese endpoint existe para ENTREGAR un recurso: exige `destino_url` y su fuente
+ * es `recurso_gratis`. Acá no hay archivo que entregar y la fuente tiene que ser
+ * `masterclass` para que Tony filtre la clase en el CRM.
+ *
+ * Lo que sí se copió de él es la INSCRIPCIÓN en la cadena de correos: sin eso,
+ * quien se registra no vuelve a oír de la clase hasta el día del evento.
  *
  * ── Orden de operaciones ────────────────────────────────────────────────────
  * Primero el CRM; si eso falla, la petición falla. Después el correo, en
@@ -203,6 +211,22 @@ export async function POST(req: NextRequest) {
       // Si esto falla el lead YA está guardado: no se pierde la persona, pero
       // esa fila queda sin variante y hay que saberlo.
       if (error) console.error('[clase/registro] no se pudo completar la ficha:', error.message)
+    }
+
+    // ── La cadena de calentamiento ──
+    //
+    // Quien se registra queda esperando semanas sin oír nada; esta cadena es la
+    // que mantiene la conversación viva hasta el día de la clase. Qué cadena es
+    // lo decide Tony desde el CRM, no el código.
+    //
+    // Va en try/catch y NO tumba la petición: el lead ya está guardado, y
+    // perderlo porque falló una inscripción a correos sería absurdo. Si esto
+    // falla queda en los logs y la persona se puede inscribir a mano.
+    try {
+      const cadena = await automatizacionDeLaClase()
+      if (cadena) await inscribirEnAutomatizacion(alta.contactoId, cadena, null)
+    } catch (e) {
+      console.error('[clase/registro] no se pudo inscribir en la cadena:', e)
     }
 
     // ── El correo de confirmación ──
