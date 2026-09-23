@@ -68,6 +68,39 @@ export function esBorrador(correo: { asunto?: string | null; cuerpo?: string | n
   return a.includes('[BORRADOR]') || c.includes('[BORRADOR]') || (!a.trim() && !c.trim())
 }
 
+// ── La cadena de la clase ───────────────────────────────────────────────────
+
+/**
+ * Qué automatización recibe a quien se registra a la clase.
+ *
+ * Vive en `cta_ajustes.automatizacion_clase`, no en el código ni en Vercel, por
+ * la misma regla de arriba: **los secretos van en Vercel, las decisiones van en
+ * el CRM.** Así Tony puede cambiar de cadena —o dejar de mandar correos, con
+ * borrar el valor— sin desplegar nada.
+ *
+ * Devuelve `null` si no está puesta o si la consulta falla. Que nadie entre a
+ * la cadena es molesto; meter gente en una cadena equivocada es peor.
+ */
+export async function automatizacionDeLaClase(): Promise<string | null> {
+  try {
+    const { data, error } = await getCrm()
+      .from('cta_ajustes')
+      .select('valor')
+      .eq('clave', 'automatizacion_clase')
+      .maybeSingle()
+
+    if (error) {
+      console.error('[secuencias] no se pudo leer la cadena de la clase:', error.message)
+      return null
+    }
+    const valor = (data?.valor ?? '').trim()
+    return valor || null
+  } catch (e) {
+    console.error('[secuencias] no se pudo leer la cadena de la clase:', e)
+    return null
+  }
+}
+
 // ── Firma de los enlaces de baja ────────────────────────────────────────────
 
 /**
