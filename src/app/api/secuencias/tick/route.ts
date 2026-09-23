@@ -120,7 +120,7 @@ export async function correrElTick(req: NextRequest) {
 
     const { data: paso } = await crm
       .from(TABLA_PASOS)
-      .select('paso, asunto, cuerpo, activo')
+      .select('paso, asunto, cuerpo, activo, dias_despues')
       .eq('automatizacion_id', ins.automatizacion_id)
       .eq('paso', ins.paso_actual)
       .maybeSingle()
@@ -182,8 +182,21 @@ export async function correrElTick(req: NextRequest) {
         .maybeSingle()
 
       if (proximo) {
+        // `dias_despues` se cuenta DESDE EL ALTA, no desde el correo anterior:
+        // así están escritas las cadenas (1 · 3 · 7 · 12 = «al día 12», no «12
+        // días después del tercero»). Para pasar de un paso al siguiente hay que
+        // esperar la DIFERENCIA entre los dos.
+        //
+        // Antes decía `proximo.dias_despues - 0` y contaba el número entero desde
+        // hoy: la cadena del ebook, escrita para 16 días, corría en 40.
+        //
+        // Se resta en vez de calcular sobre `inscrito_el` a propósito. Sobre el
+        // alta, a quien lleva semanas en la cadena le quedarían tres o cuatro
+        // pasos con fecha vencida y los recibiría en días seguidos. Con la
+        // diferencia, el que ya venía en camino conserva sus huecos.
+        const hueco = Math.max(1, proximo.dias_despues - (paso.dias_despues ?? 0))
         const cuando = new Date()
-        cuando.setUTCDate(cuando.getUTCDate() + Math.max(1, proximo.dias_despues - 0))
+        cuando.setUTCDate(cuando.getUTCDate() + hueco)
         await crm.from(TABLA_INSCRIPCIONES).update({
           paso_actual: siguiente,
           proximo_envio_el: cuando.toISOString().slice(0, 10),
