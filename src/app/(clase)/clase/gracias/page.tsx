@@ -1,8 +1,9 @@
 import Image from 'next/image'
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import { ArrowRight, BadgeCheck, Check, Download, MessageCircle, TriangleAlert } from 'lucide-react'
 import Contador from '@/components/clase/Contador'
-import PixelRegistroCompletado from '@/components/clase/PixelRegistroCompletado'
+import { META_PIXEL_ID } from '@/lib/meta-pixel'
 import { CLASE, GRUPO, GUIA, VIP, hayVip } from '@/data/clase-copropiedad'
 import {
   enlaceGoogle,
@@ -57,7 +58,23 @@ const CALENDARIOS = [
 export default function GraciasPage() {
   return (
     <main className="relative min-h-screen overflow-hidden">
-      <PixelRegistroCompletado />
+      {/*
+        Evento de conversión del píxel de Meta, inline con next/script — igual
+        que el snippet base en `(clase)/layout.tsx`. Antes vivía en un Client
+        Component aparte (`PixelRegistroCompletado`, montado con useEffect),
+        pero ese wiring nunca llegó a producción: se verificó con la
+        herramienta "Probar eventos" del Administrador de eventos y con
+        Resource Timing en el navegador que solo llegaba `PageView`, nunca
+        `CompleteRegistration`, incluso tras un redeploy forzado sin caché.
+        Este patrón inline es el que sí está probado en este repo.
+      */}
+      <Script
+        id="meta-pixel-registro-completado"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `if (window.fbq) { window.fbq('track', 'CompleteRegistration'); }`,
+        }}
+      />
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_55%_at_50%_0%,rgba(139,92,246,0.26)_0%,transparent_70%)]"
