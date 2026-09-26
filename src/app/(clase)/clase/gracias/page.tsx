@@ -67,12 +67,24 @@ export default function GraciasPage() {
         Resource Timing en el navegador que solo llegaba `PageView`, nunca
         `CompleteRegistration`, incluso tras un redeploy forzado sin caché.
         Este patrón inline es el que sí está probado en este repo.
+
+        ── Por qué el reintento y no un `if (window.fbq)` a secas ──────────────
+        Un `if` a secas fue el SEGUNDO intento y tampoco disparó nada: verificado
+        de nuevo con Resource Timing, solo `PageView`. `next/script` con
+        `afterInteractive` no garantiza que el snippet base del layout (que
+        define `window.fbq`) corra ANTES que el de esta página — son segmentos
+        distintos. Si este script se adelanta, `window.fbq` todavía no existe,
+        el `if` no entra, y el evento se pierde para siempre sin avisar. El
+        reintento cada 100ms (máximo 5s) no depende de ningún orden.
       */}
       <Script
         id="meta-pixel-registro-completado"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
-          __html: `if (window.fbq) { window.fbq('track', 'CompleteRegistration'); }`,
+          __html: `(function esperar(intento){
+  if (window.fbq) { window.fbq('track', 'CompleteRegistration'); }
+  else if (intento < 50) { setTimeout(function(){ esperar(intento + 1); }, 100); }
+})(0);`,
         }}
       />
       <div
