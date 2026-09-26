@@ -687,6 +687,13 @@ export default function PaginaClase({ variante }: { variante: Variante }) {
           <p className="mt-6 text-center text-xs text-brand-muted/40">
             © {new Date().getFullYear()} Tony Alvarado · La Fortuna, Costa Rica
           </p>
+
+          {/* Exigido por las políticas de anuncios de Meta: deja claro que el sitio no es de Facebook. */}
+          <p className="mx-auto mt-4 max-w-xl text-center text-[11px] leading-relaxed text-brand-muted/40">
+            Este sitio no forma parte del sitio web de Facebook ni de Meta Platforms, Inc. Además,
+            este contenido no está avalado por Facebook de ninguna manera. FACEBOOK es una marca
+            registrada de Meta Platforms, Inc.
+          </p>
         </div>
       </footer>
 

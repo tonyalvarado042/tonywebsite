@@ -291,6 +291,13 @@ export default function GraciasPage() {
           Clase educativa y gratuita. No constituye una oferta pública de valores ni asesoría legal,
           contable o de inversión. No se ofrece ni se garantiza ningún resultado económico.
         </p>
+
+        {/* Exigido por las políticas de anuncios de Meta: deja claro que el sitio no es de Facebook. */}
+        <p className="mx-auto mt-4 max-w-xl text-center text-[11px] leading-relaxed text-brand-muted/40">
+          Este sitio no forma parte del sitio web de Facebook ni de Meta Platforms, Inc. Además, este
+          contenido no está avalado por Facebook de ninguna manera. FACEBOOK es una marca registrada
+          de Meta Platforms, Inc.
+        </p>
       </div>
     </main>
   )
