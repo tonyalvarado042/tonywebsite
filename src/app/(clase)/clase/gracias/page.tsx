@@ -2,6 +2,7 @@ import Image from 'next/image'
 import type { Metadata } from 'next'
 import { ArrowRight, BadgeCheck, Check, Download, MessageCircle, TriangleAlert } from 'lucide-react'
 import Contador from '@/components/clase/Contador'
+import PixelRegistroCompletado from '@/components/clase/PixelRegistroCompletado'
 import { CLASE, GRUPO, GUIA, VIP, hayVip } from '@/data/clase-copropiedad'
 import {
   enlaceGoogle,
@@ -56,6 +57,7 @@ const CALENDARIOS = [
 export default function GraciasPage() {
   return (
     <main className="relative min-h-screen overflow-hidden">
+      <PixelRegistroCompletado />
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_55%_at_50%_0%,rgba(139,92,246,0.26)_0%,transparent_70%)]"

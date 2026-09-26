@@ -1,7 +1,9 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import Script from 'next/script'
 import '../globals.css'
 import { CLASE } from '@/data/clase-copropiedad'
+import { META_PIXEL_ID } from '@/lib/meta-pixel'
 
 /**
  * Layout raíz de la landing de la clase.
@@ -54,7 +56,47 @@ export const metadata: Metadata = {
 export default function ClaseLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es" className={inter.variable}>
-      <body className="bg-brand-bg font-sans text-brand-text antialiased">{children}</body>
+      <body className="bg-brand-bg font-sans text-brand-text antialiased">
+        {children}
+
+        {/* Píxel de Meta (noscript fallback) */}
+        <noscript>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            height="1"
+            width="1"
+            style={{ display: 'none' }}
+            alt=""
+            src={`https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`}
+          />
+        </noscript>
+      </body>
+
+      {/*
+        Este layout tiene su propio <html>/<body> (ver comentario arriba) y por
+        eso NO hereda el GTM de `(es)/layout.tsx`: cada layout raíz es un
+        documento HTML aparte. Sin esto, ningún anuncio que aterrice en
+        `clase.tonyalvarado.com` deja rastro en Meta — es la misma clase de
+        hueco que dejó a tonyalvarado.com sin retargeting (ver memoria
+        `el-pixel-no-esta-en-tonyalvarado-com`). Por eso va el píxel de Meta
+        directo acá, sin pasar por GTM.
+      */}
+      <Script
+        id="meta-pixel-clase"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '${META_PIXEL_ID}');
+fbq('track', 'PageView');`,
+        }}
+      />
     </html>
   )
 }
