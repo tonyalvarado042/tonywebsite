@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { REMITENTE_CON_NOMBRE } from '@/lib/correo'
+import { armarCorreo } from '@/lib/email-templates'
 import {
   altaContacto,
   getCrm,
@@ -251,65 +252,67 @@ export async function POST(req: NextRequest) {
         // darle «Responder», la respuesta llega a ventas@puromtb.com.
         replyTo: VENTAS.correo,
         subject: `Quedaste adentro: rifa de ${RIFA.nombre} — y esto es lo que vas a vivir`,
-        text: [
-          `Hola ${nombre},`,
-          '',
-          `Ya quedaste participando por uno de los ${RIFA.cupos} cupos de ${RIFA.nombre}.`,
-          ...(etiquetoA ? [`Anotamos que te irías con @${etiquetoA}.`] : []),
-          ...(hayCierre ? [`La rifa cierra el ${cierre}, y el sorteo se hace en vivo por Facebook Live.`] : []),
-          '',
-          `⚠️ Ojo con esto: si salís ganador te vamos a pedir que confirmes los tres`,
-          `pasos. Asegurate de haber compartido el post en tus historias ETIQUETANDO A`,
-          `${RIFA.cuenta} — sin esa etiqueta no podemos ver tu historia ni comprobarla.`,
-          '',
-          '───────────────────────────────',
-          `${RIFA.nombre.toUpperCase()} · ${RIFA.fechas.texto}`,
-          `${RIFA.fechas.dias} días y ${RIFA.fechas.noches} noches en ${RIFA.lugar}`,
-          '───────────────────────────────',
-          '',
-          'Esto es lo que incluye la experiencia:',
-          '',
-          ...EXPERIENCIA.map((e) => `  · ${e.titulo}`),
-          '',
-          'Todo mientras te hospedás en Bike & Bed, el primer hotel temático de',
-          'ciclismo de Costa Rica, en La Fortuna, a minutos del Volcán Arenal.',
-          '',
-          'Te acompañan los cuatro días:',
-          ...ANFITRIONES.map((a) => `  · ${a.nombre} — ${a.rol}`),
-          '',
-          '───────────────────────────────',
-          '¿NO QUERÉS DEPENDER DE LA SUERTE?',
-          '───────────────────────────────',
-          '',
-          `La experiencia tiene ${RESERVA.cuposTotales} espacios, y solo ${RESERVA.cupos} quedan con`,
-          `PRECIO ESPECIAL: $${RESERVA.precio.ahora} en vez de $${RESERVA.precio.antes}.`,
-          'Es para quienes prefieren asegurar su lugar y no depender del sorteo.',
-          '',
-          `Si querés el detalle completo —qué incluye, el precio y cómo reservar—`,
-          `respondé este correo o escribinos a ${VENTAS.correo} y te mandamos`,
-          'toda la información.',
-          '',
-          ...(quiereReservar
-            ? [
-                'Ya nos dijiste que querés ser parte sin esperar el sorteo, así que',
-                'te vamos a escribir. Si querés adelantarlo, respondé este correo.',
-                '',
-              ]
-            : []),
-          ...(enlaceWa
-            ? [
-                'También podés escribirnos por WhatsApp y te llega la información',
-                'de una:',
-                enlaceWa,
-                '',
-              ]
-            : []),
-          'Nos vemos en La Fortuna.',
-          '',
-          'Tony Alvarado',
-          'Bike & Bed · tonyalvarado.com',
-          ...(baja ? ['', '—', `Si no querés recibir más correos míos: ${baja}`] : []),
-        ].join('\n'),
+        ...armarCorreo(
+          [
+            `Hola ${nombre},`,
+            '',
+            `Ya quedaste participando por uno de los ${RIFA.cupos} cupos de ${RIFA.nombre}.`,
+            ...(etiquetoA ? [`Anotamos que te irías con @${etiquetoA}.`] : []),
+            ...(hayCierre ? [`La rifa cierra el ${cierre}, y el sorteo se hace en vivo por Facebook Live.`] : []),
+            '',
+            `⚠️ Ojo con esto: si salís ganador te vamos a pedir que confirmes los tres`,
+            `pasos. Asegurate de haber compartido el post en tus historias ETIQUETANDO A`,
+            `${RIFA.cuenta} — sin esa etiqueta no podemos ver tu historia ni comprobarla.`,
+            '',
+            '───────────────────────────────',
+            `${RIFA.nombre.toUpperCase()} · ${RIFA.fechas.texto}`,
+            `${RIFA.fechas.dias} días y ${RIFA.fechas.noches} noches en ${RIFA.lugar}`,
+            '───────────────────────────────',
+            '',
+            'Esto es lo que incluye la experiencia:',
+            '',
+            ...EXPERIENCIA.map((e) => `  · ${e.titulo}`),
+            '',
+            'Todo mientras te hospedás en Bike & Bed, el primer hotel temático de',
+            'ciclismo de Costa Rica, en La Fortuna, a minutos del Volcán Arenal.',
+            '',
+            'Te acompañan los cuatro días:',
+            ...ANFITRIONES.map((a) => `  · ${a.nombre} — ${a.rol}`),
+            '',
+            '───────────────────────────────',
+            '¿NO QUERÉS DEPENDER DE LA SUERTE?',
+            '───────────────────────────────',
+            '',
+            `La experiencia tiene ${RESERVA.cuposTotales} espacios, y solo ${RESERVA.cupos} quedan con`,
+            `PRECIO ESPECIAL: $${RESERVA.precio.ahora} en vez de $${RESERVA.precio.antes}.`,
+            'Es para quienes prefieren asegurar su lugar y no depender del sorteo.',
+            '',
+            `Si querés el detalle completo —qué incluye, el precio y cómo reservar—`,
+            `respondé este correo o escribinos a ${VENTAS.correo} y te mandamos`,
+            'toda la información.',
+            '',
+            ...(quiereReservar
+              ? [
+                  'Ya nos dijiste que querés ser parte sin esperar el sorteo, así que',
+                  'te vamos a escribir. Si querés adelantarlo, respondé este correo.',
+                  '',
+                ]
+              : []),
+            ...(enlaceWa
+              ? [
+                  'También podés escribirnos por WhatsApp y te llega la información',
+                  'de una:',
+                  enlaceWa,
+                  '',
+                ]
+              : []),
+            'Nos vemos en La Fortuna.',
+            '',
+            'Tony Alvarado',
+            'Bike & Bed · tonyalvarado.com',
+          ].join('\n'),
+          baja
+        ),
       })
       correoEnviado = true
       await registrarActividad(

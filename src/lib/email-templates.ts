@@ -230,3 +230,68 @@ export function buildAutoReplyHtml(d: AutoReplyData): string {
 
 </div>`
 }
+
+// ─── Los correos que le llegan a la gente ─────────────────────────────────────
+
+/**
+ * Las dos versiones de un correo del sitio.
+ *
+ * Los correos que salen para afuera —confirmaciones, recursos, las cadenas— se
+ * escriben en TEXTO PLANO, con sus divisorias, sus viñetas y su sangría, y así
+ * se leen bien. El problema era el pie: en texto plano un enlace no puede
+ * esconderse detrás de una palabra, así que el de baja salía como una URL
+ * entera, larga y bruta al final de cada correo.
+ *
+ * Devuelve las dos versiones del MISMO texto, y se mandan juntas:
+ *
+ * - `text` — el de siempre. Es el respaldo para el cliente que no pinta HTML, y
+ *   llevar las dos versiones sube la entregabilidad.
+ * - `html` — el mismo texto con `white-space: pre-wrap`, así que se ve IGUAL que
+ *   antes; las URLs del cuerpo quedan clicables, y el pie es «darse de baja» en
+ *   chiquito.
+ *
+ * ⚠️ El cuerpo entra SIN el pie de baja: lo pone esta función. Así el pie se
+ * escribe en un solo lugar para los cinco correos del sitio, en vez de estar
+ * copiado cinco veces.
+ */
+export function armarCorreo(
+  cuerpo: string,
+  enlaceBaja?: string
+): { text: string; html: string } {
+  const pieTexto = enlaceBaja
+    ? `\n\n—\nSi no querés recibir más correos míos: ${enlaceBaja}`
+    : ''
+
+  // El cuerpo va escapado: lleva nombres y textos que escribió otra persona.
+  // Después de escapar ya no quedan `<`, `>` ni `"` literales, así que la
+  // búsqueda de enlaces no se puede salir de su propio texto.
+  const cuerpoHtml = escapeHtml(cuerpo).replace(/(https?:\/\/[^\s<>"]+)/g, (url) => {
+    // Un punto o una coma pegados al final son puntuación, no parte del enlace.
+    // No se recorta `;` porque `&amp;` termina en `;` y las URLs traen `&`.
+    const limpia = url.replace(/[.,!?)]+$/, '')
+    const cola = url.slice(limpia.length)
+    return `<a href="${limpia}" style="color:#7D26CC;">${limpia}</a>${cola}`
+  })
+
+  const pieHtml = enlaceBaja
+    ? `\n  <p style="margin:14px 0 0;font-family:Arial,sans-serif;font-size:12px;` +
+      `line-height:1.6;color:#9ca3af;text-align:center;">` +
+      `<a href="${escapeHtml(enlaceBaja)}" style="color:#9ca3af;">darse de baja</a></p>`
+    : ''
+
+  return {
+    text: cuerpo + pieTexto,
+    html:
+      `<div style="font-family:Arial,sans-serif;max-width:620px;margin:0 auto;color:#1a1a1a;">\n` +
+      `  <div style="height:4px;background:#7D26CC;border-radius:4px 4px 0 0;"></div>\n` +
+      `  <div style="background:#ffffff;border:1px solid #e0e0e0;border-top:none;padding:24px;">\n` +
+      // `pre-wrap` es lo que hace que el texto se vea igual que en la versión
+      // plana: conserva los saltos, las divisorias y la sangría tal cual.
+      // `overflow-wrap` es para que una URL larga no estire el correo en el
+      // teléfono.
+      `    <div style="white-space:pre-wrap;overflow-wrap:anywhere;font-size:15px;` +
+      `line-height:1.7;color:#374151;">${cuerpoHtml}</div>\n` +
+      `  </div>${pieHtml}\n` +
+      `</div>`,
+  }
+}
