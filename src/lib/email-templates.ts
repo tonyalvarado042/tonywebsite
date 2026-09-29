@@ -250,10 +250,50 @@ export function buildAutoReplyHtml(d: AutoReplyData): string {
  *   antes; las URLs del cuerpo quedan clicables, y el pie es «darse de baja» en
  *   chiquito.
  *
+ * Los enlaces del cuerpo se muestran **sin los UTM**: el `href` los conserva
+ * enteros —si no, se pierde de dónde vino cada visita— pero lo que se lee es la
+ * dirección a secas. Y un cuerpo puede escribir `[texto propio](https://…)` si
+ * se quiere elegir la palabra; eso se puede hacer desde el CRM, sin tocar código.
+ *
  * ⚠️ El cuerpo entra SIN el pie de baja: lo pone esta función. Así el pie se
  * escribe en un solo lugar para los cinco correos del sitio, en vez de estar
  * copiado cinco veces.
  */
+/**
+ * Las dos formas de enlace que entiende un cuerpo, en una sola pasada:
+ *
+ *   [texto propio](https://…)   para cuando se quiere elegir qué palabra va
+ *   https://…                    suelto, como se escriben hoy los cuerpos
+ *
+ * Se corre sobre el texto ya escapado, donde los corchetes y los paréntesis
+ * sobreviven intactos.
+ */
+const ENLACES = /\[([^\]\n]*)\]\((https?:\/\/[^\s)]+)\)|(https?:\/\/[^\s<>"]+)/g
+
+/**
+ * Lo que se VE de una URL cuando nadie eligió un texto.
+ *
+ * Los enlaces de los correos llevan UTM para saber de dónde viene cada visita,
+ * y eso los vuelve monstruos de 150 caracteres que llenan media pantalla del
+ * teléfono. El `href` los conserva enteros —si no, se pierde la medición— pero
+ * lo que se lee es la dirección a secas:
+ *
+ *   https://www.tonyalvarado.com/recursos/calculadora-airbnb?utm_source=correo&…
+ *   → tonyalvarado.com/recursos/calculadora-airbnb
+ */
+function urlVisible(url: string): string {
+  const corta = url
+    .replace(/^https?:\/\//, '')
+    .replace(/^www\./, '')
+    .split('?')[0]
+    .replace(/\/$/, '')
+  return corta.length > 58 ? corta.slice(0, 57) + '…' : corta
+}
+
+function enlace(url: string, texto: string): string {
+  return `<a href="${url}" style="color:#7D26CC;">${texto}</a>`
+}
+
 export function armarCorreo(
   cuerpo: string,
   enlaceBaja?: string
@@ -265,13 +305,22 @@ export function armarCorreo(
   // El cuerpo va escapado: lleva nombres y textos que escribió otra persona.
   // Después de escapar ya no quedan `<`, `>` ni `"` literales, así que la
   // búsqueda de enlaces no se puede salir de su propio texto.
-  const cuerpoHtml = escapeHtml(cuerpo).replace(/(https?:\/\/[^\s<>"]+)/g, (url) => {
-    // Un punto o una coma pegados al final son puntuación, no parte del enlace.
-    // No se recorta `;` porque `&amp;` termina en `;` y las URLs traen `&`.
-    const limpia = url.replace(/[.,!?)]+$/, '')
-    const cola = url.slice(limpia.length)
-    return `<a href="${limpia}" style="color:#7D26CC;">${limpia}</a>${cola}`
-  })
+  //
+  // Las dos formas se buscan en UNA sola pasada. Si se hicieran en dos, la
+  // segunda volvería a encontrar las URLs que la primera ya metió dentro de un
+  // `href` y las enlazaría otra vez.
+  const cuerpoHtml = escapeHtml(cuerpo).replace(
+    ENLACES,
+    (_todo, textoPropio: string | undefined, urlDelTexto: string | undefined, urlSuelta: string | undefined) => {
+      if (urlDelTexto) return enlace(urlDelTexto, textoPropio ?? '')
+
+      // Un punto o una coma pegados al final son puntuación, no parte del
+      // enlace. No se recorta `;` porque `&amp;` termina en `;`.
+      const limpia = (urlSuelta ?? '').replace(/[.,!?)]+$/, '')
+      const cola = (urlSuelta ?? '').slice(limpia.length)
+      return enlace(limpia, urlVisible(limpia)) + cola
+    }
+  )
 
   const pieHtml = enlaceBaja
     ? `\n  <p style="margin:14px 0 0;font-family:Arial,sans-serif;font-size:12px;` +
@@ -279,8 +328,16 @@ export function armarCorreo(
       `<a href="${escapeHtml(enlaceBaja)}" style="color:#9ca3af;">darse de baja</a></p>`
     : ''
 
+  // En texto plano un enlace no puede esconderse detrás de una palabra, así que
+  // `[texto](url)` se abre a «texto: url». La dirección tiene que quedar a la
+  // vista o el enlace no sirve para quien lee sin HTML.
+  const cuerpoTexto = cuerpo.replace(
+    /\[([^\]\n]*)\]\((https?:\/\/[^\s)]+)\)/g,
+    (_todo, texto: string, url: string) => (texto.trim() ? `${texto.trim()}: ${url}` : url)
+  )
+
   return {
-    text: cuerpo + pieTexto,
+    text: cuerpoTexto + pieTexto,
     html:
       `<div style="font-family:Arial,sans-serif;max-width:620px;margin:0 auto;color:#1a1a1a;">\n` +
       `  <div style="height:4px;background:#7D26CC;border-radius:4px 4px 0 0;"></div>\n` +
