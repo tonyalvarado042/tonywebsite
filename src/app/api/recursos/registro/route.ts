@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { REMITENTE_CON_NOMBRE } from '@/lib/correo'
+import { armarCorreo } from '@/lib/email-templates'
 import {
   altaContacto,
   inscribirEnAutomatizacion,
@@ -118,18 +119,20 @@ export async function POST(req: NextRequest) {
         from: REMITENTE_CON_NOMBRE,
         to: correo,
         subject: `Aquí está: ${recurso.titulo}`,
-        text: [
-          `Hola ${nombre},`,
-          '',
-          `Gracias por pedir «${recurso.titulo}». Lo podés abrir acá:`,
-          url,
-          '',
-          'Cualquier cosa, respondé este correo — lo leo yo.',
-          '',
-          'Tony Alvarado',
-          'tonyalvarado.com',
-          ...(baja ? ['', '—', `Si no querés recibir más correos míos: ${baja}`] : []),
-        ].join('\n'),
+        ...armarCorreo(
+          [
+            `Hola ${nombre},`,
+            '',
+            `Gracias por pedir «${recurso.titulo}». Lo podés abrir acá:`,
+            url,
+            '',
+            'Cualquier cosa, respondé este correo — lo leo yo.',
+            '',
+            'Tony Alvarado',
+            'tonyalvarado.com',
+          ].join('\n'),
+          baja
+        ),
       })
       correoEnviado = true
       await registrarActividad(

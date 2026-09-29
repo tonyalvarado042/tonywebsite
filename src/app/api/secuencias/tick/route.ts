@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { REMITENTE_CON_NOMBRE } from '@/lib/correo'
+import { armarCorreo } from '@/lib/email-templates'
 import {
   getCrm,
   registrarActividad,
@@ -153,17 +154,17 @@ export async function correrElTick(req: NextRequest) {
         from: REMITENTE_CON_NOMBRE,
         to: contacto.email,
         subject: personalizar(paso.asunto ?? '', nombre),
-        text: [
-          nombre ? `Hola ${nombre},` : 'Hola,',
-          '',
-          personalizar(paso.cuerpo ?? '', nombre),
-          '',
-          'Tony Alvarado',
-          'tonyalvarado.com',
-          '',
-          '—',
-          `Si no querés recibir más correos míos: ${enlaceDeBaja(SITIO, ins.contacto_id)}`,
-        ].join('\n'),
+        ...armarCorreo(
+          [
+            nombre ? `Hola ${nombre},` : 'Hola,',
+            '',
+            personalizar(paso.cuerpo ?? '', nombre),
+            '',
+            'Tony Alvarado',
+            'tonyalvarado.com',
+          ].join('\n'),
+          enlaceDeBaja(SITIO, ins.contacto_id)
+        ),
       })
 
       await registrarActividad(
