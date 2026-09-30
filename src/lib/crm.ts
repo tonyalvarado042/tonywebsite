@@ -266,6 +266,33 @@ export async function darDeBaja(contactoId: string, motivo: string): Promise<boo
   return true
 }
 
+/**
+ * La baja por el código corto de los SMS.
+ *
+ * Existe aparte de `darDeBaja` porque el enlace del correo no cabe en un SMS:
+ * `?id=<uuid>&f=<hmac>` mide 104 caracteres de los 160 que hay. El código opaco
+ * de 10 caracteres deja el enlace en 29.
+ *
+ * Toda la lógica vive en `cta_baja_por_codigo` del CRM —buscar el contacto,
+ * marcarlo, detener sus inscripciones y anotar la actividad como `sms`— para no
+ * tener dos versiones de «qué significa darse de baja».
+ *
+ * Devuelve `true` tanto si acaba de salir como si YA estaba de baja, y `false`
+ * solo si el código no existe. Quien prueba códigos al azar no aprende nada.
+ */
+export async function darDeBajaPorCodigo(codigo: string): Promise<boolean> {
+  const { data, error } = await getCrm().rpc('cta_baja_por_codigo', {
+    p_codigo: codigo,
+    p_motivo: 'Enlace de salida de un SMS',
+  })
+
+  if (error) {
+    console.error('[crm] no se pudo dar de baja por código:', error.message)
+    return false
+  }
+  return data === true
+}
+
 // ── Recursos (los lee el sitio, los edita Tony desde el CRM) ────────────────
 
 export type RecursoCrm = {
