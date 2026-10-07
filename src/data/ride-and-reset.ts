@@ -351,6 +351,24 @@ export const PREMIO = {
   },
 }
 
+/**
+ * La nota de cancelacion, al pie de la landing de la rifa.
+ *
+ * Pedida por Tony el 7 de octubre de 2026: la experiencia no se puede ejecutar
+ * sin un minimo de gente inscrita y pagada, asi que eso tiene que estar dicho
+ * antes y no despues.
+ *
+ * El minimo lo confirmo Tony el 7 de octubre de 2026: **4 personas inscritas y
+ * pagadas**. Primero dijo «2 o 4»; se le pidio el numero exacto porque un minimo
+ * publicado es una condicion que despues hay que sostener.
+ */
+export const MINIMO_PARA_EJECUTAR = 4
+
+export const NOTA_CANCELACION =
+  `La experiencia se realiza con un mínimo de ${MINIMO_PARA_EJECUTAR} personas ` +
+  'inscritas y pagadas. Si no se alcanza ese mínimo, la rifa y la experiencia se ' +
+  'reprograman o se cancelan, y le avisamos a cada participante.'
+
 /** Los tres pasos para participar. */
 export const PASOS = [
   {

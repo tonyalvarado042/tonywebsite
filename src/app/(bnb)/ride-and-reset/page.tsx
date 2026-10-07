@@ -7,7 +7,7 @@ import JsonLd from '@/components/JsonLd'
 import FormularioRifa from '@/components/bnb/FormularioRifa'
 import BotonQuieroSerParte from '@/components/bnb/BotonQuieroSerParte'
 import {
-  RIFA, RESERVA, PREMIO, ANFITRIONES, EXPERIENCIA, PASOS, FOTOS, LOGO_BNB,
+  RIFA, RESERVA, PREMIO, NOTA_CANCELACION, ANFITRIONES, EXPERIENCIA, PASOS, FOTOS, LOGO_BNB,
   PENDIENTE, pendientesDeLaRifa,
 } from '@/data/ride-and-reset'
 
@@ -523,7 +523,12 @@ export default function RideAndReset() {
             </a>
           </div>
 
-          <p className="mt-10 text-center text-[12.5px] text-bnb-tenue">
+          {/* La nota de cancelacion. Chica y al pie, como la pidio Tony. */}
+          <p className="mt-10 border-t border-bnb-borde pt-6 text-[12.5px] leading-relaxed text-bnb-tenue">
+            {NOTA_CANCELACION}
+          </p>
+
+          <p className="mt-6 text-center text-[12.5px] text-bnb-tenue">
             Bike &amp; Bed · La Fortuna de San Carlos, Costa Rica ·{' '}
             <a
               href={RIFA.cuentaUrl}
