@@ -20,7 +20,7 @@ const DURACION_MIN = 90
 const inicio = () => new Date(CLASE.instanteUtc)
 const fin = () => new Date(inicio().getTime() + DURACION_MIN * 60 * 1000)
 
-/** `20261022T010000Z` — el formato compacto que piden Google, Yahoo e iCal. */
+/** `20261029T010000Z` — el formato compacto que piden Google, Yahoo e iCal. */
 const compacto = (d: Date) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '')
 
 export const TITULO_EVENTO = `Clase en vivo: ${CLASE.nombre} — Tony Alvarado`
