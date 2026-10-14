@@ -37,3 +37,7 @@ _client-assets/
 _client-assets/**
 dist/
 .sanity/
+
+# Lo que genera scripts/correr-la-clase.mjs: SQL y tablas de enlaces para una
+# fecha concreta. Se regeneran con un comando, no hay por que guardarlos.
+scripts/salida/
