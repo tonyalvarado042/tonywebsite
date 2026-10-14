@@ -23,20 +23,34 @@
 // ── Cuándo ──────────────────────────────────────────────────────────────────
 
 /**
- * Miércoles 21 de octubre de 2026, 7:00 p.m. hora de Costa Rica.
+ * Miércoles 28 de octubre de 2026, 7:00 p.m. hora de Costa Rica.
  *
  * Se guarda como instante UTC y no como «fecha + hora local» a propósito: así
  * el contador marca lo mismo desde La Fortuna, Miami o Madrid. Costa Rica es
  * UTC-6 todo el año (no tiene horario de verano), así que 19:00 CR = 01:00 UTC
  * del día siguiente.
  *
- * Verificado: el 21 de octubre de 2026 cae miércoles.
+ * Verificado: el 28 de octubre de 2026 cae miércoles.
+ *
+ * ⚠️ Se corrió una semana el 13 de octubre de 2026, a pedido de Tony. Era el
+ * miércoles 21. **Si vuelve a moverse, este bloque es lo único que hay que
+ * tocar** — el contador, el `.ics`, los enlaces de calendario y el correo de
+ * confirmación salen todos de acá. Lo único aparte es el `slug`, porque viaja
+ * al CRM como etiqueta y hay que reetiquetar a quien ya estaba.
  */
 export const CLASE = {
-  slug: 'copropiedad-21-oct',
+  /**
+   * ⚠️ Cambiar el slug parte la lista del CRM en dos.
+   *
+   * Viaja como etiqueta `clase:<slug>`. Al correr la fecha al 28 había **8
+   * personas** ya registradas con `clase:copropiedad-21-oct`; se les cambió la
+   * etiqueta a mano en la base para que sigan siendo una sola lista. Si se
+   * vuelve a mover, hay que repetir ese paso o dejar el slug quieto.
+   */
+  slug: 'copropiedad-28-oct',
   nombre: 'La Revolución de la Copropiedad Turística',
-  instanteUtc: '2026-10-22T01:00:00Z',
-  fechaTexto: 'Miércoles 21 de octubre',
+  instanteUtc: '2026-10-29T01:00:00Z',
+  fechaTexto: 'Miércoles 28 de octubre',
   horaTexto: '7:00 p.m. Costa Rica',
   duracionTexto: '80 minutos',
   /** Dónde se transmite. Se le dice a la gente que el enlace llega por correo. */
@@ -115,7 +129,7 @@ export const GRUPO = {
  */
 export const WHATSAPP = {
   numero: '',
-  mensaje: 'Hola Tony, me registré a la clase del 21 de octubre y tengo una consulta.',
+  mensaje: 'Hola Tony, me registré a la clase del 28 de octubre y tengo una consulta.',
 } as const
 
 export function enlaceWhatsApp(): string | null {

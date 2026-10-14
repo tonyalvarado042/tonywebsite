@@ -7,7 +7,7 @@ import { CLASE } from '@/data/clase-copropiedad'
  * El contador regresivo hacia la clase.
  *
  * ── Por qué cuenta contra un instante UTC ───────────────────────────────────
- * `CLASE.instanteUtc` es un momento exacto en el tiempo, no «21 de octubre a
+ * `CLASE.instanteUtc` es un momento exacto en el tiempo, no «28 de octubre a
  * las 7». Así marca lo mismo para alguien en La Fortuna, en Miami o en Madrid:
  * cada quien ve cuánto falta desde SU reloj, y todos llegan a la misma hora.
  *

@@ -69,7 +69,7 @@ export default function Header({ locale = 'es' }: HeaderProps) {
    * Rica, y tirar a un visitante en inglés a una página en español es peor que
    * no ofrecérsela.
    *
-   * El texto es sin fecha a propósito. La clase del 21 de octubre pasa, y un
+   * El texto es sin fecha a propósito. La clase del 28 de octubre pasa, y un
    * encabezado con fecha vieja queda mintiendo en todo el sitio. La fecha vive
    * en `/clase`, que es donde se mantiene.
    */
