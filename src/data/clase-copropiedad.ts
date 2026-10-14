@@ -63,7 +63,10 @@ export const ETIQUETA_CRM = `clase:${CLASE.slug}`
 // ── La oferta VIP ───────────────────────────────────────────────────────────
 
 /**
- * El encuentro presencial del 8 de noviembre en La Fortuna.
+ * El encuentro presencial del 15 de noviembre en La Fortuna.
+ *
+ * ⚠️ Se corrió una semana junto con la clase, el 13 de octubre de 2026. Era el
+ * domingo 8. Verificado que el 15 también cae domingo.
  *
  * ⚠️ `enlacePago` vacío = el bloque NO se muestra en ningún lado. Publicar un
  * botón de compra que no lleva a una pasarela real es peor que no ponerlo.
@@ -73,7 +76,7 @@ export const ETIQUETA_CRM = `clase:${CLASE.slug}`
 export const VIP = {
   enlacePago: '',
   nombre: 'DESTINO OWNERS · Experiencia VIP La Fortuna',
-  fechaTexto: 'Domingo 8 de noviembre de 2026',
+  fechaTexto: 'Domingo 15 de noviembre de 2026',
   horarioTexto: 'de 9:00 a.m. a 1:00 p.m.',
   precioTexto: 'US$97 por persona',
   promesa:
