@@ -190,7 +190,9 @@ export const hayVip = (): boolean => VIP.enlacePago.trim().length > 0
  * aparte (`/clase/vip`) que no lleva ni el botón del otro grupo ni la barra
  * del «te falta un paso».
  *
- * ⚠️ Vacío = el botón no se dibuja. Tony pasa el enlace.
+ * ⚠️ **Vacío porque TODAVÍA NO EXISTE.** Tony lo confirmó el 19 de octubre
+ * de 2026: «no hay grupo de vip de momento». Cuando lo cree, se pega acá y el
+ * botón aparece solo donde corresponda. Mientras tanto no se dibuja nada.
  */
 export const GRUPO_VIP = {
   url: '',
