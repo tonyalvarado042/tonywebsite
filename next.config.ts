@@ -41,6 +41,7 @@ const nextConfig: NextConfig = {
       beforeFiles: [
         { source: '/', has: enElSubdominio, destination: '/clase' },
         { source: '/gracias', has: enElSubdominio, destination: '/clase/gracias' },
+        { source: '/vip', has: enElSubdominio, destination: '/clase/vip' },
 
       // Una reescritura POR VARIANTE, sacada del mismo arreglo que dibuja las
       // páginas. Nada de `/:slug*`: un comodín se tragaría `/favicon.ico` y

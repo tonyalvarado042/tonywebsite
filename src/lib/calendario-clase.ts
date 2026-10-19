@@ -21,7 +21,7 @@ const inicio = () => new Date(CLASE.instanteUtc)
 const fin = () => new Date(inicio().getTime() + DURACION_MIN * 60 * 1000)
 
 /** `20261029T010000Z` — el formato compacto que piden Google, Yahoo e iCal. */
-const compacto = (d: Date) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '')
+export const compacto = (d: Date) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '')
 
 export const TITULO_EVENTO = `Clase en vivo: ${CLASE.nombre} — Tony Alvarado`
 
@@ -89,7 +89,7 @@ export function enlaceYahoo(): string {
  * del formato: sin escapar, un título con una coma parte el campo en dos y el
  * evento entra con el nombre cortado.
  */
-function escapar(texto: string): string {
+export function escapar(texto: string): string {
   return texto
     .replace(/\\/g, '\\\\')
     .replace(/;/g, '\\;')
@@ -105,7 +105,7 @@ function escapar(texto: string): string {
  * se cortara a ciegas por bytes, se podría partir un carácter a la mitad y el
  * archivo saldría con basura. Por eso se mide con TextEncoder.
  */
-function plegar(linea: string): string {
+export function plegar(linea: string): string {
   const enc = new TextEncoder()
   if (enc.encode(linea).length <= 75) return linea
 
