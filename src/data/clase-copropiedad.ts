@@ -102,6 +102,14 @@ const VIP_DESPUES = [
 ] as const
 
 export const VIP = {
+  /**
+   * ⚠️ El enlace EXISTE pero todavía NO se pone: `https://pay.hotmart.com/X108101737C`.
+   *
+   * Probado el 19 de octubre de 2026 con el producto en **Borrador**: devuelve
+   * **«Product unavailable.»**. Ponerlo hoy sería publicar un botón de compra
+   * que lleva a un checkout muerto — peor que no tener botón. Se pega acá el
+   * día que Tony publique el producto y el checkout cargue de verdad.
+   */
   enlacePago: '',
   nombre: 'Destino Owners VIP Experience',
   /** Para el boleto, partido en dos líneas. */
@@ -120,20 +128,19 @@ export const VIP = {
   precioMoneda: 'US$',
   precioNumero: '97',
   /**
-   * ⚠️ Vacío a propósito: **no se inventa un aforo**. El documento de
-   * estrategia dice 40 «propuesto, sujeto a capacidad real del recorrido», y
-   * propuesto no es confirmado. Mientras esté vacío, la banda del boleto no
-   * menciona cantidad y queda solo la razón física del límite — que es
-   * escasez verdadera y no se puede discutir.
+   * **40, confirmado el 19 de octubre de 2026 en Hotmart**, no «propuesto»:
+   * el lote «Destino Owners VIP» del producto 8764514 tiene `Número de
+   * entradas: 40`. Ese número ya no es un adorno — Hotmart deja de vender al
+   * llegar a 40, así que la banda del boleto dice la verdad.
    */
-  cuposTexto: '',
+  cuposTexto: '40',
   /** La razón del límite. Esta sí es cierta sin necesidad de un número. */
   limiteTexto:
     'El recorrido es a pie y en grupo. Cabe lo que cabe: cuando se llena, se cierra.',
-  /** ⚠️ Vacío = no se dibuja. Tony confirma la política de devolución. */
-  devolucionTexto: '',
-  /** ⚠️ Vacío = no se nombra la pasarela hasta que exista el enlace. */
-  pagoTexto: '',
+  /** Leído de Hotmart el 19 de octubre de 2026: «Plazo para solicitar el reembolso: 7 días». */
+  devolucionTexto: 'Reembolso dentro de los primeros 7 días',
+  /** La pasarela quedó confirmada: producto 8764514 de Hotmart. */
+  pagoTexto: 'Pago seguro por Hotmart',
   promesa:
     'Vení a ver con tus propios ojos cómo se desarrolla y se opera un destino turístico: recorrés Bike & Bed, conocés el área del proyecto HUMAYA y te sentás con Tony y el equipo.',
   incluyeDia: VIP_DIA,
