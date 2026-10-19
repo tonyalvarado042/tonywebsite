@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:whatsapp": "node --experimental-strip-types --test tests/calculadora-airbnb-whatsapp.test.mjs"
+    "test:whatsapp": "node --experimental-strip-types --test tests/calculadora-airbnb-whatsapp.test.mjs",
+    "clase:correr": "node scripts/correr-la-clase.mjs",
+    "test:clase": "node --test tests/correr-la-clase.test.mjs"
   },
   "dependencies": {
     "@portabletext/react": "^6.2.0",
