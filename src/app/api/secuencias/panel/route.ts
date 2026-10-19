@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { getCrm } from '@/lib/crm'
 import { cambiarSecuencias, secuenciasActivas } from '@/lib/secuencias'
-import { correrElTick } from '../tick/route'
+import { correrElTick } from '@/lib/secuencias-tick'
 
 /**
  * El mando de las cadenas de correos, para que Tony las opere DESDE EL CRM.

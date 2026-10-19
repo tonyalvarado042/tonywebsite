@@ -103,25 +103,39 @@ const VIP_DESPUES = [
 
 export const VIP = {
   /**
-   * ⚠️ El enlace EXISTE pero todavía NO se pone: `https://pay.hotmart.com/X108101737C`.
+   * Checkout de Hotmart del producto 8764514.
    *
-   * Probado el 19 de octubre de 2026 con el producto en **Borrador**: devuelve
-   * **«Product unavailable.»**. Ponerlo hoy sería publicar un botón de compra
-   * que lleva a un checkout muerto — peor que no tener botón. Se pega acá el
-   * día que Tony publique el producto y el checkout cargue de verdad.
+   * **Probado abriéndolo el 19 de octubre de 2026**, con el producto ya en
+   * «Ventas activas»: carga el checkout real, con el lote, la fecha y el
+   * lugar. Antes, en Borrador, devolvía «Product unavailable.» — por eso la
+   * regla es abrir el enlace antes de pegarlo, nunca confiar en que exista.
    */
-  enlacePago: '',
+  enlacePago: 'https://pay.hotmart.com/X108101737C',
   nombre: 'Destino Owners VIP Experience',
   /** Para el boleto, partido en dos líneas. */
   nombreLinea1: 'Destino Owners',
   nombreLinea2: 'VIP Experience',
+  slug: 'vip-18-nov',
+  /**
+   * El instante exacto, para el calendario. Costa Rica es UTC−6 todo el año
+   * (no tiene horario de verano), así que 9:00 CR = 15:00 UTC y 12:00 CR =
+   * 18:00 UTC. Los dos salen de lo que dice el checkout de Hotmart, que es lo
+   * que se imprime en la entrada.
+   */
+  instanteUtc: '2026-11-18T15:00:00Z',
+  instanteFinUtc: '2026-11-18T18:00:00Z',
   fechaTexto: 'Miércoles 18 de noviembre de 2026',
   fechaCorta: 'Miércoles 18',
   fechaCortaMes: 'de noviembre',
   /** Como lo imprime la banda del boleto cuando no hay aforo confirmado. */
   fechaBoleto: '18 NOV 2026',
-  horarioTexto: 'de 9:00 a.m. a 1:00 p.m.',
-  horarioCorto: '9:00 a.m. a 1:00 p.m.',
+  /**
+  * ⚠️ Eran «9:00 a.m. a 1:00 p.m.», que venía del documento de estrategia.
+  * El 19 de octubre de 2026 se leyó el checkout real: dice **9:00 a 12:00**,
+  * y eso es lo que imprime la entrada. Manda lo que ve el comprador.
+  */
+  horarioTexto: 'de 9:00 a.m. a 12 mediodía',
+  horarioCorto: '9:00 a.m. a 12 mediodía',
   lugarTexto: 'La Fortuna de San Carlos',
   precioTexto: 'US$97 por persona',
   /** Separado para poder dibujarlo grande en el boleto. */
@@ -141,6 +155,12 @@ export const VIP = {
   devolucionTexto: 'Reembolso dentro de los primeros 7 días',
   /** La pasarela quedó confirmada: producto 8764514 de Hotmart. */
   pagoTexto: 'Pago seguro por Hotmart',
+  /**
+   * El producto tiene la conversión de moneda activa: abierto desde Costa
+   * Rica, el checkout muestra el precio en colones, no en dólares. Decirlo
+   * acá evita que el botón prometa una moneda y la pasarela cobre otra.
+   */
+  monedaTexto: 'Hotmart lo cobra en colones al tipo de cambio del día.',
   promesa:
     'Vení a ver con tus propios ojos cómo se desarrolla y se opera un destino turístico: recorrés Bike & Bed, conocés el área del proyecto HUMAYA y te sentás con Tony y el equipo.',
   incluyeDia: VIP_DIA,
@@ -161,6 +181,23 @@ export const VIP = {
 } as const
 
 export const hayVip = (): boolean => VIP.enlacePago.trim().length > 0
+
+/**
+ * El grupo privado de Destino Owners — **no es el de la clase**.
+ *
+ * El de la clase ([[GRUPO]]) es para los 300 que se registraron gratis. Este
+ * es solo para quien compró la entrada VIP, y por eso vive en una página
+ * aparte (`/clase/vip`) que no lleva ni el botón del otro grupo ni la barra
+ * del «te falta un paso».
+ *
+ * ⚠️ Vacío = el botón no se dibuja. Tony pasa el enlace.
+ */
+export const GRUPO_VIP = {
+  url: '',
+  nombre: 'el grupo de Destino Owners',
+} as const
+
+export const hayGrupoVip = (): boolean => GRUPO_VIP.url.trim().length > 0
 
 // ── El grupo de la clase ────────────────────────────────────────
 
