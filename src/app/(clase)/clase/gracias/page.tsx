@@ -4,7 +4,8 @@ import Script from 'next/script'
 import { ArrowRight, BadgeCheck, Check, Download, MessageCircle, TriangleAlert, X } from 'lucide-react'
 import Contador from '@/components/clase/Contador'
 import { META_PIXEL_ID } from '@/lib/meta-pixel'
-import { CLASE, GRUPO, GUIA, VIP, hayVip } from '@/data/clase-copropiedad'
+import { CLASE, GRUPO, GUIA, VIP } from '@/data/clase-copropiedad'
+import { leerVip } from '@/lib/vip-ajustes'
 import {
   enlaceGoogle,
   enlaceOffice365,
@@ -72,7 +73,15 @@ const REELS = [
   { archivo: 'obra-2', etiqueta: 'HUMAYA · la obra', obra: true, alt: 'La hilera de módulos en construcción de HUMAYA' },
 ]
 
-export default function GraciasPage() {
+/**
+ * Se revalida cada 5 minutos: encender o apagar el VIP desde el CRM, o mover
+ * su fecha, se ve acá **sin desplegar**.
+ */
+export const revalidate = 300
+
+export default async function GraciasPage() {
+  const vip = await leerVip()
+
   return (
     <main className="relative min-h-screen overflow-hidden">
       {/*
@@ -247,7 +256,7 @@ export default function GraciasPage() {
         </div>
 
         {/* ───────── El presencial ───────── */}
-        {hayVip() && (
+        {vip?.enlacePago && (
           <section className="mt-14">
             <div className="flex items-center gap-4">
               <div className="h-px flex-1 bg-brand-border" aria-hidden />
@@ -291,7 +300,7 @@ export default function GraciasPage() {
               <div className="mt-4 flex flex-wrap items-center gap-3">
                 <span aria-hidden className="h-0.5 w-11 shrink-0 bg-brand-gold" />
                 <span className="text-[11.5px] font-bold uppercase tracking-[0.13em] text-brand-muted">
-                  {VIP.fechaTexto} · {VIP.lugarTexto} · {VIP.precioTexto}
+                  {vip.fechaTexto} · {VIP.lugarTexto} · {vip.precioTexto}
                 </span>
               </div>
 
@@ -404,7 +413,7 @@ export default function GraciasPage() {
                     Entrada · Destino Owners VIP
                   </span>
                   <span className="text-[11px] font-extrabold uppercase tracking-[0.12em] sm:text-xs">
-                    {VIP.cuposTexto ? `Solo ${VIP.cuposTexto} entradas` : VIP.fechaBoleto}
+                    {vip.cuposTexto ? `Solo ${vip.cuposTexto} entradas` : vip.fechaBoleto}
                   </span>
                 </div>
 
@@ -418,7 +427,7 @@ export default function GraciasPage() {
                         {VIP.precioMoneda}
                       </span>
                       <span className="text-[46px] font-extrabold leading-[0.9] tracking-[-0.045em] sm:text-[64px]">
-                        {VIP.precioNumero}
+                        {vip.precioNumero}
                       </span>
                     </p>
                     <p className="mt-2.5 text-[13px] leading-snug text-[#4A4438]">
@@ -443,12 +452,12 @@ export default function GraciasPage() {
                       Cuándo y dónde
                     </p>
                     <p className="mt-2 text-[17px] font-extrabold leading-tight tracking-[-0.015em] sm:text-xl">
-                      {VIP.fechaCorta}
+                      {vip.fechaCorta}
                       <br />
-                      {VIP.fechaCortaMes}
+                      {vip.fechaCortaMes}
                     </p>
                     <p className="mt-2 text-[13.5px] leading-snug text-[#4A4438] sm:text-[14.5px]">
-                      {VIP.horarioCorto}
+                      {vip.horarioCorto}
                       <br />
                       {VIP.lugarTexto}
                     </p>
@@ -469,13 +478,13 @@ export default function GraciasPage() {
                   <p className="text-[13px] leading-snug text-[#4A4438]">{VIP.limiteTexto}</p>
 
                   <a
-                    href={VIP.enlacePago}
+                    href={vip.enlacePago}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-5 flex w-full items-center justify-center gap-2.5 rounded-2xl bg-brand-bg px-5 py-5 text-base font-extrabold text-[#F7F3E8] transition hover:opacity-90 sm:text-lg"
                   >
                     Comprar mi entrada — {VIP.precioMoneda}
-                    {VIP.precioNumero}
+                    {vip.precioNumero}
                     <ArrowRight size={18} aria-hidden />
                   </a>
 

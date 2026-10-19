@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { leerVip } from '@/lib/vip-ajustes'
 import {
   ArrowRight,
   BadgeCheck,
@@ -24,7 +25,6 @@ import {
   PREGUNTAS,
   RECORTES,
   VIP,
-  hayVip,
 } from '@/data/clase-copropiedad'
 import { RESENAS_BNB, RESUMEN_RESENAS } from '@/data/resenas-bike-and-bed'
 
@@ -117,7 +117,8 @@ const FOTOS_VILLAS = [
   },
 ]
 
-export default function PaginaClase({ variante }: { variante: Variante }) {
+export default async function PaginaClase({ variante }: { variante: Variante }) {
+  const vip = await leerVip()
   return (
     <>
       {/* ───────────────── Barra de arriba ───────────────── */}
@@ -571,7 +572,7 @@ export default function PaginaClase({ variante }: { variante: Variante }) {
 
       {/* ───────────────── El VIP presencial ───────────────── */}
       {/* Solo aparece cuando hay un enlace de pago de verdad. */}
-      {hayVip() && (
+      {vip?.enlacePago && (
         <section className="border-y border-brand-border/60 bg-brand-surface/40 py-16">
           <div className="mx-auto max-w-3xl px-6 md:px-12">
             <div className="rounded-3xl border border-brand-gold/30 bg-brand-card/70 p-7 sm:p-9">
@@ -582,7 +583,7 @@ export default function PaginaClase({ variante }: { variante: Variante }) {
                 {VIP.nombre}
               </h2>
               <p className="mt-2 text-sm text-brand-muted">
-                {VIP.fechaTexto} · {VIP.horarioTexto} · {VIP.precioTexto}
+                {vip.fechaTexto} · {vip.horarioTexto} · {vip.precioTexto}
               </p>
               <p className="mt-5 leading-relaxed text-brand-muted">{VIP.promesa}</p>
 
@@ -596,7 +597,7 @@ export default function PaginaClase({ variante }: { variante: Variante }) {
               </ul>
 
               <a
-                href={VIP.enlacePago}
+                href={vip.enlacePago}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full border border-brand-gold/60 px-7 py-3.5 text-sm font-bold text-brand-gold transition hover:bg-brand-gold hover:text-brand-bg"

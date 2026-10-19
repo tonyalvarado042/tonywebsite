@@ -1,4 +1,5 @@
 import { VIP, GRUPO_VIP, hayGrupoVip } from '@/data/clase-copropiedad'
+import type { ConfigVip } from '@/lib/vip-ajustes'
 import { compacto, escapar, plegar } from '@/lib/calendario-clase'
 
 /**
@@ -15,8 +16,13 @@ import { compacto, escapar, plegar } from '@/lib/calendario-clase'
  * exactamente la que ya causó un problema en este repo.
  */
 
-const inicio = () => new Date(VIP.instanteUtc)
-const fin = () => new Date(VIP.instanteFinUtc)
+/**
+ * ⚠️ La fecha ya **no vive en el código**: llega como parámetro desde
+ * `leerVip()`, que la saca del CRM. Así un lanzamiento nuevo es cambiar un
+ * campo en la base, no tocar este archivo. Ver `lib/vip-ajustes.ts`.
+ */
+const inicio = (v: ConfigVip) => new Date(v.instanteUtc)
+const fin = (v: ConfigVip) => new Date(v.instanteFinUtc)
 
 export const TITULO_VIP = `${VIP.nombre} — Bike & Bed, La Fortuna`
 
@@ -27,11 +33,11 @@ export const TITULO_VIP = `${VIP.nombre} — Bike & Bed, La Fortuna`
  */
 export const LUGAR_VIP = `Bike and Bed Arenal — ${VIP.lugarTexto}`
 
-export const DESCRIPCION_VIP = [
+export const descripcionVip = (v: ConfigVip) => [
   'Encuentro presencial de Destino Owners VIP con Tony Alvarado y el equipo.',
   '',
   `Dónde: ${LUGAR_VIP}`,
-  `Horario: ${VIP.horarioTexto}`,
+  `Horario: ${v.horarioTexto}`,
   '',
   'Recorrido por Bike & Bed, visita a la obra de HUMAYA y sesión de preguntas',
   'con los fundadores.',
@@ -40,32 +46,32 @@ export const DESCRIPCION_VIP = [
   ...(hayGrupoVip() ? ['', `Grupo de Destino Owners: ${GRUPO_VIP.url}`] : []),
 ].join('\n')
 
-export function enlaceGoogleVip(): string {
+export function enlaceGoogleVip(v: ConfigVip): string {
   const params = new URLSearchParams({
     action: 'TEMPLATE',
     text: TITULO_VIP,
-    dates: `${compacto(inicio())}/${compacto(fin())}`,
-    details: DESCRIPCION_VIP,
+    dates: `${compacto(inicio(v))}/${compacto(fin(v))}`,
+    details: descripcionVip(v),
     location: LUGAR_VIP,
   })
   return `https://calendar.google.com/calendar/render?${params.toString()}`
 }
 
-function enlaceOutlookVip(dominio: string): string {
+function enlaceOutlookVip(dominio: string, v: ConfigVip): string {
   const params = new URLSearchParams({
     path: '/calendar/action/compose',
     rru: 'addevent',
     subject: TITULO_VIP,
-    startdt: inicio().toISOString(),
-    enddt: fin().toISOString(),
-    body: DESCRIPCION_VIP,
+    startdt: inicio(v).toISOString(),
+    enddt: fin(v).toISOString(),
+    body: descripcionVip(v),
     location: LUGAR_VIP,
   })
   return `https://${dominio}/calendar/0/action/compose?${params.toString()}`
 }
 
-export const enlaceOutlookVipPersonal = () => enlaceOutlookVip('outlook.live.com')
-export const enlaceOffice365Vip = () => enlaceOutlookVip('outlook.office.com')
+export const enlaceOutlookVipPersonal = (v: ConfigVip) => enlaceOutlookVip('outlook.live.com', v)
+export const enlaceOffice365Vip = (v: ConfigVip) => enlaceOutlookVip('outlook.office.com', v)
 
 /**
  * El `.ics` del presencial.
@@ -74,7 +80,7 @@ export const enlaceOffice365Vip = () => enlaceOutlookVip('outlook.office.com')
  * La Fortuna. Un recordatorio a las 8 de la mañana del mismo día no le sirve a
  * nadie que salga de San José.
  */
-export function generarIcsVip(): string {
+export function generarIcsVip(v: ConfigVip): string {
   const lineas = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
@@ -82,12 +88,12 @@ export function generarIcsVip(): string {
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
     'BEGIN:VEVENT',
-    `UID:${VIP.slug}@tonyalvarado.com`,
+    `UID:${v.slug}@tonyalvarado.com`,
     `DTSTAMP:${compacto(new Date())}`,
-    `DTSTART:${compacto(inicio())}`,
-    `DTEND:${compacto(fin())}`,
+    `DTSTART:${compacto(inicio(v))}`,
+    `DTEND:${compacto(fin(v))}`,
     `SUMMARY:${escapar(TITULO_VIP)}`,
-    `DESCRIPTION:${escapar(DESCRIPCION_VIP)}`,
+    `DESCRIPTION:${escapar(descripcionVip(v))}`,
     `LOCATION:${escapar(LUGAR_VIP)}`,
     'STATUS:CONFIRMED',
     'BEGIN:VALARM',
