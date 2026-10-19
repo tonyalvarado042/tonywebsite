@@ -10,7 +10,7 @@ import {
   registrarActividad,
 } from '@/lib/crm'
 import { automatizacionDeLaClase, enlaceDeBaja } from '@/lib/secuencias'
-import { CLASE, ETIQUETA_CRM, GRUPO } from '@/data/clase-copropiedad'
+import { CLASE, ETIQUETA_CRM, GRUPO, VIP, hayVip } from '@/data/clase-copropiedad'
 import { PAISES } from '@/data/paises'
 import { enlaceGoogle } from '@/lib/calendario-clase'
 
@@ -284,6 +284,45 @@ export async function POST(req: NextRequest) {
             '',
             'Y una advertencia que va en serio: acá no se garantiza ningún',
             'número. Si alguien te promete uno, desconfiá — incluido yo.',
+            /*
+              El upsell del presencial va ACÁ, al final y después de las
+              advertencias — no arriba. El trabajo de este correo es meter a la
+              persona al grupo de WhatsApp; una oferta antes de eso compite con
+              el paso que falta y se pierden las dos cosas.
+
+              Y solo existe si hay enlace de pago: `hayVip()` es la misma
+              compuerta que usa la página. Sin enlace, el correo sale igual que
+              siempre y no menciona nada.
+            */
+            ...(hayVip()
+              ? [
+                  '',
+                  '───────────────────────────────',
+                  '¿Y SI EN VEZ DE VERLO, LO CAMINÁS?',
+                  '───────────────────────────────',
+                  '',
+                  'El miércoles te muestro los números en pantalla. El miércoles',
+                  '18 de noviembre abrimos Bike & Bed para que los veas en el',
+                  'piso: el recorrido completo, la obra de HUMAYA, y preguntas',
+                  'en grupo conmigo y el equipo.',
+                  '',
+                  'Y no se acaba ese día: quedás en el grupo privado con los',
+                  'avances semanales, los renders y el detrás de cámaras, la',
+                  'masterclass de cómo estamos construyendo el proyecto, y tu',
+                  'nombre en el Founders Wall.',
+                  '',
+                  `  ${VIP.fechaTexto} · ${VIP.horarioTexto}`,
+                  `  ${VIP.lugarTexto} · ${VIP.precioTexto}`,
+                  '',
+                  `  ${VIP.enlacePago}`,
+                  '',
+                  'Ojo con tres cosas, porque prefiero decirlas yo: no te',
+                  'convierte en socio de nada, no te da acceso a información que',
+                  'los demás no tengan, y no incluye transporte ni hospedaje.',
+                  '',
+                  'Tu campo del miércoles ya está hecho y no depende de esto.',
+                ]
+              : []),
             '',
             'Nos vemos el miércoles.',
             '',
