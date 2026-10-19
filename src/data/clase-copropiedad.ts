@@ -115,6 +115,15 @@ export const VIP = {
   /** Para el boleto, partido en dos líneas. */
   nombreLinea1: 'Destino Owners',
   nombreLinea2: 'VIP Experience',
+  slug: 'vip-18-nov',
+  /**
+   * El instante exacto, para el calendario. Costa Rica es UTC−6 todo el año
+   * (no tiene horario de verano), así que 9:00 CR = 15:00 UTC y 12:00 CR =
+   * 18:00 UTC. Los dos salen de lo que dice el checkout de Hotmart, que es lo
+   * que se imprime en la entrada.
+   */
+  instanteUtc: '2026-11-18T15:00:00Z',
+  instanteFinUtc: '2026-11-18T18:00:00Z',
   fechaTexto: 'Miércoles 18 de noviembre de 2026',
   fechaCorta: 'Miércoles 18',
   fechaCortaMes: 'de noviembre',
@@ -172,6 +181,23 @@ export const VIP = {
 } as const
 
 export const hayVip = (): boolean => VIP.enlacePago.trim().length > 0
+
+/**
+ * El grupo privado de Destino Owners — **no es el de la clase**.
+ *
+ * El de la clase ([[GRUPO]]) es para los 300 que se registraron gratis. Este
+ * es solo para quien compró la entrada VIP, y por eso vive en una página
+ * aparte (`/clase/vip`) que no lleva ni el botón del otro grupo ni la barra
+ * del «te falta un paso».
+ *
+ * ⚠️ Vacío = el botón no se dibuja. Tony pasa el enlace.
+ */
+export const GRUPO_VIP = {
+  url: '',
+  nombre: 'el grupo de Destino Owners',
+} as const
+
+export const hayGrupoVip = (): boolean => GRUPO_VIP.url.trim().length > 0
 
 // ── El grupo de la clase ────────────────────────────────────────
 
