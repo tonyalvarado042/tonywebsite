@@ -605,7 +605,7 @@ export default function PaginaClase({ variante }: { variante: Variante }) {
                 <ArrowRight size={16} />
               </a>
 
-              <p className="mt-4 text-xs leading-relaxed text-brand-muted/70">{VIP.noIncluye}</p>
+              <p className="mt-4 text-xs leading-relaxed text-brand-muted/70">{VIP.noIncluye.join(' ')}</p>
             </div>
           </div>
         </section>

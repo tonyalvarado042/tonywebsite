@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import type { Metadata } from 'next'
 import Script from 'next/script'
-import { ArrowRight, BadgeCheck, Check, Download, MessageCircle, TriangleAlert } from 'lucide-react'
+import { ArrowRight, BadgeCheck, Check, Download, MessageCircle, TriangleAlert, X } from 'lucide-react'
 import Contador from '@/components/clase/Contador'
 import { META_PIXEL_ID } from '@/lib/meta-pixel'
 import { CLASE, GRUPO, GUIA, VIP, hayVip } from '@/data/clase-copropiedad'
@@ -53,6 +53,23 @@ const CALENDARIOS = [
   { nombre: 'Office 365', url: enlaceOffice365(), color: '#D83B01', externo: true },
   { nombre: 'Yahoo', url: enlaceYahoo(), color: '#6001D2', externo: true },
   { nombre: 'Otro (.ics)', url: '/api/clase/calendario', color: '#9266F7', externo: false },
+]
+
+/**
+ * Las seis tomas que se mueven dentro del bloque VIP.
+ *
+ * Salen de los reels de octubre de 2026 recortados a cuadrado **por encima de
+ * y=1440**: el material original lleva los subtítulos quemados en la imagen y
+ * un recorte descuidado deja una palabra suelta en medio de la miniatura.
+ * Sin audio y en bucle: 408 KB las doce piezas juntas.
+ */
+const REELS = [
+  { archivo: 'bnb-1', etiqueta: 'Bike & Bed', obra: false, alt: 'La piscina y una villa de Bike & Bed' },
+  { archivo: 'bnb-2', etiqueta: 'Bike & Bed', obra: false, alt: 'Una bicicleta colgada en la pared dentro de una villa' },
+  { archivo: 'bnb-3', etiqueta: 'Bike & Bed', obra: false, alt: 'El interior de una villa con vidrio de piso a techo' },
+  { archivo: 'bnb-4', etiqueta: 'Bike & Bed', obra: false, alt: 'El volcán Arenal detrás del jardín de Bike & Bed' },
+  { archivo: 'obra-1', etiqueta: 'HUMAYA · la obra', obra: true, alt: 'Un módulo en armazón en la construcción de HUMAYA' },
+  { archivo: 'obra-2', etiqueta: 'HUMAYA · la obra', obra: true, alt: 'La hilera de módulos en construcción de HUMAYA' },
 ]
 
 export default function GraciasPage() {
@@ -231,40 +248,257 @@ export default function GraciasPage() {
 
         {/* ───────── El presencial ───────── */}
         {hayVip() && (
-          <div className="mt-12 rounded-3xl border border-brand-gold/30 bg-brand-card/70 p-7 sm:p-8">
-            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-brand-gold">
-              Ya que estás adentro · opcional
-            </p>
-            <h2 className="mt-4 text-2xl font-bold leading-tight text-brand-text">{VIP.nombre}</h2>
-            <p className="mt-2 text-sm text-brand-muted">
-              {VIP.fechaTexto} · {VIP.horarioTexto} · {VIP.precioTexto}
-            </p>
-            <p className="mt-5 leading-relaxed text-brand-muted">{VIP.promesa}</p>
+          <section className="mt-14">
+            <div className="flex items-center gap-4">
+              <div className="h-px flex-1 bg-brand-border" aria-hidden />
+              <span className="text-[11px] uppercase tracking-[0.2em] text-brand-muted">
+                Y ya que estás
+              </span>
+              <div className="h-px flex-1 bg-brand-border" aria-hidden />
+            </div>
 
-            <ul className="mt-6 space-y-2.5">
-              {VIP.incluye.map((t) => (
-                <li key={t} className="flex gap-3 text-[15px] text-brand-text/90">
-                  <BadgeCheck size={17} className="mt-0.5 shrink-0 text-brand-gold" aria-hidden />
-                  {t}
-                </li>
-              ))}
-            </ul>
+            {/*
+              ⚠️ Sin `overflow-hidden`: las muescas del boleto son círculos
+              posicionados fuera de su caja y un overflow los recorta. Y la
+              tarjeta va con color SÓLIDO, no translúcido, porque las muescas
+              tienen que pintarse del mismo color exacto para que se lean como
+              un recorte y no como dos puntos pegados encima.
+            */}
+            <div className="mt-7 rounded-3xl border border-brand-gold/40 bg-brand-card p-6 sm:p-9">
+              <div className="flex flex-wrap items-center gap-2.5">
+                <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-brand-gold">
+                  Opcional
+                </span>
+                <span className="text-brand-muted" aria-hidden>
+                  ·
+                </span>
+                <span className="text-[11px] uppercase tracking-[0.1em] text-brand-muted">
+                  No afecta tu registro
+                </span>
+              </div>
 
-            <a
-              href={VIP.enlacePago}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand-gold px-7 py-3.5 text-sm font-bold text-brand-bg transition hover:opacity-90"
-            >
-              Quiero la entrada del presencial
-              <ArrowRight size={16} />
-            </a>
+              {/*
+                El titular es el NOMBRE DEL PRODUCTO, no la frase de venta.
+                Regla de Tony: la palabra que dice qué es va en el titular
+                grande. La frase de venta bajó a subtítulo.
+              */}
+              <h2 className="mt-5 text-[34px] font-extrabold leading-[1.02] tracking-[-0.03em] text-brand-text sm:text-[46px]">
+                {VIP.nombreLinea1}
+                <br />
+                <span className="text-brand-gold">{VIP.nombreLinea2}</span>
+              </h2>
 
-            <p className="mt-4 text-xs leading-relaxed text-brand-muted/70">{VIP.noIncluye}</p>
-            <p className="mt-3 text-xs leading-relaxed text-brand-muted/70">
-              Tu registro a la clase gratuita ya está hecho y no depende de esto.
-            </p>
-          </div>
+              <div className="mt-4 flex flex-wrap items-center gap-3">
+                <span aria-hidden className="h-0.5 w-11 shrink-0 bg-brand-gold" />
+                <span className="text-[11.5px] font-bold uppercase tracking-[0.13em] text-brand-muted">
+                  {VIP.fechaTexto} · {VIP.lugarTexto} · {VIP.precioTexto}
+                </span>
+              </div>
+
+              <p className="mt-6 text-xl font-semibold leading-snug tracking-[-0.015em] text-brand-text sm:text-2xl">
+                El miércoles ves los números.
+                <br />
+                <span className="text-brand-muted">
+                  El 18 de noviembre podés ver el hotel.
+                </span>
+              </p>
+
+              <p className="mt-5 leading-relaxed text-brand-muted">{VIP.promesa}</p>
+
+              {/*
+                Las seis tomas. Sin audio, en bucle, 408 KB las doce piezas
+                (seis clips y seis carátulas). Recortadas por encima de la
+                banda de subtítulos quemados del material original.
+              */}
+              <ul className="mt-7 grid grid-cols-3 gap-2 sm:gap-2.5">
+                {REELS.map((r) => (
+                  <li
+                    key={r.archivo}
+                    className={`relative aspect-square overflow-hidden rounded-2xl border bg-brand-bg ${
+                      r.obra ? 'border-brand-gold/45' : 'border-brand-border'
+                    }`}
+                  >
+                    <video
+                      src={`/clase/reels/${r.archivo}.mp4`}
+                      poster={`/clase/reels/${r.archivo}.jpg`}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="auto"
+                      aria-label={r.alt}
+                      className="h-full w-full object-cover"
+                    />
+                    <span
+                      aria-hidden
+                      className="pointer-events-none absolute inset-x-0 bottom-0 h-[58%] bg-gradient-to-t from-black/85 to-transparent"
+                    />
+                    <span
+                      className={`absolute bottom-2 left-2.5 text-[8.5px] font-bold uppercase tracking-[0.12em] sm:text-[9.5px] ${
+                        r.obra ? 'text-brand-gold' : 'text-white'
+                      }`}
+                    >
+                      {r.etiqueta}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-3 text-xs leading-relaxed text-brand-muted/70">
+                Tomas de octubre, sin retoque. Las cuatro primeras son Bike &amp; Bed operando hoy;
+                las dos doradas son la obra de HUMAYA.
+              </p>
+
+              {/* Qué incluye, en dos tiempos: el día y lo que queda después. */}
+              <div className="mt-8 grid gap-7 sm:grid-cols-2">
+                <div>
+                  <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-brand-gold">
+                    El día, en La Fortuna
+                  </p>
+                  <ul className="mt-3.5 space-y-2.5">
+                    {VIP.incluyeDia.map((t) => (
+                      <li key={t} className="flex gap-2.5 text-[14.5px] leading-snug text-brand-text/90">
+                        <BadgeCheck size={16} className="mt-0.5 shrink-0 text-brand-gold" aria-hidden />
+                        {t}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-brand-gold">
+                    Y lo que te queda después
+                  </p>
+                  <ul className="mt-3.5 space-y-2.5">
+                    {VIP.incluyeDespues.map((t) => (
+                      <li key={t} className="flex gap-2.5 text-[14.5px] leading-snug text-brand-text/90">
+                        <BadgeCheck size={16} className="mt-0.5 shrink-0 text-brand-gold" aria-hidden />
+                        {t}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              {/*
+                Esto no es el descargo del final: es parte del argumento. En un
+                rubro donde todos prometen de más, el que dice en voz alta lo
+                que no da es el que suena cierto.
+              */}
+              <div className="mt-7 rounded-r-2xl border-l-[3px] border-brand-muted/50 bg-brand-bg/80 p-5">
+                <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-brand-muted">
+                  Y lo que esta entrada NO es
+                </p>
+                <ul className="mt-3 space-y-2">
+                  {VIP.noIncluye.map((t) => (
+                    <li key={t} className="flex gap-2.5 text-[14px] leading-snug text-brand-muted">
+                      <X size={15} className="mt-0.5 shrink-0" aria-hidden />
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* ───────── El boleto: acá se compra ───────── */}
+              <div className="relative mt-8 rounded-[20px] bg-[#F7F3E8] text-[#1A1A1A] shadow-[0_20px_56px_rgba(0,0,0,.5)]">
+                <div className="flex flex-wrap items-center justify-between gap-3 rounded-t-[20px] bg-brand-gold px-5 py-3 text-brand-bg sm:px-6">
+                  <span className="text-[11px] font-extrabold uppercase tracking-[0.1em] sm:text-xs sm:tracking-[0.16em]">
+                    Entrada · Destino Owners VIP
+                  </span>
+                  <span className="text-[11px] font-extrabold uppercase tracking-[0.12em] sm:text-xs">
+                    {VIP.cuposTexto ? `Solo ${VIP.cuposTexto} entradas` : VIP.fechaBoleto}
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-[1fr_2px_1fr]">
+                  <div className="px-5 pb-5 pt-6 sm:pb-6 sm:px-6">
+                    <p className="text-[10.5px] font-bold uppercase tracking-[0.16em] text-[#6B6355]">
+                      Precio
+                    </p>
+                    <p className="mt-1.5 flex items-baseline gap-1">
+                      <span className="text-lg font-bold text-[#6B6355] sm:text-[22px]">
+                        {VIP.precioMoneda}
+                      </span>
+                      <span className="text-[46px] font-extrabold leading-[0.9] tracking-[-0.045em] sm:text-[64px]">
+                        {VIP.precioNumero}
+                      </span>
+                    </p>
+                    <p className="mt-2.5 text-[13px] leading-snug text-[#4A4438]">
+                      Por persona. Una entrada vale por una persona — quien te acompañe necesita la
+                      suya.
+                    </p>
+                  </div>
+
+                  {/* Vertical en escritorio; en móvil las columnas se apilan y sobra. */}
+                  <div
+                    aria-hidden
+                    className="hidden self-stretch bg-[repeating-linear-gradient(to_bottom,#D2C8B0_0_7px,transparent_7px_14px)] sm:block"
+                  />
+
+                  <div className="border-t border-dashed border-[#D2C8B0] px-5 pb-6 pt-5 sm:border-t-0 sm:px-6 sm:pt-6">
+                    <p className="text-[10.5px] font-bold uppercase tracking-[0.16em] text-[#6B6355]">
+                      Cuándo y dónde
+                    </p>
+                    <p className="mt-2 text-[17px] font-extrabold leading-tight tracking-[-0.015em] sm:text-xl">
+                      {VIP.fechaCorta}
+                      <br />
+                      {VIP.fechaCortaMes}
+                    </p>
+                    <p className="mt-2 text-[13.5px] leading-snug text-[#4A4438] sm:text-[14.5px]">
+                      {VIP.horarioCorto}
+                      <br />
+                      {VIP.lugarTexto}
+                    </p>
+                  </div>
+                </div>
+
+                {/* La perforación con las muescas: esto es lo que lo vuelve un boleto. */}
+                <div className="relative border-t-2 border-dashed border-[#C9BFA6] px-5 pb-6 pt-6 sm:px-6">
+                  <span
+                    aria-hidden
+                    className="absolute -left-3.5 -top-[15px] h-7 w-7 rounded-full bg-brand-card"
+                  />
+                  <span
+                    aria-hidden
+                    className="absolute -right-3.5 -top-[15px] h-7 w-7 rounded-full bg-brand-card"
+                  />
+
+                  <p className="text-[13px] leading-snug text-[#4A4438]">{VIP.limiteTexto}</p>
+
+                  <a
+                    href={VIP.enlacePago}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-5 flex w-full items-center justify-center gap-2.5 rounded-2xl bg-brand-bg px-5 py-5 text-base font-extrabold text-[#F7F3E8] transition hover:opacity-90 sm:text-lg"
+                  >
+                    Comprar mi entrada — {VIP.precioMoneda}
+                    {VIP.precioNumero}
+                    <ArrowRight size={18} aria-hidden />
+                  </a>
+
+                  {(VIP.pagoTexto || VIP.devolucionTexto) && (
+                    <div className="mt-3.5 flex flex-wrap gap-2 text-[12.5px] text-[#4A4438]">
+                      {VIP.pagoTexto && (
+                        <span className="rounded-full border border-[#D2C8B0] px-3 py-1.5">
+                          {VIP.pagoTexto}
+                        </span>
+                      )}
+                      <span className="rounded-full border border-[#D2C8B0] px-3 py-1.5">
+                        Comprobante e indicaciones por correo
+                      </span>
+                      {VIP.devolucionTexto && (
+                        <span className="rounded-full border border-[#D2C8B0] px-3 py-1.5">
+                          {VIP.devolucionTexto}
+                        </span>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <p className="mt-5 text-center text-xs leading-relaxed text-brand-muted/70">
+                Tu registro a la clase gratuita del miércoles ya está hecho y no depende de esto.
+              </p>
+            </div>
+          </section>
         )}
 
         {/* ───────── Mientras tanto ───────── */}

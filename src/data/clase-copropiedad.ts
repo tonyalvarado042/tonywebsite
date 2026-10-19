@@ -63,33 +63,94 @@ export const ETIQUETA_CRM = `clase:${CLASE.slug}`
 // ── La oferta VIP ───────────────────────────────────────────────────────────
 
 /**
- * El encuentro presencial del 15 de noviembre en La Fortuna.
+ * El encuentro presencial de DESTINO OWNERS en La Fortuna.
  *
- * ⚠️ Se corrió una semana junto con la clase, el 13 de octubre de 2026. Era el
- * domingo 8. Verificado que el 15 también cae domingo.
+ * ⚠️ Se movió DOS veces. Era el domingo 8 de noviembre; el 13 de octubre de
+ * 2026 se corrió al domingo 15 junto con la clase; y el 19 de octubre Tony lo
+ * pasó al **miércoles 18 de noviembre de 2026**.
+ * Verificado contra el calendario: el 18 de noviembre de 2026 cae miércoles.
  *
  * ⚠️ `enlacePago` vacío = el bloque NO se muestra en ningún lado. Publicar un
  * botón de compra que no lleva a una pasarela real es peor que no ponerlo.
  * Tony pasa el enlace de Hotmart o Whop, se pone acá, y con eso se prende solo
  * en los dos lugares donde vive: debajo del registro y en la página de gracias.
+ *
+ * ── Lo que NO está acá a propósito ─────────────────────────────────────────
+ * «Prioridad para futuras conversaciones privadas del proyecto» venía en la
+ * lista vieja del VIP. **No se puso**: vender por US$97 el turno para hablar
+ * de plata choca con la regla del propio documento de DESTINO OWNERS —«no
+ * ofrecer prioridad financiera […] por pagar la experiencia»— y el descargo
+ * que trae pegado no borra la oferta. Entra solo si Tony lo decide.
  */
+
+/** Lo que pasa el día del encuentro, en La Fortuna. */
+const VIP_DIA = [
+  'Encuentro privado con el equipo de Bike & Bed y con los demás que van.',
+  'Tour guiado de Bike & Bed y de la construcción de HUMAYA Wellness Hotel.',
+  'Sesión de preguntas con los fundadores: historia, visión, avances y próximos pasos.',
+  'Los números en pizarra, con tiempo para preguntar. Café o refrigerio.',
+] as const
+
+/** Lo que queda después — lo que antes se llamaba Founder Insider Access. */
+const VIP_DESPUES = [
+  'Grupo privado con las actualizaciones semanales del proyecto.',
+  'Renders, avances y detrás de cámaras.',
+  'Masterclass privada: «Cómo estamos construyendo un destino turístico wellness premium en La Fortuna».',
+  'La historia completa de Bike & Bed, de principio a fin.',
+  'Tu nombre en el Founders Wall digital.',
+  'Acceso prioritario a futuras experiencias Founder.',
+] as const
+
 export const VIP = {
   enlacePago: '',
-  nombre: 'DESTINO OWNERS · Experiencia VIP La Fortuna',
-  fechaTexto: 'Domingo 15 de noviembre de 2026',
+  nombre: 'Destino Owners VIP Experience',
+  /** Para el boleto, partido en dos líneas. */
+  nombreLinea1: 'Destino Owners',
+  nombreLinea2: 'VIP Experience',
+  fechaTexto: 'Miércoles 18 de noviembre de 2026',
+  fechaCorta: 'Miércoles 18',
+  fechaCortaMes: 'de noviembre',
+  /** Como lo imprime la banda del boleto cuando no hay aforo confirmado. */
+  fechaBoleto: '18 NOV 2026',
   horarioTexto: 'de 9:00 a.m. a 1:00 p.m.',
+  horarioCorto: '9:00 a.m. a 1:00 p.m.',
+  lugarTexto: 'La Fortuna de San Carlos',
   precioTexto: 'US$97 por persona',
+  /** Separado para poder dibujarlo grande en el boleto. */
+  precioMoneda: 'US$',
+  precioNumero: '97',
+  /**
+   * ⚠️ Vacío a propósito: **no se inventa un aforo**. El documento de
+   * estrategia dice 40 «propuesto, sujeto a capacidad real del recorrido», y
+   * propuesto no es confirmado. Mientras esté vacío, la banda del boleto no
+   * menciona cantidad y queda solo la razón física del límite — que es
+   * escasez verdadera y no se puede discutir.
+   */
+  cuposTexto: '',
+  /** La razón del límite. Esta sí es cierta sin necesidad de un número. */
+  limiteTexto:
+    'El recorrido es a pie y en grupo. Cabe lo que cabe: cuando se llena, se cierra.',
+  /** ⚠️ Vacío = no se dibuja. Tony confirma la política de devolución. */
+  devolucionTexto: '',
+  /** ⚠️ Vacío = no se nombra la pasarela hasta que exista el enlace. */
+  pagoTexto: '',
   promesa:
     'Vení a ver con tus propios ojos cómo se desarrolla y se opera un destino turístico: recorrés Bike & Bed, conocés el área del proyecto HUMAYA y te sentás con Tony y el equipo.',
-  incluye: [
-    'Clase presencial «Cómo evaluar los números de un destino turístico».',
-    'Recorrido guiado por Bike & Bed y visita al área del proyecto HUMAYA.',
-    'Preguntas en grupo con Tony y el equipo sobre operación y desarrollo.',
-    'La calculadora educativa y la grabación de la clase.',
-    'Café o refrigerio y conexión con los demás asistentes.',
+  incluyeDia: VIP_DIA,
+  incluyeDespues: VIP_DESPUES,
+  /** La lista plana, para el bloque corto que vive debajo del registro. */
+  incluye: [...VIP_DIA, ...VIP_DESPUES],
+  /**
+   * Esto no es un descargo legal metido al final: es parte del argumento. En
+   * un rubro donde todos prometen de más, el que dice en voz alta lo que no da
+   * es el que suena cierto.
+   */
+  noIncluye: [
+    'No te convierte en socio de nada.',
+    'No te da acceso a información que los demás no tengan. Todo lo de HUMAYA se entrega igual sin pagar esta entrada.',
+    'No incluye transporte a La Fortuna, hospedaje ni alimentación completa.',
+    'La entrada es para una persona. Quien te acompañe necesita la suya.',
   ],
-  noIncluye:
-    'No incluye transporte a La Fortuna, hospedaje ni alimentación completa. La entrada es para una persona: quien te acompañe necesita su propio cupo. Comprar la entrada no te convierte en socio de nada.',
 } as const
 
 export const hayVip = (): boolean => VIP.enlacePago.trim().length > 0
