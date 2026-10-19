@@ -22,7 +22,15 @@ export async function GET() {
       'content-type': 'text/calendar; charset=utf-8',
       // Nombre en ASCII a propósito: una tilde acá llega destrozada a Windows.
       'content-disposition': 'attachment; filename="destino-owners-vip.ics"',
-      'cache-control': 'public, max-age=3600',
+      /*
+        ⚠️ 5 minutos, no una hora — y tiene que calzar con el `revalidate` de
+        las páginas. Este archivo depende de ajustes que Tony cambia en el CRM
+        (la fecha, el interruptor). Con una hora de caché, apagar el VIP o
+        moverle la fecha seguiría entregando el evento viejo durante una hora,
+        y alguien se lo agendaría. Se vio en producción: con `vip_activo` en
+        «no» el CDN seguía sirviendo el `.ics` cacheado.
+      */
+      'cache-control': 'public, max-age=300',
     },
   })
 }
