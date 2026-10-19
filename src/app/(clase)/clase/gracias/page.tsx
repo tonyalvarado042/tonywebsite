@@ -425,6 +425,11 @@ export default function GraciasPage() {
                       Por persona. Una entrada vale por una persona — quien te acompañe necesita la
                       suya.
                     </p>
+                    {VIP.monedaTexto && (
+                      <p className="mt-2 text-[12.5px] leading-snug text-[#6B6355]">
+                        {VIP.monedaTexto}
+                      </p>
+                    )}
                   </div>
 
                   {/* Vertical en escritorio; en móvil las columnas se apilan y sobra. */}
