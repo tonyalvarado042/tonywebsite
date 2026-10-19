@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
-import { CORREO_REMITENTE, CORREO_DESTINO, REMITENTE_CON_NOMBRE, esDominioPropio } from '@/lib/correo'
+import { CORREO_REMITENTE, REMITENTE_CON_NOMBRE, esDominioPropio } from '@/lib/correo'
+import { destinosDeAviso } from '@/lib/correo'
+import { altaContacto, getCrm, hayCrm, normalizarTelefono } from '@/lib/crm'
 import {
   getInteresLabel,
   getInternalSubject,
@@ -204,7 +206,7 @@ export async function POST(req: NextRequest) {
     // Ahora el destino vive en el código (`@/lib/correo`) y nunca viene vacío,
     // así que esta rama de fallo ya no existe. Una variable que falta no puede
     // tumbar el formulario que capta los clientes.
-    const toEmail = CORREO_DESTINO
+    const { para: toEmail } = await destinosDeAviso()
     const fromEmail = CORREO_REMITENTE
 
     const interesLabel = getInteresLabel(interes)
@@ -231,6 +233,55 @@ export async function POST(req: NextRequest) {
         { success: false, error: 'No se pudo enviar el mensaje.' },
         { status: 500 }
       )
+    }
+
+    // 10b. EL LEAD AL CRM.
+    //
+    // Tony, 19 de octubre de 2026: tenía leads de este formulario que solo
+    // existían como un correo en una bandeja que no revisa. **Éste era el único
+    // de los seis formularios del sitio que no guardaba nada en el CRM** — si
+    // ese correo se perdía, el lead no existió nunca.
+    //
+    // Va DESPUÉS de avisar y NO tumba la respuesta: si el CRM está caído, el
+    // correo ya salió y la persona ya vio «listo». Un lead avisado pero sin
+    // guardar es malo; un formulario que da error teniendo el aviso adentro es
+    // peor.
+    try {
+      if (hayCrm()) {
+        const alta = await altaContacto({
+          telefono: whatsapp ? normalizarTelefono(whatsapp) : null,
+          nombre,
+          correo,
+          // `otro` a propósito: el CHECK de `fuente_lead` no tiene un valor para
+          // «formulario de contacto», y agregarlo obliga a tocar la base Y el
+          // filtro del CRM, que es otro repo. Se distingue por etiqueta, que es
+          // como Marketing segmenta igual. Mismo criterio que la rifa.
+          fuente: 'otro',
+          etiqueta: 'form:contacto',
+          detalle:
+            `Escribió por el formulario de contacto. Interés: ${interesLabel}.` +
+            (empresa ? ` Empresa: ${empresa}.` : '') +
+            (origen ? ` Vino de: ${origen}.` : '') +
+            `\n\n${mensaje}`,
+        })
+
+        // La etiqueta del interés, para poder segmentar después. Mismo patrón
+        // que la landing de la clase: una lectura y una escritura, no tres.
+        if (interes) {
+          const crm = getCrm()
+          const { data: ficha } = await crm
+            .from('cta_contactos').select('tags').eq('id', alta.contactoId).maybeSingle()
+          const tags: string[] = Array.isArray(ficha?.tags) ? (ficha!.tags as string[]) : []
+          const etiqueta = `interes:${interes}`
+          if (!tags.includes(etiqueta)) {
+            await crm.from('cta_contactos')
+              .update({ tags: [...tags, etiqueta] }).eq('id', alta.contactoId)
+          }
+        }
+      }
+    } catch (e) {
+      // Queda en el registro, no en la cara del visitante.
+      console.error('[contact/route] no se pudo guardar el lead en el CRM:', e)
     }
 
     // 11. Respuesta automática con plantilla Resend
