@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { generarIcsVip } from '@/lib/calendario-vip'
+import { leerVip } from '@/lib/vip-ajustes'
 
 /**
  * El archivo `.ics` del encuentro presencial de Destino Owners VIP.
@@ -11,8 +12,12 @@ import { generarIcsVip } from '@/lib/calendario-vip'
  * No escribe nada ni lee el CRM: es un GET público y estático.
  */
 
-export function GET() {
-  return new NextResponse(generarIcsVip(), {
+export async function GET() {
+  // Apagado en el CRM: no se sirve un evento de una fecha que ya no se vende.
+  const vip = await leerVip()
+  if (!vip) return new NextResponse('No hay una fecha abierta.', { status: 404 })
+
+  return new NextResponse(generarIcsVip(vip), {
     headers: {
       'content-type': 'text/calendar; charset=utf-8',
       // Nombre en ASCII a propósito: una tilde acá llega destrozada a Windows.

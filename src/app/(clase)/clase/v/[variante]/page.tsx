@@ -23,6 +23,12 @@ import { VARIANTES_CON_SLUG, buscarVariante } from '@/data/clase-variantes'
  * intentar renderizar una variante que no existe.
  */
 
+/**
+ * Se revalida cada 5 minutos para que encender o apagar el VIP desde el CRM
+ * —o moverle la fecha— se vea acá sin desplegar. Ver `lib/vip-ajustes.ts`.
+ */
+export const revalidate = 300
+
 export const dynamicParams = false
 
 export function generateStaticParams() {

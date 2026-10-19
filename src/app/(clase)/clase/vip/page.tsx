@@ -1,7 +1,8 @@
 import Image from 'next/image'
 import type { Metadata } from 'next'
 import { ArrowRight, BadgeCheck, X } from 'lucide-react'
-import { VIP, hayVip } from '@/data/clase-copropiedad'
+import { VIP } from '@/data/clase-copropiedad'
+import { leerVip } from '@/lib/vip-ajustes'
 
 /**
  * La página de VENTA de la entrada VIP.
@@ -28,6 +29,13 @@ import { VIP, hayVip } from '@/data/clase-copropiedad'
  * que dice en voz alta lo que no da es el que suena cierto, y eso vende.
  */
 
+/**
+ * Se revalida cada 5 minutos para que un cambio en el CRM —encender el VIP,
+ * mover la fecha, pegar el enlace nuevo— se vea **sin desplegar**. Ese es el
+ * punto de tener la configuración en la base.
+ */
+export const revalidate = 300
+
 export const metadata: Metadata = {
   title: 'Destino Owners VIP Experience | Miércoles 18 de noviembre en La Fortuna',
   description:
@@ -44,7 +52,50 @@ const REELS = [
   { archivo: 'obra-2', etiqueta: 'HUMAYA · la obra', obra: true, alt: 'La hilera de módulos en construcción de HUMAYA' },
 ]
 
-export default function VipPage() {
+export default async function VipPage() {
+  const vip = await leerVip()
+
+  /*
+    Apagado en el CRM, sin fecha válida, o la base no respondió. No se deja la
+    página rota ni en blanco: se dice la verdad y se manda a la clase, que es
+    el embudo que sí está abierto. Es mejor que mostrar una fecha vieja o un
+    botón que lleva a un checkout muerto.
+  */
+  if (!vip) {
+    return (
+      <main className="relative flex min-h-screen items-center justify-center overflow-hidden px-6">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_55%_at_50%_0%,rgba(201,162,77,0.18)_0%,transparent_70%)]"
+        />
+        <div className="relative z-10 max-w-md text-center">
+          <Image
+            src="/images/logos/tony-alvarado-logo-white-horizontal.png"
+            alt="Tony Alvarado"
+            width={1920}
+            height={456}
+            priority
+            className="mx-auto h-7 w-auto object-contain"
+          />
+          <h1 className="mt-10 text-3xl font-extrabold leading-tight tracking-[-0.02em] text-brand-text">
+            {VIP.nombreLinea1} <span className="text-brand-gold">{VIP.nombreLinea2}</span>
+          </h1>
+          <p className="mt-5 leading-relaxed text-brand-muted">
+            Por ahora no hay una fecha abierta. Las entradas se abren por tandas y se agotan: la
+            forma de enterarte primero es estar en la clase.
+          </p>
+          <a
+            href="/clase"
+            className="mt-8 inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-gold px-7 py-4 text-base font-extrabold text-brand-bg transition hover:opacity-90"
+          >
+            Ver la clase gratuita
+            <ArrowRight size={17} aria-hidden />
+          </a>
+        </div>
+      </main>
+    )
+  }
+
   return (
     <main className="relative min-h-screen overflow-hidden">
       <div
@@ -72,7 +123,7 @@ export default function VipPage() {
               ·
             </span>
             <span className="text-[11px] uppercase tracking-[0.1em] text-brand-muted">
-              Cupo limitado a {VIP.cuposTexto} entradas
+              Cupo limitado a {vip.cuposTexto} entradas
             </span>
           </div>
 
@@ -85,7 +136,7 @@ export default function VipPage() {
           <div className="mt-5 flex flex-wrap items-center gap-3">
             <span aria-hidden className="h-0.5 w-11 shrink-0 bg-brand-gold" />
             <span className="text-[11.5px] font-bold uppercase tracking-[0.13em] text-brand-muted">
-              {VIP.fechaTexto} · {VIP.lugarTexto} · {VIP.precioTexto}
+              {vip.fechaTexto} · {VIP.lugarTexto} · {vip.precioTexto}
             </span>
           </div>
 
@@ -107,12 +158,12 @@ export default function VipPage() {
             </p>
           </div>
 
-          {hayVip() && (
+          {vip.enlacePago && (
             <a
               href="#entrada"
               className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-brand-gold underline underline-offset-4 transition hover:opacity-80"
             >
-              Ver la entrada — {VIP.precioTexto}
+              Ver la entrada — {vip.precioTexto}
               <ArrowRight size={15} aria-hidden />
             </a>
           )}
@@ -204,7 +255,7 @@ export default function VipPage() {
         </section>
 
         {/* ───────── El boleto: acá se compra ───────── */}
-        {hayVip() && (
+        {vip.enlacePago && (
           <div
             id="entrada"
             className="relative mt-10 scroll-mt-8 rounded-[20px] bg-[#F7F3E8] text-[#1A1A1A] shadow-[0_20px_56px_rgba(0,0,0,.5)]"
@@ -214,7 +265,7 @@ export default function VipPage() {
                 Entrada · Destino Owners VIP
               </span>
               <span className="text-[11px] font-extrabold uppercase tracking-[0.12em] sm:text-xs">
-                {VIP.cuposTexto ? `Solo ${VIP.cuposTexto} entradas` : VIP.fechaBoleto}
+                {vip.cuposTexto ? `Solo ${vip.cuposTexto} entradas` : vip.fechaBoleto}
               </span>
             </div>
 
@@ -228,7 +279,7 @@ export default function VipPage() {
                     {VIP.precioMoneda}
                   </span>
                   <span className="text-[46px] font-extrabold leading-[0.9] tracking-[-0.045em] sm:text-[64px]">
-                    {VIP.precioNumero}
+                    {vip.precioNumero}
                   </span>
                 </p>
                 <p className="mt-2.5 text-[13px] leading-snug text-[#4A4438]">
@@ -250,12 +301,12 @@ export default function VipPage() {
                   Cuándo y dónde
                 </p>
                 <p className="mt-2 text-[17px] font-extrabold leading-tight tracking-[-0.015em] sm:text-xl">
-                  {VIP.fechaCorta}
+                  {vip.fechaCorta}
                   <br />
-                  {VIP.fechaCortaMes}
+                  {vip.fechaCortaMes}
                 </p>
                 <p className="mt-2 text-[13.5px] leading-snug text-[#4A4438] sm:text-[14.5px]">
-                  {VIP.horarioCorto}
+                  {vip.horarioCorto}
                   <br />
                   {VIP.lugarTexto}
                 </p>
@@ -275,13 +326,13 @@ export default function VipPage() {
               <p className="text-[13px] leading-snug text-[#4A4438]">{VIP.limiteTexto}</p>
 
               <a
-                href={VIP.enlacePago}
+                href={vip.enlacePago}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-5 flex w-full items-center justify-center gap-2.5 rounded-2xl bg-brand-bg px-5 py-5 text-base font-extrabold text-[#F7F3E8] transition hover:opacity-90 sm:text-lg"
               >
                 Comprar mi entrada — {VIP.precioMoneda}
-                {VIP.precioNumero}
+                {vip.precioNumero}
                 <ArrowRight size={18} aria-hidden />
               </a>
 

@@ -14,6 +14,12 @@ import { VARIANTE_POR_DEFECTO } from '@/data/clase-variantes'
 const v = VARIANTE_POR_DEFECTO
 const CANONICO = 'https://clase.tonyalvarado.com/'
 
+/**
+ * Se revalida cada 5 minutos para que encender o apagar el VIP desde el CRM
+ * —o moverle la fecha— se vea acá sin desplegar. Ver `lib/vip-ajustes.ts`.
+ */
+export const revalidate = 300
+
 export const metadata: Metadata = {
   title: `${v.meta.titulo} | ${CLASE.fechaTexto}`,
   description: v.meta.descripcion,

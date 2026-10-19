@@ -63,6 +63,20 @@ export const ETIQUETA_CRM = `clase:${CLASE.slug}`
 // ── La oferta VIP ───────────────────────────────────────────────────────────
 
 /**
+ * El TEXTO de la experiencia VIP. Lo que no cambia de un lanzamiento a otro.
+ *
+ * ⚠️ **La fecha, el enlace de pago, los cupos, el precio y el interruptor de
+ * encendido YA NO VIVEN ACÁ.** Viven en `cta_ajustes` del CRM y se leen con
+ * `leerVip()` de `lib/vip-ajustes.ts`.
+ *
+ * Tony lo pidió el 19 de octubre de 2026: van 5 a 10 lanzamientos, uno cada
+ * ~15 días, y con la fecha en el código cada lanzamiento era un despliegue.
+ * Es la misma regla que ya estaba escrita en `secuencias.ts`: **los secretos
+ * van en Vercel, las decisiones van en el CRM.**
+ *
+ * No volver a poner una fecha acá: **dos fuentes de verdad se desincronizan**,
+ * y la que se queda vieja es siempre la que ve el cliente.
+ *
  * El encuentro presencial de DESTINO OWNERS en La Fortuna.
  *
  * ⚠️ Se movió DOS veces. Era el domingo 8 de noviembre; el 13 de octubre de
@@ -102,58 +116,18 @@ const VIP_DESPUES = [
 ] as const
 
 export const VIP = {
-  /**
-   * Checkout de Hotmart del producto 8764514.
-   *
-   * **Probado abriéndolo el 19 de octubre de 2026**, con el producto ya en
-   * «Ventas activas»: carga el checkout real, con el lote, la fecha y el
-   * lugar. Antes, en Borrador, devolvía «Product unavailable.» — por eso la
-   * regla es abrir el enlace antes de pegarlo, nunca confiar en que exista.
-   */
-  enlacePago: 'https://pay.hotmart.com/X108101737C',
   nombre: 'Destino Owners VIP Experience',
-  /** Para el boleto, partido en dos líneas. */
+  /** Para el titular y el boleto, partido en dos líneas. */
   nombreLinea1: 'Destino Owners',
   nombreLinea2: 'VIP Experience',
-  slug: 'vip-18-nov',
-  /**
-   * El instante exacto, para el calendario. Costa Rica es UTC−6 todo el año
-   * (no tiene horario de verano), así que 9:00 CR = 15:00 UTC y 12:00 CR =
-   * 18:00 UTC. Los dos salen de lo que dice el checkout de Hotmart, que es lo
-   * que se imprime en la entrada.
-   */
-  instanteUtc: '2026-11-18T15:00:00Z',
-  instanteFinUtc: '2026-11-18T18:00:00Z',
-  fechaTexto: 'Miércoles 18 de noviembre de 2026',
-  fechaCorta: 'Miércoles 18',
-  fechaCortaMes: 'de noviembre',
-  /** Como lo imprime la banda del boleto cuando no hay aforo confirmado. */
-  fechaBoleto: '18 NOV 2026',
-  /**
-  * ⚠️ Eran «9:00 a.m. a 1:00 p.m.», que venía del documento de estrategia.
-  * El 19 de octubre de 2026 se leyó el checkout real: dice **9:00 a 12:00**,
-  * y eso es lo que imprime la entrada. Manda lo que ve el comprador.
-  */
-  horarioTexto: 'de 9:00 a.m. a 12 mediodía',
-  horarioCorto: '9:00 a.m. a 12 mediodía',
   lugarTexto: 'La Fortuna de San Carlos',
-  precioTexto: 'US$97 por persona',
-  /** Separado para poder dibujarlo grande en el boleto. */
+  /** Separado para poder dibujar el número grande en el boleto. */
   precioMoneda: 'US$',
-  precioNumero: '97',
-  /**
-   * **40, confirmado el 19 de octubre de 2026 en Hotmart**, no «propuesto»:
-   * el lote «Destino Owners VIP» del producto 8764514 tiene `Número de
-   * entradas: 40`. Ese número ya no es un adorno — Hotmart deja de vender al
-   * llegar a 40, así que la banda del boleto dice la verdad.
-   */
-  cuposTexto: '40',
-  /** La razón del límite. Esta sí es cierta sin necesidad de un número. */
+  /** La razón del límite. Es cierta sin necesidad de un número. */
   limiteTexto:
     'El recorrido es a pie y en grupo. Cabe lo que cabe: cuando se llena, se cierra.',
   /** Leído de Hotmart el 19 de octubre de 2026: «Plazo para solicitar el reembolso: 7 días». */
   devolucionTexto: 'Reembolso dentro de los primeros 7 días',
-  /** La pasarela quedó confirmada: producto 8764514 de Hotmart. */
   pagoTexto: 'Pago seguro por Hotmart',
   /**
    * El producto tiene la conversión de moneda activa: abierto desde Costa
@@ -180,7 +154,7 @@ export const VIP = {
   ],
 } as const
 
-export const hayVip = (): boolean => VIP.enlacePago.trim().length > 0
+/** `hayVip()` se retiró: ahora la compuerta es `leerVip()`, que lee el CRM. */
 
 /**
  * El grupo privado de Destino Owners — **no es el de la clase**.

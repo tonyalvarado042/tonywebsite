@@ -10,7 +10,8 @@ import {
   registrarActividad,
 } from '@/lib/crm'
 import { automatizacionDeLaClase, enlaceDeBaja } from '@/lib/secuencias'
-import { CLASE, ETIQUETA_CRM, GRUPO, VIP, hayVip } from '@/data/clase-copropiedad'
+import { CLASE, ETIQUETA_CRM, GRUPO, VIP } from '@/data/clase-copropiedad'
+import { leerVip } from '@/lib/vip-ajustes'
 import { PAISES } from '@/data/paises'
 import { enlaceGoogle } from '@/lib/calendario-clase'
 
@@ -236,6 +237,8 @@ export async function POST(req: NextRequest) {
     let correoEnviado = false
     try {
       const baja = alta.estaDeBaja ? '' : enlaceDeBaja(SITIO, alta.contactoId)
+      // El upsell solo existe si el VIP está encendido en el CRM Y tiene enlace.
+      const vip = await leerVip()
 
       await getResend().emails.send({
         from: REMITENTE_CON_NOMBRE,
@@ -290,11 +293,11 @@ export async function POST(req: NextRequest) {
               persona al grupo de WhatsApp; una oferta antes de eso compite con
               el paso que falta y se pierden las dos cosas.
 
-              Y solo existe si hay enlace de pago: `hayVip()` es la misma
-              compuerta que usa la página. Sin enlace, el correo sale igual que
-              siempre y no menciona nada.
+              Y solo existe si el VIP está encendido en el CRM y tiene enlace
+              de pago: la misma compuerta que usa la página. Apagado, el correo
+              sale igual que siempre y no menciona nada.
             */
-            ...(hayVip()
+            ...(vip?.enlacePago
               ? [
                   '',
                   '───────────────────────────────',
@@ -311,10 +314,10 @@ export async function POST(req: NextRequest) {
                   'masterclass de cómo estamos construyendo el proyecto, y tu',
                   'nombre en el Founders Wall.',
                   '',
-                  `  ${VIP.fechaTexto} · ${VIP.horarioTexto}`,
-                  `  ${VIP.lugarTexto} · ${VIP.precioTexto}`,
+                  `  ${vip.fechaTexto} · ${vip.horarioTexto}`,
+                  `  ${VIP.lugarTexto} · ${vip.precioTexto}`,
                   '',
-                  `  ${VIP.enlacePago}`,
+                  `  ${vip.enlacePago}`,
                   '',
                   'Ojo con tres cosas, porque prefiero decirlas yo: no te',
                   'convierte en socio de nada, no te da acceso a información que',
