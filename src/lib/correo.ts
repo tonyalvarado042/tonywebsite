@@ -151,3 +151,45 @@ export function estadoDelRemitente() {
     ignorada: Boolean(puesta) && puesta !== CORREO_REMITENTE,
   }
 }
+
+/* ── A dónde llegan los avisos: lo decide el CRM, no este archivo ──────────
+ *
+ * Tony, 19 de octubre de 2026: «tengo algunos leads que entraron por el form de
+ * la página, entraron al correo de tonyalvarado pero no lo estoy revisando […]
+ * lo que quiero es que me lleguen también a aalvarado@gmail.com».
+ *
+ * Antes el destino era la constante de arriba. Cambiarlo era editar código y
+ * desplegar — y eso no se vende: **el CRM se va a vender a otras empresas**, y
+ * cada una tendría su propia rama del repo solo para cambiar un correo.
+ * Ahora sale de Ajustes del CRM.
+ *
+ * ⚠️ NUNCA TIRA. Si el CRM no contesta, se usa el de siempre. Un lead que llega
+ * y no avisa a nadie es peor que cualquier otra falla de acá: la persona ya
+ * levantó la mano y nadie se entera.
+ */
+
+import { getCrm, hayCrm } from '@/lib/crm'
+
+export type DestinosAviso = { para: string[]; deDonde: 'crm' | 'respaldo' }
+
+export async function destinosDeAviso(): Promise<DestinosAviso> {
+  if (!hayCrm()) return { para: [CORREO_DESTINO], deDonde: 'respaldo' }
+
+  try {
+    const { data, error } = await getCrm().rpc('cta_correos_de_aviso')
+    if (error) throw new Error(error.message)
+
+    const principal = String((data as Record<string, unknown>)?.principal ?? '').trim()
+    const copia = String((data as Record<string, unknown>)?.copia ?? '').trim()
+    const para = [principal, copia].filter(Boolean)
+
+    // Los dos vacíos en Ajustes es una decisión rara, pero es SU decisión.
+    // Aun así no se deja sin avisar: cae al de siempre y queda dicho de dónde
+    // salió, para que `/api/salud` lo pueda reportar.
+    if (para.length === 0) return { para: [CORREO_DESTINO], deDonde: 'respaldo' }
+    return { para, deDonde: 'crm' }
+  } catch (e) {
+    console.error('no se pudo leer los correos de aviso del CRM:', e)
+    return { para: [CORREO_DESTINO], deDonde: 'respaldo' }
+  }
+}
