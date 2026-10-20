@@ -1,3 +1,13 @@
+/**
+ * Los comodines que se pueden escribir en un correo de la cadena, y cómo se
+ * expanden.
+ *
+ * Vive aparte del motor de envío por dos razones: se puede probar con
+ * `node --test` sin base de datos, y la **vista previa del CRM usa estas
+ * mismas funciones** en vez de una copia. Una vista previa que no usa el
+ * código real miente justo cuando más importa.
+ */
+
 // Import relativo, no con alias: así este módulo se puede probar con
 // `node --test` sin resolver los alias de TypeScript.
 import type { ConfigVip } from './vip-fechas'
@@ -95,4 +105,29 @@ export function expandirVip(cuerpo: string, vip: ConfigVip | null): string {
   ].join('\n')
 
   return cuerpo.replace(/\{vip\}/g, bloque).replace(/\{vip_linea\}/g, linea)
+}
+
+/**
+ * Reemplaza `{nombre}` en el asunto y en el cuerpo.
+ *
+ * Tony lo pidio el 20-sep-2026: el nombre va en el titulo Y en el saludo.
+ *
+ * ⚠️ Si el contacto no tiene nombre, NO deja el hueco ni escribe «Hola ,».
+ * Se limpia el placeholder y de paso se arreglan los restos: la coma o el
+ * espacio que quedaba colgando. Un correo que dice «Hola ,» se lee peor que
+ * uno que no saluda.
+ */
+export function personalizar(texto: string, nombre: string): string {
+  if (nombre) return texto.replace(/\{nombre\}/g, nombre)
+  return texto
+    // El hueco puede llevar coma ANTES («…, {nombre}») o DESPUÉS
+    // («{nombre}, el número…»). Hay que barrer las dos, si no queda una coma
+    // suelta al principio de la frase.
+    .replace(/\{nombre\}\s*,\s*/g, '')
+    .replace(/\s*,?\s*\{nombre\}/g, '')
+    .replace(/\s+([,.!?:])/g, '$1')
+    .replace(/[ \t]{2,}/g, ' ')
+    .trim()
+    // Al quitar el nombre del principio, la frase arrancaba en minúscula.
+    .replace(/^([a-záéíóúñ¿¡])/u, (c) => c.toUpperCase())
 }
