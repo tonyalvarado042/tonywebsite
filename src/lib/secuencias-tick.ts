@@ -15,6 +15,8 @@ import {
   esBorrador,
   secuenciasActivas,
 } from '@/lib/secuencias'
+import { leerVip } from '@/lib/vip-ajustes'
+import { expandirVip } from '@/lib/vip-texto-correo'
 
 /**
  * ⚠️ **Esto vivía dentro de `app/api/secuencias/tick/route.ts` y tuvo que
@@ -50,6 +52,7 @@ import {
 const SITIO = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.tonyalvarado.com'
 const MAX_POR_TICK = 200
 
+
 let resendClient: Resend | null = null
 function getResend(): Resend {
   const apiKey = process.env.RESEND_API_KEY
@@ -72,13 +75,16 @@ export async function correrElTick(req: NextRequest) {
 
   const crm = getCrm()
   const hoy = new Date().toISOString().slice(0, 10)
+  const ahora = new Date()
+  // Una sola lectura por tick: es el mismo VIP para todos los destinatarios.
+  const vip = await leerVip()
 
   const { data: pendientes, error } = await crm
     .from(TABLA_INSCRIPCIONES)
     .select(`
       id, contacto_id, automatizacion_id, paso_actual, proximo_envio_el,
       cta_contactos!inner ( id, nombre_completo, email, baja ),
-      cta_automatizaciones!inner ( id, nombre, activa )
+      cta_automatizaciones!inner ( id, nombre, activa, vence_el )
     `)
     .eq('estado', 'activa')
     .lte('proximo_envio_el', hoy)
@@ -102,7 +108,7 @@ export async function correrElTick(req: NextRequest) {
     automatizacion_id: string
     paso_actual: number
     cta_contactos: { nombre_completo: string | null; email: string | null; baja: boolean }
-    cta_automatizaciones: { nombre: string; activa: boolean }
+    cta_automatizaciones: { nombre: string; activa: boolean; vence_el: string | null }
   }>) {
     const contacto = ins.cta_contactos
     const automatizacion = ins.cta_automatizaciones
@@ -129,6 +135,35 @@ export async function correrElTick(req: NextRequest) {
 
     // Freno 2 — la automatización tiene que estar encendida.
     if (!automatizacion.activa) { anotar('bloqueado: automatización apagada'); continue }
+
+    /*
+      Freno 5 — la cadena venció.
+
+      Los pasos se cuentan **desde que la persona se inscribe**, no desde el
+      evento. En una cadena atada a una fecha —la clase en vivo— eso significa
+      que quien se registra pocos días antes tiene pasos programados para
+      DESPUÉS del evento. El correo 4 dice «ya falta poco para la clase, nos
+      vemos ahí»: mandarlo cuando la clase ya pasó es peor que no mandar nada.
+
+      Medido el 19 de octubre de 2026 sobre la cadena de la clase del 28: a los
+      132 inscritos vivos no les tocaba ninguno después del evento, pero a
+      quien se registrara del 21 en adelante sí. Por eso el freno es
+      preventivo y no le movió el calendario a nadie.
+
+      La inscripción pasa a «terminada», no a «detenida»: no es que algo
+      fallara ni que la persona se diera de baja — la cadena simplemente se
+      acabó para ella.
+    */
+    const vence = automatizacion.vence_el ? new Date(automatizacion.vence_el) : null
+    if (vence && ahora > vence) {
+      if (!prueba) {
+        await crm.from(TABLA_INSCRIPCIONES)
+          .update({ estado: 'terminada', proximo_envio_el: null })
+          .eq('id', ins.id)
+      }
+      anotar('terminada: la cadena venció (el evento ya pasó)')
+      continue
+    }
 
     const { data: paso } = await crm
       .from(TABLA_PASOS)
@@ -169,7 +204,7 @@ export async function correrElTick(req: NextRequest) {
           [
             nombre ? `Hola ${nombre},` : 'Hola,',
             '',
-            personalizar(paso.cuerpo ?? '', nombre),
+            expandirVip(personalizar(paso.cuerpo ?? '', nombre), vip),
             '',
             'Tony Alvarado',
             'tonyalvarado.com',
