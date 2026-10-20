@@ -217,6 +217,15 @@ export async function POST(req: NextRequest) {
   /**
    * ── Los comodines que se pueden escribir en un correo de la cadena ──
    *
+   * `tipo` dice cómo se mete en el texto, y NO es un detalle:
+   *   `inline` — va donde está el cursor (es una palabra dentro de la frase)
+   *   `bloque` — va SIEMPRE al final (es un bloque de varias líneas)
+   *
+   * ⚠️ Esto nació de un error real el 19-oct-2026: la pantalla metía todos
+   * los comodines donde estuviera el cursor, y `{vip}` cayó en la mitad del
+   * correo 3 — partiendo el argumento justo antes de su remate. Un bloque de
+   * venta en medio de un párrafo no es un detalle de estilo: rompe el texto.
+   *
    * La lista vive ACÁ y no en el CRM a propósito: quien los expande es este
    * repo (`personalizar` y `expandirVip`). Si el CRM los tuviera escritos
    * aparte, el día que se agregue uno la pantalla seguiría mostrando la lista
@@ -231,17 +240,20 @@ export async function POST(req: NextRequest) {
       comodines: [
         {
           clave: '{nombre}',
+          tipo: 'inline',
           donde: 'asunto y cuerpo',
           que_hace: 'El primer nombre de la persona. Si no lo tenemos, se borra solo y arregla la coma que quedaba colgando.',
         },
         {
           clave: '{vip_linea}',
-          donde: 'cuerpo',
+          tipo: 'bloque',
+          donde: 'al final del cuerpo',
           que_hace: 'Una posdata corta con la experiencia VIP y el enlace. Para sembrarla sin competir con el llamado principal.',
         },
         {
           clave: '{vip}',
-          donde: 'cuerpo',
+          tipo: 'bloque',
+          donde: 'al final del cuerpo',
           que_hace: 'El bloque completo del VIP: fecha, horario, lugar, precio, cupos y enlace.',
         },
       ],
