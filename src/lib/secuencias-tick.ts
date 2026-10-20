@@ -16,7 +16,7 @@ import {
   secuenciasActivas,
 } from '@/lib/secuencias'
 import { leerVip } from '@/lib/vip-ajustes'
-import { expandirVip } from '@/lib/vip-texto-correo'
+import { expandirVip, personalizar } from '@/lib/correo-comodines'
 
 /**
  * ⚠️ **Esto vivía dentro de `app/api/secuencias/tick/route.ts` y tuvo que
@@ -287,29 +287,4 @@ function primerNombre(completo: string | null): string {
   const primero = limpio.split(' ')[0]
   if (primero.length < 2) return ''
   return primero.charAt(0).toUpperCase() + primero.slice(1).toLowerCase()
-}
-
-/**
- * Reemplaza `{nombre}` en el asunto y en el cuerpo.
- *
- * Tony lo pidio el 20-sep-2026: el nombre va en el titulo Y en el saludo.
- *
- * ⚠️ Si el contacto no tiene nombre, NO deja el hueco ni escribe «Hola ,».
- * Se limpia el placeholder y de paso se arreglan los restos: la coma o el
- * espacio que quedaba colgando. Un correo que dice «Hola ,» se lee peor que
- * uno que no saluda.
- */
-function personalizar(texto: string, nombre: string): string {
-  if (nombre) return texto.replace(/\{nombre\}/g, nombre)
-  return texto
-    // El hueco puede llevar coma ANTES («…, {nombre}») o DESPUÉS
-    // («{nombre}, el número…»). Hay que barrer las dos, si no queda una coma
-    // suelta al principio de la frase.
-    .replace(/\{nombre\}\s*,\s*/g, '')
-    .replace(/\s*,?\s*\{nombre\}/g, '')
-    .replace(/\s+([,.!?:])/g, '$1')
-    .replace(/[ \t]{2,}/g, ' ')
-    .trim()
-    // Al quitar el nombre del principio, la frase arrancaba en minúscula.
-    .replace(/^([a-záéíóúñ¿¡])/u, (c) => c.toUpperCase())
 }

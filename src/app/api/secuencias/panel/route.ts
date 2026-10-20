@@ -3,6 +3,8 @@ import { createClient } from '@supabase/supabase-js'
 import { getCrm } from '@/lib/crm'
 import { cambiarSecuencias, secuenciasActivas } from '@/lib/secuencias'
 import { correrElTick } from '@/lib/secuencias-tick'
+import { expandirVip, personalizar } from '@/lib/correo-comodines'
+import { leerVip } from '@/lib/vip-ajustes'
 
 /**
  * El mando de las cadenas de correos, para que Tony las opere DESDE EL CRM.
@@ -210,6 +212,75 @@ export async function POST(req: NextRequest) {
   // ── Ver cómo está: cualquiera con sesión ──
   if (accion === 'estado') {
     return responder({ ok: true, encendido: await secuenciasActivas(), puedeCambiar: esAdmin })
+  }
+
+  /**
+   * ── Los comodines que se pueden escribir en un correo de la cadena ──
+   *
+   * La lista vive ACÁ y no en el CRM a propósito: quien los expande es este
+   * repo (`personalizar` y `expandirVip`). Si el CRM los tuviera escritos
+   * aparte, el día que se agregue uno la pantalla seguiría mostrando la lista
+   * vieja — y Tony escribiría un comodín que no existe, que sale literal en
+   * el correo.
+   */
+  if (accion === 'comodines') {
+    const vip = await leerVip()
+    return responder({
+      ok: true,
+      vipEncendido: Boolean(vip?.enlacePago),
+      comodines: [
+        {
+          clave: '{nombre}',
+          donde: 'asunto y cuerpo',
+          que_hace: 'El primer nombre de la persona. Si no lo tenemos, se borra solo y arregla la coma que quedaba colgando.',
+        },
+        {
+          clave: '{vip_linea}',
+          donde: 'cuerpo',
+          que_hace: 'Una posdata corta con la experiencia VIP y el enlace. Para sembrarla sin competir con el llamado principal.',
+        },
+        {
+          clave: '{vip}',
+          donde: 'cuerpo',
+          que_hace: 'El bloque completo del VIP: fecha, horario, lugar, precio, cupos y enlace.',
+        },
+      ],
+      nota: vip?.enlacePago
+        ? `El VIP está encendido: los comodines del VIP se llenan con la fecha del ${vip.fechaTexto}.`
+        : 'El VIP está apagado en Ajustes: los comodines del VIP desaparecen solos del correo, sin dejar hueco.',
+    })
+  }
+
+  /**
+   * ── Cómo queda el correo antes de mandarlo ──
+   *
+   * Renderiza con las MISMAS funciones que usa el motor de envío, no con una
+   * copia. Una vista previa que no usa el código real miente justo cuando más
+   * importa.
+   */
+  if (accion === 'vista_previa') {
+    const asunto = typeof cuerpo.asunto === 'string' ? cuerpo.asunto : ''
+    const texto = typeof cuerpo.cuerpo === 'string' ? cuerpo.cuerpo : ''
+    const nombre = typeof cuerpo.nombre === 'string' && cuerpo.nombre.trim()
+      ? cuerpo.nombre.trim()
+      : 'Kevin'
+    const vip = await leerVip()
+
+    return responder({
+      ok: true,
+      // Dos versiones a propósito: así se ve de una que el correo funciona
+      // igual para quien tiene nombre guardado y para quien no.
+      conNombre: {
+        asunto: personalizar(asunto, nombre),
+        cuerpo: expandirVip(personalizar(texto, nombre), vip),
+      },
+      sinNombre: {
+        asunto: personalizar(asunto, ''),
+        cuerpo: expandirVip(personalizar(texto, ''), vip),
+      },
+      vipEncendido: Boolean(vip?.enlacePago),
+      nombreDeEjemplo: nombre,
+    })
   }
 
   // De acá para abajo, solo administrador. Prender el interruptor o correr la

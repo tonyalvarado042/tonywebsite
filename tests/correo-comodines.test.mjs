@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { expandirVip } from '../src/lib/vip-texto-correo.ts'
+import { expandirVip } from '../src/lib/correo-comodines.ts'
 import { derivarVip } from '../src/lib/vip-fechas.ts'
 
 /**

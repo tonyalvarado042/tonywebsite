@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "test:whatsapp": "node --experimental-strip-types --test tests/calculadora-airbnb-whatsapp.test.mjs",
-    "test:vip": "node --experimental-strip-types --test tests/vip-fechas.test.mjs tests/vip-texto-correo.test.mjs",
+    "test:vip": "node --experimental-strip-types --test tests/vip-fechas.test.mjs tests/correo-comodines.test.mjs",
     "clase:correr": "node scripts/correr-la-clase.mjs",
     "test:clase": "node --test tests/correr-la-clase.test.mjs"
   },
