@@ -17,6 +17,7 @@ import {
 } from '@/lib/secuencias'
 import { leerVip } from '@/lib/vip-ajustes'
 import { expandirVip, personalizar } from '@/lib/correo-comodines'
+import { ordenarPorUrgencia } from '@/lib/orden-del-tick'
 
 /**
  * ⚠️ **Esto vivía dentro de `app/api/secuencias/tick/route.ts` y tuvo que
@@ -76,6 +77,9 @@ export async function correrElTick(req: NextRequest) {
   const crm = getCrm()
   const hoy = new Date().toISOString().slice(0, 10)
   const ahora = new Date()
+  const manana = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
+  /** Un correo por persona por día. Se llena a medida que se va mandando. */
+  const yaRecibieronHoy = new Set<string>()
   // Una sola lectura por tick: es el mismo VIP para todos los destinatarios.
   const vip = await leerVip()
 
@@ -94,6 +98,12 @@ export async function correrElTick(req: NextRequest) {
     return NextResponse.json({ ok: false, error: error.message }, { status: 500 })
   }
 
+  /*
+    Quien está en dos cadenas solo recibe una hoy (freno 6), así que importa
+    cuál. Gana la que vence antes — el porqué está en `orden-del-tick.ts`.
+  */
+  const porUrgencia = ordenarPorUrgencia(pendientes ?? [])
+
   const resultado = {
     ok: true,
     prueba,
@@ -102,7 +112,7 @@ export async function correrElTick(req: NextRequest) {
     detalle: [] as { correo: string; paso: number; automatizacion: string; accion: string }[],
   }
 
-  for (const ins of (pendientes ?? []) as unknown as Array<{
+  for (const ins of porUrgencia as unknown as Array<{
     id: string
     contacto_id: string
     automatizacion_id: string
@@ -190,6 +200,44 @@ export async function correrElTick(req: NextRequest) {
       anotar('bloqueado: el texto todavía es [BORRADOR]')
       continue
     }
+
+    /*
+      Freno 6 — una persona recibe UN correo por día, no dos.
+
+      El motor recorre inscripción por inscripción, así que quien está en dos
+      cadenas recibe las dos el mismo día. Medido el 19 de octubre de 2026:
+      dos personas iban a recibir dos correos el 21, y siete en diez días.
+      Dos correos del mismo remitente el mismo día es lo que convierte a un
+      lector en alguien que marca spam.
+
+      El que se queda espera **un día**, no se pierde: se le corre
+      `proximo_envio_el` a mañana. Y como queda corrido, si el tick se corre
+      dos veces el mismo día tampoco vuelve a salir — el agujero se cierra
+      solo, sin necesidad de ir a consultar qué se mandó hoy.
+
+      Cuál de las dos gana: la que **vence antes**. Una cadena atada a un
+      evento tiene fecha de caducidad y la de goteo no, así que esperar un día
+      le cuesta mucho menos a la segunda. Se ordena abajo, antes del recorrido.
+    */
+    if (yaRecibieronHoy.has(ins.contacto_id)) {
+      if (!prueba) {
+        await crm.from(TABLA_INSCRIPCIONES)
+          .update({ proximo_envio_el: manana })
+          .eq('id', ins.id)
+      }
+      anotar('corrido a mañana: hoy ya le toca otro correo')
+      continue
+    }
+
+    /*
+      Se marca ANTES de mandar, a propósito.
+
+      En seco, porque si no la prueba mentiría sobre quién recibe qué. Y en
+      real, porque si el envío falla igual preferimos que la otra cadena
+      espere un día: es mejor quedarse corto que mandarle dos correos a
+      alguien cuyo primer intento quizá sí salió y solo falló el acuse.
+    */
+    yaRecibieronHoy.add(ins.contacto_id)
 
     if (prueba) { anotar('se enviaría'); continue }
 
