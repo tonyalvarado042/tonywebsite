@@ -206,7 +206,10 @@ export async function POST(req: NextRequest) {
     // Ahora el destino vive en el código (`@/lib/correo`) y nunca viene vacío,
     // así que esta rama de fallo ya no existe. Una variable que falta no puede
     // tumbar el formulario que capta los clientes.
-    const { para: toEmail } = await destinosDeAviso()
+    // `landing` es el formulario de contacto del sitio. Pasarlo hace que el
+    // aviso salga a la lista de ESE formulario (CRM -> Ajustes -> Avisos),
+    // no al general.
+    const { para: toEmail } = await destinosDeAviso('landing')
     const fromEmail = CORREO_REMITENTE
 
     const interesLabel = getInteresLabel(interes)
