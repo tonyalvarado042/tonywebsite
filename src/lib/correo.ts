@@ -172,16 +172,34 @@ import { getCrm, hayCrm } from '@/lib/crm'
 
 export type DestinosAviso = { para: string[]; deDonde: 'crm' | 'respaldo' }
 
-export async function destinosDeAviso(): Promise<DestinosAviso> {
+/** A quién avisarle cuando entra un lead.
+ *
+ *  Tony, 22 de octubre de 2026: «prefiero que hagan una sección en
+ *  configuración del CRM para poner qué correos se envía cada formulario».
+ *
+ *  `fuente` es la llave: el mismo valor de `fuente_lead` que el formulario ya
+ *  graba en el contacto. Si se pasa, el CRM responde la lista de ESE formulario
+ *  —la que Tony edita en Ajustes— y si ese formulario no tiene a nadie puesto,
+ *  cae al aviso general. Sin `fuente` se usa el general directo, que es como
+ *  funcionaba antes.
+ *
+ *  Se configura en: CRM → Ajustes → «A quién le avisa cada formulario»
+ *  (`/ajustes/avisos`). */
+export async function destinosDeAviso(fuente?: string): Promise<DestinosAviso> {
   if (!hayCrm()) return { para: [CORREO_DESTINO], deDonde: 'respaldo' }
 
   try {
-    const { data, error } = await getCrm().rpc('cta_correos_de_aviso')
+    const { data, error } = fuente
+      ? await getCrm().rpc('cta_correos_de_aviso', { p_fuente: fuente })
+      : await getCrm().rpc('cta_correos_de_aviso')
     if (error) throw new Error(error.message)
 
-    const principal = String((data as Record<string, unknown>)?.principal ?? '').trim()
-    const copia = String((data as Record<string, unknown>)?.copia ?? '').trim()
-    const para = [principal, copia].filter(Boolean)
+    const d = data as Record<string, unknown>
+    // La versión con `fuente` devuelve `{para:[…]}`; la vieja, `{principal, copia}`.
+    // Se aceptan las dos para no romper a quien todavía llame sin formulario.
+    const para = Array.isArray(d?.para)
+      ? (d.para as unknown[]).map((x) => String(x).trim()).filter(Boolean)
+      : [String(d?.principal ?? '').trim(), String(d?.copia ?? '').trim()].filter(Boolean)
 
     // Los dos vacíos en Ajustes es una decisión rara, pero es SU decisión.
     // Aun así no se deja sin avisar: cae al de siempre y queda dicho de dónde
