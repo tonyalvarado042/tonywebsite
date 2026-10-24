@@ -42,6 +42,9 @@ const nextConfig: NextConfig = {
         { source: '/', has: enElSubdominio, destination: '/clase' },
         { source: '/gracias', has: enElSubdominio, destination: '/clase/gracias' },
         { source: '/vip', has: enElSubdominio, destination: '/clase/vip' },
+        // El destino del botón «Entrar al grupo» de las plantillas de
+        // WhatsApp. Ver `src/app/(clase)/clase/grupo/route.ts`.
+        { source: '/grupo', has: enElSubdominio, destination: '/clase/grupo' },
 
       // Una reescritura POR VARIANTE, sacada del mismo arreglo que dibuja las
       // páginas. Nada de `/:slug*`: un comodín se tragaría `/favicon.ico` y
