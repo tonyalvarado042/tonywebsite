@@ -10,6 +10,7 @@ import {
   registrarActividad,
 } from '@/lib/crm'
 import { automatizacionDeLaClase, enlaceDeBaja } from '@/lib/secuencias'
+import { avisarAGhl } from '@/lib/ghl'
 import { CLASE, ETIQUETA_CRM, GRUPO, VIP } from '@/data/clase-copropiedad'
 import { leerVip } from '@/lib/vip-ajustes'
 import { PAISES } from '@/data/paises'
@@ -231,14 +232,88 @@ export async function POST(req: NextRequest) {
       console.error('[clase/registro] no se pudo inscribir en la cadena:', e)
     }
 
+    /*
+      El VIP se lee UNA vez y lo usan el WhatsApp y el correo.
+
+      Antes vivía adentro del try del correo. Se subió acá porque ahora el
+      WhatsApp también lo ofrece, y leerlo dos veces abre una grieta real: si
+      Tony apaga el interruptor entre una lectura y la otra, la misma persona
+      recibe un WhatsApp que ofrece el VIP y un correo que no lo menciona.
+      Una sola lectura hace imposible esa contradicción.
+    */
+    const vip = await leerVip()
+
+    // ── El WhatsApp de confirmación ──
+    //
+    // Va ANTES del correo porque es el canal que de verdad mete a la gente al
+    // grupo: el mensaje llega al mismo lugar donde está el grupo, a un toque.
+    // El correo dice lo mismo pero pide cambiar de aplicación.
+    //
+    // Acá solo se avisa; el texto, la plantilla y el recordatorio del día
+    // viven en el flujo de GoHighLevel. Ver `src/lib/ghl.ts`.
+    //
+    // ⚠️ Un `ok` significa **que GHL recibió el aviso**, no que el WhatsApp
+    // llegó. Lo segundo depende de la plantilla aprobada y del número, y se
+    // mira en GHL.
+    const avisoGhl = await avisarAGhl({
+      nombre,
+      correo,
+      telefono,
+      pais,
+      clase: CLASE.nombre,
+      fechaTexto: CLASE.fechaTexto,
+      horaTexto: CLASE.horaTexto,
+      instanteUtc: CLASE.instanteUtc,
+      etiquetas: [ETIQUETA_CRM, etiquetaVariante, etiquetaVia].filter(
+        (e): e is string => Boolean(e)
+      ),
+      /*
+        El VIP solo viaja si está encendido Y tiene enlace de pago — la misma
+        compuerta que usan la página y el correo, no una propia. `leerVip()`
+        ya devuelve `null` si está apagado; lo del enlace se exige acá por lo
+        mismo que en el correo: ofrecer algo sin dónde pagarlo es peor que no
+        ofrecerlo.
+      */
+      vip: vip?.enlacePago
+        ? {
+            fechaTexto: vip.fechaTexto,
+            lugarTexto: VIP.lugarTexto,
+            precioTexto: vip.precioTexto,
+            cuposTexto: vip.cuposTexto,
+          }
+        : null,
+    })
+    /*
+      Solo se anota el FALLO, no el éxito.
+
+      Un envío que salió bien ya se ve en GHL: ahí está la conversación. Un
+      aviso que se perdió no se ve en ningún lado — esa persona nunca recibe
+      su WhatsApp y nadie se entera. La asimetría es a propósito: lo que se
+      registra es lo que de otra forma quedaría invisible.
+    */
+    if (avisoGhl === 'fallo') {
+      try {
+        await registrarActividad(
+          alta.contactoId,
+          'whatsapp',
+          'No se pudo avisar a GoHighLevel del registro: esta persona NO recibió' +
+            ' el WhatsApp de confirmación ni va a recibir el recordatorio. Hay que' +
+            ' mandárselo a mano o volverla a meter al flujo.'
+        )
+      } catch (e) {
+        console.error('[clase/registro] no se pudo anotar el fallo de GHL:', e)
+      }
+    }
+
     // ── El correo de confirmación ──
     // Sale de una; no es parte de ninguna secuencia. Si falla NO se rompe la
     // petición: el lead ya está guardado.
     let correoEnviado = false
     try {
       const baja = alta.estaDeBaja ? '' : enlaceDeBaja(SITIO, alta.contactoId)
-      // El upsell solo existe si el VIP está encendido en el CRM Y tiene enlace.
-      const vip = await leerVip()
+      // El upsell solo existe si el VIP está encendido en el CRM Y tiene
+      // enlace. `vip` se leyó arriba, una sola vez para el WhatsApp y el
+      // correo, para que los dos no puedan contradecirse.
 
       await getResend().emails.send({
         from: REMITENTE_CON_NOMBRE,

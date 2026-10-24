@@ -6,6 +6,10 @@
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
+    // Permite `import ... from './fechas-cr.ts'`. Hace falta porque los
+    // módulos puros de `src/lib` se prueban con `node --test`, y el resolvedor
+    // de Node exige la extensión. Solo PERMITE la extensión; no la obliga.
+    "allowImportingTsExtensions": true,
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "bundler",
