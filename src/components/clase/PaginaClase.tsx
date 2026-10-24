@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { leerVip } from '@/lib/vip-ajustes'
+import { leerMuroActivo } from '@/lib/clase-ajustes'
 import {
   ArrowRight,
   BadgeCheck,
@@ -118,7 +119,10 @@ const FOTOS_VILLAS = [
 ]
 
 export default async function PaginaClase({ variante }: { variante: Variante }) {
-  const vip = await leerVip()
+  // Las dos lecturas del CRM van juntas: son independientes y encadenarlas le
+  // sumaría una ida y vuelta a cada carga de la landing, que es la página con
+  // pauta encima.
+  const [vip, muroActivo] = await Promise.all([leerVip(), leerMuroActivo()])
   return (
     <>
       {/* ───────────────── Barra de arriba ───────────────── */}
@@ -456,8 +460,13 @@ export default async function PaginaClase({ variante }: { variante: Variante }) 
         </div>
       </section>
 
-      {/* ───────────────── Muro de registrados ───────────────── */}
-      <MuroEnVivo />
+      {/*
+        ───────────────── Muro de registrados ─────────────────
+        Apagado salvo que Tony lo encienda en Ajustes. La prueba social corta
+        en los dos sentidos: con 200 registrados empuja, con 6 frena. Ver
+        `leerMuroActivo()`.
+      */}
+      {muroActivo && <MuroEnVivo />}
 
       {/* ───────────────── Para quién sí, para quién no ───────────────── */}
       <section className="py-20">

@@ -141,3 +141,42 @@ export async function leerGrupoUrl(): Promise<string> {
     return GRUPO.url
   }
 }
+
+/**
+ * Si el muro de registrados —«Ya van N personas registradas»— se dibuja o no.
+ *
+ * Tony, 23 de octubre de 2026: «quitá la parte donde muestra el contador de
+ * personas en las landing, y dejá opción para habilitar luego desde settings».
+ *
+ * ── Por qué apagado por defecto ───────────────────────────────────────────
+ * El muro es prueba social, y la prueba social **corta en los dos sentidos**:
+ * con 200 registrados empuja, con 6 frena. Ya tenía una guarda para no mostrar
+ * un «ya van 0» —no se dibujaba con cero— pero no para el tramo incómodo de en
+ * medio, que es justo el primer día de cada lanzamiento. Van entre 5 y 10
+ * lanzamientos: ese primer día se repite diez veces.
+ *
+ * Así que la decisión de cuándo enseñar el número pasa a ser de Tony, desde el
+ * CRM, y no una regla fija del código.
+ *
+ * Ante cualquier problema devuelve `false`: si la base no contesta, es mejor
+ * una landing sin muro que una que se cae o que enseña un número que no se
+ * pudo confirmar.
+ */
+export async function leerMuroActivo(): Promise<boolean> {
+  try {
+    const { data, error } = await getCrm()
+      .from('cta_ajustes')
+      .select('valor')
+      .eq('clave', 'clase_muro_activo')
+      .maybeSingle()
+
+    if (error) {
+      console.error('[clase] no se pudo leer el muro:', error.message)
+      return false
+    }
+    return (data?.valor ?? '').trim() === 'si'
+  } catch (e) {
+    console.error('[clase] no se pudo leer el muro:', e)
+    return false
+  }
+}
