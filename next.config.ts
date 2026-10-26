@@ -45,6 +45,9 @@ const nextConfig: NextConfig = {
         // El destino del botón «Entrar al grupo» de las plantillas de
         // WhatsApp. Ver `src/app/(clase)/clase/grupo/route.ts`.
         { source: '/grupo', has: enElSubdominio, destination: '/clase/grupo' },
+        // La encuesta previa a la clase. Se reparte por correo y por WhatsApp,
+        // así que el enlace corto importa: `clase.tonyalvarado.com/encuesta`.
+        { source: '/encuesta', has: enElSubdominio, destination: '/clase/encuesta' },
 
       // Una reescritura POR VARIANTE, sacada del mismo arreglo que dibuja las
       // páginas. Nada de `/:slug*`: un comodín se tragaría `/favicon.ico` y
