@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { AlertCircle, Check, Loader2, Lock } from 'lucide-react'
 import { PAISES } from '@/data/paises'
 import { correoSirve } from '@/lib/correo-valido'
-import { APLICACION, PREGUNTAS, PREGUNTA_ABIERTA, DESCARGO } from '@/data/aplicacion'
+import { APLICACION, CEDULA, PREGUNTAS, PREGUNTA_ABIERTA, DESCARGO } from '@/data/aplicacion'
 
 /**
  * El formulario de aplicación, en una sola pantalla.
@@ -16,10 +16,11 @@ import { APLICACION, PREGUNTAS, PREGUNTA_ABIERTA, DESCARGO } from '@/data/aplica
  */
 export default function FormularioAplicacion() {
   const [f, setF] = useState<Record<string, string>>({
-    nombre: '', apellidos: '', correo: '', whatsapp: '', pais: 'Costa Rica',
+    nombre: '', apellidos: '', cedula: '', correo: '', whatsapp: '', pais: 'Costa Rica',
     que_necesita: '', website: '',
   })
   const [prefijo, setPrefijo] = useState('+506')
+  const paisActual = PAISES.find((p) => p.codigo === prefijo) ?? PAISES[0]
   const [enviando, setEnviando] = useState(false)
   const [listo, setListo] = useState(false)
   const [error, setError] = useState('')
@@ -30,6 +31,7 @@ export default function FormularioAplicacion() {
   const contestadas = PREGUNTAS.filter((p) => f[p.id]).length
   const completo =
     f.nombre.trim().length >= 2 &&
+    f.cedula.trim().length >= 5 &&
     correoSirve(f.correo.trim().toLowerCase()) &&
     contestadas === PREGUNTAS.length &&
     f.que_necesita.trim().length >= PREGUNTA_ABIERTA.minimo
@@ -86,6 +88,12 @@ export default function FormularioAplicacion() {
           </Campo>
         </div>
 
+        <Campo etiqueta={CEDULA.etiqueta}>
+          <input value={f.cedula} onChange={pon('cedula')} required maxLength={40}
+                 className={ENTRADA} />
+          <span className="mt-1 block text-xs text-brand-muted/80">{CEDULA.ayuda}</span>
+        </Campo>
+
         <Campo etiqueta="Correo">
           <input type="email" value={f.correo} onChange={pon('correo')} required maxLength={254}
                  autoComplete="email" className={ENTRADA} />
@@ -94,13 +102,17 @@ export default function FormularioAplicacion() {
         <Campo etiqueta="WhatsApp">
           <div className="flex gap-2">
             <select value={prefijo} onChange={(e) => setPrefijo(e.target.value)}
-                    className={`${ENTRADA} w-28 shrink-0`} aria-label="País del teléfono">
+                    aria-label="País del teléfono"
+                    className={`w-[7.5rem] shrink-0 cursor-pointer ${BASE}`}>
               {PAISES.map((p) => (
                 <option key={p.codigo} value={p.codigo}>{p.corto} {p.codigo}</option>
               ))}
             </select>
+            {/* `min-w-0` es lo que deja al input encogerse dentro del flex en
+                vez de desbordar y empujar al selector. */}
             <input value={f.whatsapp} onChange={pon('whatsapp')} inputMode="tel"
-                   autoComplete="tel" className={ENTRADA} />
+                   autoComplete="tel" placeholder={paisActual.ejemplo}
+                   className={`min-w-0 flex-1 ${BASE}`} />
           </div>
         </Campo>
 
@@ -178,9 +190,23 @@ export default function FormularioAplicacion() {
   )
 }
 
-const ENTRADA =
-  'w-full rounded-xl border border-brand-border/70 bg-brand-bg/60 px-4 py-3 text-brand-text ' +
-  'placeholder:text-brand-muted/60 focus:border-brand-cta focus:outline-none'
+/**
+ * ⚠️ La base NO lleva ancho.
+ *
+ * La primera versión tenía `w-full` acá dentro, y el `<select>` del prefijo lo
+ * heredaba: le puse `w-28` al lado y no sirvió de nada, porque entre dos
+ * clases de ancho gana la que Tailwind emite después, no la que se escribe
+ * última. El resultado fue un selector que se comía toda la fila y un campo de
+ * teléfono reducido a una rendija.
+ *
+ * Por eso el ancho se declara en cada uso y nunca en la base.
+ */
+const BASE =
+  'rounded-xl border border-brand-border/70 bg-brand-bg/60 px-4 py-3 text-brand-text ' +
+  'placeholder:text-brand-muted/60 focus:border-brand-cta focus:outline-none ' +
+  'transition-colors'
+
+const ENTRADA = `w-full ${BASE}`
 
 function Campo({ etiqueta, children }: { etiqueta: string; children: React.ReactNode }) {
   return (
