@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { CheckCircle2, Send } from 'lucide-react'
+import { correoSirve } from '@/lib/correo-valido'
 
 /**
  * Formulario de mentoría. Escribe en `cta_contactos` vía `/api/mentoria`.
@@ -87,7 +88,7 @@ export default function MentoriaForm({ locale = 'es' }: { locale?: 'es' | 'en' }
     const nombre = String(datos.get('nombre') ?? '').trim()
     const correo = String(datos.get('correo') ?? '').trim()
 
-    if (!tema || nombre.length < 2 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
+    if (!tema || nombre.length < 2 || !correoSirve(correo)) {
       setError(t.falta)
       setEstado('error')
       return

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { correoSirve } from '@/lib/correo-valido'
 import { Resend } from 'resend'
 import { CORREO_REMITENTE, REMITENTE_CON_NOMBRE, esDominioPropio } from '@/lib/correo'
 import { destinosDeAviso } from '@/lib/correo'
@@ -165,7 +166,7 @@ export async function POST(req: NextRequest) {
         { status: 422 }
       )
     }
-    if (correo.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
+    if (correo.length > 254 || !correoSirve(correo)) {
       return NextResponse.json(
         { success: false, error: 'Correo no válido.' },
         { status: 422 }

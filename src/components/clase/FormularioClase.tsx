@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { AlertCircle, ArrowRight, Check, Loader2, Lock } from 'lucide-react'
 import { PAISES } from '@/data/paises'
+import { correoSirve } from '@/lib/correo-valido'
 
 /**
  * El formulario de registro a la clase.
@@ -65,7 +66,7 @@ export default function FormularioClase({
   const paisActual = PAISES.find((p) => p.codigo === prefijo) ?? PAISES[0]
 
   const okNombre = nombre.trim().length >= 2
-  const okCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo.trim())
+  const okCorreo = correoSirve(correo.trim())
   const okTelefono = telefono.replace(/\D/g, '').length >= 7
   const todoListo = okNombre && okCorreo && okTelefono
 

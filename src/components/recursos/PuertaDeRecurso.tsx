@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { ArrowRight, Check, Loader2, Lock, X } from 'lucide-react'
 import { PAISES } from '@/data/paises'
+import { correoSirve } from '@/lib/correo-valido'
 
 /**
  * La puerta de un recurso, en ventana emergente.
@@ -52,7 +53,7 @@ export default function PuertaDeRecurso({ slug, titulo, destino, acento, llamado
 
   // Las palomitas: qué cuenta como "ya está bien".
   const okNombre = nombre.trim().length >= 2
-  const okCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo.trim())
+  const okCorreo = correoSirve(correo.trim())
   const okTelefono = telefono.replace(/\D/g, '').length >= 7
   const todoListo = okNombre && okCorreo && okTelefono
 

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { altaContacto } from '@/lib/crm'
+import { correoSirve } from '@/lib/correo-valido'
 
 /**
  * Alta al boletín: SOLO nombre y correo.
@@ -44,7 +45,7 @@ export async function POST(req: NextRequest) {
     if (nombre.length < 2 || nombre.length > 100) {
       return NextResponse.json({ ok: false, error: 'Escribí tu nombre.' }, { status: 422 })
     }
-    if (correo.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
+    if (correo.length > 254 || !correoSirve(correo)) {
       return NextResponse.json({ ok: false, error: 'Ese correo no se ve válido.' }, { status: 422 })
     }
 

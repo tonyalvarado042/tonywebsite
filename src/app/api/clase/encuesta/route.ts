@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getCrm, normalizarTelefono, registrarActividad } from '@/lib/crm'
 import { ENCUESTA, PREGUNTAS, PREGUNTA_ABIERTA } from '@/data/clase-encuesta'
+import { correoSirve } from '@/lib/correo-valido'
 
 /**
  * Las respuestas de la encuesta previa a la clase.
@@ -47,7 +48,7 @@ export async function POST(req: NextRequest) {
   if (nombre.length < 2 || nombre.length > 100) {
     return NextResponse.json({ ok: false, error: 'Escribí tu nombre.' }, { status: 422 })
   }
-  if (email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  if (email.length > 254 || !correoSirve(email)) {
     return NextResponse.json({ ok: false, error: 'Ese correo no se ve válido.' }, { status: 422 })
   }
   if (pregunta.length < PREGUNTA_ABIERTA.minimo) {
