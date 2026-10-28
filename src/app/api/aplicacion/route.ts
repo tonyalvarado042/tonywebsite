@@ -140,7 +140,7 @@ export async function POST(req: NextRequest) {
         utm: utm || null,
         actualizado_el: new Date().toISOString(),
       },
-      { onConflict: 'email,proyecto_id' }
+      { onConflict: 'email' }
     )
 
     if (error) {
