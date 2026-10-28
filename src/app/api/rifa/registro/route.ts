@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { correoSirve } from '@/lib/correo-valido'
 import { Resend } from 'resend'
 import { REMITENTE_CON_NOMBRE } from '@/lib/correo'
 import { armarCorreo } from '@/lib/email-templates'
@@ -95,7 +96,7 @@ export async function POST(req: NextRequest) {
     if (nombre.length < 2 || nombre.length > 100) {
       return NextResponse.json({ ok: false, error: 'Escribí tu nombre.' }, { status: 422 })
     }
-    if (correo.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
+    if (correo.length > 254 || !correoSirve(correo)) {
       return NextResponse.json({ ok: false, error: 'Ese correo no se ve válido.' }, { status: 422 })
     }
     const telefono = normalizarTelefono(

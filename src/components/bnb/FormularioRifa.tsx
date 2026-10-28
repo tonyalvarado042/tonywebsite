@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { AlertCircle, ArrowRight, Check, Loader2, Lock, MessageCircle } from 'lucide-react'
 import { PAISES } from '@/data/paises'
 import { RIFA } from '@/data/ride-and-reset'
+import { correoSirve } from '@/lib/correo-valido'
 
 /**
  * El formulario de la rifa RIDE & RESET.
@@ -73,7 +74,7 @@ export default function FormularioRifa() {
 
   // Qué cuenta como «ya está bien».
   const okNombre = nombre.trim().length >= 2
-  const okCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo.trim())
+  const okCorreo = correoSirve(correo.trim())
   const okTelefono = telefono.replace(/\D/g, '').length >= 7
   const okInstagram = instagram.trim().replace(/^@+/, '').length >= 2
   const okEtiqueto = etiquetoA.trim().replace(/^@+/, '').length >= 2

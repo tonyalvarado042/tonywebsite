@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { AlertCircle, ArrowRight, Check, Gift, Loader2 } from 'lucide-react'
 import { PAISES } from '@/data/paises'
 import { PREGUNTAS, PREGUNTA_ABIERTA, SORTEO } from '@/data/clase-encuesta'
+import { correoSirve } from '@/lib/correo-valido'
 
 /**
  * La encuesta previa a la clase.
@@ -54,7 +55,7 @@ export default function FormularioEncuesta() {
   const paisActual = PAISES.find((p) => p.codigo === prefijo) ?? PAISES[0]
 
   const okNombre = nombre.trim().length >= 2
-  const okCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo.trim())
+  const okCorreo = correoSirve(correo.trim())
   const okTelefono = telefono.replace(/\D/g, '').length >= 7
   const okOpciones = PREGUNTAS.every((p) => Boolean(respuestas[p.id]))
   const okPregunta = pregunta.trim().length >= PREGUNTA_ABIERTA.minimo

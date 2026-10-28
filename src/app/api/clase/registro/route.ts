@@ -15,6 +15,7 @@ import { CLASE, ETIQUETA_CRM, GRUPO, VIP } from '@/data/clase-copropiedad'
 import { leerVip } from '@/lib/vip-ajustes'
 import { PAISES } from '@/data/paises'
 import { enlaceGoogle } from '@/lib/calendario-clase'
+import { correoSirve } from '@/lib/correo-valido'
 
 /**
  * Registro a la clase gratuita «La Revolución de la Copropiedad Turística».
@@ -151,7 +152,7 @@ export async function POST(req: NextRequest) {
     if (nombre.length < 2 || nombre.length > 100) {
       return NextResponse.json({ ok: false, error: 'Escribí tu nombre.' }, { status: 422 })
     }
-    if (correo.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
+    if (correo.length > 254 || !correoSirve(correo)) {
       return NextResponse.json({ ok: false, error: 'Ese correo no se ve válido.' }, { status: 422 })
     }
     const telefono = normalizarTelefono(

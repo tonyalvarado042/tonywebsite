@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { ArrowRight, Check, Loader2, Mail, MessageCircle } from 'lucide-react'
 import { PAISES } from '@/data/paises'
 import type { EscenarioAirbnb, Supuestos } from '@/lib/calculadora-airbnb'
+import { correoSirve } from '@/lib/correo-valido'
 
 /**
  * El único punto de la calculadora donde se piden datos.
@@ -78,7 +79,7 @@ export default function InformeAirbnb({
   const paisActual = PAISES.find((p) => p.codigo === prefijo) ?? PAISES[0]
 
   const okNombre = nombre.trim().length >= 2
-  const okCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo.trim())
+  const okCorreo = correoSirve(correo.trim())
   const okTelefono = telefono.replace(/\D/g, '').length >= 7
   const todoListo = okNombre && okCorreo && okTelefono && acepta
 

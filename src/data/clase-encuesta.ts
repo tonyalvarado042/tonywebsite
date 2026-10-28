@@ -119,13 +119,28 @@ export const SORTEO = {
    */
   premioEnFrase: 'una noche en HUMAYA Wellness Hotel',
   valorTexto: 'Valor de referencia superior a US$400 la noche',
-  cuando: 'Se rifa entre quienes respondan antes de que empiece la clase.',
+  cuando: 'Se rifa en vivo durante la clase, entre quienes hayan respondido y estén conectados.',
+  /**
+   * ⚠️ **Estas bases cambiaron el 28 de octubre de 2026, el día de la clase**,
+   * por pedido de Tony: que haya que estar presente, y que la noche se use
+   * antes del 6 de diciembre.
+   *
+   * Las dos son condiciones NUEVAS. La versión anterior decía que el ganador
+   * «se anuncia en la clase» —sin exigir estar— y que la noche «se disfruta
+   * cuando HUMAYA abra sus puertas», sin fecha tope. **Veinte personas
+   * respondieron leyendo eso.**
+   *
+   * Por eso se publica el cambio acá además de decirlo en la clase: una regla
+   * que aparece solo en el momento del sorteo no es una regla, es una
+   * sorpresa. Si alguien de esos veinte reclama, lo justo es atenderlo.
+   */
   bases: [
     'Participa quien responda la encuesta completa antes de que empiece la clase.',
     'Una participación por persona: si respondés de nuevo, se actualiza tu respuesta y no se suma otra chance.',
-    'El ganador sale al azar entre las respuestas válidas y se anuncia en la clase.',
+    'El sorteo se hace en vivo durante la clase y el ganador sale al azar entre las respuestas válidas.',
+    'Hay que estar en la clase cuando se sortea. Si quien sale no está, se saca otro nombre ahí mismo.',
+    'La noche se disfruta antes del 6 de diciembre de 2026 y queda sujeta a disponibilidad del hotel: se coordina la fecha con HUMAYA antes de reservar.',
     'Te avisamos al correo y al WhatsApp con los que respondiste.',
-    'La noche se reserva sujeta a disponibilidad y se disfruta cuando HUMAYA abra sus puertas.',
     'El premio no se cambia por dinero.',
   ],
 } as const
