@@ -51,6 +51,23 @@ export const APLICACION = {
   cierre: 'Gracias. Revisamos cada aplicación a mano y te escribimos.',
 } as const
 
+/**
+ * La cédula.
+ *
+ * ⚠️ Se pide porque Tony la necesita para armar el contrato de copropiedad, y
+ * se guarda tal cual la escriben: **no se valida el formato**. Una cédula de
+ * Costa Rica es 1-2345-6789, pero un panameño trae 8-123-456, un español un
+ * NIE y un estadounidense llevaría pasaporte. Un formato tico rechazaría justo
+ * a los de afuera, que son los que más cuesta conseguir.
+ *
+ * ⚠️ Es un dato sensible. **Nunca sale en la pantalla de la rifa ni en ningún
+ * correo automático.**
+ */
+export const CEDULA = {
+  etiqueta: 'Cédula o pasaporte',
+  ayuda: 'Si vivís fuera de Costa Rica, poné tu documento de identidad o pasaporte.',
+} as const
+
 /** El precio de una acción, hoy. Si cambia, cambian los rangos de abajo. */
 export const PRECIO_ACCION_TEXTO = 'US$30.500'
 

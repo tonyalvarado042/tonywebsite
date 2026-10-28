@@ -50,6 +50,7 @@ export async function POST(req: NextRequest) {
   const prefijo = leer(cuerpo.prefijo) || '+506'
   const telefonoCrudo = leer(cuerpo.whatsapp)
   const pais = leer(cuerpo.pais)
+  const cedula = leer(cuerpo.cedula)
   const queNecesita = leer(cuerpo.que_necesita)
   const utm = leer(cuerpo.utm).slice(0, 400)
 
@@ -59,6 +60,12 @@ export async function POST(req: NextRequest) {
   if (email.length > LARGO_MAXIMO_CORREO || !correoSirve(email)) {
     return NextResponse.json(
       { ok: false, error: 'Ese correo no se ve bien. Revisá que no tenga espacios y que no termine en punto.' },
+      { status: 422 }
+    )
+  }
+  if (cedula.length < 5 || cedula.length > 40) {
+    return NextResponse.json(
+      { ok: false, error: 'Poné tu cédula o pasaporte.' },
       { status: 422 }
     )
   }
@@ -131,6 +138,7 @@ export async function POST(req: NextRequest) {
         email,
         telefono: telefono || null,
         pais: pais || null,
+        cedula: cedula || null,
         capital: respuestas.capital,
         cuando_avanza: respuestas.cuando_avanza,
         origen_capital: respuestas.origen_capital,
