@@ -121,26 +121,36 @@ export const SORTEO = {
   valorTexto: 'Valor de referencia superior a US$400 la noche',
   cuando: 'Se rifa en vivo durante la clase, entre quienes hayan respondido y estén conectados.',
   /**
-   * ⚠️ **Estas bases cambiaron el 28 de octubre de 2026, el día de la clase**,
-   * por pedido de Tony: que haya que estar presente, y que la noche se use
-   * antes del 6 de diciembre.
+   * ⚠️ **Estas son las reglas que Tony escribió, publicadas tal cual.**
    *
-   * Las dos son condiciones NUEVAS. La versión anterior decía que el ganador
-   * «se anuncia en la clase» —sin exigir estar— y que la noche «se disfruta
-   * cuando HUMAYA abra sus puertas», sin fecha tope. **Veinte personas
-   * respondieron leyendo eso.**
+   * 29 de octubre de 2026. Tony las pasó para la pantalla de la rifa y pidió:
+   * *«Publicá así como te lo envié»*. Se publican palabra por palabra, sin
+   * reescribir — es un texto de condiciones y cambiarle la redacción le
+   * cambia el alcance.
    *
-   * Por eso se publica el cambio acá además de decirlo en la clase: una regla
-   * que aparece solo en el momento del sorteo no es una regla, es una
-   * sorpresa. Si alguien de esos veinte reclama, lo justo es atenderlo.
+   * ── Lo que hay que saber, y no se puede tapar ────────────────────────────
+   * **Estas reglas son MÁS estrictas que las que estaban publicadas antes**, y
+   * veinte personas ya habían respondido leyendo las viejas. Lo que se agregó:
+   *
+   *   · una fecha de inicio (25 de noviembre) que antes no existía;
+   *   · que el premio es para dos personas (antes no se decía);
+   *   · que no se puede reprogramar;
+   *   · que se pierde si no se usa.
+   *
+   * Publicarlas acá es lo correcto —mejor un solo texto público que dos que se
+   * contradicen— pero **no borra que cambiaron después de que la gente
+   * entrara**. Si alguno de esos veinte reclama por una condición que no
+   * estaba cuando respondió, lo justo es atenderlo.
    */
   bases: [
-    'Participa quien responda la encuesta completa antes de que empiece la clase.',
-    'Una participación por persona: si respondés de nuevo, se actualiza tu respuesta y no se suma otra chance.',
-    'El sorteo se hace en vivo durante la clase y el ganador sale al azar entre las respuestas válidas.',
-    'Hay que estar en la clase cuando se sortea. Si quien sale no está, se saca otro nombre ahí mismo.',
-    'La noche se disfruta antes del 6 de diciembre de 2026 y queda sujeta a disponibilidad del hotel: se coordina la fecha con HUMAYA antes de reservar.',
-    'Te avisamos al correo y al WhatsApp con los que respondiste.',
-    'El premio no se cambia por dinero.',
+    'Participan quienes completen la encuesta y asistan a la clase en vivo.',
+    'El premio incluye una noche para la persona ganadora y un acompañante, máximo dos personas.',
+    'Válido únicamente para una estadía entre el 25 de noviembre y el 6 de diciembre de 2026, previa reserva y sujeto a disponibilidad.',
+    'Una vez confirmada la fecha, no se permiten cambios ni reprogramaciones.',
+    'El premio es personal e intransferible. No se permite cederlo, venderlo, modificarlo ni agregar personas.',
+    'No es canjeable por dinero, otros servicios ni estadías fuera del período indicado.',
+    'Si la persona ganadora no utiliza el premio dentro del plazo o no se presenta en la fecha reservada, lo pierde sin compensación.',
   ],
+  /** El cierre, también literal. Va debajo de la lista. */
+  cierreBases: 'Participar implica aceptar estas condiciones.',
 } as const

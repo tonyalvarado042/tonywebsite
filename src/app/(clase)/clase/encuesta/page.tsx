@@ -93,9 +93,10 @@ export default async function EncuestaPage() {
 
         {/* ── Las bases ────────────────────────────────────────────── */}
         <section className="mt-14 border-t border-brand-border/60 pt-8">
+          {/* El rótulo también es el de Tony: «Reglas del sorteo». */}
           <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-brand-muted">
             <MessageSquareQuote className="h-3.5 w-3.5" aria-hidden />
-            Bases del sorteo
+            Reglas del sorteo · {SORTEO.premio}
           </p>
           <ul className="mt-4 space-y-2.5">
             {SORTEO.bases.map((b) => (
@@ -105,6 +106,14 @@ export default async function EncuestaPage() {
               </li>
             ))}
           </ul>
+
+          {/*
+            El cierre va literal y DEBAJO de la lista, como lo escribió Tony.
+            «Participar implica aceptar estas condiciones» es la frase que
+            convierte una lista informativa en condiciones aceptadas, así que
+            no puede quedar escondida ni reescrita.
+          */}
+          <p className="mt-5 text-sm font-semibold text-brand-text">{SORTEO.cierreBases}</p>
 
           {/*
             El mismo descargo que lleva toda la familia de páginas de la clase.
