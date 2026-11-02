@@ -369,7 +369,7 @@ export default function NuevoNegocioTurismoPage() {
               },
               {
                 dt: 'Humaya Costa Rica',
-                dd: 'Etapa 2, en construcción: 10 villas con gimnasio, spa, termales, sauna y cold plunge. Apertura prevista para noviembre de 2026.',
+                dd: 'Etapa 2, en construcción: 10 villas con gimnasio, spa, termales, sauna y cold plunge. Apertura prevista para diciembre de 2026.',
               },
               {
                 dt: 'PuroMTB',

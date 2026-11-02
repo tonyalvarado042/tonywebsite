@@ -22,7 +22,7 @@ export default function Hero({ locale = 'es' }: { locale?: 'es' | 'en' }) {
     h1line1: 'No construimos',
     h1line2: 'hoteles.',
     h1span: 'Construimos razones para viajar.',
-    paragraph: 'Desarrollo y opero hoteles temáticos en La Fortuna de San Carlos. Bike & Bed opera desde 2025; Humaya abre en noviembre de 2026. Todo desde Costa Rica.',
+    paragraph: 'Desarrollo y opero hoteles temáticos en La Fortuna de San Carlos. Bike & Bed opera desde 2025; Humaya abre en diciembre de 2026. Todo desde Costa Rica.',
     cta1: 'Conocer los proyectos',
     cta1Href: '/bike-bed-hotels',
     cta2: 'El nuevo libro',

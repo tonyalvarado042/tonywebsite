@@ -176,7 +176,7 @@ export const humayaOrg: Record<string, unknown> = {
   '@id': `${SITE_URL}/#humaya`,
   name: 'Humaya Costa Rica',
   description:
-    'Etapa 2 de Bike & Bed en La Fortuna de San Carlos: 10 villas con gimnasio, spa, piscinas termales, sauna y cold plunge. Apertura prevista para noviembre de 2026.',
+    'Etapa 2 de Bike & Bed en La Fortuna de San Carlos: 10 villas con gimnasio, spa, piscinas termales, sauna y cold plunge. Apertura prevista para diciembre de 2026.',
   founder: { '@type': 'Person', '@id': `${SITE_URL}/#tony-alvarado` },
   parentOrganization: { '@type': 'Organization', '@id': `${SITE_URL}/#bike-bed-hotels` },
 }
