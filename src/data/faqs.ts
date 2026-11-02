@@ -254,7 +254,7 @@ export const faqsCopropiedad: FAQItem[] = [
         type: 'list',
         items: [
           '**Bike & Bed Hotels** — cinco villas, opera desde 2025. Superhost, 4.96 de valoración',
-          '**Humaya** — abre en noviembre de 2026. Diez villas, con gimnasio, spa, piscinas termales, sauna y cold plunge',
+          '**Humaya** — abre en diciembre de 2026. Diez villas, con gimnasio, spa, piscinas termales, sauna y cold plunge',
         ],
       },
     ],

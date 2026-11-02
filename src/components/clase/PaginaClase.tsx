@@ -536,7 +536,7 @@ export default async function PaginaClase({ variante }: { variante: Variante }) 
             </h2>
             <p className="mt-5 leading-relaxed text-brand-muted">
               Desarrollo y opero hoteles temáticos en La Fortuna de San Carlos. Bike & Bed opera
-              desde setiembre de 2025 y Humaya —diez villas— abre en noviembre de 2026. Los números
+              desde setiembre de 2025 y Humaya —diez villas— abre en diciembre de 2026. Los números
               que vas a ver en la clase son los de mi propia operación, no los de un caso de estudio
               ajeno.
             </p>

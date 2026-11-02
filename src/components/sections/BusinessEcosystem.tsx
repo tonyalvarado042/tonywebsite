@@ -90,7 +90,7 @@ export default function BusinessEcosystem({ locale = 'es' }: { locale?: 'es' | '
     // se sacaron de sus propios sitios —stayhumaya.com y liderax10.com— y no
     // de la cabeza de nadie.
     humayaSubtitle: 'Diez villas al pie del Volcán Arenal.',
-    humayaDesc: 'Un lugar para dejar de correr y volver a lo esencial: arquitectura que desaparece en el bosque, silencio de verdad, y cinco pilares — moverse, nutrirse, conectar, crear y creer. Abre en noviembre de 2026, en La Fortuna.',
+    humayaDesc: 'Un lugar para dejar de correr y volver a lo esencial: arquitectura que desaparece en el bosque, silencio de verdad, y cinco pilares — moverse, nutrirse, conectar, crear y creer. Abre en diciembre de 2026, en La Fortuna.',
     humayaCta: 'Conocer Humaya →',
     // Sin la promesa de «7 cifras» que sale en su propio sitio: en la web de
     // Tony no se prometen resultados de plata.

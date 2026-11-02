@@ -47,10 +47,10 @@ export const CLASE = {
    * etiqueta a mano en la base para que sigan siendo una sola lista. Si se
    * vuelve a mover, hay que repetir ese paso o dejar el slug quieto.
    */
-  slug: 'copropiedad-28-oct',
+  slug: 'copropiedad-17-nov',
   nombre: 'La Revolución de la Copropiedad Turística',
-  instanteUtc: '2026-10-29T01:00:00Z',
-  fechaTexto: 'Miércoles 28 de octubre',
+  instanteUtc: '2026-11-18T01:00:00Z',
+  fechaTexto: 'Martes 17 de noviembre',
   horaTexto: '7:00 p.m. Costa Rica',
   duracionTexto: '80 minutos',
   /** Dónde se transmite. Se le dice a la gente que el enlace llega por correo. */
@@ -213,7 +213,7 @@ export const GRUPO = {
  */
 export const WHATSAPP = {
   numero: '',
-  mensaje: 'Hola Tony, me registré a la clase del 28 de octubre y tengo una consulta.',
+  mensaje: 'Hola Tony, me registré a la clase del 17 de noviembre y tengo una consulta.',
 } as const
 
 export function enlaceWhatsApp(): string | null {
@@ -388,5 +388,5 @@ export const CREDENCIALES = [
   { dato: '22 años', detalle: 'construyendo empresas en Costa Rica' },
   { dato: '263 reseñas', detalle: 'de huéspedes en Airbnb · 4,95 de promedio' },
   { dato: '5 villas', detalle: 'operando hoy en La Fortuna' },
-  { dato: '10 villas', detalle: 'más, abriendo en noviembre de 2026' },
+  { dato: '10 villas', detalle: 'más, abriendo en diciembre de 2026' },
 ] as const

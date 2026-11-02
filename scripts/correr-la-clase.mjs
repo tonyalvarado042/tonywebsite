@@ -112,13 +112,32 @@ export function leerActual(texto) {
     if (!r) throw new Error(`No encontré «${llave}» en el bloque.`)
     return r[1]
   }
+  /** Igual que `sacar`, pero devuelve null en vez de reventar. Para lo que
+   *  se mudó del archivo al CRM y puede o no seguir acá. */
+  const sacarOpcional = (bloque, llave) => {
+    const r = new RegExp(`${llave}:\\s*'([^']*)'`).exec(bloque)
+    return r ? r[1] : null
+  }
   const clase = dentro('CLASE')
   const vip = dentro('VIP')
+  /**
+   * ⚠️ La fecha del VIP YA NO VIVE EN EL ARCHIVO.
+   *
+   * El 19 de octubre de 2026 se mudó a `cta_ajustes` (`vip_instante`), junto
+   * con el precio, los cupos y el enlace de pago. Este script la seguía
+   * exigiendo y **reventaba al arrancar**: «No encontré fechaTexto en el
+   * bloque».
+   *
+   * O sea que la herramienta hecha para mover la clase sin olvidos llevaba
+   * rota desde ese día — y nadie lo supo, porque sus pruebas corren contra
+   * un molde de ejemplo que todavía tiene la forma vieja. Por eso el 2 de
+   * noviembre la clase del 28 de octubre seguía publicada.
+   */
   return {
     slug: sacar(clase, 'slug'),
     instanteUtc: sacar(clase, 'instanteUtc'),
     fechaTexto: sacar(clase, 'fechaTexto'),
-    vipFechaTexto: sacar(vip, 'fechaTexto'),
+    vipFechaTexto: sacarOpcional(vip, 'fechaTexto'),
   }
 }
 
@@ -147,7 +166,10 @@ export function reescribir(texto, nuevo, vipTexto = null) {
     ['instanteUtc', nuevo.instanteUtc],
     ['fechaTexto', nuevo.fechaTexto],
   ])
-  if (vipTexto) enBloque('VIP', [['fechaTexto', vipTexto]])
+  // Solo si el bloque TODAVIA tiene la fecha. Desde que se mudó al CRM no la
+  // tiene, y el VIP se corre con el SQL que este mismo script genera.
+  const vipEnElArchivo = /export const VIP = \{[\s\S]*?fechaTexto:\s*'/.test(texto)
+  if (vipTexto && vipEnElArchivo) enBloque('VIP', [['fechaTexto', vipTexto]])
 
   // El comentario de arriba y el mensaje de WhatsApp: si quedan con la fecha
   // vieja, la próxima persona que los lea cree que el cambio no se hizo.
@@ -320,7 +342,7 @@ Sin --escribir no toca nada: muestra qué cambiaría.
     : null
   if (vipTexto) {
     console.log(`\n━━━ El VIP presencial ━━━`)
-    console.log(`  fecha        ${viejo.vipFechaTexto}  →  ${vipTexto}`)
+    console.log(`  fecha        ${viejo.vipFechaTexto ?? '(vive en el CRM)'}  →  ${vipTexto}`)
   }
 
   const salida = join(RAIZ, 'scripts/salida')
@@ -351,7 +373,7 @@ Sin --escribir no toca nada: muestra qué cambiaría.
   · ManyChat      app.manychat.com, cuenta fb5270938 → el enlace del DM a ${nuevo.campana}
   · WhatsApp      el nombre y la descripción del grupo, si dicen la fecha
   · Posts y pauta los que ya estén publicados con la fecha vieja${vipTexto ? '' : `
-  · El VIP        sigue en «${viejo.vipFechaTexto}». Si se corre, volvé a correr esto con --vip`}
+  · El VIP        ${viejo.vipFechaTexto ? `sigue en «${viejo.vipFechaTexto}»` : 'vive en el CRM (vip_instante)'}. Si se corre, volvé a correr esto con --vip`}
 
   Los enlaces viejos NO se rompen: la página es la misma. Solo entran con la
   campaña vieja, así que al contar van a aparecer las dos.
