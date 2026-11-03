@@ -11,7 +11,8 @@
     "test:vip": "node --experimental-strip-types --test tests/vip-fechas.test.mjs tests/correo-comodines.test.mjs tests/orden-del-tick.test.mjs tests/clase-fechas.test.mjs tests/correo.test.mjs",
     "clase:correr": "node scripts/correr-la-clase.mjs",
     "test:clase": "node --test tests/correr-la-clase.test.mjs",
-    "test:ghl": "node --experimental-strip-types --test tests/ghl.test.mjs"
+    "test:ghl": "node --experimental-strip-types --test tests/ghl.test.mjs",
+    "test:sala": "node --experimental-strip-types --test tests/sala-webinar.test.mjs"
   },
   "dependencies": {
     "@portabletext/react": "^6.2.0",

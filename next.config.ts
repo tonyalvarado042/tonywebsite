@@ -48,6 +48,15 @@ const nextConfig: NextConfig = {
         // La encuesta previa a la clase. Se reparte por correo y por WhatsApp,
         // así que el enlace corto importa: `clase.tonyalvarado.com/encuesta`.
         { source: '/encuesta', has: enElSubdominio, destination: '/clase/encuesta' },
+        // La sala del webinar pregrabado. Tony, 3 de noviembre:
+        // «clase.tonyalvarado.com es la landing de registro, debe quedar ahí
+        // en /vivo».
+        //
+        // ⚠️ La dirección es FIJA y no lleva la fecha: así los correos, el
+        // grupo, los reels y ManyChat apuntan siempre al mismo lugar y mover
+        // la clase deja de ser «actualizá el enlace en seis lados». Cuál sala
+        // se sirve lo decide el CRM, no la URL.
+        { source: '/vivo', has: enElSubdominio, destination: '/clase/vivo' },
 
       // Una reescritura POR VARIANTE, sacada del mismo arreglo que dibuja las
       // páginas. Nada de `/:slug*`: un comodín se tragaría `/favicon.ico` y
